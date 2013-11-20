@@ -207,7 +207,11 @@ These controllers are all more or less self-explanatory. They enable the user to
 
 
 \subsubsection{State machines}
+An entity can have different states. After its creation (POST), it is stores in the persistent database module on the server. From here it can either be deleted (DELETE), or it can be fetched (GET). When a object is queried from the database the server will fetch it as a DTO (Data transfer object) into the servers memory. Often used objects will be saved in the server's cache. The DTO is then sent to the client requesting the object. The client-side also have a cache. This means that if the user has recently queried the object, it will not be fetched from the server, but from the local cache. A DTO can from there either be updated (PUT) and pushed back to the server, or cache time-out and be deleted (This means that only the DTO will be deleted and not the entity in the database)   
 
-
-
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{img/EntityStateMachineDiagram.png}
+\caption{Entity State Machine Diagram}
+\label{fig:Entity State Machine Diagram}
+\end{figure}
 \newpage
