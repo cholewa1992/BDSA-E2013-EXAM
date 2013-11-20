@@ -514,8 +514,8 @@ The explanations furthermore include the relation between the actors and the use
 	\item[1.] Movie \hfill \\
 	A movie is a collection of data about a specific movie. It has attributes defining its title, length, year of production and genre. Some movies are episodes of series and has attributes defining it's season and episode number.
 	
-	\item[2.] An People \hfill \\
-	The people entity defines data about a specific person. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age.
+	\item[2.] Person \hfill \\
+	The person entity defines data about a specific person. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age.
 	
 	\item[3.] User \hfill \\
 	The user entity defines data about each specific user. Each entity instances includes attributes defining the log in informtion of the user. Each user has a list of favourite movies.
@@ -526,14 +526,33 @@ The explanations furthermore include the relation between the actors and the use
 
 \begin{enumerate}
 
-	\item[1.] Client \hfill \\
-	The 'client', is a boundary object that allows the frontend program to contact the database. 
-
-	\item[2.] Desktop Client \hfill \\
-	The 'desktop client', is a specified version of the client, that is used in the desktop version of the application.
 	
-	\item[3.] Browser Client \hfill \\
-	The 'browser client', is a specified version of the client, that is used in the browser version of the application.
+
+	\item SearchField \hfill \\
+	The main search field where you can search for searchable content like movies and actors.
+	
+	\item RegisterForm \hfill \\
+	The user can enter a desired username and password to create his account.
+
+	\item LogInForm \hfill \\
+	A username and password field where the user can input his login information.
+	
+	\item LogOutButton \hfill \\
+	The user can press this button to log out of his account
+	
+	\item FavouritesList \hfill \\
+	The list containing all the users favourite movies. The user can remove movie from the list
+	
+	\item FavouriteButton \hfill \\
+	A button on every movie to add the movie to the users favourites list
+	
+	\item MovieInformationForm \hfill \\
+	A form where an Administrator can input data about a movie
+	
+	\item ActorInformationForm \hfill \\
+	A form where an Administrator can input data about an Actor
+	
+	\item d 
 	
 \end{enumerate}
 
