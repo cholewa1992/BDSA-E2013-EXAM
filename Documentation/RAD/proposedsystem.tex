@@ -7,32 +7,88 @@ A distributed system where a user is able to search and find movies. Information
 \section{Functional requirements}
 \begin{itemize}
 	\setlength{\itemsep}{-5pt}
-	\item The system should allow for user registration and login
-	\item 
+	\item The following components shall be implemented
+	\begin{itemize}
+		\setlength{\itemsep}{-5pt}
+		\item A database
+		\item A server exposing functions for retrieving data from the database
+		\item A Windows Application
+		\item A web Client
+	\end{itemize}
+	\item All above parts shall be implemented in C\#. The Windows client in WPF and the web client in ASP.NET
+	\item Communication between clients and server shall happen in a RESTful manner sending JSON over HTTP
+	\item The server must build on the HttpListener for HTTP communication
+	\item The server should support two ways of retrieving data. One being from its memory cache and the other begin from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
+	\item The desktop client shall support two ways of storing data. One being XML on the disk, and another being in memory cache.
+	\begin{itemize}
+			\setlength{\itemsep}{-5pt}
+			\item If the client is offline: If the requested data is in memory cache it will be retrieved from there instead of from the disk
+			\item If the client is online: If the requested data is in memory cache it will be retrieved from there instead of from the disk. In both cases the client will check-up with the Server to see if it has the most recent version
+	\end{itemize}
+	\item The server shall be able to merge information from My Movie API. If some data is not stored locally, but is in the My Movie API, it will get the data from there and store it locally.
+	\item The system shall allow for user registration and login
 \end{itemize}
 
 \section{Nonfunctional requirements}
 
-\emph{Easy to handle.} Or some other stuff (I'm writing these to have templates)
+\begin{itemize}
 
-/* This section we did not use in our RAD. I don't know why it's here
-\subsection{Usability}
-text
+\item[\textbf{Usability}]
+\begin{itemize}
+\item A user with low PC expertise should be able to use the system
+\end{itemize}
 
-\subsection{Reliability}
+\vspace{0.2cm}
+\item[\textbf{Reliability}]
+\begin{itemize}
+\item Reliability is a \textit{must} for the system. The user should experience as few software crashes as possible, with a maximum of 2 per day.
+\item Restarting the system is acceptable if a software crash does happen
+\item The system must not lose data as result of a software crash
+\end{itemize}
 
-\subsection{Performance}
+\vspace{0.2cm}
+\item[\textbf{Performance}]
+\begin{itemize}
+\item The system must be responsive even on the worst purchasable hardware today
+\item The system should support at least 7 concurrent users
+\item The server must support storing at least 10 gigabytes of data
+\item The maximum latency the user can experience, when his internet is not a bottlenect, must not surpass 5 seconds
+\end{itemize}
 
-\subsection{Supportability}
+\vspace{0.2cm}
+\item[\textbf{Supportability}]
+\begin{itemize}
+\item Extensibility
+\begin{enumerate}
+\item The system should be prepared for implementing more user functions
+\item The system should be prepared for changing storage architecture
+\end{enumerate}
+\end{itemize}
 
-\subsection{Implementation}
+\vspace{0.2cm}
+\item[\textbf{Implementation}]
+\begin{itemize}
+\item The desktop client will be implemented for the Windows 7/8 operation system
+\item The web client will be implemented by ASP.NET MVC
+\end{itemize}
 
-\subsection{Interface}
+\vspace{0.2cm}
+\item[\textbf{Interface}]
+\begin{itemize}
+\item The system shall interact with the My Movie API
+\item Initial data for the movie database is made available as a .mdf file
+\end{itemize}
 
-\subsection{Packaging}
+\vspace{0.2cm}
+\item[\textbf{Packaging}]
+\begin{itemize}
+\item The backend server software and database is installed by us
+\item The Clients are installed by the end-user
+\item The desktop client should be portable and not require any installation
+\end{itemize}
 
-\subsection{Legal}
-*/
+\end{itemize}
+
 
 \section{System models}
 
