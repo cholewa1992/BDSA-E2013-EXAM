@@ -35,7 +35,7 @@ A distributed system where a user is able to search and find movies. Information
 
 \item[\textbf{Usability}]
 \begin{itemize}
-\item A user with low PC expertise should be able to use the system
+\item A user able to use an internet browser must be able to use the System
 \end{itemize}
 
 \vspace{0.2cm}
@@ -46,10 +46,29 @@ A distributed system where a user is able to search and find movies. Information
 \item The system must not lose data as result of a software crash
 \end{itemize}
 
+
 \vspace{0.2cm}
-\item[\textbf{Performance}]
+\item[\textbf{Performance}] 
+
+\hspace{50cm}
+
 \begin{itemize}
-\item The system must be responsive even on the worst purchasable hardware today
+\item Minimum requirements
+\end{itemize}
+
+
+\begin{tabular}{|p{2cm}|p{5cm}|p{5cm}|}
+\hline  & Desktop Client & Web Client \\ 
+\hline Operation System & Windows 7/8 & Webkit2 browser \\
+\hline Processor & Intel Core2 Duo T7500 or equivalent & 1.4 GHz Scorpion or equivalent \\ 
+\hline Memory & 2gb RAM & 512mb RAM \\ 
+\hline Storage & 200mb available & non-applicable \\ 
+\hline 
+\end{tabular} 
+
+\vspace{0.2cm}
+
+\begin{itemize}
 \item The system should support at least 7 concurrent users
 \item The server must support storing at least 10 gigabytes of data
 \item The maximum latency the user can experience, when his internet is not a bottlenect, must not surpass 5 seconds
@@ -60,7 +79,7 @@ A distributed system where a user is able to search and find movies. Information
 \begin{itemize}
 \item Extensibility
 \begin{enumerate}
-\item The system should be prepared for implementing more user functions
+\item The system should be prepared for implementing more functionality which the logged in user can utilize
 \item The system should be prepared for changing storage architecture
 \end{enumerate}
 \end{itemize}
@@ -82,7 +101,7 @@ A distributed system where a user is able to search and find movies. Information
 \vspace{0.2cm}
 \item[\textbf{Packaging}]
 \begin{itemize}
-\item The backend server software and database is installed by us
+\item The back-end server software and database is installed by us
 \item The Clients are installed by the end-user
 \item The desktop client should be portable and not require any installation
 \end{itemize}
