@@ -116,17 +116,33 @@ In order to specify the use cases in which the user can interact with the progra
 
 The following scenarios were set up in order to analyze them:
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{find movie}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enter the title in the search field.
+						\item John receive information for the movie, such as a list of actors, roles, a description for the movie, rating ect.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}
+
+
+
 \begin{itemize}
 	\setlength{\itemsep}{-5pt}
 	
-	\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He searches for the title and information for the movie is retrieved.
-	\item John liked the performance of Samuel L. Jackson in a movie, and wants to find other movies where he stars in. He searches for and selects Samuel L. Jackson, to enter his page, where a list of other movies is found.
-	\item John wants to make a favourites list, but he needs a user account beforehand. He presses Register and enters his information. His user is now active.
+	\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enter the title in the search field. John receive information for the movie, such as a list of actors, roles, a description for the movie, rating ect.
+	\item John liked the performance of Samuel L. Jackson in a movie, and wants to find other movies where he stars in. He searches for and selects Samuel L. Jackson, to enter his page, where a list of other movies he stairs in is found.
+	\item John wants to make a favourites list, but he needs a user account beforehand. He presses Register and is prompted for a the user name and a password for his account and press the OK button. His user is now active.
 	\item John has now made a user, and he wants to log in. He presses login and enters his login information.
 	\item John loved Pulp Fiction, so he wants to add it to his favourites list. He searches and finds the movie, and presses the favourites icon in order to add it.
 	
-	\item The admin, George, has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name back. He logs into his administrator account, and changes the name back.
-	\item The new movie, The Hobbit 3, needs to be added to the database. The admin, George, logs into his administrator account. He notices that a new actor, Hans Lars Christiansen, is missing from the database. George adds both the actor and the movie to the database, and makes sure that the new actor is linked to the corresponding movie.
+	\item The admin, George, has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name back. He logs into his administrator account, searches for and find woll smoth. John change the name to Will Smith.
+	\item The new movie, The Hobbit 3, needs to be added to the database. The admin, George, logs into his administrator account. He notices that an actor which stair in The Hobbit 3, Hans Lars Christiansen, does not exist in the database. George adds both the actor and the movie to the database, and makes sure that the new actor is linked to the corresponding movie.
 	\item George notices that he made a mistake when adding 'The Hobbit 3' to the database. He logs into his administrator account and edits the movie description accordingly.
 	\item George realises that an incompetent intern has added a fake movie to the database. He promptly deletes it.
 \end{itemize}
