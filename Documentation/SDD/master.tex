@@ -1,0 +1,20 @@
+\documentclass[12pt,a4paper] {report}
+\author{Jonas,\\Martin,\\Michael}
+\title{System Design Document}
+\date{\today}
+
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{float}
+
+\DeclareGraphicsExtensions{.png}
+
+\begin{document}
+	\long\def\/*#1*/{}
+	\maketitle
+	\tableofcontents
+	\include{introduction}
+	\include{proposed_software_architecture}
+	\include{subsystem_services}
+\end{document}
