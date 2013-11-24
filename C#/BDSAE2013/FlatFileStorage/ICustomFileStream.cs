@@ -12,7 +12,7 @@ namespace FlatFileStorage
         /// <returns>A Dictionary containg the list of given entity types</returns>
         Dictionary<Type, IList> Load();
 
-        /// <summary>
+        /// <summary>S
         /// Saves changes of the entities to the data file
         /// </summary>
         /// <returns>returns true if the operation was succesfull</returns>
