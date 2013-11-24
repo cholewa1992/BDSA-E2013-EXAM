@@ -8,11 +8,21 @@
 
 
 \section{System architecture choice}
-
+We have chosen to utilise the \textbf{Model-View-Controller} system architecture, separating presentation and interaction from system data. 
 
 \subsubsection{Advantages}
+\begin{itemize}
+	\item By keeping the visuals separated from the application data, we can achieve very loose coupling, as well as the ability to easily change the same data from many different views, for example via our desktop and web-based clients. \\
+	\item If we ever need to change parts of the program, it will be easy to switch out parts of the code.
+\end{itemize}
+
 
 \subsubsection{Disadvantages}
+\begin{itemize}
+	\item We will most likely have a larger amount of classes than necessary for a project of this scope. \\
+	\item The class hierarchy might become messier, as we will need a larger amount of classes for simple tasks.
+\end{itemize}
+
 
 \section{Subsystem decomposition}
 We have grouped our classes into subsystems to create a clearer structure of the program. In this section, we will first show an overview of how the subsystems interact, and then a detailed look at the individual subsystems.
