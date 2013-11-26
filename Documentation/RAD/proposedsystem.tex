@@ -189,7 +189,10 @@ After refining the system design, we have added the following boundary scenarios
 \begin{itemize}
 	\setlength{\itemsep}{-5pt}
 	
-	\item Example
+	\item StartWebServer
+	\item ShutdownWebServer
+	\item ConfigureWebServer
+	\item ConnectionLostException
 \end{itemize}
 
 \begin{figure}[H]
@@ -514,14 +517,13 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
-
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Delete actor \\ \hline
-		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		\hline
+		Use Case Name & DeleteActor \\ \hline
+		Participating Actors & Initiated by \emph{adminstrator} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{administrator} uses the client to search for, and find, an actor. On the actor page, he choses to delete the actor
+						\item[1.] The \emph{adminstrator} uses the client to search for, and find, an actor. On the actor page, he choses to delete the actor
 						\begin{enumerate}
 							\item[2.] The client presents the \emph{administrator} with a dialogue box, asking if he is sure
 						\end{enumerate}
@@ -540,6 +542,88 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Start Web Server \\ \hline
+		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{administrator} executes the server program
+						\begin{enumerate}
+							\item[2.] The server initializes the required classes and sets up the repository with the default settings
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{administrator} is sitting by a computer capable of running the server application
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The web server has successfully been started
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Shutdown Web Server \\ \hline
+		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{administrator} closes the server program
+						\begin{enumerate}
+							\item[2.] The server stops receiving requests.
+							\item[3.] The server finishes any current transaction request.
+							\item[4.] The server closes the application.			 
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{administrator} is sitting by a computer running the server application
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The server has successfully shut down
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Server Crash Exception \\ \hline
+		Participating Actors & Initiated by \emph{server} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{server} program crashes
+						\item[2.] The database system rollbacks any incomplete transactions.
+						\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{server} program stopped responding
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The server program is closed and any errors has been handled
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Connection Lost Exception \\ \hline
+		Participating Actors & Initiated by \emph{server} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{server} completes any current transaction
+						\item[2.] The server logs all relevant information for each transaction to be used when the server regains connection
+						\item[3.] The server waits until it regains connection
+						\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{server} program lost connection
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The server program has handled every current transaction and logged them
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
 \subsection{Object model}
 
