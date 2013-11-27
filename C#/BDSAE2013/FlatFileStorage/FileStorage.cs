@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Storage;
+using Storage.EntityDto;
 
 namespace FlatFileStorage
 {
@@ -34,12 +35,12 @@ namespace FlatFileStorage
         /// </summary>
         /// <typeparam name="TEntity">Entity type to query for</typeparam>
         /// <returns>An IList of the entities</returns>
-        public IList<TEntity> Get<TEntity>() where TEntity : class
+        public IList<TEntity> Get<TEntity>() where TEntity : IEntityDto
         {
             return GetTypeList<TEntity>();
         }
 
-        public TEntity Get<TEntity>(int id) where TEntity : class
+        public TEntity Get<TEntity>(int id) where TEntity : IEntityDto
         {
             throw new NotImplementedException();
         }
@@ -50,7 +51,7 @@ namespace FlatFileStorage
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        private List<TEntity> GetTypeList<TEntity>() where TEntity : class
+        private List<TEntity> GetTypeList<TEntity>() where TEntity : IEntityDto
         {
             if (!_data.ContainsKey(typeof (TEntity)))
             {
@@ -82,7 +83,7 @@ namespace FlatFileStorage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add</param>
         /// <returns>The just added entity</returns>
-        public TEntity Add<TEntity>(TEntity entity) where TEntity : class
+        public TEntity Add<TEntity>(TEntity entity) where TEntity : IEntityDto
         {
             Get<TEntity>().Add(entity);
             return entity;
@@ -95,7 +96,7 @@ namespace FlatFileStorage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to update</param>
         /// <returns>The just updated entity</returns>
-        public TEntity Update<TEntity>(TEntity entity) where TEntity : class
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : IEntityDto
         {
             throw new NotImplementedException();
         }
@@ -107,7 +108,7 @@ namespace FlatFileStorage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if operation was successful</returns>
-        public bool Delete<TEntity>(TEntity entity) where TEntity : class
+        public bool Delete<TEntity>(TEntity entity) where TEntity : IEntityDto
         {
             return Get<TEntity>().Remove(entity);
         }

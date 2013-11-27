@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServerUnitTest", "WebServerUnitTest\WebServerUnitTest.csproj", "{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDBMSStorage", "RDBMSStorage\RDBMSStorage.csproj", "{B1E131EC-F68D-40C8-AF87-47ECF8246824}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E131EC-F68D-40C8-AF87-47ECF8246824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E131EC-F68D-40C8-AF87-47ECF8246824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E131EC-F68D-40C8-AF87-47ECF8246824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E131EC-F68D-40C8-AF87-47ECF8246824}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
