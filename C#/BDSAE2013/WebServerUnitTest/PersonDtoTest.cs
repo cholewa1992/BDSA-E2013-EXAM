@@ -19,10 +19,19 @@ namespace WebServerUnitTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestNameInputValidationInvalidName_Test()
+        public void TestNameInputValidationInvalidNameEmpty_Test()
         {
             var person = new PersonDto();
             person.Name = "";
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestNameInputValidationInvalidNameSpaceChar_Test()
+        {
+            var person = new PersonDto();
+            person.Name = " ";
         }
     }
 }

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityDto\EntityState.cs" />
+    <Compile Include="EntityDto\FavoriteListDto.cs" />
     <Compile Include="EntityDto\IEntityDto.cs" />
     <Compile Include="EntityDto\MovieDto.cs" />
     <Compile Include="EntityDto\PersonDto.cs" />

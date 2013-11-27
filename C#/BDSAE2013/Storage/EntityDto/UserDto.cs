@@ -17,9 +17,9 @@ namespace Storage.EntityDto
             get { return _email; }
             set
             {
-                if (!Regex.IsMatch(value, @"([a-zA-Z0-9]+)@([a-zA-Z0-9]+)\.([a-zA-Z]+)"))
+                if (value == null || !Regex.IsMatch(value, @"([a-zA-Z0-9]+)@([a-zA-Z0-9]+)\.([a-zA-Z]+)"))
                 {
-                    throw new ArgumentException("The email enteted was incorrect");
+                    throw new ArgumentException("The email entered was incorrect");
                 }
                 _email = value;
             }

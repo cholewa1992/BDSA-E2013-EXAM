@@ -16,7 +16,7 @@ namespace Storage.EntityDto
             get { return _name; }
             set
             {
-                if (!Regex.IsMatch(value, @"."))
+                if (!Regex.IsMatch(value, @"[.]+"))
                 {
                     throw new ArgumentException("A name can't be nothing");
                 }
