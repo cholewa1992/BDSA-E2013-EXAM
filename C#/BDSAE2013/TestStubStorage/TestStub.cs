@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Storage;
 using FlatFileStorage;
+using Storage.EntityDto;
 
 namespace TestStubStorage
 {
@@ -26,12 +27,12 @@ namespace TestStubStorage
         /// </summary>
         /// <typeparam name="TEntity">Entity type to query for</typeparam>
         /// <returns>An IList of the entities</returns>
-        public IList<TEntity> Get<TEntity>() where TEntity : class
+        public IList<TEntity> Get<TEntity>() where TEntity : IEntityDto
         {
             return _storage.Get<TEntity>();
         }
 
-        public TEntity Get<TEntity>(int id) where TEntity : class
+        public TEntity Get<TEntity>(int id) where TEntity : IEntityDto
         {
             throw new NotImplementedException();
         }
@@ -52,7 +53,7 @@ namespace TestStubStorage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add</param>
         /// <returns>The just added entity</returns>
-        public TEntity Add<TEntity>(TEntity entity) where TEntity : class
+        public TEntity Add<TEntity>(TEntity entity) where TEntity : IEntityDto
         {
             return _storage.Add(entity);
         }
@@ -64,7 +65,7 @@ namespace TestStubStorage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to update</param>
         /// <returns>The just updated entity</returns>
-        public TEntity Update<TEntity>(TEntity entity) where TEntity : class
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : IEntityDto
         {
             return _storage.Update(entity);
         }
@@ -76,7 +77,7 @@ namespace TestStubStorage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if operation was successful</returns>
-        public bool Delete<TEntity>(TEntity entity) where TEntity : class
+        public bool Delete<TEntity>(TEntity entity) where TEntity : IEntityDto
         {
             return _storage.Delete(entity);
         }
