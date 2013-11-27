@@ -23,7 +23,10 @@ namespace WebServer
             get { return _email; }
             set
             {
-                if (!Regex.IsMatch(value, @"([a-zA-Z0-9]+)@([a-zA-Z0-9]+)\.([a-zA-Z]+)")) throw new ArgumentException("The email enteted was incorrect");
+                if (!Regex.IsMatch(value, @"([a-zA-Z0-9]+)@([a-zA-Z0-9]+)\.([a-zA-Z]+)"))
+                {
+                    throw new ArgumentException("The email enteted was incorrect");
+                }
                 _email = value;
             }
         }
