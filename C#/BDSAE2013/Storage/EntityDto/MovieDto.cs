@@ -43,7 +43,7 @@ namespace WebServer
             get { return _seriesYear; }
             set
             {
-                if (!Regex.IsMatch(value, @"(0-9)"))
+                if (!Regex.IsMatch(value, @"^\d{4}$"))
                 {
                     throw new ArgumentException("Year consist of numbers. ex: 2013");
                 }

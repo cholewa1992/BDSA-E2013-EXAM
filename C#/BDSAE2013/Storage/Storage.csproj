@@ -41,6 +41,9 @@
   <ItemGroup>
     <Compile Include="EntityDto\EntityState.cs" />
     <Compile Include="EntityDto\IEntityDto.cs" />
+    <Compile Include="EntityDto\MovieDto.cs" />
+    <Compile Include="EntityDto\PersonDto.cs" />
+    <Compile Include="EntityDto\UserDto.cs" />
     <Compile Include="IStorage.cs" />
     <Compile Include="IStorageBridge.cs" />
     <Compile Include="IStorageFactory.cs" />

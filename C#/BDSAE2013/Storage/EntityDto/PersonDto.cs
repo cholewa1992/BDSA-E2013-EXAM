@@ -8,7 +8,7 @@ using Storage.EntityDto;
 
 namespace WebServer
 {
-    class PersonDto
+    public class PersonDto
     {
         public int Id { get; set; }
         public EntityState State { get; set; }
