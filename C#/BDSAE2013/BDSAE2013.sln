@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServerUnitTest", "WebServerUnitTest\WebServerUnitTest.csproj", "{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeImdbMssqlConnection", "FakeImdbMssqlConnection\FakeImdbMssqlConnection.csproj", "{6BB59853-F9D5-45BF-B32B-6D6BF7AE2395}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{3E9A8D40-6301-4FB2-B2A3-083D70C15C4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB59853-F9D5-45BF-B32B-6D6BF7AE2395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB59853-F9D5-45BF-B32B-6D6BF7AE2395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB59853-F9D5-45BF-B32B-6D6BF7AE2395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB59853-F9D5-45BF-B32B-6D6BF7AE2395}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9A8D40-6301-4FB2-B2A3-083D70C15C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9A8D40-6301-4FB2-B2A3-083D70C15C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9A8D40-6301-4FB2-B2A3-083D70C15C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9A8D40-6301-4FB2-B2A3-083D70C15C4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
