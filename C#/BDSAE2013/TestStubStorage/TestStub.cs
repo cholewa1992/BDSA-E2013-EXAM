@@ -43,7 +43,7 @@ namespace TestStubStorage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add</param>
         /// <returns>The just added entity</returns>
-        public TEntity Add<TEntity>(TEntity entity) where TEntity : IEntityDto
+        public TEntity Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new()
         {
             return _storage.Add(entity);
         }
@@ -55,7 +55,7 @@ namespace TestStubStorage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to update</param>
         /// <returns>The just updated entity</returns>
-        public TEntity Update<TEntity>(TEntity entity) where TEntity : IEntityDto
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new()
         {
             return _storage.Update(entity);
         }
@@ -67,7 +67,7 @@ namespace TestStubStorage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if operation was successful</returns>
-        public bool Delete<TEntity>(TEntity entity) where TEntity : IEntityDto
+        public bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new()
         {
             return _storage.Delete(entity);
         }

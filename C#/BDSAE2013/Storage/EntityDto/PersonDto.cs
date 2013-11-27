@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Storage.EntityDto
 {
-    public class PersonDto
+    public class PersonDto : IEntityDto
     {
         public int Id { get; set; }
         public EntityState State { get; set; }

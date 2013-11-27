@@ -31,17 +31,17 @@ namespace RDBMSStorage
             throw new NotImplementedException();
         }
 
-        public TEntity Add<TEntity>(TEntity entity) where TEntity : IEntityDto
+        public TEntity Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new()
         {
             throw new NotImplementedException();
         }
 
-        public TEntity Update<TEntity>(TEntity entity) where TEntity : IEntityDto
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new()
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete<TEntity>(TEntity entity) where TEntity : IEntityDto
+        public bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new()
         {
             throw new NotImplementedException();
         }

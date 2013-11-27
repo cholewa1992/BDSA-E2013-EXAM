@@ -20,7 +20,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        TEntity Add<TEntity>(TEntity entity) where TEntity : IEntityDto;
+        TEntity Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -29,7 +29,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        TEntity Update<TEntity>(TEntity entity) where TEntity : IEntityDto;
+        TEntity Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -37,6 +37,6 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        bool Delete<TEntity>(TEntity entity) where TEntity : IEntityDto;
+        bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
     }
 }

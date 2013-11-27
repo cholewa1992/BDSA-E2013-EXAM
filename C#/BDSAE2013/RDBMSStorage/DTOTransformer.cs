@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Data.Entity.ModelConfiguration.Conventions;
 using Storage.EntityDto;
 
 namespace RDBMSStorage
@@ -16,9 +16,18 @@ namespace RDBMSStorage
                 Id = o.Id,
                 SeasonNumber = o.SeasonNumber,
                 SeriesYear = o.SeriesYear,
-                Year = o.Year
+                Year = o.Year + ""
             } as TEntity;
         }
 
+        public static TEntity Transform<TEntity>(People o) where TEntity : class, IEntityDto, new()
+        {
+            return new PersonDto
+            {
+                Gender = o.Gender,
+                Id = o.Id,
+                Name = o.Name
+            } as TEntity;
+        }
     }
 }
