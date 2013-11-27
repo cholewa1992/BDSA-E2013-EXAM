@@ -11,5 +11,6 @@ namespace Storage
         TEntity Add<TEntity>(TEntity entity) where TEntity : class;
         TEntity Update<TEntity>(TEntity entity) where TEntity : class;
         bool Delete<TEntity>(TEntity entity) where TEntity : class;
+
     }
 }
