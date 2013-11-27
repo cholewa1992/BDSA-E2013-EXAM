@@ -12,13 +12,11 @@ namespace WebServer
     {
         public int Id { set; get; }
         public EntityState State { set; get; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Firstname { get; set; }
+        public string Username { set; get; }
+        public string Password { set; get; }
+        public string Firstname { set; get; }
 
         private string _email;
-
-
         public string Email
         {
             get { return _email; }
