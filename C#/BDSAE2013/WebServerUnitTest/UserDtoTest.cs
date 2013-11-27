@@ -18,6 +18,15 @@ namespace WebServerUnitTest
             user.Email = "jbec01@iTu.COM";
         }
 
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestEmailValidationNull_Test()
+        {
+            var user = new UserDto();
+            user.Email = null;
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void TestEmailValidationNoAtOrDot_Test()
@@ -25,6 +34,7 @@ namespace WebServerUnitTest
             var user = new UserDto();
             user.Email = "jacob";
         }
+        
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void TestEmailValidationNoAt_Test()

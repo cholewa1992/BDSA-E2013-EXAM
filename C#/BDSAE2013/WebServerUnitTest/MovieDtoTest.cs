@@ -9,6 +9,15 @@ namespace WebServerUnitTest
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
+        public void TestYearInputInValidNull()
+        {
+            var movie = new MovieDto();
+            movie.Year = null;
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestYearInputInValidEmpty()
         {
             var movie = new MovieDto();
