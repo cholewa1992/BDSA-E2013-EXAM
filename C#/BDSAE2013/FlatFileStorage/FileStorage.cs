@@ -40,7 +40,7 @@ namespace FlatFileStorage
             return GetTypeList<TEntity>();
         }
 
-        public TEntity Get<TEntity>(int id) where TEntity : IEntityDto
+        public TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new()
         {
             throw new NotImplementedException();
         }

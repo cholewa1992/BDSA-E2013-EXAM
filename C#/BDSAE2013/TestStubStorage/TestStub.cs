@@ -22,17 +22,7 @@ namespace TestStubStorage
             _storage = new FileStorageFactory("testdata.dat").GetConnection();
         }
 
-        /// <summary>
-        /// Returns a list of entities
-        /// </summary>
-        /// <typeparam name="TEntity">Entity type to query for</typeparam>
-        /// <returns>An IList of the entities</returns>
-        public IList<TEntity> Get<TEntity>() where TEntity : IEntityDto
-        {
-            return _storage.Get<TEntity>();
-        }
-
-        public TEntity Get<TEntity>(int id) where TEntity : IEntityDto
+        public TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new()
         {
             throw new NotImplementedException();
         }

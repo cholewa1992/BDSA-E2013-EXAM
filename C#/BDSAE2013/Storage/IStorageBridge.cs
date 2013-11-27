@@ -7,19 +7,12 @@ namespace Storage
     public interface IStorageBridge : IDisposable
     {
         /// <summary>
-        /// Method for getting entities
-        /// </summary>
-        /// <typeparam name="TEntity">The entity type to fetch</typeparam>
-        /// <returns>The query result</returns>
-        IEnumerable<TEntity> Get<TEntity>() where TEntity : IEntityDto;
-
-        /// <summary>
         /// Fetches a single entity from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        TEntity Get<TEntity>(int id) where TEntity : IEntityDto;
+        TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Adds a new entity to the storage

@@ -18,19 +18,6 @@ namespace Storage
         }
 
         /// <summary>
-        /// Method for getting entities
-        /// </summary>
-        /// <typeparam name="TEntity">The entity type to fetch</typeparam>
-        /// <returns>The query result</returns>
-        public override IEnumerable<TEntity> Get<TEntity>()
-        {
-            using (var db = StorageFactory.GetConnection())
-            {
-                return db.Get<TEntity>();
-            }
-        }
-
-        /// <summary>
         /// Fetches a single entity from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>

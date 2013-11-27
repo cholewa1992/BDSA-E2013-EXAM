@@ -6,13 +6,10 @@ namespace Storage
 {
     public interface IStorage : IDisposable
     {
-        IList<TEntity> Get<TEntity>() where TEntity : IEntityDto;
-        TEntity Get<TEntity>(int id) where TEntity : IEntityDto;
+        TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
         bool SaveChanges();
         TEntity Add<TEntity>(TEntity entity) where TEntity : IEntityDto;
         TEntity Update<TEntity>(TEntity entity) where TEntity : IEntityDto;
         bool Delete<TEntity>(TEntity entity) where TEntity : IEntityDto;
-
-
     }
 }

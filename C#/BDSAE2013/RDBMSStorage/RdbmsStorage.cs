@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Storage;
 using Storage.EntityDto;
 
@@ -15,14 +13,17 @@ namespace RDBMSStorage
             throw new NotImplementedException();
         }
 
-        public IList<TEntity> Get<TEntity>() where TEntity : IEntityDto
+        public TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new()
         {
-            throw new NotImplementedException();
-        }
-
-        public TEntity Get<TEntity>(int id) where TEntity : IEntityDto
-        {
-            throw new NotImplementedException();
+            if (typeof (TEntity) == typeof (MovieDto))
+            {
+                using (var con = new IMDBEntities())
+                {
+                    var o = con.Movies.Single(m => m.Id == id); 
+                    return DtoTransformer.Transform<TEntity>(o);
+                }
+            }
+            throw new InvalidOperationException(typeof(TEntity) + " is not implemented as an entity type");
         }
 
         public bool SaveChanges()

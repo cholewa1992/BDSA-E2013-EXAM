@@ -28,19 +28,12 @@ namespace Storage
         public abstract void Dispose();
 
         /// <summary>
-        /// Method for getting entities
-        /// </summary>
-        /// <typeparam name="TEntity">The entity type to fetch</typeparam>
-        /// <returns>The query result</returns>
-        public abstract IEnumerable<TEntity> Get<TEntity>() where TEntity : IEntityDto;
-
-        /// <summary>
         /// Fetches a single entity from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        public abstract TEntity Get<TEntity>(int id) where TEntity : IEntityDto;
+        public abstract TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Adds a new entity to the storage
