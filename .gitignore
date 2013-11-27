@@ -140,7 +140,10 @@ UpgradeLog*.XML
 .Spotlight-V100
 .Trashes
 ehthumbs.db
-Thumbs.db
+
+# Windows crap!
+*.db
+*.ini
 
 # Packages #
 *.7z
