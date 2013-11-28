@@ -7,17 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EntityFrameworkStorage
+namespace Storage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MovieInfo
+    public partial class Participate : IEntityDto
     {
-        public int MovieInfoId { get; set; }
-        public string Info { get; set; }
+        public int ParticipateId { get; set; }
+        public Nullable<int> NrOrder { get; set; }
+        public string CharName { get; set; }
+        public string Role { get; set; }
         public string Note { get; set; }
-        public int Movie_Id { get; set; }
-        public Nullable<int> Type_Id { get; set; }
+        public Nullable<int> Movie_Id { get; set; }
+        public Nullable<int> Person_Id { get; set; }
+
+        public int Id
+        {
+            set { ParticipateId = value; }
+            get { return ParticipateId; }
+        }
     }
 }

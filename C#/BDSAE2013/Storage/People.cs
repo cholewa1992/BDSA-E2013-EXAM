@@ -7,19 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EntityFrameworkStorage
+namespace Storage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Participate
+    public partial class People : IEntityDto
     {
-        public int ParticipateId { get; set; }
-        public Nullable<int> NrOrder { get; set; }
-        public string CharName { get; set; }
-        public string Role { get; set; }
-        public string Note { get; set; }
-        public Nullable<int> Movie_Id { get; set; }
-        public Nullable<int> Person_Id { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
     }
 }

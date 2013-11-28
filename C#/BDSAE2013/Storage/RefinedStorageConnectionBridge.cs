@@ -1,25 +1,34 @@
-﻿using System;
-using System.Linq;
-using Storage.EntityDto;
+﻿using System.Linq;
 
 namespace Storage
 {
-    public interface IStorageBridge : IDisposable
+    internal class RefinedStorageConnectionBridge : StorageConnectionBridge
     {
+        public RefinedStorageConnectionBridge(IStorageConnectionFactory storageFactory) : base(storageFactory)
+        {
+        }
+
         /// <summary>
         /// Fetches a single entity from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
+        public override TEntity Get<TEntity>(int id)
+        {
+            return Db.Get<TEntity>(id);
+
+        }
 
         /// <summary>
-        /// Fetches an IQueryable with all data for a given entity typr
+        /// Fetches entities from the storage
         /// </summary>
-        /// <typeparam name="TEntity">The entity type to use</typeparam>
-        /// <returns>An IQueryable with all the data</returns>
-        IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto, new();
+        /// <typeparam name="TEntity">The entity type to fetch</typeparam>
+        /// <returns>The entities as an IQueryable</returns>
+        public override IQueryable<TEntity> Get<TEntity>()
+        {
+            return Db.Get<TEntity>();
+        }
 
         /// <summary>
         /// Adds a new entity to the storage
@@ -27,7 +36,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        bool Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public override void Add<TEntity>(TEntity entity)
+        {
+            Db.Add(entity);
+        }
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -36,7 +48,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        bool Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public override void Update<TEntity>(TEntity entity)
+        {
+            Db.Update(entity);
+        }
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -44,6 +59,9 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public override void Delete<TEntity>(TEntity entity)
+        {
+            Db.Delete(entity);
+        }
     }
 }

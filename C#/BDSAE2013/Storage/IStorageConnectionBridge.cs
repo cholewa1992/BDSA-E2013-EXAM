@@ -1,35 +1,23 @@
-﻿using System.Collections.Generic;
-
-
+﻿using System;
+using System.Linq;
 namespace Storage
 {
-    internal class RefinedStorageBidge : StorageBridge
+    public interface IStorageConnectionBridge : IDisposable
     {
-        public RefinedStorageBidge(IStorageFactory storageFactory) : base(storageFactory)
-        {
-        }
-
-        /// <summary>
-        /// Disposable methode to ensure that the bridge and its underlying storage is closed corretly 
-        /// </summary>
-        public override void Dispose()
-        {
-
-        }
-
         /// <summary>
         /// Fetches a single entity from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        public override TEntity Get<TEntity>(int id)
-        {
-            using (var db = StorageFactory.GetConnection())
-            {
-                return db.Get<TEntity>(id);
-            }
-        }
+        TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto;
+
+        /// <summary>
+        /// Fetches an IQueryable with all data for a given entity typr
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to use</typeparam>
+        /// <returns>An IQueryable with all the data</returns>
+        IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Adds a new entity to the storage
@@ -37,13 +25,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public override bool Add<TEntity>(TEntity entity)
-        {
-            using (var db = StorageFactory.GetConnection())
-            {
-                return db.Add(entity);
-            }
-        }
+        void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -52,13 +34,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public override bool Update<TEntity>(TEntity entity)
-        {
-            using (var db = StorageFactory.GetConnection())
-            {
-                return db.Update(entity);
-            }
-        }
+        void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -66,12 +42,12 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public override bool Delete<TEntity>(TEntity entity)
-        {
-            using (var db = StorageFactory.GetConnection())
-            {
-                return db.Delete(entity);
-            }
-        }
+        void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+
+        /// <summary>
+        /// Saves all changes in the current context
+        /// </summary>
+        /// <returns>True if entities was saved</returns>
+        bool SaveChanges();
     }
 }

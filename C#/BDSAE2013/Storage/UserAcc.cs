@@ -7,17 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EntityFrameworkStorage
+namespace Storage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PersonInfo
+    public partial class UserAcc : IEntityDto
     {
-        public int PersonInfoId { get; set; }
-        public string Info { get; set; }
-        public string Note { get; set; }
-        public int Person_Id { get; set; }
-        public int Type_Id { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
     }
 }

@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EntityFrameworkStorage
+namespace Storage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Movies
+    public partial class PersonInfo : IEntityDto
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Kind { get; set; }
-        public Nullable<int> Year { get; set; }
-        public Nullable<int> SeasonNumber { get; set; }
-        public Nullable<int> EpisodeNumber { get; set; }
-        public string SeriesYear { get; set; }
-        public Nullable<int> EpisodeOf_Id { get; set; }
+        public int PersonInfoId { get; set; }
+        public string Info { get; set; }
+        public string Note { get; set; }
+        public int Person_Id { get; set; }
+        public int Type_Id { get; set; }
+
+        public int Id
+        {
+            set { PersonInfoId = value; }
+            get { return PersonInfoId; }
+        }
     }
 }

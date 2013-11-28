@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Storage.EntityDto;
 
 namespace WebServerUnitTest
 {
@@ -10,9 +9,9 @@ namespace WebServerUnitTest
         [TestMethod]
         public void TestNameInputValidationValidName_Test()
         {
-            var person = new PersonDto();
-            person.Name = "John";
-            person.Name = "John Doe";
+            //var person = new PersonDto();
+            //person.Name = "John";
+            //person.Name = "John Doe";
         }
 
 
@@ -20,8 +19,8 @@ namespace WebServerUnitTest
         [ExpectedException(typeof(ArgumentException))]
         public void TestNameInputValidationInvalidNameEmpty_Test()
         {
-            var person = new PersonDto();
-            person.Name = "";
+            //var person = new PersonDto();
+            //person.Name = "";
         }
 
 
@@ -29,8 +28,8 @@ namespace WebServerUnitTest
         [ExpectedException(typeof(ArgumentException))]
         public void TestNameInputValidationInvalidNameSpaceChar_Test()
         {
-            var person = new PersonDto();
-            person.Name = " ";
+            //var person = new PersonDto();
+            //person.Name = " ";
         }
     }
 }

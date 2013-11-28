@@ -1,32 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Storage.EntityDto;
+﻿using System.Linq;
 
 namespace Storage
 {
     /// <summary>
     /// Bridge implementation to provide stubs to builde storage module around
     /// </summary>
-    public abstract class StorageBridge : IStorageBridge
+    public abstract class StorageConnectionBridge : IStorageConnectionBridge
     {
         /// <summary>
         /// Concret IStorageFactory implementation to use
         /// </summary>
-        protected IStorageFactory StorageFactory { private set; get; }
+        protected IStorageConnection Db { private set; get; }
 
         /// <summary>
         /// Constructs the bridge and uses dependency injection of an conret storage to use
         /// </summary>
         /// <param name="storageFactory">Concret storage implementation to use</param>
-        protected StorageBridge(IStorageFactory storageFactory)
+        protected StorageConnectionBridge(IStorageConnectionFactory storageFactory)
         {
-            StorageFactory = storageFactory;
+            Db = storageFactory.GetConnection();
         }
 
         /// <summary>
         /// Disposable methode to ensure that the bridge and its underlying storage is closed corretly 
         /// </summary>
-        public abstract void Dispose();
+        public void Dispose()
+        {
+            Db.Dispose();
+        }
 
         /// <summary>
         /// Fetches a single entity from the storage
@@ -34,12 +35,15 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        public abstract TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
+        public abstract TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto;
 
-        public IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto, new()
-        {
-            throw new System.NotImplementedException();
-        }
+
+        /// <summary>
+        /// Fetches entities from the storage
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to fetch</typeparam>
+        /// <returns>The entities as an IQueryable</returns>
+        public abstract IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Adds a new entity to the storage
@@ -47,7 +51,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public abstract bool Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public abstract void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -56,7 +60,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public abstract bool Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public abstract void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -64,6 +68,15 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public abstract bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public abstract void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+
+        /// <summary>
+        /// Saves changes to the context
+        /// </summary>
+        /// <returns>true if entities was saved</returns>
+        public bool SaveChanges()
+        {
+            return Db.SaveChanges();
+        }
     }
 }

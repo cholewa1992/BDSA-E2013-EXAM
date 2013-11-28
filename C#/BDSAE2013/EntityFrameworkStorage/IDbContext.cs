@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     public interface IDbContext : IDisposable
     {
