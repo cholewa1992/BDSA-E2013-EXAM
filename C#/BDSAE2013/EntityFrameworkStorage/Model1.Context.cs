@@ -7,31 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Storage.EntityDto;
-
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class fakeimdbEntities : DbContext, IDbContext
+    public partial class fakeimdbEntities : DbContext
     {
         public fakeimdbEntities()
             : base("name=fakeimdbEntities")
         {
         }
-
-        //public IDbSet<InfoType> InfoType { get; set; }
-        //public IDbSet<MovieInfo> MovieInfo { get; set; }
-        //public IDbSet<Movies> Movies { get; set; }
-        //public IDbSet<Participate> Participate { get; set; }
-        //public IDbSet<People> People { get; set; }
-        //public IDbSet<PersonInfo> PersonInfo { get; set; }
-
-        public new IDbSet<T> Set<T>() where T : class
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            return base.Set<T>();
+            throw new UnintentionalCodeFirstException();
         }
+    
+        public DbSet<InfoType> InfoType { get; set; }
+        public DbSet<MovieInfo> MovieInfo { get; set; }
+        public DbSet<Movies> Movies { get; set; }
+        public DbSet<Participate> Participate { get; set; }
+        public DbSet<People> People { get; set; }
+        public DbSet<PersonInfo> PersonInfo { get; set; }
     }
 }

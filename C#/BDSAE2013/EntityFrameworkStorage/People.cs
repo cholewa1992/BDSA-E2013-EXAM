@@ -7,20 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Movies : IEntity
+    public partial class People
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Kind { get; set; }
-        public Nullable<int> Year { get; set; }
-        public Nullable<int> SeasonNumber { get; set; }
-        public Nullable<int> EpisodeNumber { get; set; }
-        public string SeriesYear { get; set; }
-        public Nullable<int> EpisodeOf_Id { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
     }
 }

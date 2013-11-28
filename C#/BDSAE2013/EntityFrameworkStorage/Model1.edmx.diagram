@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0032f558ac7149c5b2bc0b8bb3a24803" Name="Diagram1">
+        <EntityTypeShape EntityType="fakeimdbModel.InfoType" Width="1.5" PointX="3.6078880352936169" PointY="28.531393258148523" />
+        <EntityTypeShape EntityType="fakeimdbModel.MovieInfo" Width="1.5" PointX="10.152981015924821" PointY="11.001153235789925" />
+        <EntityTypeShape EntityType="fakeimdbModel.Movies" Width="1.5" PointX="4.1212522406695653" PointY="20.493802452689877" />
+        <EntityTypeShape EntityType="fakeimdbModel.Participate" Width="1.5" PointX="5.2791543571647042" PointY="31.487496971845392" />
+        <EntityTypeShape EntityType="fakeimdbModel.People" Width="1.5" PointX="7.7685556112642189" PointY="10.808684488203696" />
+        <EntityTypeShape EntityType="fakeimdbModel.PersonInfo" Width="1.5" PointX="1.1887626187823539" PointY="0.44014959057799985" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
