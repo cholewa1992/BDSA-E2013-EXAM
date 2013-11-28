@@ -25,10 +25,32 @@ namespace CommunicationFramework
             }
         }
 
+
+
         private IProtocol getProtocol(Protocols protocol)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                IProtocol protocolInstance =
+                    (IProtocol) Activator.CreateInstance(null, protocol.ToString() + "Protocol");
+
+                if (protocol == null)
+                    throw new Exception();
+
+                return protocolInstance;
+
+            }
+            catch
+            {
+                return new HTTPProtocol("");
+            }
+            
+
+
         }
+
+
 
         public Protocols Protocol{ get; set; }
         public enum Protocols

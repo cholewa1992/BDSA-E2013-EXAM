@@ -24,6 +24,9 @@ namespace CommunicationFramework
         public byte[] GetResponse( int timeout )
         {
             WebResponse response = null;
+
+            if (_request == null)
+                throw new ProtocolException("SendMessage must be used before GetResponse");
             
 
             Task t = Task.Run(() => response = _request.GetResponse());
@@ -37,7 +40,11 @@ namespace CommunicationFramework
             }
 
             if (response == null)
+            {
+                t.Dispose();
                 throw new TimeoutException("Timeout of " + timeout + " surpassed without response");
+            }
+                
             
             
             HttpWebResponse webResponse = (HttpWebResponse) response;
@@ -46,7 +53,13 @@ namespace CommunicationFramework
                 throw new ProtocolException(webResponse.StatusDescription);
 
 
-            return null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                webResponse.GetResponseStream().CopyTo(ms);
+
+                return ms.ToArray();
+            }
+
 
         }
 
