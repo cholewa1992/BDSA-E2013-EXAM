@@ -9,7 +9,17 @@ namespace WebServer
 {
     public class RequestDelegator
     {
-        IRequestController[] requestControllerArray;
+        List<IRequestController> requestControllers;
+
+        public RequestDelegator()
+        {
+            requestControllers = new List<IRequestController>();
+            requestControllers.Add(new MovieRequestController());
+            requestControllers.Add(new UserRequestController());
+            requestControllers.Add(new PersonRequestController());
+            requestControllers.Add(new FavouriteRequestController());
+        }
+
         public void ProcessRequest(Request request)
         {
             DefineController(request.Method).ProcessRequest(request);
@@ -22,11 +32,11 @@ namespace WebServer
 
             for (int i = 0; i < urlKeywords.Length; i++)
             {
-                for (int j = 0; j < requestControllerArray.Length; j++)
+                foreach (IRequestController controller in requestControllers)
                 {
-                    if( urlKeywords[i] == requestControllerArray[j].Keyword )
+                    if (urlKeywords[i] == controller.Keyword)
                     {
-                        return requestControllerArray[j];
+                        return controller;
                     }
                 }
             }
