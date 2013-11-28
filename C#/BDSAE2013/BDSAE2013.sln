@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.csproj", "{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFileStorage", "FlatFileStorage\FlatFileStorage.csproj", "{F15E489B-AFEC-452E-A442-49FF6E8E4A2A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestStubStorage", "TestStubStorage\TestStubStorage.csproj", "{7FD63881-0530-4E87-80E3-EB236DEF2D88}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer", "WebServer\WebServer.csproj", "{030A9116-5751-4180-A19A-17C1AB21D5FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServerUnitTest", "WebServerUnitTest\WebServerUnitTest.csproj", "{DFC69762-0905-45D5-8B5F-B3BFD67F4E84}"
@@ -14,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDBMSStorage", "RDBMSStorage\RDBMSStorage.csproj", "{B1E131EC-F68D-40C8-AF87-47ECF8246824}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationFramework", "CommunicationFramework\CommunicationFramework.csproj", "{713ABCBB-D297-4DA6-A2FE-18063EDDBCD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkStorage", "EntityFrameworkStorage\EntityFrameworkStorage.csproj", "{531A3239-9797-4D54-AEBD-224C5868BB19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +23,6 @@ Global
 		{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F15E489B-AFEC-452E-A442-49FF6E8E4A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F15E489B-AFEC-452E-A442-49FF6E8E4A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F15E489B-AFEC-452E-A442-49FF6E8E4A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F15E489B-AFEC-452E-A442-49FF6E8E4A2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FD63881-0530-4E87-80E3-EB236DEF2D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FD63881-0530-4E87-80E3-EB236DEF2D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FD63881-0530-4E87-80E3-EB236DEF2D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FD63881-0530-4E87-80E3-EB236DEF2D88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{030A9116-5751-4180-A19A-17C1AB21D5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{030A9116-5751-4180-A19A-17C1AB21D5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{030A9116-5751-4180-A19A-17C1AB21D5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +39,10 @@ Global
 		{713ABCBB-D297-4DA6-A2FE-18063EDDBCD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{713ABCBB-D297-4DA6-A2FE-18063EDDBCD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{713ABCBB-D297-4DA6-A2FE-18063EDDBCD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{531A3239-9797-4D54-AEBD-224C5868BB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{531A3239-9797-4D54-AEBD-224C5868BB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{531A3239-9797-4D54-AEBD-224C5868BB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{531A3239-9797-4D54-AEBD-224C5868BB19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,10 +44,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FlatFileStorage\FlatFileStorage.csproj">
-      <Project>{f15e489b-afec-452e-a442-49ff6e8e4a2a}</Project>
-      <Name>FlatFileStorage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.csproj">
       <Project>{7f6ed44d-0aa8-4d4b-8dbe-fbfb0f20e9a5}</Project>
       <Name>Storage</Name>
