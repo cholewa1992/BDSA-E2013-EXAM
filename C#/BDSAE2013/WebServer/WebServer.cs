@@ -14,12 +14,13 @@ namespace WebServer
         private readonly CommunicationHandler _communicationHandler;
 
 
+        /*
         public static void Main(String[] args)
         {
 
             new WebServer("http://localhost:1337", Protocols.HTTP).Start();
 
-        }
+        }*/
 
 
         public WebServer(String Uri, Protocols protocol)
