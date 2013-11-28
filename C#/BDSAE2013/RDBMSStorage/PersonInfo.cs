@@ -19,8 +19,5 @@ namespace RDBMSStorage
         public string Note { get; set; }
         public int Person_Id { get; set; }
         public int Type_Id { get; set; }
-    
-        public virtual InfoType InfoType { get; set; }
-        public virtual People People { get; set; }
     }
 }

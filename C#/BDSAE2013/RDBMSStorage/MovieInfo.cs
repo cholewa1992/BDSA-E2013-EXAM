@@ -19,8 +19,5 @@ namespace RDBMSStorage
         public string Note { get; set; }
         public int Movie_Id { get; set; }
         public Nullable<int> Type_Id { get; set; }
-    
-        public virtual InfoType InfoType { get; set; }
-        public virtual Movies Movies { get; set; }
     }
 }

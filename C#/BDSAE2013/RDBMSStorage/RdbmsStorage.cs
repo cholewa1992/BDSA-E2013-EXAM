@@ -17,11 +17,13 @@ namespace RDBMSStorage
         {
             if (typeof (TEntity) == typeof (MovieDto))
             {
-                using (var con = new IMDBEntities())
+                using (var con = new fakeimdbEntities())
                 {
-                    var o = con.Movies.Single(m => m.Id == id); 
+                    var o = con.Movies.Single(m => m.Id == id);
+                    Console.WriteLine(con.Movies.Count());
                     return DtoTransformer.Transform<TEntity>(o);
                 }
+
             }
             throw new InvalidOperationException(typeof(TEntity) + " is not implemented as an entity type");
         }

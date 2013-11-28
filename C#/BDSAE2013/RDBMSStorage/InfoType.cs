@@ -14,16 +14,7 @@ namespace RDBMSStorage
     
     public partial class InfoType
     {
-        public InfoType()
-        {
-            this.MovieInfo = new HashSet<MovieInfo>();
-            this.PersonInfo = new HashSet<PersonInfo>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
-    
-        public virtual ICollection<MovieInfo> MovieInfo { get; set; }
-        public virtual ICollection<PersonInfo> PersonInfo { get; set; }
     }
 }

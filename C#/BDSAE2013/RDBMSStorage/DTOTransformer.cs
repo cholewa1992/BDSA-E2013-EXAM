@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.ModelConfiguration.Conventions;
-using Storage.EntityDto;
+﻿using Storage.EntityDto;
 
 namespace RDBMSStorage
 {

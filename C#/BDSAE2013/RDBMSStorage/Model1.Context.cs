@@ -13,10 +13,10 @@ namespace RDBMSStorage
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class IMDBEntities : DbContext
+    public partial class fakeimdbEntities : DbContext
     {
-        public IMDBEntities()
-            : base("name=IMDBEntities")
+        public fakeimdbEntities()
+            : base("name=fakeimdbEntities")
         {
         }
     
@@ -25,7 +25,6 @@ namespace RDBMSStorage
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public DbSet<InfoType> InfoType { get; set; }
         public DbSet<MovieInfo> MovieInfo { get; set; }
         public DbSet<Movies> Movies { get; set; }

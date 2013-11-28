@@ -21,8 +21,5 @@ namespace RDBMSStorage
         public string Note { get; set; }
         public Nullable<int> Movie_Id { get; set; }
         public Nullable<int> Person_Id { get; set; }
-    
-        public virtual Movies Movies { get; set; }
-        public virtual People People { get; set; }
     }
 }

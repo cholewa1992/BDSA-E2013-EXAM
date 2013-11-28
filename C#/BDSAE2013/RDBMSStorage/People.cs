@@ -14,17 +14,8 @@ namespace RDBMSStorage
     
     public partial class People
     {
-        public People()
-        {
-            this.Participate = new HashSet<Participate>();
-            this.PersonInfo = new HashSet<PersonInfo>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
-    
-        public virtual ICollection<Participate> Participate { get; set; }
-        public virtual ICollection<PersonInfo> PersonInfo { get; set; }
     }
 }

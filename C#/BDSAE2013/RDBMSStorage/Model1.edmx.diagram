@@ -4,21 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="691ca25040894aeaa1d61f21d4201030" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.InfoType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.MovieInfo" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Movies" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Participate" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.People" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.PersonInfo" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="Model.FK_dbo_MovieInfo_dbo_InfoType_Type_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_PersonInfo_dbo_InfoType_Type_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_MovieInfo_dbo_Movies_Movie_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_Participate_dbo_Movies_Movie_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_Participate_dbo_People_Person_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_PersonInfo_dbo_People_Person_Id" ManuallyRouted="false" />
+      <Diagram DiagramId="0c79f6e81ca0401a8d8778597e3af1cc" Name="Diagram1">
+        <EntityTypeShape EntityType="fakeimdbModel.InfoType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.MovieInfo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.Movies" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.Participate" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.People" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.PersonInfo" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

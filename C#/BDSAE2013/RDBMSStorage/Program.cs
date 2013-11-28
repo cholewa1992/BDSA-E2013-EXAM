@@ -13,8 +13,7 @@ namespace RDBMSStorage
         static void Main(string[] args)
         {
             var sud = new RdbmsStorage();
-            Console.WriteLine(
-                sud.Get<MovieDto>(7523).Title);
+            Console.WriteLine(sud.Get<MovieDto>(7523).Title);
                 Console.ReadKey();
             
         }
