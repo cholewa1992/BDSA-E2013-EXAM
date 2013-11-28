@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CommunicationFramework
@@ -12,16 +14,40 @@ namespace CommunicationFramework
     {
         private WebRequest _request;
         public string Address{ get; set; }
+        private Dictionary<Request, HttpListenerContext> lookupTable; 
 
         public HTTPProtocol( string address )
         {
-            
+            Address = address;
         }
 
         public byte[] GetResponse( int timeout )
         {
-            WebResponse response = _request.GetResponse();
+            WebResponse response = null;
+            
+
+            Task t = Task.Run(() => response = _request.GetResponse());
+
+
+            while (response == null && timeout > 0)
+            {
+                int interval = 0;
+                Thread.Sleep(interval);
+                timeout = timeout - interval;
+            }
+
+            if (response == null)
+                throw new TimeoutException("Timeout of " + timeout + " surpassed without response");
+            
+            
             HttpWebResponse webResponse = (HttpWebResponse) response;
+
+            if (webResponse.StatusDescription != "Ok")
+                throw new ProtocolException(webResponse.StatusDescription);
+
+
+            return null;
+
         }
 
         public void SendMessage( byte[] data, string method )
@@ -37,17 +63,43 @@ namespace CommunicationFramework
             stream.Write( data, 0, data.Length );
         }
 
+
+
         public Request getRequest()
         {
             HttpListener listener = new HttpListener();
             listener.Prefixes.Add( Address );
             HttpListenerContext context = listener.GetContext();
 
-            Request request = new Request() { OutputStream = context.Response.OutputStream, Method = context.Request.HttpMethod + " " + context.Request.RawUrl };
+            Request request = new Request() { Method = context.Request.HttpMethod + " " + context.Request.RawUrl };
+
+            lookupTable.Add(request, context);
 
             request.Data = Encoding.GetEncoding( "iso-8859-1" ).GetBytes( new StreamReader( context.Request.InputStream ).ReadToEnd() );
 
             return request;
+        }
+
+
+        public void RespondToRequest(Request request)
+        {
+            HttpListenerContext context;
+            if (lookupTable.TryGetValue(request, out context))
+            {
+
+                context.Response.StatusDescription = request.ResponseStatusCode.ToString();
+                context.Response.ContentLength64 = request.Data.Length;
+
+                using (var stream = context.Response.OutputStream)
+                {
+                    
+                    stream.Write(request.Data, 0, request.Data.Length);
+
+                }
+
+            }
+            
+
         }
     }
 }

@@ -12,6 +12,13 @@ namespace CommunicationFramework
         public byte[] Data{ get; set; }
         public string Method{ get; set; }
         //public string Address{ get; set; }
-        public Stream OutputStream{ get; set; }
+        public enum StatusCode
+        {
+            NotFount,
+            Ok,
+            BadRequest
+        }
+
+        public StatusCode ResponseStatusCode { get; set; }
     }
 }

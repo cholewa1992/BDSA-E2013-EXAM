@@ -24,7 +24,12 @@ namespace CommunicationFramework
                 _protocolInstance = value;
             }
         }
-        
+
+        private IProtocol getProtocol(Protocols protocol)
+        {
+            throw new NotImplementedException();
+        }
+
         public Protocols Protocol{ get; set; }
         public enum Protocols
         {
