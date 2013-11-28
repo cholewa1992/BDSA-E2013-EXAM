@@ -7,19 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PersonInfo : IEntity
+    public partial class PersonInfo
     {
         public int PersonInfoId { get; set; }
         public string Info { get; set; }
         public string Note { get; set; }
         public int Person_Id { get; set; }
         public int Type_Id { get; set; }
-
-        public int Id{get { return PersonInfoId; }}
     }
 }

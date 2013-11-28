@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Participate : IEntity
+    public partial class Participate
     {
         public int ParticipateId { get; set; }
         public Nullable<int> NrOrder { get; set; }
@@ -21,7 +21,5 @@ namespace RDBMSStorage
         public string Note { get; set; }
         public Nullable<int> Movie_Id { get; set; }
         public Nullable<int> Person_Id { get; set; }
-
-        public int Id{get { return ParticipateId; }}
     }
 }

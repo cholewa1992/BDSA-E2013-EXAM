@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Storage.EntityDto;
 
 namespace Storage
@@ -34,6 +35,11 @@ namespace Storage
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
         public abstract TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
+
+        public IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto, new()
+        {
+            throw new System.NotImplementedException();
+        }
 
         /// <summary>
         /// Adds a new entity to the storage

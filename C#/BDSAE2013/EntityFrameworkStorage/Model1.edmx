@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="fakeimdbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="fakeimdbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="fakeimdbModelStoreContainer">
           <EntitySet Name="InfoType" EntityType="fakeimdbModel.Store.InfoType" store:Type="Tables" store:Schema="dbo" store:Name="InfoType">
             <DefiningQuery>SELECT 
@@ -148,8 +148,7 @@
           <Property Name="Person_Id" Type="int" Nullable="false" />
           <Property Name="Type_Id" Type="int" Nullable="false" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="fakeimdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -166,8 +165,8 @@
             <PropertyRef Name="Id" />
             <PropertyRef Name="Name" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MovieInfo">
           <Key>
@@ -175,11 +174,11 @@
             <PropertyRef Name="Info" />
             <PropertyRef Name="Movie_Id" />
           </Key>
-          <Property Name="MovieInfoId" Type="Int32" Nullable="false" />
-          <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Note" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
-          <Property Name="Movie_Id" Type="Int32" Nullable="false" />
-          <Property Name="Type_Id" Type="Int32" />
+          <Property Type="Int32" Name="MovieInfoId" Nullable="false" />
+          <Property Type="String" Name="Info" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Note" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Movie_Id" Nullable="false" />
+          <Property Type="Int32" Name="Type_Id" />
         </EntityType>
         <EntityType Name="Movies">
           <Key>
@@ -187,35 +186,35 @@
             <PropertyRef Name="Title" />
             <PropertyRef Name="Kind" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="Kind" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="SeasonNumber" Type="Int32" />
-          <Property Name="EpisodeNumber" Type="Int32" />
-          <Property Name="SeriesYear" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
-          <Property Name="EpisodeOf_Id" Type="Int32" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Kind" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Year" />
+          <Property Type="Int32" Name="SeasonNumber" />
+          <Property Type="Int32" Name="EpisodeNumber" />
+          <Property Type="String" Name="SeriesYear" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="EpisodeOf_Id" />
         </EntityType>
         <EntityType Name="Participate">
           <Key>
             <PropertyRef Name="ParticipateId" />
           </Key>
-          <Property Name="ParticipateId" Type="Int32" Nullable="false" />
-          <Property Name="NrOrder" Type="Int32" />
-          <Property Name="CharName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="Role" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
-          <Property Name="Note" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="Movie_Id" Type="Int32" />
-          <Property Name="Person_Id" Type="Int32" />
+          <Property Type="Int32" Name="ParticipateId" Nullable="false" />
+          <Property Type="Int32" Name="NrOrder" />
+          <Property Type="String" Name="CharName" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Role" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Note" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Movie_Id" />
+          <Property Type="Int32" Name="Person_Id" />
         </EntityType>
         <EntityType Name="People">
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="Name" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="Gender" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Gender" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PersonInfo">
           <Key>
@@ -224,13 +223,13 @@
             <PropertyRef Name="Person_Id" />
             <PropertyRef Name="Type_Id" />
           </Key>
-          <Property Name="PersonInfoId" Type="Int32" Nullable="false" />
-          <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="Note" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
-          <Property Name="Person_Id" Type="Int32" Nullable="false" />
-          <Property Name="Type_Id" Type="Int32" Nullable="false" />
+          <Property Type="Int32" Name="PersonInfoId" Nullable="false" />
+          <Property Type="String" Name="Info" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Note" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Person_Id" Nullable="false" />
+          <Property Type="Int32" Name="Type_Id" Nullable="false" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -239,66 +238,66 @@
           <EntitySetMapping Name="InfoType">
             <EntityTypeMapping TypeName="fakeimdbModel.InfoType">
               <MappingFragment StoreEntitySet="InfoType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MovieInfo">
             <EntityTypeMapping TypeName="fakeimdbModel.MovieInfo">
               <MappingFragment StoreEntitySet="MovieInfo">
-                <ScalarProperty Name="MovieInfoId" ColumnName="MovieInfoId" />
-                <ScalarProperty Name="Info" ColumnName="Info" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
                 <ScalarProperty Name="Type_Id" ColumnName="Type_Id" />
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="MovieInfoId" ColumnName="MovieInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Movies">
             <EntityTypeMapping TypeName="fakeimdbModel.Movies">
               <MappingFragment StoreEntitySet="Movies">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Kind" ColumnName="Kind" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="SeasonNumber" ColumnName="SeasonNumber" />
-                <ScalarProperty Name="EpisodeNumber" ColumnName="EpisodeNumber" />
-                <ScalarProperty Name="SeriesYear" ColumnName="SeriesYear" />
                 <ScalarProperty Name="EpisodeOf_Id" ColumnName="EpisodeOf_Id" />
+                <ScalarProperty Name="SeriesYear" ColumnName="SeriesYear" />
+                <ScalarProperty Name="EpisodeNumber" ColumnName="EpisodeNumber" />
+                <ScalarProperty Name="SeasonNumber" ColumnName="SeasonNumber" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Participate">
             <EntityTypeMapping TypeName="fakeimdbModel.Participate">
               <MappingFragment StoreEntitySet="Participate">
-                <ScalarProperty Name="ParticipateId" ColumnName="ParticipateId" />
-                <ScalarProperty Name="NrOrder" ColumnName="NrOrder" />
-                <ScalarProperty Name="CharName" ColumnName="CharName" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
                 <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="CharName" ColumnName="CharName" />
+                <ScalarProperty Name="NrOrder" ColumnName="NrOrder" />
+                <ScalarProperty Name="ParticipateId" ColumnName="ParticipateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="fakeimdbModel.People">
               <MappingFragment StoreEntitySet="People">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PersonInfo">
             <EntityTypeMapping TypeName="fakeimdbModel.PersonInfo">
               <MappingFragment StoreEntitySet="PersonInfo">
-                <ScalarProperty Name="PersonInfoId" ColumnName="PersonInfoId" />
-                <ScalarProperty Name="Info" ColumnName="Info" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
                 <ScalarProperty Name="Type_Id" ColumnName="Type_Id" />
+                <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="PersonInfoId" ColumnName="PersonInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

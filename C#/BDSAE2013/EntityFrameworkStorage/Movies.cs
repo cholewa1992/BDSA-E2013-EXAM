@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Movies : IEntity
+    public partial class Movies
     {
         public int Id { get; set; }
         public string Title { get; set; }

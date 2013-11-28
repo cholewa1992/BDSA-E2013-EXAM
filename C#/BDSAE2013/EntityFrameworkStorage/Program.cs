@@ -10,7 +10,7 @@ namespace EntityFrameworkStorage
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(new FakeimdbEntities().Movies.Count());
+            //Console.WriteLine(new FakeimdbEntities().Movies.Count());
         }
     }
 }

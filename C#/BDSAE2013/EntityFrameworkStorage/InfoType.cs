@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RDBMSStorage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class InfoType : IEntity
+    public partial class InfoType
     {
         public int Id { get; set; }
         public string Name { get; set; }

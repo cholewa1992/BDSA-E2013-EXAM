@@ -7,18 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using RDBMSStorage;
-
 namespace EntityFrameworkStorage
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FakeimdbEntities : DbContext
+    public partial class fakeimdbEntities : DbContext
     {
-        public FakeimdbEntities()
-            : base("name=FakeimdbEntities")
+        public fakeimdbEntities()
+            : base("name=fakeimdbEntities")
         {
         }
     
