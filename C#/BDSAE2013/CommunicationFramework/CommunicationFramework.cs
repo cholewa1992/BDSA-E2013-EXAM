@@ -25,10 +25,32 @@ namespace CommunicationFramework
             }
         }
 
+
+
         private IProtocol getProtocol(Protocols protocol)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                IProtocol protocolInstance =
+                    (IProtocol) Activator.CreateInstance(null, protocol.ToString() + "Protocol");
+
+                if (protocol == null)
+                    throw new Exception();
+
+                return protocolInstance;
+
+            }
+            catch
+            {
+                return new HTTPProtocol("");
+            }
+            
+
+
         }
+
+
 
         public Protocols Protocol{ get; set; }
         public enum Protocols
@@ -39,7 +61,7 @@ namespace CommunicationFramework
         public void Send( string address, byte[] data, string method )
         {
             if( Protocol == null )
-                throw new Exception( "ERROR! Protocol not set" );
+                throw new ProtocolException( "ERROR! Protocol not set" );
 
             _protocolInstance.Address = address;
             _protocolInstance.SendMessage( data, method );
@@ -55,7 +77,18 @@ namespace CommunicationFramework
 
         public Request GetRequest()
         {
+            if (Protocol == null)
+                throw new ProtocolException("ERROR! Protocol not set");
+
             return _protocolInstance.getRequest();
+        }
+
+        public void RespondToRequest(Request request)
+        {
+            if (Protocol == null)
+                throw new ProtocolException("ERROR! Protocol not set");
+
+            _protocolInstance.RespondToRequest(request);
         }
     }
 }

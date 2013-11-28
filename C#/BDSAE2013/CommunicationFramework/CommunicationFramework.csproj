@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="CommunicationFramework.cs" />
     <Compile Include="HTTPProtocol.cs" />
     <Compile Include="IProtocol.cs" />

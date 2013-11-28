@@ -13,6 +13,11 @@ namespace WebServer
 
         void ProcessRequest(Request request);
 
+        void ProcessGet(Request request);
+        void ProcessPost(Request request);
+        void ProcessDelete(Request request);
+        void ProcessPut(Request request);
+
     }
 
 
