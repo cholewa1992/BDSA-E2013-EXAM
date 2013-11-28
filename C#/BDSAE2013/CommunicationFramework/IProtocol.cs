@@ -13,5 +13,6 @@ namespace CommunicationFramework
         byte[] GetResponse( int timeout );
         void SendMessage( byte[] data, string method );
         Request getRequest();
+        void RespondToRequest(Request request);
     }
 }
