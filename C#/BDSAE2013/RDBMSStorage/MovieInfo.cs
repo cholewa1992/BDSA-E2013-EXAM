@@ -12,12 +12,13 @@ namespace RDBMSStorage
     using System;
     using System.Collections.Generic;
     
-    public partial class MovieInfo
+    public partial class MovieInfo : IEntity
     {
         public int MovieInfoId { get; set; }
         public string Info { get; set; }
         public string Note { get; set; }
         public int Movie_Id { get; set; }
         public Nullable<int> Type_Id { get; set; }
+        public int Id { get { return MovieInfoId; } }
     }
 }

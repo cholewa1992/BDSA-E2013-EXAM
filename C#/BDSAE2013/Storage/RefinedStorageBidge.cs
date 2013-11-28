@@ -37,7 +37,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public override TEntity Add<TEntity>(TEntity entity)
+        public override bool Add<TEntity>(TEntity entity)
         {
             using (var db = StorageFactory.GetConnection())
             {
@@ -52,7 +52,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public override TEntity Update<TEntity>(TEntity entity)
+        public override bool Update<TEntity>(TEntity entity)
         {
             using (var db = StorageFactory.GetConnection())
             {

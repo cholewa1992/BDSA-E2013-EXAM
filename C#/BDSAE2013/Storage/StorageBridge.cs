@@ -41,7 +41,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public abstract TEntity Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public abstract bool Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -50,7 +50,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public abstract TEntity Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        public abstract bool Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Deletes the given entity from the data
