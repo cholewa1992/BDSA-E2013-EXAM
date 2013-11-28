@@ -41,10 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractRequestController.cs" />
+    <Compile Include="Controllers\PersonRequestController.cs" />
+    <Compile Include="Controllers\FavouriteRequestController.cs" />
     <Compile Include="IRequestController.cs" />
+    <Compile Include="Controllers\MovieRequestController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestDelegator.cs" />
+    <Compile Include="Controllers\UserRequestController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
