@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using Storage.EntityDto;
 
 namespace Storage
@@ -15,12 +15,19 @@ namespace Storage
         TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto, new();
 
         /// <summary>
+        /// Fetches an IQueryable with all data for a given entity typr
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to use</typeparam>
+        /// <returns>An IQueryable with all the data</returns>
+        IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto, new();
+
+        /// <summary>
         /// Adds a new entity to the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        TEntity Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        bool Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -29,7 +36,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        TEntity Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
+        bool Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto, new();
 
         /// <summary>
         /// Deletes the given entity from the data

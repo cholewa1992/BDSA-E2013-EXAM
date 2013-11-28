@@ -12,12 +12,14 @@ namespace RDBMSStorage
     using System;
     using System.Collections.Generic;
     
-    public partial class PersonInfo
+    public partial class PersonInfo : IEntity
     {
         public int PersonInfoId { get; set; }
         public string Info { get; set; }
         public string Note { get; set; }
         public int Person_Id { get; set; }
         public int Type_Id { get; set; }
+
+        public int Id{get { return PersonInfoId; }}
     }
 }
