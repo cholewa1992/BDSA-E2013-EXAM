@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using CommunicationFramework;
 
@@ -23,10 +21,10 @@ namespace WebServer
         }*/
 
 
-        public WebServer(String Uri, Protocols protocol)
+        public WebServer(String Uri, CommunicationHandler.Protocols protocol)
         {
 
-            _communicationHandler = new CommunicationHandler(protocol);
+            //_communicationHandler = new CommunicationHandler(protocol);
 
         }
 
