@@ -2,31 +2,10 @@
 
 namespace Storage
 {
-    /// <summary>
-    /// Bridge implementation to provide stubs to builde storage module around
-    /// </summary>
-    public abstract class StorageConnectionBridge : IStorageConnectionBridge
+    internal class RefinedStorageConnectionBridge : StorageConnectionBridge
     {
-        /// <summary>
-        /// Concret IStorageFactory implementation to use
-        /// </summary>
-        protected IStorageConnection Db { private set; get; }
-
-        /// <summary>
-        /// Constructs the bridge and uses dependency injection of an conret storage to use
-        /// </summary>
-        /// <param name="storageFactory">Concret storage implementation to use</param>
-        protected StorageConnectionBridge(IStorageConnectionFactory storageFactory)
+        public RefinedStorageConnectionBridge(IStorageConnectionFactory storageFactory) : base(storageFactory)
         {
-            Db = storageFactory.GetConnection();
-        }
-
-        /// <summary>
-        /// Disposable methode to ensure that the bridge and its underlying storage is closed corretly 
-        /// </summary>
-        public void Dispose()
-        {
-            Db.Dispose();
         }
 
         /// <summary>
@@ -35,15 +14,21 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        public abstract TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto;
+        public override TEntity Get<TEntity>(int id)
+        {
+            return Db.Get<TEntity>(id);
 
+        }
 
         /// <summary>
         /// Fetches entities from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <returns>The entities as an IQueryable</returns>
-        public abstract IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto;
+        public override IQueryable<TEntity> Get<TEntity>()
+        {
+            return Db.Get<TEntity>();
+        }
 
         /// <summary>
         /// Adds a new entity to the storage
@@ -51,7 +36,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public abstract void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        public override void Add<TEntity>(TEntity entity)
+        {
+            Db.Add(entity);
+        }
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -60,7 +48,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public abstract void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        public override void Update<TEntity>(TEntity entity)
+        {
+            Db.Update(entity);
+        }
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -68,15 +59,9 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public abstract void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
-
-        /// <summary>
-        /// Saves changes to the context
-        /// </summary>
-        /// <returns>true if entities was saved</returns>
-        public bool SaveChanges()
+        public override void Delete<TEntity>(TEntity entity)
         {
-            return Db.SaveChanges();
+            Db.Delete(entity);
         }
     }
 }

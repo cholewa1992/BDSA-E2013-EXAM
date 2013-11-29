@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{030A9116-5751-4180-A19A-17C1AB21D5FA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{713ABCBB-D297-4DA6-A2FE-18063EDDBCD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebServer</RootNamespace>
-    <AssemblyName>WebServer</AssemblyName>
+    <RootNamespace>CommunicationFramework</RootNamespace>
+    <AssemblyName>CommunicationFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,27 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractRequestController.cs" />
-    <Compile Include="Controllers\PersonRequestController.cs" />
-    <Compile Include="Controllers\FavouriteRequestController.cs" />
-    <Compile Include="IRequestController.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="CommunicationFramework.cs" />
+    <Compile Include="HTTPProtocol.cs" />
+    <Compile Include="IProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestDelegator.cs" />
-    <Compile Include="WebServer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CommunicationFramework\CommunicationFramework.csproj">
-      <Project>{713abcbb-d297-4da6-a2fe-18063eddbcd6}</Project>
-      <Name>CommunicationFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Storage\Storage.csproj">
-      <Project>{7f6ed44d-0aa8-4d4b-8dbe-fbfb0f20e9a5}</Project>
-      <Name>Storage</Name>
-    </ProjectReference>
+    <Compile Include="ProtocolException.cs" />
+    <Compile Include="Request.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
