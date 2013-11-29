@@ -21,7 +21,7 @@ namespace WebServer
         }*/
 
 
-        public WebServer(String Uri, CommunicationHandler.Protocols protocol)
+        public WebServer(String Uri, Protocols protocol)
         {
 
             //_communicationHandler = new CommunicationHandler(protocol);

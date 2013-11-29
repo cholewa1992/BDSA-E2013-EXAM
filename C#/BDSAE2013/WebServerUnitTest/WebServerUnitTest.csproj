@@ -56,6 +56,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationFramework\CommunicationFramework.csproj">
+      <Project>{713abcbb-d297-4da6-a2fe-18063eddbcd6}</Project>
+      <Name>CommunicationFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.csproj">
       <Project>{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}</Project>
       <Name>Storage</Name>
