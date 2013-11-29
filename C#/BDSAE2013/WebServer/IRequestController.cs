@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunicationFramework;
+using System.Collections.Specialized;
+using Storage;
 
 namespace WebServer
 {
@@ -11,13 +13,14 @@ namespace WebServer
     {
         string Keyword { get; set; }
 
-        void ProcessRequest(Request request);
+        Func<IStorageConnectionBridge, object> ProcessRequest(Request request);
 
-        void ProcessGet(Request request);
-        void ProcessPost(Request request);
-        void ProcessDelete(Request request);
-        void ProcessPut(Request request);
+        Func<IStorageConnectionBridge, object> ProcessGet(Request request);
+        Func<IStorageConnectionBridge, object> ProcessPost(Request request);
+        Func<IStorageConnectionBridge, object> ProcessDelete(Request request);
+        Func<IStorageConnectionBridge, object> ProcessPut(Request request);
 
+        NameValueCollection ConvertByteToDataTable(byte[] bytes);
     }
 
 

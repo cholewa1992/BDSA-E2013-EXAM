@@ -4,36 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunicationFramework;
+using Storage;
+using EntityFrameworkStorage;
+using System.Collections.Specialized;
 
 namespace WebServer
 {
     public class MovieRequestController : AbstractRequestController
     {
-        public override string Keyword { get; set; }
-
         public MovieRequestController()
         {
             Keyword = "Movie";
         }
 
-        public override void ProcessGet(Request request)
+        public override Func<IStorageConnectionBridge, object> ProcessGet(Request request)
         {
-            Console.WriteLine("Movie Get");
+            NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
+            Console.WriteLine("Movie Get... id: " + nameValueCollection["id"] + "  Name: " + nameValueCollection["name"]);
+
+            //Console.WriteLine(storage.Get<Movies>(int.Parse(nameValueCollection["id"])).Title);
+
+            return (storage => storage.Get<Movies>(int.Parse(nameValueCollection["id"])));
         }
 
-        public override void ProcessPut(Request request)
+        public override Func<IStorageConnectionBridge, object> ProcessPut(Request request)
         {
             Console.WriteLine("Movie Put");
+            return (storage => "Not Yet Implemented");
         }
 
-        public override void ProcessPost(Request request)
+        public override Func<IStorageConnectionBridge, object> ProcessPost(Request request)
         {
             Console.WriteLine("Movie Post");
+            return (storage => "Not Yet Implemented");
         }
 
-        public override void ProcessDelete(Request request)
+        public override Func<IStorageConnectionBridge, object> ProcessDelete(Request request)
         {
             Console.WriteLine("Movie Delete");
+            return (storage => "Not Yet Implemented");
         }
 
     }

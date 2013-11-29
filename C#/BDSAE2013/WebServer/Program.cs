@@ -17,6 +17,8 @@ namespace WebServer
 
             //Test movie processing
             request.Method = "GET http://localhost:112/Movie";
+            request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes("id=6&name=Pulp Fiction");
+
             delegator.ProcessRequest(request);
 
             request.Method = "POST http://localhost:112/Movie";

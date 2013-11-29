@@ -4,44 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunicationFramework;
+using System.IO;
+using System.Web;
+using System.Collections.Specialized;
+using Storage;
 
 namespace WebServer
 {
     public abstract class AbstractRequestController : IRequestController
     {
-        public abstract string Keyword { get; set; }
+        public string Keyword { get; set; }
 
-        public void ProcessRequest(Request request)
+        public Func<IStorageConnectionBridge, object> ProcessRequest(Request request)
         {
             string input = request.Method.Split(' ')[0];
 
             switch (input) 
             { 
                 case "GET":
-                    ProcessGet(request);
-                    break;
+                    return ProcessGet(request);
 
                 case "POST":
-                    ProcessPost(request);
-                    break;
-
+                    return ProcessPost(request);
+                    
                 case "DELETE":
-                    ProcessDelete(request);
-                    break;
-
+                    return ProcessDelete(request);
+                    
                 case "PUT":
-                    ProcessPut(request);
-                    break;
-
-
+                    return ProcessPut(request);
             }
+
+            throw new ArgumentException("Input did not match any controllers");
         }
 
+        public NameValueCollection ConvertByteToDataTable(byte[] bytes)
+        {
+            return HttpUtility.ParseQueryString(Encoding.GetEncoding("iso-8859-1").GetString(bytes)); 
+        }
 
-        public abstract void ProcessGet(Request request);
-        public abstract void ProcessPost(Request request);
-        public abstract void ProcessDelete(Request request);
-        public abstract void ProcessPut(Request request);
+        public abstract Func<IStorageConnectionBridge, object> ProcessGet(Request request);
+        public abstract Func<IStorageConnectionBridge, object> ProcessPost(Request request);
+        public abstract Func<IStorageConnectionBridge, object> ProcessDelete(Request request);
+        public abstract Func<IStorageConnectionBridge, object> ProcessPut(Request request);
 
 
     }

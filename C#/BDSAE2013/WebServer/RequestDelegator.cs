@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunicationFramework;
+using Storage;
+using EntityFrameworkStorage;
 
 namespace WebServer
 {
     public class RequestDelegator
     {
         List<IRequestController> requestControllers;
+        IStorageConnectionBridge storage;
 
         public RequestDelegator()
         {
+            storage = new RefinedStorageConnectionBridge(new EFConnectionFactory());
+
             requestControllers = new List<IRequestController>();
             requestControllers.Add(new MovieRequestController());
             requestControllers.Add(new UserRequestController());
@@ -22,7 +27,11 @@ namespace WebServer
 
         public void ProcessRequest(Request request)
         {
-            DefineController(request.Method).ProcessRequest(request);
+            Func<IStorageConnectionBridge, object> funcDelegate = DefineController(request.Method).ProcessRequest(request);
+
+            funcDelegate.Invoke(storage);
+
+            //Implement return values
         }
 
         private IRequestController DefineController(string method)
