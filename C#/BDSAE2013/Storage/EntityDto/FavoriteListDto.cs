@@ -8,10 +8,8 @@ namespace Storage.EntityDto
         public int Id { set; get; }
         public EntityState State { set; get; }
 
-        // Type shall be changed to List<Movie>.
         private IList<MovieDto>  _favoriteMovies;
         
-        // Type shall be changed to List<Movie>
         public IList<MovieDto> FavoriteMovie
         {
             set; get;
