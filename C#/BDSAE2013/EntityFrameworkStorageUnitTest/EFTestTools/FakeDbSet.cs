@@ -23,7 +23,7 @@ namespace EntityFrameworkStorageUnitTest.EFTestTools
             _instance = null;
         }
 
-        private FakeDbSet()
+        public FakeDbSet()
         {
             _data = new HashSet<T>();
             _query = _data.AsQueryable();
