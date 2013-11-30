@@ -18,8 +18,9 @@ namespace Mankey_Pidgey_AS39
     public partial class FakeImdbContext : DbContext, IDbContext
     {
         public FakeImdbContext()
-            : base("name=FakeImdbContext")
+            : base("FakeImdbContext")
         {
+            
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

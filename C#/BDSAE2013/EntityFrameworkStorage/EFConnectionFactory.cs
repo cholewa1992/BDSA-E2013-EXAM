@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Mankey_Pidgey_AS39;
+﻿using Mankey_Pidgey_AS39;
 using Storage;
 
 namespace EntityFrameworkStorage
