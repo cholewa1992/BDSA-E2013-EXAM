@@ -45,6 +45,7 @@
     <Compile Include="AbstractRequestController.cs" />
     <Compile Include="Controllers\MovieInfoController.cs" />
     <Compile Include="Controllers\MovieRequestController.cs" />
+    <Compile Include="Controllers\PeopleInfoController.cs" />
     <Compile Include="Controllers\PersonRequestController.cs" />
     <Compile Include="Controllers\FavouriteRequestController.cs" />
     <Compile Include="Controllers\UserRequestController.cs" />

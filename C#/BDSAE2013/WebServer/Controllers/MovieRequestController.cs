@@ -134,9 +134,6 @@ namespace WebServer
 
             var id = int.Parse(nameValueCollection["id"]);
 
-            //Cannot return proper delegate, since Put method returns void
-            //return (storage => storage.Delete<Movies>(movie));
-
             return (storage => storage.Delete<Movies>(id));
         }
 
