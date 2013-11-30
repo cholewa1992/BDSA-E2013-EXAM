@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>71862efc-a820-44b6-9501-e5baa9055f39</ProjectGuid>
+    <ProjectGuid>{37BBBC8F-64B2-4205-BCD0-153364B9869F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StorageTest</RootNamespace>
-    <AssemblyName>StorageTest</AssemblyName>
+    <RootNamespace>EntityFrameworkStorageUnitTest</RootNamespace>
+    <AssemblyName>EntityFrameworkStorageUnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,7 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,8 +56,27 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="EFTestTools\FakeContext.cs" />
+    <Compile Include="EFTestTools\FakeDbSet.cs" />
+    <Compile Include="EFStorageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFrameworkStorage\EntityFrameworkStorage.csproj">
+      <Project>{531a3239-9797-4d54-aebd-224c5868bb19}</Project>
+      <Name>EntityFrameworkStorage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Storage\Storage.csproj">
+      <Project>{7f6ed44d-0aa8-4d4b-8dbe-fbfb0f20e9a5}</Project>
+      <Name>Storage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

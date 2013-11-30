@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("StorageTest")]
+[assembly: AssemblyTitle("EntityFrameworkStorageUnitTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("StorageTest")]
+[assembly: AssemblyProduct("EntityFrameworkStorageUnitTest")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("71862efc-a820-44b6-9501-e5baa9055f39")]
+[assembly: Guid("24428770-0228-46fc-9a07-bf9bb160e86b")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -20,7 +20,7 @@ namespace Mankey_Pidgey_AS39
         public FakeImdbContext()
             : base("FakeImdbContext")
         {
-            
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
