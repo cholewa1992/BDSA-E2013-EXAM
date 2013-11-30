@@ -47,6 +47,8 @@ namespace WebServer
             _requestControllers.Add(new UserRequestController());
             _requestControllers.Add(new PersonRequestController());
             _requestControllers.Add(new FavouriteRequestController());
+            _requestControllers.Add(new MovieInfoController());
+            _requestControllers.Add(new PersonInfoController());
         }
 
         /// <summary>
