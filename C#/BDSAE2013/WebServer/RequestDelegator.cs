@@ -12,6 +12,7 @@ namespace WebServer
     /// <summary>
     /// A class to handle the interactions between a communcation protocol and a storage module.
     /// The class contains a list of control objects that can process different types of request when invoked. This results in delegates that can be used to access the storage module.
+    /// @invariant _storage != null
     /// </summary>
     public class RequestDelegator
     {
@@ -49,6 +50,11 @@ namespace WebServer
             _requestControllers.Add(new FavouriteRequestController());
             _requestControllers.Add(new MovieInfoController());
             _requestControllers.Add(new PersonInfoController());
+
+            //Invariant Check
+            if (_storage == null)
+                throw new StorageNullException("Storage was null when trying to process request");
+
         }
 
         /// <summary>
@@ -58,6 +64,7 @@ namespace WebServer
         /// <param name="request"> The request to process </param>
         public void ProcessRequest(Request request)
         {
+            //Check if the incoming request is null
             if (request == null)
                 throw new ArgumentNullException("Incoming request must not be null");
 
@@ -98,11 +105,21 @@ namespace WebServer
         /// <summary>
         /// Method to define whether there is a controller in the list of controllers that can handle the incoming request.
         /// If there is, the method returns the controller.
+        /// @pre _requestControllers != null
+        /// @pre _requestControllers.Count > 0
         /// </summary>
         /// <param name="method"> The method part of the incoming request </param>
         /// <returns> The controller to be used to determine the work that has to be done on the storage module </returns>
         private IRequestController DefineController(string method)
         {
+            //pre condition checks
+            if (_requestControllers == null)
+                throw new RequestControllerListException("List of request controllers cannot be null when invoking DefineController method");
+            
+            if (!(_requestControllers.Count > 0))
+                throw new RequestControllerListException("List of request controllers must contain at least 1 controller when invoking DefineController method");
+
+            //Check if the incoming method is null
             if (method == null)
                 throw new ArgumentNullException("Method string must not be null");
 

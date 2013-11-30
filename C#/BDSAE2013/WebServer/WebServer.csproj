@@ -49,6 +49,8 @@
     <Compile Include="Controllers\PersonRequestController.cs" />
     <Compile Include="Controllers\FavouriteRequestController.cs" />
     <Compile Include="Controllers\UserRequestController.cs" />
+    <Compile Include="Exceptions\RequestControllerListException.cs" />
+    <Compile Include="Exceptions\StorageNullException.cs" />
     <Compile Include="IRequestController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
