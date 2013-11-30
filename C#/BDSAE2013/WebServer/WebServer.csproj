@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestController.cs" />
+    <Compile Include="Controllers\MovieInfoController.cs" />
     <Compile Include="Controllers\MovieRequestController.cs" />
     <Compile Include="Controllers\PersonRequestController.cs" />
     <Compile Include="Controllers\FavouriteRequestController.cs" />

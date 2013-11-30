@@ -36,8 +36,10 @@ namespace WebServer
             //Get the values of the given request.
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
             
+            #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)
             Console.WriteLine("Movie Get was invoked... " + "id: " + nameValueCollection["id"]);
+            #endif 
 
             //Return the delegate 
             return (storage => storage.Get<Movies>(int.Parse(nameValueCollection["id"])));
@@ -77,10 +79,7 @@ namespace WebServer
                 EpisodeOf_Id = int.Parse(nameValueCollection["episodeOfId"])
             };
 
-            //Cannot return proper delegate, since Post method returns void
-            //return (storage => storage.Add<Movies>(movie));
-
-            return (storage => "Not Yet Implemented");
+            return (storage => storage.Add<Movies>(movie));
         }
 
         /// <summary>
@@ -119,10 +118,7 @@ namespace WebServer
                 EpisodeOf_Id = int.Parse(nameValueCollection["episodeOfId"])
             };
 
-            //Cannot return proper delegate, since Put method returns void
-            //return (storage => storage.Update<Movies>(movie));
-
-            return (storage => "Not Yet Implemented");
+            return (storage => storage.Update<Movies>(movie));
         }
 
         /// <summary>
@@ -136,16 +132,12 @@ namespace WebServer
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
             Console.WriteLine("Movie Delete was invoked... " + "id: " + nameValueCollection["id"]);
 
-            //Should we create an object to parse or parse parameters?
-            Movies movie = new Movies()
-            {
-                Id = int.Parse(nameValueCollection["id"]),
-            };
+            var id = int.Parse(nameValueCollection["id"]);
 
             //Cannot return proper delegate, since Put method returns void
             //return (storage => storage.Delete<Movies>(movie));
 
-            return (storage => "Not Yet Implemented");
+            return (storage => storage.Delete<Movies>(id));
         }
 
     }
