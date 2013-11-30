@@ -2,9 +2,10 @@
 
 namespace Storage
 {
-    public class RefinedStorageConnectionBridge : StorageConnectionBridge
+    public class StorageFacade : StorageConnectionBridge
     {
-        public RefinedStorageConnectionBridge(IStorageConnectionFactory storageFactory) : base(storageFactory)
+        public StorageFacade(IStorageConnectionFactory storageFactory)
+            : base(storageFactory)
         {
         }
 
@@ -36,9 +37,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public override void Add<TEntity>(TEntity entity)
+        public override bool Add<TEntity>(TEntity entity)
         {
             Db.Add(entity);
+            return SaveChanges();
         }
 
         /// <summary>
@@ -48,9 +50,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public override void Update<TEntity>(TEntity entity)
+        public override bool Update<TEntity>(TEntity entity)
         {
             Db.Update(entity);
+            return SaveChanges();
         }
 
         /// <summary>
@@ -59,9 +62,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public override void Delete<TEntity>(TEntity entity)
+        public override bool Delete<TEntity>(TEntity entity)
         {
             Db.Delete(entity);
+            return SaveChanges();
         }
 
         /// <summary>
@@ -70,9 +74,10 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="id">The id of the entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public override void Delete<TEntity>(int id)
+        public override bool Delete<TEntity>(int id)
         {
             Db.Delete(Get<TEntity>(id));
+            return SaveChanges();
         }
 
     }

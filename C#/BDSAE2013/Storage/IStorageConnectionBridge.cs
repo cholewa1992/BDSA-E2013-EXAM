@@ -25,7 +25,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        bool Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -34,7 +34,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        bool Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -42,7 +42,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -50,12 +50,6 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="id">The id of the entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        void Delete<TEntity>(int id) where TEntity : class, IEntityDto;
-        
-        /// <summary>
-        /// Saves all changes in the current context
-        /// </summary>
-        /// <returns>True if entities was saved</returns>
-        bool SaveChanges();
+        bool Delete<TEntity>(int id) where TEntity : class, IEntityDto;
     }
 }
