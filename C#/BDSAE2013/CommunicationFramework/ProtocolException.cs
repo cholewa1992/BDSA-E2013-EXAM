@@ -10,20 +10,18 @@ namespace CommunicationFramework
             // Add implementation.
         }
 
-        public ProtocolException(string message)
-            : base(message)
+        public ProtocolException( string message ) : base( message )
         {
-            
+
         }
 
-        public ProtocolException(string message, Exception inner) 
-            : base(message, inner)
+        public ProtocolException( string message, Exception inner ) : base( message, inner )
         {
-            
+
         }
 
         // This constructor is needed for serialization.
-        protected ProtocolException(SerializationInfo info, StreamingContext context)
+        protected ProtocolException( SerializationInfo info, StreamingContext context )
         {
             // Add implementation.
         }
