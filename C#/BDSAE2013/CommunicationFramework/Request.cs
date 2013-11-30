@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace CommunicationFramework
 {
+    //The object to pass around in the system that contains all the information that should be relevant
     public class Request
     {
         public byte[] Data{ get; set; }
         public string Method{ get; set; }
-        //public string Address{ get; set; }
+        //Enum of the status codes that can be returned by the request
         public enum StatusCode
         {
-            NotFount,
-            Ok,
-            BadRequest
+            BadRequest,
+            NotFound,
+            Ok
         }
-
-        public StatusCode ResponseStatusCode { get; set; }
+        public StatusCode ResponseStatusCode{ get; set; }
     }
 }
