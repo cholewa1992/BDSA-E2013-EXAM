@@ -2,7 +2,7 @@
 
 namespace Storage
 {
-    internal class RefinedStorageConnectionBridge : StorageConnectionBridge
+    public class RefinedStorageConnectionBridge : StorageConnectionBridge
     {
         public RefinedStorageConnectionBridge(IStorageConnectionFactory storageFactory) : base(storageFactory)
         {

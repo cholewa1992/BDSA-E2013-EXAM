@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace CommunicationFramework
 {
-    public class CommunicationFramework
+    public enum Protocols
+    {
+        HTTP
+    }
+
+
+    public class CommunicationHandler
     {
         private IProtocol _protocolInstance;
         private IProtocol ProtocolInstance
@@ -53,26 +59,30 @@ namespace CommunicationFramework
 
 
         public Protocols Protocol{ get; set; }
-        public enum Protocols
+
+
+
+        public CommunicationHandler(Protocols protocol)
         {
-            HTTP
+            Protocol = protocol;
         }
+        
         
         public void Send( string address, byte[] data, string method )
         {
             if( Protocol == null )
                 throw new ProtocolException( "ERROR! Protocol not set" );
 
-            _protocolInstance.Address = address;
-            _protocolInstance.SendMessage( data, method );
+            ProtocolInstance.Address = address;
+            ProtocolInstance.SendMessage(data, method);
         }
 
         public byte[] Receive( int timeout )
         {
             if( Protocol == null )
-                throw new Exception( "ERROR! Protocol not set" );
+                throw new ProtocolException("ERROR! Protocol not set");
 
-            return _protocolInstance.GetResponse( timeout );
+            return ProtocolInstance.GetResponse(timeout);
         }
 
         public Request GetRequest()
@@ -80,7 +90,7 @@ namespace CommunicationFramework
             if (Protocol == null)
                 throw new ProtocolException("ERROR! Protocol not set");
 
-            return _protocolInstance.getRequest();
+            return ProtocolInstance.getRequest();
         }
 
         public void RespondToRequest(Request request)
@@ -88,7 +98,7 @@ namespace CommunicationFramework
             if (Protocol == null)
                 throw new ProtocolException("ERROR! Protocol not set");
 
-            _protocolInstance.RespondToRequest(request);
+            ProtocolInstance.RespondToRequest(request);
         }
     }
 }

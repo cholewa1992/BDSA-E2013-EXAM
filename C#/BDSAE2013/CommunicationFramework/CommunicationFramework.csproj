@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommunicationFramework.cs" />
+    <Compile Include="CommunicationHandler.cs" />
     <Compile Include="HTTPProtocol.cs" />
     <Compile Include="IProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

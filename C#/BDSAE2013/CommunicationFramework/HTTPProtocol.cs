@@ -14,7 +14,22 @@ namespace CommunicationFramework
     {
         private WebRequest _request;
         public string Address{ get; set; }
-        private Dictionary<Request, HttpListenerContext> lookupTable; 
+        private Dictionary<Request, HttpListenerContext> lookupTable = new Dictionary<Request, HttpListenerContext>();
+
+        private HttpListener _listener;
+        private HttpListener Listener
+        {
+            get
+            {
+                if(_listener == null)
+                    _listener = new HttpListener();
+
+                return _listener;
+            }
+            set { _listener = value; }
+
+        }
+
 
         public HTTPProtocol( string address )
         {
@@ -80,9 +95,10 @@ namespace CommunicationFramework
 
         public Request getRequest()
         {
-            HttpListener listener = new HttpListener();
-            listener.Prefixes.Add( Address );
-            HttpListenerContext context = listener.GetContext();
+
+            Listener.Prefixes.Add( Address );
+            Listener.Start();
+            HttpListenerContext context = Listener.GetContext();
 
             Request request = new Request() { Method = context.Request.HttpMethod + " " + context.Request.RawUrl };
 
