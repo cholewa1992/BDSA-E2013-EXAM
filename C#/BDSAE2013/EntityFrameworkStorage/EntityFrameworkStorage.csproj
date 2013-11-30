@@ -51,7 +51,6 @@
     <Compile Include="EFConnectionFactory.cs" />
     <Compile Include="EFStorage.cs" />
     <Compile Include="IDbContext.cs" />
-    <Compile Include="IEntity.cs" />
     <Compile Include="FakeImdbContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
