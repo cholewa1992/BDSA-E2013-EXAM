@@ -63,5 +63,17 @@ namespace Storage
         {
             Db.Delete(entity);
         }
+
+        /// <summary>
+        /// Deletes the given entity from the data
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to use</typeparam>
+        /// <param name="id">The id of the entity to delete</param>
+        /// <returns>True if the operation was successfull</returns>
+        public override void Delete<TEntity>(int id)
+        {
+            Db.Delete(Get<TEntity>(id));
+        }
+
     }
 }

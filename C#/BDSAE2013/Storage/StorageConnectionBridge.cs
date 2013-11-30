@@ -71,6 +71,14 @@ namespace Storage
         public abstract void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
+        /// Deletes the given entity from the data
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type to use</typeparam>
+        /// <param name="id">The id of the entity to delete</param>
+        /// <returns>True if the operation was successfull</returns>
+        public abstract void Delete<TEntity>(int id) where TEntity : class, IEntityDto;
+
+        /// <summary>
         /// Saves changes to the context
         /// </summary>
         /// <returns>true if entities was saved</returns>
