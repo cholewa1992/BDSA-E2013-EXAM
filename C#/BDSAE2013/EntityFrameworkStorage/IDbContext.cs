@@ -9,5 +9,6 @@ namespace EntityFrameworkStorage
         IDbSet<T> Set<T>() where T : class;
         int SaveChanges();
         DbEntityEntry Entry(object o);
+        DbChangeTracker ChangeTracker { get; }
     }
 }

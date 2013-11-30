@@ -18,7 +18,6 @@ namespace Storage
         public override TEntity Get<TEntity>(int id)
         {
             return Db.Get<TEntity>(id);
-
         }
 
         /// <summary>

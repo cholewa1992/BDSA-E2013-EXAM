@@ -6,12 +6,12 @@ using EntityState = System.Data.EntityState;
 
 namespace EntityFrameworkStorage
 {
-    class EFStorageConnection<TContext> : IStorageConnection where TContext : IDbContext, new()
+    public class EFStorageConnection<TContext> : IStorageConnection where TContext : IDbContext, new()
     {
 
         private readonly TContext _ef;
 
-        public EFStorageConnection()
+        internal EFStorageConnection()
         {
             _ef = new TContext();
         } 

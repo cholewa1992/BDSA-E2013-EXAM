@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace CommunicationFramework
 {
+    //Interface for all the protocols to adhere to
     public interface IProtocol
     {
         string Address{ get; set; }
 
         byte[] GetResponse( int timeout );
         void SendMessage( byte[] data, string method );
-        Request getRequest();
-        void RespondToRequest(Request request);
+        Request GetRequest();
+        void RespondToRequest( Request request );
     }
 }
