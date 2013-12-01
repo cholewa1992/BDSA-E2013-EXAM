@@ -26,7 +26,7 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException),
+        [ExpectedException(typeof(UnsplittableStringParameterException),
         "Method syntax is wrong,  must be [Method]' '[URL]")]
         public void Test_RequestController_ProcessRequest_Error_BadMethod()
         {

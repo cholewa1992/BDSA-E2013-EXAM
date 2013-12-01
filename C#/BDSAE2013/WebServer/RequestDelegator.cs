@@ -131,7 +131,7 @@ namespace WebServer
         /// </summary>
         /// <param name="method"> The method part of the incoming request </param>
         /// <returns> The controller to be used to determine the work that has to be done on the storage module </returns>
-        private IRequestController DefineController(string method)
+        public IRequestController DefineController(string method)
         {
             //pre condition checks
             if (_requestControllers == null)
@@ -144,8 +144,9 @@ namespace WebServer
             if (method == null)
                 throw new ArgumentNullException("Method string must not be null");
 
+            //Check if the incoming method has the correct syntax. Correct syntax is [Method]' '[URL]
             if (method.Split(' ').Length != 2)
-                throw new ArgumentException("Incoming request method has bad syntax, must be [Method]' '[URL]");
+                throw new UnsplittableStringParameterException("Incoming request method has bad syntax, must be [Method]' '[URL]");
 
             //Split the method by the 'space' character. Take the second string from the resulting array. This is the url of the received request
             string url = method.Split(' ')[1];
@@ -167,7 +168,7 @@ namespace WebServer
             }
 
             //If no keyword matched any controller the program throws an exception due to bad input.
-            throw new ArgumentException("The url did not match any controllers");
+            throw new InvalidServiceRequestException("The url did not match any controllers");
         }
     }
 }
