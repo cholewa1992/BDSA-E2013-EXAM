@@ -13,6 +13,7 @@ namespace WebServer
 {
     /// <summary>
     /// Abstract class that implements parts of the RequestController class hierachy
+    /// @invariant Keyword != null
     /// </summary>
     public abstract class AbstractRequestController : IRequestController
     {
@@ -26,7 +27,11 @@ namespace WebServer
         /// <returns> A delegate that can be given a storage in order to perform a request. This can be GET, PUT, POST and DELETE requests from each of the entities </returns>
         public Func<IStorageConnectionBridge, object> ProcessRequest(Request request)
         {
-            //QUESTION: Null was checked in preceeding call hierachy. Should we check for null again for the sake of potential decoupling?
+            if (request == null)
+                throw new ArgumentNullException("Incoming request cannot be null");
+
+            if (request.Method.Split(' ').Length != 2)
+                throw new ArgumentException("Incoming request method has bad syntax, must be [Method]' '[URL]");
 
             //Split the request method string by the 'space' character, and get the first part of the resulting array.
             //This is the part of the method string that contains the rest request type
@@ -49,7 +54,7 @@ namespace WebServer
             }
 
             //If the request does not match any rest methods it is an invalid input and thus the program throws an error
-            throw new ArgumentException("Input did not match any controllers");
+            throw new InvalidRestMethodException("Input did not match any REST method");
         }
 
         /// <summary>
@@ -60,7 +65,7 @@ namespace WebServer
         public NameValueCollection ConvertByteToDataTable(byte[] bytes)
         {
             if (bytes == null)
-                throw new ArgumentException("bytes cannot be null");
+                throw new ArgumentNullException("bytes cannot be null");
 
             //Decode the byte code with the proper encoding.
             string decodedString = Encoding.GetEncoding("iso-8859-1").GetString(bytes);

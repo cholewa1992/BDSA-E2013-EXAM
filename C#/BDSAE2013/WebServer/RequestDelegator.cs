@@ -12,6 +12,7 @@ namespace WebServer
     /// <summary>
     /// A class to handle the interactions between a communcation protocol and a storage module.
     /// The class contains a list of control objects that can process different types of request when invoked. This results in delegates that can be used to access the storage module.
+    /// @invariant _storage != null
     /// </summary>
     public class RequestDelegator
     {
@@ -47,8 +48,13 @@ namespace WebServer
             _requestControllers.Add(new UserRequestController());
             _requestControllers.Add(new PersonRequestController());
             _requestControllers.Add(new FavouriteRequestController());
-            _requestControllers.Add(new MovieInfoController());
-            _requestControllers.Add(new PersonInfoController());
+            _requestControllers.Add(new MovieInfoRequestController());
+            _requestControllers.Add(new PeopleInfoRequestController());
+
+            //Invariant Check
+            if (_storage == null)
+                throw new StorageNullException("Storage was null when trying to process request");
+
         }
 
         /// <summary>
@@ -56,8 +62,9 @@ namespace WebServer
         /// The method will use the underlying controllers to process the request.
         /// </summary>
         /// <param name="request"> The request to process </param>
-        public void ProcessRequest(Request request)
+        public Request ProcessRequest(Request request)
         {
+            //Check if the incoming request is null
             if (request == null)
                 throw new ArgumentNullException("Incoming request must not be null");
 
@@ -70,9 +77,11 @@ namespace WebServer
             }
             catch (ArgumentException e)
             {
-                //TODO: compute a return message
-                Console.WriteLine("No valid controller was found, or argument was null");
-                return;
+                Console.WriteLine("No valid controller was found");
+
+                //This response code is returned when no controllers can process the incoming request
+                request.ResponseStatusCode = Request.StatusCode.BadRequest;
+                return request;
             }
 
             Func<IStorageConnectionBridge, object> storageDelegate;
@@ -84,27 +93,59 @@ namespace WebServer
             }
             catch (ArgumentException e)
             {
-                //TODO: compute a return message
-                Console.WriteLine("An exception was thrown durng request processing: " + e.Message);
-                return;
+                Console.WriteLine("An error occured while processing request. Error: "+e.Message);
+
+                //This response code is returned if the request was not a restful method or some vital input was null.
+                request.ResponseStatusCode = Request.StatusCode.BadRequest;
+                return request;
             }
 
             //Invoke the delegate received from the controller using the storage module given through the constructor.
-            storageDelegate.Invoke(_storage);
+            try
+            {
+                object returnValue = storageDelegate.Invoke(_storage);
 
-            //TODO: Implement return values
+                /*
+                if(returnValue == typeof(string))
+                    //Set response string
+                else
+                    //Set response object
+                */
+
+                request.ResponseStatusCode = Request.StatusCode.Ok;
+                return request;
+            }
+            catch (ArgumentException e)
+            {
+                //This response code is returned if the request could not process the request in the database
+                request.ResponseStatusCode = Request.StatusCode.NotFound;
+                return request;
+            }
         }
 
         /// <summary>
         /// Method to define whether there is a controller in the list of controllers that can handle the incoming request.
         /// If there is, the method returns the controller.
+        /// @pre _requestControllers != null
+        /// @pre _requestControllers.Count > 0
         /// </summary>
         /// <param name="method"> The method part of the incoming request </param>
         /// <returns> The controller to be used to determine the work that has to be done on the storage module </returns>
         private IRequestController DefineController(string method)
         {
+            //pre condition checks
+            if (_requestControllers == null)
+                throw new RequestControllerListException("List of request controllers cannot be null when invoking DefineController method");
+            
+            if (!(_requestControllers.Count > 0))
+                throw new RequestControllerListException("List of request controllers must contain at least 1 controller when invoking DefineController method");
+
+            //Check if the incoming method is null
             if (method == null)
                 throw new ArgumentNullException("Method string must not be null");
+
+            if (method.Split(' ').Length != 2)
+                throw new ArgumentException("Incoming request method has bad syntax, must be [Method]' '[URL]");
 
             //Split the method by the 'space' character. Take the second string from the resulting array. This is the url of the received request
             string url = method.Split(' ')[1];
@@ -128,6 +169,5 @@ namespace WebServer
             //If no keyword matched any controller the program throws an exception due to bad input.
             throw new ArgumentException("The url did not match any controllers");
         }
-
     }
 }

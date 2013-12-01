@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 
 namespace CommunicationFramework
 {
-    class HTTPProtocol : IProtocol
+    /// <summary>
+    /// This is the implementation of the IProtocol interface specifying communication
+    /// over with HTTP
+    /// 
+    /// @inv !String.IsNullOrEmpty(_address)
+    /// </summary>
+    internal class HTTPProtocol : IProtocol
     {
         //Lookup table based on the request object and it's ListenerContext. This is specific for the HTTPProtocol
-        private readonly Dictionary<Request, HttpListenerContext> lookupTable = new Dictionary<Request, HttpListenerContext>();
+        private readonly Dictionary<Request, HttpListenerContext> _lookupTable = new Dictionary<Request, HttpListenerContext>();
         private string _address;
         private HttpListener _listener;
         private WebRequest _request;
@@ -23,6 +29,7 @@ namespace CommunicationFramework
         public HTTPProtocol()
         {
             Address = "http://localhost:1337/";
+            
         }
 
         /// <summary>
@@ -57,6 +64,10 @@ namespace CommunicationFramework
                     throw new ProtocolException( "ERROR! Address not valid" );
 
                 _address = value;
+
+                //CheckForInvariant !String.IsNullOrEmpty(_address)
+                if (String.IsNullOrEmpty(_address))
+                    throw new ProtocolException("ERROR! Invariant !String.IsNullOrEmpty(_address) not satisfied");
             }
         }
 
@@ -71,11 +82,12 @@ namespace CommunicationFramework
         /// <returns>The data that was received</returns>
         public byte[] GetResponse( int timeout )
         {
-            WebResponse response = null;
 
             //CheckPreCondition _request != null
             if( _request == null )
                 throw new ProtocolException( "SendMessage must be used before GetResponse" );
+
+            WebResponse response = null;
 
             //Start a new thread to check for the response
             Task t = Task.Run( () => response = _request.GetResponse() );
@@ -149,7 +161,7 @@ namespace CommunicationFramework
 
             //Add a mapping from the request object to the context that received it
             //so we know where to send a response to
-            lookupTable.Add( request, context );
+            _lookupTable.Add( request, context );
 
             request.Data = Encoding.GetEncoding( "iso-8859-1" ).GetBytes( new StreamReader( context.Request.InputStream ).ReadToEnd() );
 
@@ -166,18 +178,17 @@ namespace CommunicationFramework
         public void RespondToRequest( Request request )
         {
             HttpListenerContext context;
-            //CheckPreCondition lookupTable.contains( request )
-            //Check to make sure that the lookupTable actually contains a request with an associated context
-            if( lookupTable.TryGetValue( request, out context ) )
-            {
-                context.Response.StatusDescription = request.ResponseStatusCode.ToString();
-                context.Response.ContentLength64 = request.Data.Length;
 
-                using( Stream stream = context.Response.OutputStream )
-                    stream.Write( request.Data, 0, request.Data.Length );
-            }
-            else
-                throw new ProtocolException( "ERROR! No context found which received the supplied request. Did you create request object yourself?" );
+            //CheckPreCondition lookupTable.contains( request )
+            if( !_lookupTable.TryGetValue( request, out context ) )
+                throw new ProtocolException("ERROR! No context found which received the supplied request. Did you create request object yourself?");
+
+                
+            context.Response.StatusDescription = request.ResponseStatusCode.ToString();
+            context.Response.ContentLength64 = request.Data.Length;
+
+            using (Stream stream = context.Response.OutputStream)
+                stream.Write(request.Data, 0, request.Data.Length);
         }
     }
 }

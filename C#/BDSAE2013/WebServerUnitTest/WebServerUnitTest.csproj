@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.1.1311.0615\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,6 +53,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="RequestControllerTest.cs" />
+    <Compile Include="RequestDelegatorTest.cs" />
     <Compile Include="MovieDtoTest.cs" />
     <Compile Include="PersonDtoTest.cs" />
     <Compile Include="UserDtoTest.cs" />
@@ -60,6 +65,10 @@
       <Project>{713abcbb-d297-4da6-a2fe-18063eddbcd6}</Project>
       <Name>CommunicationFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFrameworkStorage\EntityFrameworkStorage.csproj">
+      <Project>{531a3239-9797-4d54-aebd-224c5868bb19}</Project>
+      <Name>EntityFrameworkStorage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.csproj">
       <Project>{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}</Project>
       <Name>Storage</Name>
@@ -68,6 +77,9 @@
       <Project>{030a9116-5751-4180-a19a-17c1ab21d5fa}</Project>
       <Name>WebServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

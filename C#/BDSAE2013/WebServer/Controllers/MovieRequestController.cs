@@ -14,6 +14,7 @@ namespace WebServer
     /// A request controller that handle the rest methods GET, POST, PUT and DELETE.
     /// The controller receives the request and based on the type of method being invoked, the class will return a delegate
     /// which can be used by the RequestDelegator to contact the database.
+    /// @invariant Keyword != null
     /// </summary>
     public class MovieRequestController : AbstractRequestController
     {
@@ -23,6 +24,10 @@ namespace WebServer
         public MovieRequestController()
         {
             Keyword = "Movie";
+
+            //Check the invariant
+            if (Keyword == null)
+                throw new KeywordNullException("Keyword must never be null");
         }
 
         /// <summary>
@@ -129,11 +134,15 @@ namespace WebServer
         /// <returns> A delegate that deletes a movie from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridge, object> ProcessDelete(Request request)
         {
+            //Get the values of the request
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
+            
+            //Print the values to the console (should be deleted before release)
             Console.WriteLine("Movie Delete was invoked... " + "id: " + nameValueCollection["id"]);
 
             var id = int.Parse(nameValueCollection["id"]);
 
+            //Return the delegate 
             return (storage => storage.Delete<Movies>(id));
         }
 
