@@ -25,7 +25,7 @@ namespace CommunicationFrameworkUnitTest
     }
 
     [ TestClass ]
-    public class UnitTest1
+    public class CommunicationUnitTest
     {
         //Test ideas: Check to make sure timeout actually works,
         //Check whether or not the actual send -> receive -> do stuff -> send -> receive actually works,
