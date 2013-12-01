@@ -13,6 +13,7 @@ namespace WebServer
 {
     /// <summary>
     /// Abstract class that implements parts of the RequestController class hierachy
+    /// @invariant Keyword != null
     /// </summary>
     public abstract class AbstractRequestController : IRequestController
     {
@@ -53,7 +54,7 @@ namespace WebServer
             }
 
             //If the request does not match any rest methods it is an invalid input and thus the program throws an error
-            throw new ArgumentException("Input did not match any controllers");
+            throw new InvalidRestMethodException("Input did not match any REST method");
         }
 
         /// <summary>

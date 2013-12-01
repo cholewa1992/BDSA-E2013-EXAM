@@ -9,14 +9,24 @@ using Storage;
 
 namespace WebServer
 {
-    class MovieInfoController : AbstractRequestController
+    /// <summary>
+    /// A request controller that handle the rest methods GET, POST, PUT and DELETE.
+    /// The controller receives the request and based on the type of method being invoked, the class will return a delegate
+    /// which can be used by the RequestDelegator to contact the database.
+    /// @invariant Keyword != null
+    /// </summary>
+    public class MovieInfoRequestController : AbstractRequestController
     {
         /// <summary>
         /// The constructor defines the keyword associated in controller on creation
         /// </summary>
-        public MovieInfoController()
+        public MovieInfoRequestController()
         {
             Keyword = "MovieInfo";
+
+            //Check the invariant
+            if (Keyword == null)
+                throw new KeywordNullException("Keyword must never be null");
         }
 
         /// <summary>

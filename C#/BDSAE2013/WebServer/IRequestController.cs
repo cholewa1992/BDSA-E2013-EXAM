@@ -11,6 +11,7 @@ namespace WebServer
 {
     /// <summary>
     /// The general interface that defines the structure of the request controller
+    /// @invariant Keyword != null
     /// </summary>
     public interface IRequestController
     {

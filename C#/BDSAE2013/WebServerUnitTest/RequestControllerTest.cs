@@ -12,6 +12,7 @@ namespace WebServerUnitTest
     [TestClass]
     public class RequestControllerTest
     {
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException),
         "Parsed request is null")]
@@ -32,11 +33,29 @@ namespace WebServerUnitTest
             //Initialize an arbitrary RequestController (they all implement the same version of ProcessRequest method from the abstract class
             IRequestController controller = new MovieRequestController();
 
+            //Make a request with a wrong method. (No right-hand url input)
             Request req = new Request() { Method = "GET", Data = new byte[0]};
 
             //Invoke the ProcessRequest method with an input with a wrongly formatted Method. 
             //This invocation should throw an exception
             controller.ProcessRequest(req);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidRestMethodException),
+        "Parsed method has no proper rest method")]
+        public void Test_RequestController_ProcessRequest_Error_NoHit()
+        {
+            //Initialize an arbitrary RequestController (they all implement the same version of ProcessRequest method from the abstract class
+            IRequestController controller = new MovieRequestController();
+
+            //Make a request with a wrong method. (No matching rest method)
+            Request req = new Request() { Method = "UPDATE https://www.google.dk/", Data = new byte[0] };
+
+            //Invoke the ProcessRequest method with null input. This invocation should throw an exception
+            controller.ProcessRequest(req);
+
+
         }
 
         [TestMethod]

@@ -43,12 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestController.cs" />
-    <Compile Include="Controllers\MovieInfoController.cs" />
+    <Compile Include="Controllers\MovieInfoRequestController.cs" />
     <Compile Include="Controllers\MovieRequestController.cs" />
-    <Compile Include="Controllers\PeopleInfoController.cs" />
+    <Compile Include="Controllers\PeopleInfoRequestController.cs" />
     <Compile Include="Controllers\PersonRequestController.cs" />
     <Compile Include="Controllers\FavouriteRequestController.cs" />
     <Compile Include="Controllers\UserRequestController.cs" />
+    <Compile Include="Exceptions\KeywordNullException.cs" />
+    <Compile Include="Exceptions\InvalidRestMethodException.cs" />
     <Compile Include="Exceptions\RequestControllerListException.cs" />
     <Compile Include="Exceptions\StorageNullException.cs" />
     <Compile Include="IRequestController.cs" />
