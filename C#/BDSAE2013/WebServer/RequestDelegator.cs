@@ -15,15 +15,15 @@ namespace WebServer
     /// </summary>
     public class RequestDelegator
     {
-        private List<IRequestController> _requestControllers;        //A list of the available controllers used by the class
-        private IStorageConnectionBridge _storage;                   //The storage module linked to the RequestDelegator, this can be injected on instantiation
+        private readonly List<IRequestController> _requestControllers;        //A list of the available controllers used by the class
+        private readonly IStorageConnectionBridge _storage;                   //The storage module linked to the RequestDelegator, this can be injected on instantiation
 
         /// <summary>
         /// The base constructor of the class.
         /// This constructor calls the general constructor with the most commonly used storage module.
         /// </summary>
         public RequestDelegator()
-            : this(new StorageFacade(new EFConnectionFactory()))
+            : this(new StorageBridgeFacade(new EFConnectionFactory()))
         {
         }
 

@@ -1,10 +1,21 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Objects.DataClasses;
+using System.Linq;
 
 namespace Storage
 {
-    public class StorageFacade : StorageConnectionBridge
+    /// <summary>
+    /// Refined IStorageBridge implementation.
+    /// </summary>
+    public class StorageBridgeFacade : StorageConnectionBridge
     {
-        public StorageFacade(IStorageConnectionFactory storageFactory)
+        /// <summary>
+        /// Constructs a new StorageBridgeFacade
+        /// </summary>
+        /// <param name="storageFactory">The storage to use</param>
+        /// <remarks>
+        /// </remarks>
+        public StorageBridgeFacade(IStorageConnectionFactory storageFactory)
             : base(storageFactory)
         {
         }
@@ -15,9 +26,22 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
+        /// <remarks>
+        /// @post id >= 0
+        /// @post id < int.max
+        /// </remarks>
         public override TEntity Get<TEntity>(int id)
         {
-            return Db.Get<TEntity>(id);
+            if(id <= 0){ throw new ArgumentException("Ids 0 or less"); }
+            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
+            try
+            {
+                return Db.Get<TEntity>().Single(t => t.Id == id);
+            }
+            catch(InvalidOperationException)
+            {
+                throw new InvalidOperationException("A single entity with the given Id could not be found");
+            }
         }
 
         /// <summary>
@@ -36,8 +60,15 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
+        /// <remarks>
+        /// @post entity != null
+        /// @post entity.Id != 0
+        /// </remarks>
         public override bool Add<TEntity>(TEntity entity)
         {
+
+            if(entity == null) throw new ArgumentNullException("entity");
+            if(entity.Id == 0) throw new ArgumentException("Id can't be preset!");
             Db.Add(entity);
             return SaveChanges();
         }
@@ -49,8 +80,12 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
+        /// <remarks>
+        /// @post entity != null
+        /// </remarks>
         public override bool Update<TEntity>(TEntity entity)
         {
+            if (entity == null) throw new ArgumentNullException("entity");
             Db.Update(entity);
             return SaveChanges();
         }
@@ -61,8 +96,12 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
+        /// <remarks>
+        /// @post entity != null
+        /// </remarks>
         public override bool Delete<TEntity>(TEntity entity)
         {
+            if (entity == null) throw new ArgumentNullException("entity");
             Db.Delete(entity);
             return SaveChanges();
         }
@@ -73,8 +112,14 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="id">The id of the entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
+        /// <remarks>
+        /// @post id >= 0
+        /// @post id < int.max
+        /// </remarks>
         public override bool Delete<TEntity>(int id)
         {
+            if (id <= 0) { throw new ArgumentException("Ids 0 or less"); }
+            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
             Db.Delete(Get<TEntity>(id));
             return SaveChanges();
         }
