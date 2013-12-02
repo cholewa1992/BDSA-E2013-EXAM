@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Storage
 {
     /// <summary>
-    /// Bridge implementation to provide stubs to builde storage module around
+    /// Bridge implementation to provide stubs to builde storage module on
     /// </summary>
     public abstract class StorageConnectionBridge : IStorageConnectionBridge
     {
@@ -11,6 +12,7 @@ namespace Storage
         /// Concret IStorageFactory implementation to use
         /// </summary>
         protected IStorageConnection Db { private set; get; }
+        private bool _isDisposed;
 
         /// <summary>
         /// Constructs the bridge and uses dependency injection of an conret storage to use
@@ -26,6 +28,7 @@ namespace Storage
         /// </summary>
         public void Dispose()
         {
+            _isDisposed = true;
             Db.Dispose();
         }
 
@@ -84,6 +87,7 @@ namespace Storage
         /// <returns>true if entities was saved</returns>
         protected bool SaveChanges()
         {
+            if(_isDisposed) throw new InvalidOperationException("Storage has been disposed");
             return Db.SaveChanges();
         }
     }

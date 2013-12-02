@@ -2,6 +2,9 @@
 using System.Linq;
 namespace Storage
 {
+    /// <summary>
+    /// Bridge implementation to provide stubs to builde storage module on
+    /// </summary>
     public interface IStorageConnectionBridge : IDisposable
     {
         /// <summary>

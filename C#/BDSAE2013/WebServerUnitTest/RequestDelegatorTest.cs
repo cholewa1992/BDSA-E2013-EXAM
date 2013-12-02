@@ -26,7 +26,7 @@ namespace WebServerUnitTest
         public void Test_RequestDelegator_Constructor_InjectedStorage()
         {
             //Initialize a request delegator with injection
-            RequestDelegator requestDelegator = new RequestDelegator(new StorageFacade(new EFConnectionFactory()));
+            RequestDelegator requestDelegator = new RequestDelegator(new StorageBridgeFacade(new EFConnectionFactory()));
 
             //If no exceptions are thrown, the test is passed
         }

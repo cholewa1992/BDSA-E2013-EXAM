@@ -55,8 +55,6 @@
   <ItemGroup>
     <Compile Include="RequestControllerTest.cs" />
     <Compile Include="RequestDelegatorTest.cs" />
-    <Compile Include="MovieDtoTest.cs" />
-    <Compile Include="PersonDtoTest.cs" />
     <Compile Include="UserDtoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
