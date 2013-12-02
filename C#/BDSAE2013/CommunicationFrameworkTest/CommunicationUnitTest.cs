@@ -51,7 +51,7 @@ namespace CommunicationFrameworkUnitTest
                 Client.Send( "http://localhost:1337/", new byte[ 0 ], "Test" );
             } );
 
-            String[] method = Server.GetRequest().Method.Split( ' ' );
+            String[] method = Server.GetRequest("http://localhost:1337/").Method.Split(' ');
             Assert.AreEqual( "Test", method[ 0 ] );
         }
 
@@ -68,7 +68,7 @@ namespace CommunicationFrameworkUnitTest
                 Client.Send( "http://localhost:1337/", Encoding.GetEncoding( "iso-8859-1" ).GetBytes( "test".ToCharArray() ), "Test" );
             } );
 
-            Assert.AreEqual( "test", Encoding.GetEncoding( "iso-8859-1" ).GetString( Server.GetRequest().Data ) );
+            Assert.AreEqual("test", Encoding.GetEncoding("iso-8859-1").GetString(Server.GetRequest("http://localhost:1337/").Data));
         }
 
         [ TestMethod ]

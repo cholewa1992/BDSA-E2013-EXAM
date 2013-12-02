@@ -55,6 +55,8 @@ namespace CommunicationFramework
         }
 
         public Protocols Protocol{ get; set; }
+
+
         /// <summary>
         /// Constructor for CommunicationHandler
         /// </summary>
@@ -120,11 +122,13 @@ namespace CommunicationFramework
         /// @pre Protocol != null
         /// </summary>
         /// <returns>A request object per request received</returns>
-        public Request GetRequest()
+        public Request GetRequest(String address)
         {
             //CheckPreCondition Protocol != null
             if( Protocol == null )
                 throw new ProtocolException( "ERROR! Protocol not set" );
+
+            ProtocolInstance.Address = address;
 
             return ProtocolInstance.GetRequest();
         }
