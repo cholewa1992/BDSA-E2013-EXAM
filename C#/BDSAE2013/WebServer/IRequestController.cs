@@ -13,12 +13,12 @@ namespace WebServer
     {
         string Keyword { get; set; }
 
-        Func<IStorageConnectionBridge, object> ProcessRequest(Request request);
+        Func<IStorageConnectionBridgeFacade, object> ProcessRequest(Request request);
 
-        Func<IStorageConnectionBridge, object> ProcessGet(Request request);
-        Func<IStorageConnectionBridge, object> ProcessPost(Request request);
-        Func<IStorageConnectionBridge, object> ProcessDelete(Request request);
-        Func<IStorageConnectionBridge, object> ProcessPut(Request request);
+        Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request);
+        Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request);
+        Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request);
+        Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request);
 
         NameValueCollection ConvertByteToDataTable(byte[] bytes);
     }

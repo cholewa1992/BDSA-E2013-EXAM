@@ -26,7 +26,7 @@ namespace WebServer
                 throw new KeywordNullException("Keyword must never be null");
         }
 
-        public override Func<IStorageConnectionBridge, object> ProcessGet(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request)
         {
             //Get the values of the given request
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -45,7 +45,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the web server.</param>
         /// <returns> A delegate that posts a user to a given storage, based on the contents of the request.</returns>
-        public override Func<IStorageConnectionBridge, object> ProcessPost(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request)
         {
             //Get the values from the request
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -85,7 +85,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request">The original request received by the web server</param>
         /// <returns> A delegate that updates a movie in a given storage, based on the contents of the request</returns>
-        public override Func<IStorageConnectionBridge, object> ProcessPut(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request)
         {
             //Get the values of the request
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -123,7 +123,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the web server.</param>
         /// <returns> A delegate that deletes a usreacc from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessDelete(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request)
         {
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
             Console.WriteLine("Useracc Delete was invoked... " + "id: " + nameValueCollection["id"]);

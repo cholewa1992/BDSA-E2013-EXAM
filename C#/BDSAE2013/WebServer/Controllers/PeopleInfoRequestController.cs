@@ -33,7 +33,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns>  A delegate that can be used to get person info from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessGet(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request)
         {
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             NameValueCollection nameValueColletion = ConvertByteToDataTable(request.Data);
@@ -54,7 +54,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns> A delegate that can be used to get person info from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessPut(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request)
         {
 
             // The Bytes(Data) in the request is converted to a table to retreive the values.
@@ -93,7 +93,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns> A delegate that can be used to insert person info from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessPost(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request)
         {
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -130,7 +130,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns>  A delegate that can be used to delete person info from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessDelete(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request)
         {
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);

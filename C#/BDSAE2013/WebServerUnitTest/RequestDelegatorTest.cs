@@ -35,7 +35,7 @@ namespace WebServerUnitTest
         public void Test_RequestDelegator_ProcessRequest_Output_Ok()
         {
             //Make a mock of the storage. Since this test is not concerned with the output of the database, we do not want an output from it.
-            var storageMock = new Mock<IStorageConnectionBridge>();        //create a mock of a storage
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();        //create a mock of a storage
             var storage = storageMock.Object;                              //Make an intance of the storage class using the mock
 
             RequestDelegator requestDelegator = new RequestDelegator(storage);

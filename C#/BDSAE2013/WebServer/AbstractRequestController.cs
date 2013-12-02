@@ -25,7 +25,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the Web Server </param>
         /// <returns> A delegate that can be given a storage in order to perform a request. This can be GET, PUT, POST and DELETE requests from each of the entities </returns>
-        public Func<IStorageConnectionBridge, object> ProcessRequest(Request request)
+        public Func<IStorageConnectionBridgeFacade, object> ProcessRequest(Request request)
         {
             if (request == null)
                 throw new ArgumentNullException("Incoming request cannot be null");
@@ -75,9 +75,9 @@ namespace WebServer
             return HttpUtility.ParseQueryString(decodedString); 
         }
 
-        public abstract Func<IStorageConnectionBridge, object> ProcessGet(Request request);
-        public abstract Func<IStorageConnectionBridge, object> ProcessPost(Request request);
-        public abstract Func<IStorageConnectionBridge, object> ProcessDelete(Request request);
-        public abstract Func<IStorageConnectionBridge, object> ProcessPut(Request request);
+        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request);
+        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request);
+        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request);
+        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request);
     }
 }

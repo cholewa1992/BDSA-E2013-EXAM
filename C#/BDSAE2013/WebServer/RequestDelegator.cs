@@ -17,7 +17,7 @@ namespace WebServer
     public class RequestDelegator : IDisposable
     {
         private readonly List<IRequestController> _requestControllers;        //A list of the available controllers used by the class
-        private readonly IStorageConnectionBridge _storage;                   //The storage module linked to the RequestDelegator, this can be injected on instantiation
+        private readonly IStorageConnectionBridgeFacade _storage;                   //The storage module linked to the RequestDelegator, this can be injected on instantiation
 
         /// <summary>
         /// The base constructor of the class.
@@ -34,7 +34,7 @@ namespace WebServer
         /// The constructor also sets up the list of controllers.
         /// </summary>
         /// <param name="storage"> The storage for the class to use </param>
-        public RequestDelegator(IStorageConnectionBridge storage)
+        public RequestDelegator(IStorageConnectionBridgeFacade storage)
         {
             //Check if the storage is null
             if (storage == null)
@@ -90,7 +90,7 @@ namespace WebServer
                 return request;
             }
 
-            Func<IStorageConnectionBridge, object> storageDelegate;
+            Func<IStorageConnectionBridgeFacade, object> storageDelegate;
 
             //Process the request using the defined controller.
             try

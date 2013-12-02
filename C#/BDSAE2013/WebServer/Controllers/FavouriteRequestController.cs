@@ -25,25 +25,25 @@ namespace WebServer
                 throw new KeywordNullException("Keyword must never be null");
         }
 
-        public override Func<IStorageConnectionBridge, object> ProcessGet(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request)
         {
             Console.WriteLine("Favourite Get");
             return (storage => "Not Yet Implemented");
         }
 
-        public override Func<IStorageConnectionBridge, object> ProcessPut(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request)
         {
             Console.WriteLine("Favourite Put");
             return (storage => "Not Yet Implemented");
         }
 
-        public override Func<IStorageConnectionBridge, object> ProcessPost(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request)
         {
             Console.WriteLine("Favourite Post");
             return (storage => "Not Yet Implemented");
         }
 
-        public override Func<IStorageConnectionBridge, object> ProcessDelete(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request)
         {
             Console.WriteLine("Favourite Delete");
             return (storage => "Not Yet Implemented");

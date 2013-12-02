@@ -5,7 +5,7 @@ namespace Storage
     /// <summary>
     /// Bridge implementation to provide stubs to builde storage module on
     /// </summary>
-    public interface IStorageConnectionBridge : IDisposable
+    public interface IStorageConnectionBridgeFacade : IDisposable
     {
         /// <summary>
         /// Fetches a single entity from the storage

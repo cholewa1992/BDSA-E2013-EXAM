@@ -35,7 +35,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that get movie info from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessGet(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request)
         {
             //Get the values of the given request.
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -55,7 +55,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that posts movie info to a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessPost(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request)
         {
             //Get the values from the request
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -86,7 +86,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that updates movie info in a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessPut(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request)
         {
             //Get the values from the request
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
@@ -117,7 +117,7 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that deletes movie info from a given storage, based on the contents of the request </returns>
-        public override Func<IStorageConnectionBridge, object> ProcessDelete(Request request)
+        public override Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request)
         {
             NameValueCollection nameValueCollection = ConvertByteToDataTable(request.Data);
             Console.WriteLine("Movie info Delete was invoked... " + "id: " + nameValueCollection["id"]);

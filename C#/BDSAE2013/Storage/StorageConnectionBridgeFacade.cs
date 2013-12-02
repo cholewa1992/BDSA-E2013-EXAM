@@ -6,7 +6,7 @@ namespace Storage
     /// <summary>
     /// Bridge implementation to provide stubs to builde storage module on
     /// </summary>
-    public abstract class StorageConnectionBridge : IStorageConnectionBridge
+    public abstract class StorageConnectionBridgeFacade : IStorageConnectionBridgeFacade
     {
         /// <summary>
         /// Concret IStorageFactory implementation to use
@@ -18,7 +18,7 @@ namespace Storage
         /// Constructs the bridge and uses dependency injection of an conret storage to use
         /// </summary>
         /// <param name="storageFactory">Concret storage implementation to use</param>
-        protected StorageConnectionBridge(IStorageConnectionFactory storageFactory)
+        protected StorageConnectionBridgeFacade(IStorageConnectionFactory storageFactory)
         {
             Db = storageFactory.GetConnection();
         }

@@ -6,7 +6,7 @@ namespace Storage
     /// <summary>
     /// Refined IStorageBridge implementation.
     /// </summary>
-    public class StorageBridgeFacade : StorageConnectionBridge
+    public class StorageBridgeFacade : StorageConnectionBridgeFacade
     {
         /// <summary>
         /// Constructs a new StorageBridgeFacade
