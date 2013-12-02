@@ -49,6 +49,8 @@
     <Compile Include="Controllers\PersonRequestController.cs" />
     <Compile Include="Controllers\FavouriteRequestController.cs" />
     <Compile Include="Controllers\UserRequestController.cs" />
+    <Compile Include="Exceptions\InvalidServiceRequestException.cs" />
+    <Compile Include="Exceptions\UnsplittableStringParameterException.cs" />
     <Compile Include="Exceptions\KeywordNullException.cs" />
     <Compile Include="Exceptions\InvalidRestMethodException.cs" />
     <Compile Include="Exceptions\RequestControllerListException.cs" />

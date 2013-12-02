@@ -31,7 +31,7 @@ namespace WebServer
                 throw new ArgumentNullException("Incoming request cannot be null");
 
             if (request.Method.Split(' ').Length != 2)
-                throw new ArgumentException("Incoming request method has bad syntax, must be [Method]' '[URL]");
+                throw new UnsplittableStringParameterException("Incoming request method has bad syntax, must be [Method]' '[URL]");
 
             //Split the request method string by the 'space' character, and get the first part of the resulting array.
             //This is the part of the method string that contains the rest request type

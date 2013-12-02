@@ -62,7 +62,7 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        public void Test_RequestDelegator_ProcessRequest_Output_BadRequest_FromProcessRequest()
+        public void Test_RequestDelegator_ProcessRequest_Output_BadRequest_FromRequestController()
         {
             RequestDelegator requestDelegator = new RequestDelegator();
 
@@ -84,9 +84,10 @@ namespace WebServerUnitTest
             requestDelegator.ProcessRequest(null);
         }
 
+
+        //DefineController has almost been fully tested through process request - should it be private ???
         //TODO Make test to check functionality of DefineController
         
-        /*
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException),
         "Parsed method is null")]
@@ -95,10 +96,40 @@ namespace WebServerUnitTest
             //Initialize a request delegator with injection
             RequestDelegator requestDelegator = new RequestDelegator();
 
-            requestDelegator.DefineController(null);
+            //Make a request with a null method.
+            Request req = new Request() { Method = null, Data = Encoding.GetEncoding("iso-8859-1").GetBytes("id=6&name=John") };
+
+            //The invocation should throw the ArgumentNullException
+            requestDelegator.DefineController(req.Method);
         }
-        */
 
+        [TestMethod]
+        [ExpectedException(typeof(UnsplittableStringParameterException),
+        "Parsed method is null")]
+        public void Test_RequestDelegator_DefineController_Error_WrongMethodSyntax()
+        {
+            //Initialize a request delegator with injection
+            RequestDelegator requestDelegator = new RequestDelegator();
 
+            //Make a request with a wrong method. Syntax should be [Method]' '[Url].
+            Request req = new Request() { Method = "GET", Data = Encoding.GetEncoding("iso-8859-1").GetBytes("id=6&name=John") };
+
+            //The invocation should throw the UnsplittableStringParameterException
+            requestDelegator.DefineController(req.Method);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidServiceRequestException),
+        "Parsed method is null")]
+        public void Test_RequestDelegator_DefineController_Error_NoMatch()
+        {
+            RequestDelegator requestDelegator = new RequestDelegator();
+
+            //Make a request with a wrong method. (url does not contain a valid keyword)
+            Request req = new Request() { Method = "UPDATE https://www.google.dk/MovieDatabase", Data = Encoding.GetEncoding("iso-8859-1").GetBytes("id=6&name=John") };
+            
+            //The invocation should throw the InvalidServiceRequestException
+            requestDelegator.DefineController(req.Method);
+        }
     }
 }
