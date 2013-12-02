@@ -165,6 +165,8 @@ namespace CommunicationFramework
 
             request.Data = Encoding.GetEncoding( "iso-8859-1" ).GetBytes( new StreamReader( context.Request.InputStream ).ReadToEnd() );
 
+            Listener.Close();
+
             return request;
         }
 
