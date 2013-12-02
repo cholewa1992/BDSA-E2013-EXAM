@@ -39,8 +39,6 @@ namespace WebServer
                 Task.Run(() => new RequestDelegator().ProcessRequest(request));
                 Console.WriteLine("new thread started");
             }
-
         }
-
     }
 }

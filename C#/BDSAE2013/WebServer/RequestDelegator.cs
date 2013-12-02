@@ -60,10 +60,15 @@ namespace WebServer
         /// <summary>
         /// Method to process incoming requests.
         /// The method will use the underlying controllers to process the request.
+        /// @pre _storage != null
         /// </summary>
         /// <param name="request"> The request to process </param>
         public Request ProcessRequest(Request request)
         {
+            //pre condition checks
+            if (_storage == null)
+                throw new StorageNullException("Storage was null when invoking ProcessRequest method");
+
             //Check if the incoming request is null
             if (request == null)
                 throw new ArgumentNullException("Incoming request must not be null");
@@ -81,6 +86,7 @@ namespace WebServer
 
                 //This response code is returned when no controllers can process the incoming request
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
+                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
                 return request;
             }
 
@@ -97,6 +103,7 @@ namespace WebServer
 
                 //This response code is returned if the request was not a restful method or some vital input was null.
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
+                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
                 return request;
             }
 
@@ -113,12 +120,21 @@ namespace WebServer
                 */
 
                 request.ResponseStatusCode = Request.StatusCode.Ok;
+                //TODO response data
                 return request;
             }
-            catch (ArgumentException e)
+            catch (InvalidOperationException e)
             {
                 //This response code is returned if the request could not process the request in the database
                 request.ResponseStatusCode = Request.StatusCode.NotFound;
+                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
+                return request;
+            }
+            catch (Exception e)
+            {
+                //This response code is returned if the request could not process the request in the database
+                request.ResponseStatusCode = Request.StatusCode.InternalError;
+                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
                 return request;
             }
         }
