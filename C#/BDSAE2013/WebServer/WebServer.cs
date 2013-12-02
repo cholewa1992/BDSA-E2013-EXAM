@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CommunicationFramework;
+using EntityFrameworkStorage;
+using Storage;
 
 namespace WebServer
 {
@@ -9,43 +11,48 @@ namespace WebServer
     public class WebServer
     {
 
-        private readonly CommunicationHandler _communicationHandler;
+        
 
 
         /*
         public static void Main(String[] args)
         {
 
-            new WebServer("http://localhost:1337", Protocols.HTTP).Start();
+            new WebServer().Start("http://localhost:1337", Protocols.HTTP);
 
         }*/
 
 
-        public WebServer(String Uri, Protocols protocol)
+
+        public void Start(String listenAddress, Protocols protocol)
         {
-
-            _communicationHandler = new CommunicationHandler(protocol);
-
-        }
-
-
-        public void Start()
-        {
-            Console.WriteLine("Server started");
+            Console.WriteLine("Server started listening on " + listenAddress);
 
             while (true)
             {
-                var request = _communicationHandler.GetRequest();
-                Task.Run(() => StartRequestDelegatorThread(request));
+
+                var ch = new CommunicationHandler(protocol);
+
+                var request = ch.GetRequest(listenAddress);
+
+                Task.Run(() => StartRequestDelegatorThread(request, ch));
+
                 Console.WriteLine("new thread started");
+
             }
         }
 
-        public void StartRequestDelegatorThread(Request request)
+
+        public void StartRequestDelegatorThread(Request request, CommunicationHandler ch)
         {
-            using (var dg = new RequestDelegator())
+
+            using (var rd = new RequestDelegator(new StorageBridgeFacade(new EFConnectionFactory())))
             {
-                dg.ProcessRequest(request);
+
+                var result = rd.ProcessRequest(request);
+
+                ch.RespondToRequest(result);
+
             }
         }
     }
