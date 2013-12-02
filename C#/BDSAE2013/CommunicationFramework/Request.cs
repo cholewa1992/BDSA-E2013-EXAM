@@ -17,6 +17,7 @@ namespace CommunicationFramework
         {
             BadRequest,
             NotFound,
+            InternalError,
             Ok
         }
         public StatusCode ResponseStatusCode{ get; set; }
