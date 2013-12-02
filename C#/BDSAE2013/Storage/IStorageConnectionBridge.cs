@@ -54,5 +54,10 @@ namespace Storage
         /// <param name="id">The id of the entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
         bool Delete<TEntity>(int id) where TEntity : class, IEntityDto;
+
+        /// <summary>
+        /// Checks whether or not the storage connection is active
+        /// </summary>
+        void IsDisposed();
     }
 }

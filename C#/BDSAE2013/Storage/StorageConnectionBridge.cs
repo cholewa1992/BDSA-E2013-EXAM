@@ -24,6 +24,14 @@ namespace Storage
         }
 
         /// <summary>
+        /// Checks wether or not the storage connection is active
+        /// </summary>
+        public void IsDisposed()
+        {
+            if (_isDisposed) throw new InternalDbException("Storage has been disposed");
+        }
+
+        /// <summary>
         /// Disposable methode to ensure that the bridge and its underlying storage is closed corretly 
         /// </summary>
         public void Dispose()
@@ -87,7 +95,7 @@ namespace Storage
         /// <returns>true if entities was saved</returns>
         protected bool SaveChanges()
         {
-            if(_isDisposed) throw new InvalidOperationException("Storage has been disposed");
+            IsDisposed();
             return Db.SaveChanges();
         }
     }

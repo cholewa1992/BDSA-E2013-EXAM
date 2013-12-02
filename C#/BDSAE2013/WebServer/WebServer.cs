@@ -35,9 +35,17 @@ namespace WebServer
 
             while (true)
             {
-                Request request = _communicationHandler.GetRequest();
-                Task.Run(() => new RequestDelegator().ProcessRequest(request));
+                var request = _communicationHandler.GetRequest();
+                Task.Run(() => StartRequestDelegatorThread(request));
                 Console.WriteLine("new thread started");
+            }
+        }
+
+        public void StartRequestDelegatorThread(Request request)
+        {
+            using (var dg = new RequestDelegator())
+            {
+                dg.ProcessRequest(request);
             }
         }
     }

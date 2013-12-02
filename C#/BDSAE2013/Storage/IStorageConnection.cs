@@ -45,5 +45,7 @@ namespace Storage
         /// </summary>
         /// <returns>true if entities was saved</returns>
         bool SaveChanges();
+
+        
     }
 }

@@ -13,13 +13,14 @@ namespace StorageTestRun
             using (var db = new StorageBridgeFacade(new EFConnectionFactory()))
             {
                 var user = new UserAcc
-                {
-                    Email = "jbec@itu.dk",
-                    Firstname = "Jacob",
-                    Lastname = "Cholewa",
-                    Password = "1234",
-                    Username = "RAzor"
-                };
+                    {
+                        Email = "jbec@itu.dk",
+                        Firstname = "Jacob",
+                        Lastname = "Cholewa",
+                        Password = "1234",
+                        Username = "RAzor"
+                    };
+                    //();
                 Console.WriteLine(db.Add(user));
             }
             Console.WriteLine("Press any key...");

@@ -14,7 +14,7 @@ namespace WebServer
     /// The class contains a list of control objects that can process different types of request when invoked. This results in delegates that can be used to access the storage module.
     /// @invariant _storage != null
     /// </summary>
-    public class RequestDelegator
+    public class RequestDelegator : IDisposable
     {
         private readonly List<IRequestController> _requestControllers;        //A list of the available controllers used by the class
         private readonly IStorageConnectionBridge _storage;                   //The storage module linked to the RequestDelegator, this can be injected on instantiation
@@ -110,6 +110,7 @@ namespace WebServer
             //Invoke the delegate received from the controller using the storage module given through the constructor.
             try
             {
+
                 object returnValue = storageDelegate.Invoke(_storage);
 
                 /*
@@ -185,6 +186,11 @@ namespace WebServer
 
             //If no keyword matched any controller the program throws an exception due to bad input.
             throw new InvalidServiceRequestException("The url did not match any controllers");
+        }
+
+        public void Dispose()
+        {
+            _storage.Dispose();
         }
     }
 }

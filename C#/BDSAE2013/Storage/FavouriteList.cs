@@ -12,7 +12,7 @@ namespace Storage
     using System;
     using System.Collections.Generic;
     
-    public partial class FavouriteList
+    public partial class FavouriteList : IEntityDto
     {
         public int Id { get; set; }
         public int UserAccId { get; set; }

@@ -65,6 +65,31 @@ namespace StorageUnitTest
         }
 
         [TestMethod]
+        public void DeleteByIdTest()
+        {
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            Assert.IsTrue(sud.Delete<UserAcc>(1));
+        }
+
+        [TestMethod]
+        public void DeleteByIdFailedTest()
+        {
+            _mock.Setup(foo => foo.SaveChanges()).Returns(false);
+            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            Assert.IsFalse(sud.Delete<UserAcc>(1));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void DeleteByIdNotFoundFailedTest()
+        {
+            _mock.Setup(foo => foo.SaveChanges()).Returns(false);
+            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            Assert.IsFalse(sud.Delete<UserAcc>(4));
+        }
+
+        [TestMethod]
         public void GetByIdTest()
         {
             var sud = new StorageBridgeFacade(_factoryMock.Object);
@@ -74,9 +99,11 @@ namespace StorageUnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void GetByIdWrongIdTest()
         {
-            //TODO
+            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            sud.Get<UserAcc>(4);
         }
 
         [TestMethod]
