@@ -38,9 +38,9 @@ namespace Storage
             {
                 return Db.Get<TEntity>().Single(t => t.Id == id);
             }
-            catch(InvalidOperationException)
+            catch(InvalidOperationException e)
             {
-                throw new InvalidOperationException("A single entity with the given Id could not be found");
+                throw new InvalidOperationException("Either none or too many entities with given ID was found");
             }
         }
 
@@ -62,13 +62,13 @@ namespace Storage
         /// <returns>The entity just added</returns>
         /// <remarks>
         /// @post entity != null
-        /// @post entity.Id != 0
+        /// @post entity.Id == 0
         /// </remarks>
         public override bool Add<TEntity>(TEntity entity)
         {
 
             if(entity == null) throw new ArgumentNullException("entity");
-            if(entity.Id == 0) throw new ArgumentException("Id can't be preset!");
+            if(entity.Id != 0) throw new ArgumentException("Id can't be preset!");
             Db.Add(entity);
             return SaveChanges();
         }

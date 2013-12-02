@@ -39,8 +39,7 @@ namespace StorageTestRun
             Console.WriteLine("Now deleteing the user");
             using (var db = new StorageBridgeFacade(new EFConnectionFactory()))
             {
-                
-                Console.WriteLine(db.Delete<UserAcc>(20));
+                Console.WriteLine(db.Delete(db.Get<UserAcc>().First()));
             }
             Console.WriteLine("Press any key...");
             Console.ReadKey();
