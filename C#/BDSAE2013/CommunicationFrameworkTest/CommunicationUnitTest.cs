@@ -27,6 +27,15 @@ namespace CommunicationFrameworkUnitTest
     [ TestClass ]
     public class CommunicationUnitTest
     {
+        private int _port = 0;
+
+	    public int Port
+	    {
+	        get
+	        {
+                return ++_port;
+	        }
+	    }
         //Test ideas: Check to make sure timeout actually works,
         //Check whether or not the actual send -> receive -> do stuff -> send -> receive actually works,
         [ TestMethod ]
@@ -34,7 +43,7 @@ namespace CommunicationFrameworkUnitTest
         {
             ExceptionAssert.Throws<ProtocolException>( () =>
             {
-                new CommunicationHandler( Protocols.HTTP ).Send( "http://localhost:1337/", null, "test" );
+                new CommunicationHandler( Protocols.HTTP ).Send( "http://localhost:" + Port + "/", null, "test" );
             }, "ERROR! Data cannot be null" );
         }
 
@@ -43,15 +52,17 @@ namespace CommunicationFrameworkUnitTest
         {
             var Server = new CommunicationHandler( Protocols.HTTP );
 
+            int portToUse = Port;
+
             Task.Run( delegate
             {
                 Thread.Sleep( 500 );
 
                 var Client = new CommunicationHandler( Protocols.HTTP );
-                Client.Send( "http://localhost:1337/", new byte[ 0 ], "Test" );
+                Client.Send( "http://localhost:" + portToUse + "/", new byte[ 0 ], "Test" );
             } );
 
-            String[] method = Server.GetRequest("http://localhost:1337/").Method.Split(' ');
+            String[] method = Server.GetRequest("http://localhost:" + portToUse + "/").Method.Split(' ');
             Assert.AreEqual( "Test", method[ 0 ] );
         }
 
@@ -60,15 +71,17 @@ namespace CommunicationFrameworkUnitTest
         {
             var Server = new CommunicationHandler( Protocols.HTTP );
 
+            int portToUse = Port;
+
             Task.Run( () =>
             {
                 Thread.Sleep( 500 );
 
                 var Client = new CommunicationHandler( Protocols.HTTP );
-                Client.Send( "http://localhost:1337/", Encoding.GetEncoding( "iso-8859-1" ).GetBytes( "test".ToCharArray() ), "Test" );
+                Client.Send( "http://localhost:" + portToUse + "/", Encoding.GetEncoding( "iso-8859-1" ).GetBytes( "test".ToCharArray() ), "Test" );
             } );
 
-            Assert.AreEqual("test", Encoding.GetEncoding("iso-8859-1").GetString(Server.GetRequest("http://localhost:1337/").Data));
+            Assert.AreEqual("test", Encoding.GetEncoding("iso-8859-1").GetString(Server.GetRequest("http://localhost:" + portToUse + "/").Data));
         }
 
         [ TestMethod ]

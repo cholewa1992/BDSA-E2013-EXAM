@@ -18,7 +18,8 @@ namespace CommunicationFramework
     internal class HTTPProtocol : IProtocol
     {
         //Lookup table based on the request object and it's ListenerContext. This is specific for the HTTPProtocol
-        private readonly Dictionary<Request, HttpListenerContext> _lookupTable = new Dictionary<Request, HttpListenerContext>();
+        private Dictionary<Request, HttpListenerContext> _lookupTable = new Dictionary<Request, HttpListenerContext>();
+        private readonly Dictionary<Request, HttpListenerContext> _writeableLookupTable = new Dictionary<Request, HttpListenerContext>();
         private string _address;
         private HttpListener _listener;
         private WebRequest _request;
@@ -26,9 +27,8 @@ namespace CommunicationFramework
         /// <summary>
         /// Default constructor, initializes the Address to the default address
         /// </summary>
-        public HTTPProtocol()
+        public HTTPProtocol() : this("http://localhost:1337/")
         {
-            Address = "http://localhost:1337/";
             
         }
 
@@ -46,7 +46,14 @@ namespace CommunicationFramework
             get
             {
                 if( _listener == null )
+                {
                     _listener = new HttpListener();
+
+                    //Add the address to the list of prefixes that the listener listens on
+                    _listener.Prefixes.Add( Address );
+                    //And the start the listening routine
+                    _listener.Start();
+                }
 
                 return _listener;
             }
@@ -150,10 +157,6 @@ namespace CommunicationFramework
         /// <returns>A request object created from the request that was received using the http protocol</returns>
         public Request GetRequest()
         {
-            //Add the address to the list of prefixes that the listener listens on
-            Listener.Prefixes.Add( Address );
-            //And the start the listening routine
-            Listener.Start();
             //Wait until we actually receive a request, then process it
             HttpListenerContext context = Listener.GetContext();
 
@@ -161,11 +164,12 @@ namespace CommunicationFramework
 
             //Add a mapping from the request object to the context that received it
             //so we know where to send a response to
-            _lookupTable.Add( request, context );
+            _writeableLookupTable.Add( request, context );
+            Interlocked.Exchange( ref _lookupTable, _writeableLookupTable );
 
             request.Data = Encoding.GetEncoding( "iso-8859-1" ).GetBytes( new StreamReader( context.Request.InputStream ).ReadToEnd() );
 
-            Listener.Close();
+            //Listener.Close();
 
             return request;
         }
@@ -180,7 +184,6 @@ namespace CommunicationFramework
         public void RespondToRequest( Request request )
         {
             HttpListenerContext context;
-
             //CheckPreCondition lookupTable.contains( request )
             if( !_lookupTable.TryGetValue( request, out context ) )
                 throw new ProtocolException("ERROR! No context found which received the supplied request. Did you create request object yourself?");

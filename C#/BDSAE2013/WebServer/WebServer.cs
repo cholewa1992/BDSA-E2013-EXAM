@@ -6,53 +6,34 @@ using Storage;
 
 namespace WebServer
 {
-
-
     public class WebServer
     {
-
-        
-
-
-        /*
-        public static void Main(String[] args)
+        public static void Main( String[] args )
         {
+            new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
+        }
 
-            new WebServer().Start("http://localhost:1337", Protocols.HTTP);
-
-        }*/
-
-
-
-        public void Start(String listenAddress, Protocols protocol)
+        public void Start( String listenAddress, Protocols protocol )
         {
-            Console.WriteLine("Server started listening on " + listenAddress);
-
-            while (true)
+            Console.WriteLine( "Server started listening on " + listenAddress );
+            var ch = new CommunicationHandler( protocol );
+            while( true )
             {
+                var request = ch.GetRequest( listenAddress );
 
-                var ch = new CommunicationHandler(protocol);
+                Task.Run( () => StartRequestDelegatorThread( request, ch ) );
 
-                var request = ch.GetRequest(listenAddress);
-
-                Task.Run(() => StartRequestDelegatorThread(request, ch));
-
-                Console.WriteLine("new thread started");
-
+                Console.WriteLine( "new thread started" );
             }
         }
 
-
-        public void StartRequestDelegatorThread(Request request, CommunicationHandler ch)
+        public void StartRequestDelegatorThread( Request request, CommunicationHandler ch )
         {
-
-            using (var rd = new RequestDelegator(new StorageConnectionBridgeFacade(new EFConnectionFactory())))
+            using( var rd = new RequestDelegator( new StorageConnectionBridgeFacade( new EFConnectionFactory() ) ) )
             {
+                var result = rd.ProcessRequest( request );
 
-                var result = rd.ProcessRequest(request);
-
-                ch.RespondToRequest(result);
-
+                ch.RespondToRequest( result );
             }
         }
     }
