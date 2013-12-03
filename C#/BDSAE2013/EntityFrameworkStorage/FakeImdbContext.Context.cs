@@ -7,9 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using EntityFrameworkStorage;
 
-namespace Mankey_Pidgey_AS39
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Data.Entity;

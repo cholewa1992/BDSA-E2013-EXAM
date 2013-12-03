@@ -9,6 +9,6 @@
         /// Creates a connection
         /// </summary>
         /// <returns>the active IStorageConnection connection</returns>
-        IStorageConnection GetConnection();
+        IStorageConnection CreateConnection();
     }
 }

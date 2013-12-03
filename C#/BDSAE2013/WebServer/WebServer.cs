@@ -46,7 +46,7 @@ namespace WebServer
         public void StartRequestDelegatorThread(Request request, CommunicationHandler ch)
         {
 
-            using (var rd = new RequestDelegator(new StorageBridgeFacade(new EFConnectionFactory())))
+            using (var rd = new RequestDelegator(new StorageConnectionBridgeFacade(new EFConnectionFactory())))
             {
 
                 var result = rd.ProcessRequest(request);

@@ -4,40 +4,19 @@ using System.Linq;
 namespace Storage
 {
     /// <summary>
-    /// Bridge implementation to provide stubs to builde storage module on
+    /// Refined IStorageBridge implementation.
     /// </summary>
-    public abstract class StorageConnectionBridgeFacade : IStorageConnectionBridgeFacade
+    public class StorageConnectionBridgeFacade : AbstractStorageConnectionBridgeFacade
     {
         /// <summary>
-        /// Concret IStorageFactory implementation to use
+        /// Constructs a new StorageBridgeFacade
         /// </summary>
-        protected IStorageConnection Db { private set; get; }
-        private bool _isDisposed;
-
-        /// <summary>
-        /// Constructs the bridge and uses dependency injection of an conret storage to use
-        /// </summary>
-        /// <param name="storageFactory">Concret storage implementation to use</param>
-        protected StorageConnectionBridgeFacade(IStorageConnectionFactory storageFactory)
+        /// <param name="storageFactory">The storage to use</param>
+        /// <remarks>
+        /// </remarks>
+        public StorageConnectionBridgeFacade(IStorageConnectionFactory storageFactory)
+            : base(storageFactory)
         {
-            Db = storageFactory.GetConnection();
-        }
-
-        /// <summary>
-        /// Checks wether or not the storage connection is active
-        /// </summary>
-        public void IsDisposed()
-        {
-            if (_isDisposed) throw new InternalDbException("Storage has been disposed");
-        }
-
-        /// <summary>
-        /// Disposable methode to ensure that the bridge and its underlying storage is closed corretly 
-        /// </summary>
-        public void Dispose()
-        {
-            _isDisposed = true;
-            Db.Dispose();
         }
 
         /// <summary>
@@ -46,15 +25,34 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <param name="id">The id of the entity you wish to fetch</param>
         /// <returns>The entity with the given ID. Throws an EntityNotFoundException if nothing is found</returns>
-        public abstract TEntity Get<TEntity>(int id) where TEntity : class, IEntityDto;
-
+        /// <remarks>
+        /// @pre id > 0
+        /// @pre id < int.max
+        /// </remarks>
+        public override TEntity Get<TEntity>(int id)
+        {
+            IsDisposed();
+            if(id <= 0){ throw new ArgumentException("Ids 0 or less"); }
+            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
+            try
+            {
+                return Db.Get<TEntity>().Single(t => t.Id == id);
+            }
+            catch(InvalidOperationException)
+            {
+                throw new InvalidOperationException("Either none or too many entities with given ID was found");
+            }
+        }
 
         /// <summary>
         /// Fetches entities from the storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <returns>The entities as an IQueryable</returns>
-        public abstract IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto;
+        public override IQueryable<TEntity> Get<TEntity>()
+        {
+            return Db.Get<TEntity>();
+        }
 
         /// <summary>
         /// Adds a new entity to the storage
@@ -62,7 +60,24 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
-        public abstract bool Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        /// <remarks>
+        /// @pre entity != null
+        /// @pre entity.Id == 0
+        /// @pre IsDisposed();
+        /// @post entity.Id != 0
+        /// </remarks>
+        public override bool Add<TEntity>(TEntity entity)
+        {
+            IsDisposed();
+            if(entity == null) throw new ArgumentNullException("entity");
+            if(entity.Id != 0) throw new ArgumentException("Id can't be preset!");
+
+            Db.Add(entity);
+
+            if(entity.Id == 0) throw new InternalDbException("Id was not set");
+
+            return SaveChanges();
+        }
 
         /// <summary>
         /// Puts the given entity to the database.
@@ -71,7 +86,17 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
         /// <returns>The just updated entity</returns>
-        public abstract bool Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        /// <remarks>
+        /// @pre IsDisposed();
+        /// @pre entity != null
+        /// </remarks>
+        public override bool Update<TEntity>(TEntity entity)
+        {
+            IsDisposed();
+            if (entity == null) throw new ArgumentNullException("entity");
+            Db.Update(entity);
+            return SaveChanges();
+        }
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -79,7 +104,17 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public abstract bool Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
+        /// <remarks>
+        /// @pre IsDisposed();
+        /// @pre entity != null
+        /// </remarks>
+        public override bool Delete<TEntity>(TEntity entity)
+        {
+            IsDisposed();
+            if (entity == null) throw new ArgumentNullException("entity");
+            Db.Delete(entity);
+            return SaveChanges();
+        }
 
         /// <summary>
         /// Deletes the given entity from the data
@@ -87,16 +122,19 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="id">The id of the entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
-        public abstract bool Delete<TEntity>(int id) where TEntity : class, IEntityDto;
-
-        /// <summary>
-        /// Saves changes to the context
-        /// </summary>
-        /// <returns>true if entities was saved</returns>
-        protected bool SaveChanges()
+        /// <remarks>
+        /// @pre IsDisposed();
+        /// @pre id >= 0
+        /// @pre id < int.max
+        /// </remarks>
+        public override bool Delete<TEntity>(int id)
         {
             IsDisposed();
-            return Db.SaveChanges();
+            if (id <= 0) { throw new ArgumentException("Ids 0 or less"); }
+            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
+            Db.Delete(Get<TEntity>(id));
+            return SaveChanges();
         }
+
     }
 }

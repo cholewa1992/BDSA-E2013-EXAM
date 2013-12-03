@@ -20,7 +20,7 @@ namespace StorageUnitTest
         public void AddTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsTrue(sud.Add(new UserAcc()));
         }
         
@@ -28,7 +28,7 @@ namespace StorageUnitTest
         public void AddFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsFalse(sud.Add(new UserAcc()));
         }
 
@@ -36,7 +36,7 @@ namespace StorageUnitTest
         public void UpdateTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsTrue(sud.Update(new UserAcc()));
         }
 
@@ -44,7 +44,7 @@ namespace StorageUnitTest
         public void UpdateFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsFalse(sud.Update(new UserAcc()));
         }
 
@@ -52,7 +52,7 @@ namespace StorageUnitTest
         public void DeleteTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsTrue(sud.Delete(new UserAcc()));
         }
 
@@ -60,7 +60,7 @@ namespace StorageUnitTest
         public void DeleteFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsFalse(sud.Delete(new UserAcc()));
         }
 
@@ -68,7 +68,7 @@ namespace StorageUnitTest
         public void DeleteByIdTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsTrue(sud.Delete<UserAcc>(1));
         }
 
@@ -76,7 +76,7 @@ namespace StorageUnitTest
         public void DeleteByIdFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsFalse(sud.Delete<UserAcc>(1));
         }
 
@@ -85,14 +85,14 @@ namespace StorageUnitTest
         public void DeleteByIdNotFoundFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.IsFalse(sud.Delete<UserAcc>(4));
         }
 
         [TestMethod]
         public void GetByIdTest()
         {
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.AreEqual(_user1,sud.Get<UserAcc>(1));
             Assert.AreEqual(_user2, sud.Get<UserAcc>(2));
             Assert.AreEqual(_user3, sud.Get<UserAcc>(3));
@@ -102,14 +102,14 @@ namespace StorageUnitTest
         [ExpectedException(typeof(InvalidOperationException))]
         public void GetByIdWrongIdTest()
         {
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             sud.Get<UserAcc>(4);
         }
 
         [TestMethod]
         public void GetAllTest()
         {
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             var e = sud.Get<UserAcc>();
             Assert.AreEqual(_user1,e.Single(t => t.Id == 1));
             Assert.AreEqual(_user2, e.Single(t => t.Id == 2));
@@ -120,7 +120,7 @@ namespace StorageUnitTest
         public void GetAllEmptyStorageTest()
         {
             _mock.Setup(foo => foo.Get<UserAcc>()).Returns(new List<UserAcc>().AsQueryable);
-            var sud = new StorageBridgeFacade(_factoryMock.Object);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.AreEqual(0, sud.Get<UserAcc>().Count());
         }
 
@@ -171,7 +171,7 @@ namespace StorageUnitTest
             _mock.Setup(foo => foo.Update(_user3));
 
             _factoryMock = new Mock<IStorageConnectionFactory>();
-            _factoryMock.Setup(foo => foo.GetConnection()).Returns(_mock.Object);
+            _factoryMock.Setup(foo => foo.CreateConnection()).Returns(_mock.Object);
         }
     }
 }

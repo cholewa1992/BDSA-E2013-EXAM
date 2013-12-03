@@ -1,4 +1,4 @@
-﻿using Mankey_Pidgey_AS39;
+﻿
 using Storage;
 
 namespace EntityFrameworkStorage
@@ -12,7 +12,7 @@ namespace EntityFrameworkStorage
         /// Creates a FakeImdbContext connection
         /// </summary>
         /// <returns>The active IStorageConnection connection</returns>
-        public IStorageConnection GetConnection()
+        public IStorageConnection CreateConnection()
         {
             return new EFStorageConnection<FakeImdbContext>();
         }

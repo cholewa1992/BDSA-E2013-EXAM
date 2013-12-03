@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFConnectionFactory.cs" />
-    <Compile Include="EFStorage.cs" />
+    <Compile Include="EFStorageConnection.cs" />
     <Compile Include="IDbContext.cs" />
     <Compile Include="FakeImdbContext.Context.cs">
       <AutoGen>True</AutoGen>
