@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -43,12 +46,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestController.cs" />
-    <Compile Include="Controllers\MovieInfoRequestController.cs" />
-    <Compile Include="Controllers\MovieRequestController.cs" />
-    <Compile Include="Controllers\PeopleInfoRequestController.cs" />
-    <Compile Include="Controllers\PersonRequestController.cs" />
-    <Compile Include="Controllers\FavouriteRequestController.cs" />
-    <Compile Include="Controllers\UserRequestController.cs" />
+    <Compile Include="AggregatedControllers\Concretes\MovieDataRequestController.cs" />
+    <Compile Include="Encoder.cs" />
+    <Compile Include="EntityControllers\Abstracts\AbstractEntityRequestController.cs" />
+    <Compile Include="AggregatedControllers\Abstracts\AbstractAggregatedRequestController.cs" />
+    <Compile Include="EntityControllers\Concretes\MovieInfoRequestController.cs" />
+    <Compile Include="EntityControllers\Concretes\MovieRequestController.cs" />
+    <Compile Include="EntityControllers\Concretes\PeopleInfoRequestController.cs" />
+    <Compile Include="EntityControllers\Concretes\PersonRequestController.cs" />
+    <Compile Include="EntityControllers\Concretes\FavouriteRequestController.cs" />
+    <Compile Include="EntityControllers\Concretes\UserRequestController.cs" />
+    <Compile Include="AggregatedControllers\Interfaces\IAggregatedRequestController.cs" />
+    <Compile Include="EntityControllers\Interfaces\IEntityRequestController.cs" />
+    <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="Exceptions\InvalidServiceRequestException.cs" />
     <Compile Include="Exceptions\UnsplittableStringParameterException.cs" />
     <Compile Include="Exceptions\KeywordNullException.cs" />
@@ -56,6 +66,7 @@
     <Compile Include="Exceptions\RequestControllerListException.cs" />
     <Compile Include="Exceptions\StorageNullException.cs" />
     <Compile Include="IRequestController.cs" />
+    <Compile Include="JSonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestDelegator.cs" />
@@ -63,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommunicationFramework\CommunicationFramework.csproj">

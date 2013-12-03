@@ -8,6 +8,7 @@ using System.IO;
 using System.Web;
 using System.Collections.Specialized;
 using Storage;
+using Newtonsoft.Json;
 
 namespace WebServer
 {
@@ -25,59 +26,40 @@ namespace WebServer
         /// </summary>
         /// <param name="request"> The original request received by the Web Server </param>
         /// <returns> A delegate that can be given a storage in order to perform a request. This can be GET, PUT, POST and DELETE requests from each of the entities </returns>
-        public Func<IStorageConnectionBridgeFacade, object> ProcessRequest(Request request)
-        {
-            if (request == null)
-                throw new ArgumentNullException("Incoming request cannot be null");
-
-            if (request.Method.Split(' ').Length != 2)
-                throw new UnsplittableStringParameterException("Incoming request method has bad syntax, must be [Method]' '[URL]");
-
-            //Split the request method string by the 'space' character, and get the first part of the resulting array.
-            //This is the part of the method string that contains the rest request type
-            string input = request.Method.Split(' ')[0];
-
-            //Check which rest request type the request is and parse it to the proper method
-            switch (input) 
-            { 
-                case "GET":
-                    return ProcessGet(request);
-
-                case "POST":
-                    return ProcessPost(request);
-                    
-                case "DELETE":
-                    return ProcessDelete(request);
-                    
-                case "PUT":
-                    return ProcessPut(request);
-            }
-
-            //If the request does not match any rest methods it is an invalid input and thus the program throws an error
-            throw new InvalidRestMethodException("Input did not match any REST method");
-        }
+        public abstract Func<IStorageConnectionBridgeFacade, byte[]> ProcessRequest(Request request);
 
         /// <summary>
-        /// Converts a byte code into a table of values.
+        /// Converts a byte code into a dictionary of values.
         /// </summary>
         /// <param name="bytes"> The bytes containing the values </param>
-        /// <returns> A table with the values contained in the byte code </returns>
-        public NameValueCollection ConvertByteToDataTable(byte[] bytes)
+        /// <returns> A dictionary with the values contained in the byte code </returns>
+        public Dictionary<string, string> GetRequestValues(byte[] bytes)
         {
             if (bytes == null)
                 throw new ArgumentNullException("bytes cannot be null");
 
             //Decode the byte code with the proper encoding.
-            string decodedString = Encoding.GetEncoding("iso-8859-1").GetString(bytes);
+            string json = Encoding.GetEncoding("iso-8859-1").GetString(bytes);
             
-            //Then we parse the resulting string through the HttpUtility module which converts it into a table for easy access of the data contained in the byte code.
-            //The string contained in the byte code should have the format 'valueName'='value'&'valueName'='value'&...
-            return HttpUtility.ParseQueryString(decodedString); 
+            //Then we parse the resulting string through the JSonParser class to get the values contained in the byte code.
+            try
+            {
+                return JSonParser.GetValues(json);
+            }
+            catch (JsonReaderException e)
+            {
+                throw new InvalidDataException("Data did not contain proper JSon");
+            }
         }
 
-        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request);
-        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request);
-        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request);
-        public abstract Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request);
+        public int GetUrlArgument(string method)
+        {
+            if (method == null)
+                throw new ArgumentNullException("Method cannot be null");
+
+            //Get the request value of the url
+            string url = method.Split(' ')[1];
+            return int.Parse(url.Split('/').Last());
+        }
     }
 }

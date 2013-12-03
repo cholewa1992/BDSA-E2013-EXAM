@@ -66,7 +66,7 @@ namespace Storage
         /// @pre IsDisposed();
         /// @post entity.Id != 0
         /// </remarks>
-        public override bool Add<TEntity>(TEntity entity)
+        public override void Add<TEntity>(TEntity entity)
         {
             IsDisposed();
             if(entity == null) throw new ArgumentNullException("entity");
@@ -76,7 +76,7 @@ namespace Storage
 
             if(entity.Id == 0) throw new InternalDbException("Id was not set");
 
-            return SaveChanges();
+            SaveChanges();
         }
 
         /// <summary>
@@ -90,12 +90,12 @@ namespace Storage
         /// @pre IsDisposed();
         /// @pre entity != null
         /// </remarks>
-        public override bool Update<TEntity>(TEntity entity)
+        public override void Update<TEntity>(TEntity entity)
         {
             IsDisposed();
             if (entity == null) throw new ArgumentNullException("entity");
             Db.Update(entity);
-            return SaveChanges();
+            SaveChanges();
         }
 
         /// <summary>
@@ -108,12 +108,12 @@ namespace Storage
         /// @pre IsDisposed();
         /// @pre entity != null
         /// </remarks>
-        public override bool Delete<TEntity>(TEntity entity)
+        public override void Delete<TEntity>(TEntity entity)
         {
             IsDisposed();
             if (entity == null) throw new ArgumentNullException("entity");
             Db.Delete(entity);
-            return SaveChanges();
+            SaveChanges();
         }
 
         /// <summary>
@@ -127,13 +127,13 @@ namespace Storage
         /// @pre id >= 0
         /// @pre id < int.max
         /// </remarks>
-        public override bool Delete<TEntity>(int id)
+        public override void Delete<TEntity>(int id)
         {
             IsDisposed();
             if (id <= 0) { throw new ArgumentException("Ids 0 or less"); }
             if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
             Db.Delete(Get<TEntity>(id));
-            return SaveChanges();
+            SaveChanges();
         }
 
     }

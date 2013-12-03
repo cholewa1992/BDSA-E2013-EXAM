@@ -86,11 +86,11 @@ namespace WebServer
 
                 //This response code is returned when no controllers can process the incoming request
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
-                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
+                request.Data = Encoder.Encode(JSonParser.Parse("response", e.Message));
                 return request;
             }
 
-            Func<IStorageConnectionBridgeFacade, object> storageDelegate;
+            Func<IStorageConnectionBridgeFacade, byte[]> storageDelegate;
 
             //Process the request using the defined controller.
             try
@@ -99,43 +99,36 @@ namespace WebServer
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("An error occured while processing request. Error: "+e.Message);
+                Console.WriteLine("An error occured while processing request. Error: " + e.Message);
 
-                //This response code is returned if the request was not a restful method or some vital input was null.
+                //This response code is returned if the request was not a restful method or some vital input was null or incorrect syntax (eg. json).
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
-                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
+                request.Data = Encoder.Encode(JSonParser.Parse("response", e.Message));
                 return request;
             }
 
             //Invoke the delegate received from the controller using the storage module given through the constructor.
             try
             {
+                byte[] returnValue = storageDelegate.Invoke(_storage);
 
-                object returnValue = storageDelegate.Invoke(_storage);
-
-                /*
-                if(returnValue == typeof(string))
-                    //Set response string
-                else
-                    //Set response object
-                */
-
+                request.Data = returnValue;
                 request.ResponseStatusCode = Request.StatusCode.Ok;
-                //TODO response data
+                
                 return request;
             }
             catch (InvalidOperationException e)
             {
                 //This response code is returned if the request could not process the request in the database
                 request.ResponseStatusCode = Request.StatusCode.NotFound;
-                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
+                request.Data = Encoder.Encode(JSonParser.Parse("response", e.Message));
                 return request;
             }
             catch (Exception e)
             {
                 //This response code is returned if the request could not process the request in the database
                 request.ResponseStatusCode = Request.StatusCode.InternalError;
-                request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(e.Message);
+                request.Data = Encoder.Encode(JSonParser.Parse("response", e.Message));
                 return request;
             }
         }
