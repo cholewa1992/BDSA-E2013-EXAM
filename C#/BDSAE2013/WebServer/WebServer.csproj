@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestController.cs" />
+    <Compile Include="AggregatedControllers\Concretes\SearchRequestController.cs" />
     <Compile Include="AggregatedControllers\Concretes\MovieDataRequestController.cs" />
     <Compile Include="Encoder.cs" />
     <Compile Include="EntityControllers\Abstracts\AbstractEntityRequestController.cs" />

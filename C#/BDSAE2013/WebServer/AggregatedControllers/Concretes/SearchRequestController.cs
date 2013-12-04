@@ -16,14 +16,14 @@ namespace WebServer
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
     /// </summary>
-    public class MovieDataRequestController : AbstractAggregatedRequestController
+    public class SearchRequestController : AbstractAggregatedRequestController
     {
         /// <summary>
         /// The constructor defines the keyword associated with the controller on creation
         /// </summary>
-        public MovieDataRequestController()
+        public SearchRequestController()
         {
-            Keyword = "MovieData";
+            Keyword = "Search";
 
             //Check the invariant
             if (Keyword == null)
@@ -38,32 +38,53 @@ namespace WebServer
         /// <returns> A delegate that gets a movie from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
-            //Get the values of the given request.
-            Dictionary<string,string> values = GetRequestValues(request.Data);
-
+            //Get the request value of the url
+            string searchInput = GetUrlArgument(request.Method);
+            
 #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)
-            Console.WriteLine("MovieData Get was invoked... " + "id: " + values["id"]);
+            Console.WriteLine("Search Get was invoked... " + "searchInput: " + searchInput);
 #endif
-
-            int movieId = 2;
-
             //Return the delegate 
             return (storage => 
             {
-                //MovieDataDto movieDataDto = new MovieDataDto();
-
-                
                 IEnumerable<Movies> movies = storage.Get<Movies>();
-                movies.First((m) => m.Id == movieId);
+                List<Movies> movieList = movies.Where(m => m.Title.Contains(searchInput)).ToList();
 
-                IEnumerable<MovieInfo> movieInfo = storage.Get<MovieInfo>();
-                movieInfo.Select((mi) => mi.Movie_Id == movieId);
+                IEnumerable<People> people = storage.Get<People>();
+                List<People> peopleList = people.Where(m => m.Name.Contains(searchInput)).ToList();
 
+                List<string> jsonInput = new List<string>();
 
-                //return storage.Get<Movies>(int.Parse(values["id"]));
+                int index = 0;
 
-                return new byte[0];
+                foreach (Movies movie in movieList)
+                {
+                    jsonInput.Add("m" + index + "Id");
+                    jsonInput.Add(""+movie.Id);
+
+                    jsonInput.Add("m" + index + "Title");
+                    jsonInput.Add(""+movie.Title);
+
+                    index++;
+                }
+
+                index = 0;
+
+                foreach (People person in peopleList)
+                {
+                    jsonInput.Add("p" + index + "Id");
+                    jsonInput.Add("" + person.Id);
+
+                    jsonInput.Add("p" + index + "Name");
+                    jsonInput.Add("" + person.Name);
+
+                    index++;
+                }
+
+                string json = JSonParser.Parse(jsonInput.ToArray());
+
+                return Encoder.Encode(json);
             }
             );
         }

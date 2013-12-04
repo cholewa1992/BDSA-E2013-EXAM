@@ -17,7 +17,7 @@ namespace WebServer
         Func<IStorageConnectionBridgeFacade, byte[]> ProcessRequest(Request request);
 
         Dictionary<string, string> GetRequestValues(byte[] bytes);
-        int GetUrlArgument(string method);
+        string GetUrlArgument(string method);
     }
 
 

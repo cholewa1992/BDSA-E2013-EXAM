@@ -43,6 +43,7 @@ namespace WebServer
             _storage = storage;
 
             //Initialize the list of controllers as well as adding each controller
+            //Entity Controllers
             _requestControllers = new List<IRequestController>();
             _requestControllers.Add(new MovieRequestController());
             _requestControllers.Add(new UserRequestController());
@@ -50,6 +51,8 @@ namespace WebServer
             _requestControllers.Add(new FavouriteRequestController());
             _requestControllers.Add(new MovieInfoRequestController());
             _requestControllers.Add(new PeopleInfoRequestController());
+            //Aggregated Controllers
+            _requestControllers.Add(new SearchRequestController());
 
             //Invariant Check
             if (_storage == null)

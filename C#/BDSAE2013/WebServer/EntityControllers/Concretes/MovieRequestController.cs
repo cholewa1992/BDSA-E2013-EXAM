@@ -45,7 +45,7 @@ namespace WebServer
             //TODO make checks
 
             //Get the request value of the url
-            int id = GetUrlArgument(request.Method);
+            int id = int.Parse(GetUrlArgument(request.Method));
             
             #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)

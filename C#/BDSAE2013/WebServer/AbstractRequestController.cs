@@ -52,14 +52,14 @@ namespace WebServer
             }
         }
 
-        public int GetUrlArgument(string method)
+        public string GetUrlArgument(string method)
         {
             if (method == null)
                 throw new ArgumentNullException("Method cannot be null");
 
             //Get the request value of the url
             string url = method.Split(' ')[1];
-            return int.Parse(url.Split('/').Last());
+            return url.Split('/').Last();
         }
     }
 }
