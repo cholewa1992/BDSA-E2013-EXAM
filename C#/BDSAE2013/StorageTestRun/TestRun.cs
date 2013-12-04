@@ -20,8 +20,7 @@ namespace StorageTestRun
                         Password = "1234",
                         Username = "RAzor"
                     };
-                    //();
-                Console.WriteLine(db.Add(user));
+                db.Add(user);
             }
             Console.WriteLine("Press any key...");
             Console.ReadKey();
@@ -32,7 +31,7 @@ namespace StorageTestRun
                 var user = db.Get<UserAcc>().First();
                 user.Password = "12345";
                 
-                Console.WriteLine(db.Update(user));
+                db.Update(user);
             }
             Console.WriteLine("Press any key...");
             Console.ReadKey();
@@ -40,7 +39,7 @@ namespace StorageTestRun
             Console.WriteLine("Now deleteing the user");
             using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory()))
             {
-                Console.WriteLine(db.Delete(db.Get<UserAcc>().First()));
+                db.Delete(db.Get<UserAcc>().First());
             }
             Console.WriteLine("Press any key...");
             Console.ReadKey();

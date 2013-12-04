@@ -31,15 +31,12 @@ namespace Storage
         /// </remarks>
         public override TEntity Get<TEntity>(int id)
         {
-            IsDisposed();
-            if(id <= 0){ throw new ArgumentException("Ids 0 or less"); }
-            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
-            try
-            {
-                return Db.Get<TEntity>().Single(t => t.Id == id);
-            }
-            catch(InvalidOperationException)
-            {
+            IsDisposed(); //Checks that the context is not disposed
+            if (id <= 0) { throw new ArgumentException("Ids 0 or less"); } //Checks that he id is not 0 or less
+            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); } //Checks the id is not more than int.MaxValue
+            
+            try{ return Db.Get<TEntity>().Single(t => t.Id == id); } //Trying the fetch entity with given id
+            catch(InvalidOperationException) { //If the entity could not be found, throws an exception to the client
                 throw new InvalidOperationException("Either none or too many entities with given ID was found");
             }
         }
@@ -49,8 +46,12 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <returns>The entities as an IQueryable</returns>
+        /// <remarks>
+        /// @pre IsDisposed();
+        /// </remarks>
         public override IQueryable<TEntity> Get<TEntity>()
         {
+            IsDisposed();
             return Db.Get<TEntity>();
         }
 
@@ -68,14 +69,32 @@ namespace Storage
         /// </remarks>
         public override void Add<TEntity>(TEntity entity)
         {
+            //Makes sure the context has not been disposed 
             IsDisposed();
+
+            //Makes sure the entity is not null
             if(entity == null) throw new ArgumentNullException("entity");
+
+            //Makes sure the entities id is not preset
             if(entity.Id != 0) throw new ArgumentException("Id can't be preset!");
 
-            Db.Add(entity);
+            //Setting the id of the entity
+            try
+            {
+                entity.Id = Get<TEntity>().Max(t => t.Id) + 1;
+            }
+            catch (InvalidOperationException)
+            {
+                entity.Id = 1;
+            }
 
+            //Checks that the id has been set
             if(entity.Id == 0) throw new InternalDbException("Id was not set");
 
+            //Adds the entity to the context
+            Db.Add(entity);
+
+            //Saves the context
             SaveChanges();
         }
 
@@ -92,10 +111,10 @@ namespace Storage
         /// </remarks>
         public override void Update<TEntity>(TEntity entity)
         {
-            IsDisposed();
-            if (entity == null) throw new ArgumentNullException("entity");
-            Db.Update(entity);
-            SaveChanges();
+            IsDisposed(); //Checks that the context is not disposed
+            if (entity == null){ throw new ArgumentNullException("entity");} //Checks that the entity is not null
+            Db.Update(entity); //Updates the entity
+            SaveChanges(); //Saves the changes to the context
         }
 
         /// <summary>
@@ -110,10 +129,10 @@ namespace Storage
         /// </remarks>
         public override void Delete<TEntity>(TEntity entity)
         {
-            IsDisposed();
-            if (entity == null) throw new ArgumentNullException("entity");
-            Db.Delete(entity);
-            SaveChanges();
+            IsDisposed(); //Checks that the context is not disposed
+            if (entity == null){ throw new ArgumentNullException("entity"); } //Checks that the entity is not null
+            Db.Delete(entity); //Deletes the entity
+            SaveChanges(); //Saves the changes to the database
         }
 
         /// <summary>
@@ -129,12 +148,9 @@ namespace Storage
         /// </remarks>
         public override void Delete<TEntity>(int id)
         {
-            IsDisposed();
-            if (id <= 0) { throw new ArgumentException("Ids 0 or less"); }
-            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); }
-            Db.Delete(Get<TEntity>(id));
-            SaveChanges();
+            if (id <= 0) { throw new ArgumentException("Ids 0 or less"); } //Checks that the id is not 0 or less
+            if (id > int.MaxValue) { throw new ArgumentException("Ids larger than int.MaxValue"); } //Checks that the id is not more that int.maxValue
+            Delete(Get<TEntity>(id)); //Calls Delete with entity fetched by id
         }
-
     }
 }

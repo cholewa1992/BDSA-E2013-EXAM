@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Storage
 {
@@ -93,10 +92,14 @@ namespace Storage
         /// Saves changes to the context
         /// </summary>
         /// <returns>true if entities was saved</returns>
-        protected bool SaveChanges()
+        protected void SaveChanges()
         {
             IsDisposed();
-            return Db.SaveChanges();
+            if (!Db.SaveChanges())
+            {
+                Dispose();
+                throw new ChangesWasNotSavedException("The changes in this context could not be saved!");
+            }
         }
     }
 }

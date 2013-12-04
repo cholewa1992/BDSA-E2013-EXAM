@@ -21,15 +21,16 @@ namespace StorageUnitTest
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsTrue(sud.Add(new UserAcc()));
+            sud.Add(new UserAcc());
         }
         
         [TestMethod]
+        [ExpectedException(typeof(ChangesWasNotSavedException))]
         public void AddFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsFalse(sud.Add(new UserAcc()));
+            sud.Add(new UserAcc());
         }
 
         [TestMethod]
@@ -37,15 +38,16 @@ namespace StorageUnitTest
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsTrue(sud.Update(new UserAcc()));
+            sud.Update(new UserAcc());
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ChangesWasNotSavedException))]
         public void UpdateFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsFalse(sud.Update(new UserAcc()));
+            sud.Update(new UserAcc());
         }
 
         [TestMethod]
@@ -53,15 +55,16 @@ namespace StorageUnitTest
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsTrue(sud.Delete(new UserAcc()));
+            sud.Delete(new UserAcc());
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ChangesWasNotSavedException))]
         public void DeleteFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsFalse(sud.Delete(new UserAcc()));
+            sud.Delete(new UserAcc());
         }
 
         [TestMethod]
@@ -69,15 +72,16 @@ namespace StorageUnitTest
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsTrue(sud.Delete<UserAcc>(1));
+            sud.Delete<UserAcc>(1);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ChangesWasNotSavedException))]
         public void DeleteByIdFailedTest()
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsFalse(sud.Delete<UserAcc>(1));
+            sud.Delete<UserAcc>(1);
         }
 
         [TestMethod]
@@ -86,7 +90,7 @@ namespace StorageUnitTest
         {
             _mock.Setup(foo => foo.SaveChanges()).Returns(false);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            Assert.IsFalse(sud.Delete<UserAcc>(4));
+            sud.Delete<UserAcc>(4);
         }
 
         [TestMethod]

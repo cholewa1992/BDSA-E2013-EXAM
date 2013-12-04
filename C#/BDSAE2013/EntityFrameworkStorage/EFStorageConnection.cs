@@ -44,22 +44,13 @@ namespace EntityFrameworkStorage
         /// <param name="entity">The entity to add to the storage</param>
         /// <returns>The entity just added</returns>
         /// <remarks>
+        /// @pre entity.Id != 0
         /// @pre IsDisposed == false
         /// </remarks>
         public void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
             IsDisposed();
-            if (entity.Id != 0) throw new InternalDbException("The Id of an new entity should not be set!");
-           
-            try
-            {
-                entity.Id = Get<TEntity>().Max(t => t.Id) + 1;
-            }
-            catch(Exception)
-            {
-                entity.Id = 1;
-            }
-
+            if (entity.Id == 0) throw new InternalDbException("The Id of an new entity should be set!");
             _ef.Entry(entity).State = EntityState.Added;
             _ef.Set<TEntity>().Add(entity);
         }
