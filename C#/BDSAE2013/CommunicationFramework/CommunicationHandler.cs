@@ -88,13 +88,13 @@ namespace CommunicationFramework
             //CheckPreCondition address != ""
             if( String.IsNullOrEmpty( address ) )
                 throw new ProtocolException( "ERROR! Address cannot be null or empty" );
-            //CheckPreCondition data != null
-            if( data == null )
-                throw new ProtocolException( "ERROR! Data cannot be null" );
             //CheckPreCondition method != null
             //CheckPreCondition method != ""
             if( String.IsNullOrEmpty( method ) )
                 throw new ProtocolException( "ERROR! Method cannot be null or empty" );
+            //CheckPreCondition data != null
+            if( data == null && method.ToLower() != "get" )
+                throw new ProtocolException( "ERROR! Data cannot be null" );
 
             ProtocolInstance.Address = address;
             ProtocolInstance.SendMessage( data, method );

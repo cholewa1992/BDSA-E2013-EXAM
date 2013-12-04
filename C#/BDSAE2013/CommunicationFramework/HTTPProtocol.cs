@@ -141,14 +141,17 @@ namespace CommunicationFramework
             _request = WebRequest.Create( Address );
             _request.Method = method;
 
-            //Set the length of the content
-            _request.ContentLength = data.Length;
-            //TODO: Is type relevant?
-            _request.ContentType = "";
+            if( method.ToLower() != "get" )
+            {
+                //Set the length of the content
+                _request.ContentLength = data.Length;
+                //TODO: Is type relevant?
+                _request.ContentType = "application/data";
 
-            //And write the content into the requestStream
-            Stream stream = _request.GetRequestStream();
-            stream.Write( data, 0, data.Length );
+                //And write the content into the requestStream
+                Stream stream = _request.GetRequestStream();
+                stream.Write( data, 0, data.Length );
+            }
         }
 
         /// <summary>
