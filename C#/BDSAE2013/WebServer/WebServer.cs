@@ -4,6 +4,7 @@ using CommunicationFramework;
 using EntityFrameworkStorage;
 using Storage;
 using System.Collections.Generic;
+using Utils;
 
 namespace WebServer
 {
@@ -16,35 +17,48 @@ namespace WebServer
             RequestDelegator delegator = new RequestDelegator();
 
             Request request = new Request();
+            request.Method = "GET http://localhost:112/Movie/5";
 
-            //Test movie processing
-            request.Method = "GET http://localhost:112/Search/Austin";
             Request response = delegator.ProcessRequest(request);
 
-            string json = Encoder.Decode(response.Data);
+            //Console.WriteLine(JSonParser.GetValues(Encoder.Decode(response.Data))["title"]);
+            Console.WriteLine(response.ResponseStatusCode);
+            Console.WriteLine(JSonParser.GetValues(Encoder.Decode(response.Data))["response"]);
 
-            Dictionary<string, string> values = JSonParser.GetValues(json);
-
-            int index = 0;
-
-            while (values.ContainsKey("m" + index + "Id"))
-            {
-                Console.WriteLine(values["m" + index + "Id"] + ": " + values["m" + index + "Title"]); ;
-
-                index++;
-            }
-
-            index = 0;
-
-            while (values.ContainsKey("p" + index + "Id"))
-            {
-                Console.WriteLine(values["p" + index + "Id"] + ": " + values["p" + index + "Name"]); ;
-
-                index++;
-            }
-
-            Console.WriteLine("Finished");
             Console.ReadKey();
+
+            //RequestDelegator delegator = new RequestDelegator();
+
+            //Request request = new Request();
+
+            ////Test movie processing
+            //request.Method = "GET http://localhost:112/Search/Lord";
+            //Request response = delegator.ProcessRequest(request);
+
+            //string json = Encoder.Decode(response.Data);
+
+            //Dictionary<string, string> values = JSonParser.GetValues(json);
+
+            //int index = 0;
+
+            //while (values.ContainsKey("m" + index + "Id"))
+            //{
+            //    Console.WriteLine(values["m" + index + "Id"] + ": " + values["m" + index + "Title"]); ;
+
+            //    index++;
+            //}
+
+            //index = 0;
+
+            //while (values.ContainsKey("p" + index + "Id"))
+            //{
+            //    Console.WriteLine(values["p" + index + "Id"] + ": " + values["p" + index + "Name"]); ;
+
+            //    index++;
+            //}
+
+            //Console.WriteLine("Finished");
+            //Console.ReadKey();
 
 
 

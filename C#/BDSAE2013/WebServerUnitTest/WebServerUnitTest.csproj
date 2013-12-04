@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FavouriteRequestControllerTest.cs" />
     <Compile Include="RequestControllerTest.cs" />
     <Compile Include="RequestDelegatorTest.cs" />
     <Compile Include="UserDtoTest.cs" />
