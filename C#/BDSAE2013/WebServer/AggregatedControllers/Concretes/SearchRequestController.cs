@@ -40,7 +40,8 @@ namespace WebServer
         {
             //Get the request value of the url
             string searchInput = GetUrlArgument(request.Method);
-            
+            searchInput = searchInput.Replace('_', ' ');
+
 #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)
             Console.WriteLine("Search Get was invoked... " + "searchInput: " + searchInput);
@@ -48,42 +49,54 @@ namespace WebServer
             //Return the delegate 
             return (storage => 
             {
-                IEnumerable<Movies> movies = storage.Get<Movies>();
-                List<Movies> movieList = movies.Where(m => m.Title.Contains(searchInput)).ToList();
+                //Compute a list of all movies in which the title matches the search input
+                List<Movies> movieList = storage.Get<Movies>().Where(m => m.Title.Contains(searchInput)).ToList();
 
-                IEnumerable<People> people = storage.Get<People>();
-                List<People> peopleList = people.Where(m => m.Name.Contains(searchInput)).ToList();
+                //Compute a list of all people in which the name matches the search input
+                List<People> peopleList = storage.Get<People>().Where(m => m.Name.Contains(searchInput)).ToList();
 
+                //Initialize the list of attribute names/values
                 List<string> jsonInput = new List<string>();
 
+                //initialize an index to differentiate each different movie/person
                 int index = 0;
 
+                //Iterate through all movies and add them to the jsonInput
                 foreach (Movies movie in movieList)
                 {
-                    jsonInput.Add("m" + index + "Id");
-                    jsonInput.Add(""+movie.Id);
+                    //For each movie we add the id of the movie
+                    jsonInput.Add("m" + index + "Id");          //Add the attribute name
+                    jsonInput.Add(""+movie.Id);                 //Add the attribute value
 
-                    jsonInput.Add("m" + index + "Title");
-                    jsonInput.Add(""+movie.Title);
+                    //For each movie we add the title of the movie
+                    jsonInput.Add("m" + index + "Title");       //Add the attribute name
+                    jsonInput.Add(""+movie.Title);              //Add the attribute value
 
+                    //Increment the index
                     index++;
                 }
 
+                //Reet the index since we now work with person
                 index = 0;
 
                 foreach (People person in peopleList)
                 {
-                    jsonInput.Add("p" + index + "Id");
-                    jsonInput.Add("" + person.Id);
+                    //For each person we add the id of the person
+                    jsonInput.Add("p" + index + "Id");          //Add the attribute name
+                    jsonInput.Add("" + person.Id);              //Add the attribute value
 
-                    jsonInput.Add("p" + index + "Name");
-                    jsonInput.Add("" + person.Name);
+                    //For each person we add the title of the person
+                    jsonInput.Add("p" + index + "Name");          //Add the attribute name
+                    jsonInput.Add("" + person.Name);              //Add the attribute value
 
+                    //Increment the index
                     index++;
                 }
 
+                //Conver the json input to actual json
                 string json = JSonParser.Parse(jsonInput.ToArray());
 
+                //return the json encoded as byte code
                 return Encoder.Encode(json);
             }
             );

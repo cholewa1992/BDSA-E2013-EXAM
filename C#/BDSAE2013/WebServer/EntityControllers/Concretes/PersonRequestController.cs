@@ -38,22 +38,25 @@ namespace WebServer
             //Get the request value of the url
             int id = int.Parse(GetUrlArgument(request.Method));
             
-            #if DEBUG
+#if DEBUG
             //Write til the console. Only for debugging.
             Console.WriteLine("People Get");
-            #endif
+#endif
 
             //Return the delegate 
             return (storage =>
             {
+                //Get the person from the database
                 People person = storage.Get<People>(id);
 
+                //Conver the object attributes to json
                 string json = JSonParser.Parse(
                     "id", "" + person.Id,
                     "name", "" + person.Name,
                     "gender", "" + person.Gender
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -69,12 +72,9 @@ namespace WebServer
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             Dictionary<string, string> values = GetRequestValues(request.Data);
 
-            // New person byte[] initialized with values from webserver.
-            People person = new People()
-            {
-                Name = values["name"],
-                Gender = values["gender"]
-            };
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("name") || !values.ContainsKey("gender"))
+                throw new InvalidDataException("The data parsed to PeopleRequestController post method did not contain enough information to create a Person");
 
 #if DEBUG
             //Write til the console. Only for debugging
@@ -84,12 +84,22 @@ namespace WebServer
             //Return the delegate 
             return (storage =>
             {
+                // Create a new instance of the People entity using the vital information
+                People person = new People()
+                {
+                    Name = values["name"],
+                    Gender = values["gender"]
+                };
+
+                //Add the person to the database
                 storage.Add<People>(person);
 
+                //Set the json response
                 string json = JSonParser.Parse(
                     "response", "The Person was successfully added"
                     );
 
+                //Returns the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -102,18 +112,13 @@ namespace WebServer
         /// <returns> A delegate that can be used to get a person from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessPut(Request request)
         {
-
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
-            // New person byte[] initialized with values from webserver.
-            People person = new People()
-            {
-                Id = int.Parse(values["id"]),
-                Name = values["name"],
-                Gender = values["gender"]
-            };
-             
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("id"))
+                throw new InvalidDataException("The data parsed to PeopleRequestController put method did not contain the required id");
+
             #if DEBUG
             //Write til the console. Only for debugging.
             Console.WriteLine("Person Put");
@@ -122,12 +127,24 @@ namespace WebServer
             //Return the delegate 
             return (storage =>
             {
+                People person = storage.Get<People>(int.Parse(values["id"]));
+
+                //Add additional information if it is in the request
+                if (values.ContainsKey("name"))
+                    person.Name = values["name"];
+
+                if (values.ContainsKey("gender"))
+                    person.Gender = values["gender"];
+
+                //Update the Person in the database
                 storage.Update<People>(person);
 
+                //Set the json response
                 string json = JSonParser.Parse(
                     "response", "The Person was successfully updated"
                     );
 
+                //Return the response as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -143,20 +160,27 @@ namespace WebServer
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
-            #if DEBUG
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("id"))
+                throw new InvalidDataException("The data parsed to PeopleInfoRequestController Delete method did not the required id");
+
+#if DEBUG
             //Write til the console. Only for debugging
             Console.WriteLine("Person Delete");
-            #endif
+#endif
 
             //Return the delegate 
             return (storage =>
             {
+                //Delete the entity in the database
                 storage.Delete<People>(int.Parse(values["id"]));
 
+                //Set the json response
                 string json = JSonParser.Parse(
                     "response", "The Person was successfully deleted"
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }

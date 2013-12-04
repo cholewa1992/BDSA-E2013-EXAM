@@ -74,32 +74,39 @@ namespace WebServer
             //Get the values from the request
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
-            //Post the values to the console (should be deleted before release)
-            Console.WriteLine("Movie info Post was invoked..."
-                + " info: " + values["info"]
-                + " note: " + values["note"]
-                + " movieId: " + values["movieId"]
-                + " typeId: " + values["typeId"]
-                );
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("movieId") || !values.ContainsKey("typeId") || !values.ContainsKey("info"))
+                throw new InvalidDataException("The data parsed to MovieInfoRequestController delete method did not contain enough information to create MovieInfo");
 
-            //(Should we create an object to parse or parse parameters?)
-            MovieInfo movieInfo = new MovieInfo()
-            {
-                Info= values["info"],
-                Note = values["note"],
-                Movie_Id = int.Parse(values["movieId"]),
-                Type_Id = int.Parse(values["typeId"])
-            };
+#if DEBUG
+            //Post the values to the console (should be deleted before release)
+            Console.WriteLine("Movie info Post was invoked...");
+#endif
 
             //Return the delegate 
             return (storage =>
             {
+                //Create the object to be added to the database using all the required information of the request
+                MovieInfo movieInfo = new MovieInfo()
+                {
+                    Info = values["info"],
+                    Movie_Id = int.Parse(values["movieId"]),
+                    Type_Id = int.Parse(values["typeId"])
+                };
+
+                //If the request also contains information about the note we add the information as well
+                if (values.ContainsKey("note"))
+                    movieInfo.Note = values["note"];
+                
+                //Add the movie info to the database
                 storage.Add<MovieInfo>(movieInfo);
 
+                //Compute the json with the response
                 string json = JSonParser.Parse(
                     "response", "The movie info was successfully added"
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -115,33 +122,42 @@ namespace WebServer
             //Get the values from the request
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
-            //Post the values to the console (should be deleted before release)
-            Console.WriteLine("Movie info Post was invoked..."
-                + " info: " + values["info"]
-                + " note: " + values["note"]
-                + " movieId: " + values["movieId"]
-                + " typeId: " + values["typeId"]
-                );
+            //Check for any vital information in the request
+            if (!values.ContainsKey("id"))
+                throw new InvalidDataException("The data parsed to MovieInfoRequestController put did not contain the required id");
 
-            //(Should we create an object to parse or parse parameters?)
-            MovieInfo movieInfo = new MovieInfo()
-            {
-                Id = int.Parse(values["id"]),
-                Info = values["info"],
-                Note = values["note"],
-                Movie_Id = int.Parse(values["movieId"]),
-                Type_Id = int.Parse(values["typeId"])
-            };
+#if DEBUG
+            //Post the values to the console (should be deleted before release)
+            Console.WriteLine("Movie info Post was invoked...");
+#endif
 
             //Return the delegate 
             return (storage =>
             {
+                //Get the object to be updated from the database
+                MovieInfo movieInfo = storage.Get<MovieInfo>(int.Parse(values["id"]));
+
+                if(values.ContainsKey("info"))
+                    movieInfo.Info = values["info"];
+
+                if(values.ContainsKey("note"))
+                    movieInfo.Note = values["note"];
+
+                if(values.ContainsKey("movieId"))
+                    movieInfo.Movie_Id = int.Parse(values["movieId"]);
+
+                if(values.ContainsKey("typeId"))
+                    movieInfo.Type_Id = int.Parse(values["typeId"]);
+
+                //Update the movie info entity in the database
                 storage.Update<MovieInfo>(movieInfo);
 
+                //Set the response string as json
                 string json = JSonParser.Parse(
                     "response", "The movie info was successfully updated"
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -155,13 +171,20 @@ namespace WebServer
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessDelete(Request request)
         {
             Dictionary<string,string> values = GetRequestValues(request.Data);
-            Console.WriteLine("Movie info Delete was invoked... " + "id: " + values["id"]);
 
-            var id = int.Parse(values["id"]);
+            //Check for any vital information in the request
+            if (!values.ContainsKey("id"))
+                throw new InvalidDataException("The data parsed to MovieInfoRequestController delete did not contain the required id");
+
+#if DEBUG
+            Console.WriteLine("Movie info Delete was invoked... " + "id: " + values["id"]);
+#endif
 
             //Return the delegate 
             return (storage =>
             {
+                var id = int.Parse(values["id"]);
+
                 storage.Delete<MovieInfo>(id);
 
                 string json = JSonParser.Parse(

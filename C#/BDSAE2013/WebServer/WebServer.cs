@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CommunicationFramework;
 using EntityFrameworkStorage;
 using Storage;
+using System.Collections.Generic;
 
 namespace WebServer
 {
@@ -10,9 +11,42 @@ namespace WebServer
     {
         public static void Main( String[] args )
         {
-            new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
+           // new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
 
             RequestDelegator delegator = new RequestDelegator();
+
+            Request request = new Request();
+
+            //Test movie processing
+            request.Method = "GET http://localhost:112/Search/Austin";
+            Request response = delegator.ProcessRequest(request);
+
+            string json = Encoder.Decode(response.Data);
+
+            Dictionary<string, string> values = JSonParser.GetValues(json);
+
+            int index = 0;
+
+            while (values.ContainsKey("m" + index + "Id"))
+            {
+                Console.WriteLine(values["m" + index + "Id"] + ": " + values["m" + index + "Title"]); ;
+
+                index++;
+            }
+
+            index = 0;
+
+            while (values.ContainsKey("p" + index + "Id"))
+            {
+                Console.WriteLine(values["p" + index + "Id"] + ": " + values["p" + index + "Name"]); ;
+
+                index++;
+            }
+
+            Console.WriteLine("Finished");
+            Console.ReadKey();
+
+
 
             //            Request request = new Request();
 
@@ -82,7 +116,7 @@ namespace WebServer
             //            Console.ReadKey();
         }
 
-        public void Start( String listenAddress, Protocols protocol )
+        public void Start(String listenAddress, Protocols protocol)
         {
             Console.WriteLine( "Server started listening on " + listenAddress );
             var ch = new CommunicationHandler( protocol );

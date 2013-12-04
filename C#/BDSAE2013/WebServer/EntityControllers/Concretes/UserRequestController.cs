@@ -39,8 +39,10 @@ namespace WebServer
             //Return the delegate 
             return (storage =>
             {
+                //Get the object from the database
                 UserAcc userAcc = storage.Get<UserAcc>(id);
 
+                //Convert the object attributes to json
                 string json = JSonParser.Parse(
                     "id", "" + userAcc.Id,
                     "firstname", "" + userAcc.Firstname,
@@ -50,6 +52,7 @@ namespace WebServer
                     "email", "" + userAcc.Email
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -64,41 +67,51 @@ namespace WebServer
         {
             //Get the values of the request
             Dictionary<string, string> values = GetRequestValues(request.Data);
-            
+
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("username") || !values.ContainsKey("password"))
+                throw new InvalidDataException("The data parsed to UserRequestController post method did not contain enough information to create a User");
+
 #if DEBUG
             //Post the values to the console
-            Console.WriteLine("User Post was invoked..."
-                + " Username: " + values["username"]
-                + " Email: " + values["email"]
-                + " Password: " + values["password"]
-                + " Firstname: " + values["firstname"]
-                + " Lastname: ");
+            Console.WriteLine("User Post was invoked...");
 #endif
-
-            //(Should we create an byte[] to parse or parse parameters?)
-            UserAcc userAcc = new UserAcc()
-            {
-                Firstname = values["firstname"],
-                Lastname = values["lastname"],
-                Username = values["username"],
-                Password = values["password"],
-                Email = values["email"]
-            };
 
             //Return the delegate 
             return (storage =>
             {
+                //Create e user account entity using the vital information
+                UserAcc userAcc = new UserAcc()
+                {
+                    Firstname = values["firstname"],
+                    Lastname = values["lastname"],
+                    Username = values["username"],
+                    Password = values["password"],
+                    Email = values["email"]
+                };
+
+                //Add any other information given through the request
+                if (values.ContainsKey("firstname"))
+                    userAcc.Firstname = values["firstname"];
+
+                if (values.ContainsKey("lastname"))
+                    userAcc.Lastname = values["lastname"];
+
+                if (values.ContainsKey("email"))
+                    userAcc.Email = values["email"];
+
+                //Add the user to the database
                 storage.Add<UserAcc>(userAcc);
 
+                //Set the json response
                 string json = JSonParser.Parse(
                     "response", "The User was successfully added"
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
-
-
 
         /// <summary>
         /// This method returns a delegate that can be used to update a useracc in a given storage.
@@ -110,38 +123,46 @@ namespace WebServer
         {
             //Get the values of the request
             Dictionary<string, string> values = GetRequestValues(request.Data);
-            
+
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("id"))
+                throw new InvalidDataException("The data parsed to UserRequestController put method did not contain the required id");
+
 #if DEBUG
             //Post the values to the console
-            Console.WriteLine("User Post was invoked..."
-                + " Id: " + values["id"]
-                + " Username: " + values["username"]
-                + " Email: " + values["email"]
-                + " Password: " + values["password"]
-                + " Firstname: " + values["firstname"]
-                + " Lastname: ");
+            Console.WriteLine("User Put was invoked...");
 #endif
-
-            //(Should we create an byte[] to parse or parse parameters?)
-            UserAcc userAcc = new UserAcc()
-            {
-                Id = int.Parse(values["id"]),
-                Username = values["username"],
-                Email = values["email"],
-                Firstname = values["firstname"],
-                Lastname = values["lastname"],
-                Password = values["password"]
-            };
 
             //Return the delegate 
             return (storage =>
             {
+                UserAcc userAcc = storage.Get<UserAcc>(int.Parse(values["id"]));
+
+                //Add any other information given through the request
+                if (values.ContainsKey("username"))
+                    userAcc.Firstname = values["username"];
+
+                if (values.ContainsKey("password"))
+                    userAcc.Firstname = values["password"];
+
+                if (values.ContainsKey("firstname"))
+                    userAcc.Firstname = values["firstname"];
+
+                if (values.ContainsKey("lastname"))
+                    userAcc.Lastname = values["lastname"];
+
+                if (values.ContainsKey("email"))
+                    userAcc.Email = values["email"];
+
+                //Update the user account in the database
                 storage.Update<UserAcc>(userAcc);
 
+                //Set the response json
                 string json = JSonParser.Parse(
                     "response", "The User was successfully updated"
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
@@ -157,17 +178,24 @@ namespace WebServer
             //Get the values of the request
             Dictionary<string, string> values = GetRequestValues(request.Data);
 
-            Console.WriteLine("Useracc Delete was invoked... " + "id: " + values["id"]);
+            //Check for all vital information in the request. If one information is missing we throw an exception
+            if (!values.ContainsKey("id"))
+                throw new InvalidDataException("The data parsed to UserRequestController delete method did not contain the required id");
+
+            Console.WriteLine("Useracc Delete was invoked... ");
 
             //Return the delegate 
             return (storage =>
             {
+                //Delete the user account from the database
                 storage.Delete<UserAcc>(int.Parse(values["id"]));
 
+                //Set the response json
                 string json = JSonParser.Parse(
                     "response", "The User was successfully deleted"
                     );
 
+                //Return the json as encoded bytes
                 return Encoder.Encode(json);
             });
         }
