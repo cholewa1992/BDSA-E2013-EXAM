@@ -68,7 +68,6 @@
     <Compile Include="Exceptions\StorageNullException.cs" />
     <Compile Include="IRequestController.cs" />
     <Compile Include="JSonParser.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestDelegator.cs" />
     <Compile Include="WebServer.cs" />
