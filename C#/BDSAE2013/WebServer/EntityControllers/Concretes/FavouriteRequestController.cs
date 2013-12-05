@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Utils;
 using System.Threading.Tasks;
 using CommunicationFramework;
 using Storage;
@@ -35,6 +35,9 @@ namespace WebServer
         /// <returns> A delegate that get a favourite list from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            if (request == null)
+                throw new ArgumentNullException("Incoming Request must not be null");
+
             //Get the request value of the url
             int id = int.Parse(GetUrlArgument(request.Method));
             
@@ -77,10 +80,7 @@ namespace WebServer
 
 #if DEBUG
             //Print the values to the console
-            Console.WriteLine("Favourites List Post was invoked..."
-                + " title: " + values["title"]
-                + " userAccId: " + values["userAccId"]
-                );
+            Console.WriteLine("Favourites List Post was invoked...");
 #endif
 
             //Create the Favourite List object to be created in the database

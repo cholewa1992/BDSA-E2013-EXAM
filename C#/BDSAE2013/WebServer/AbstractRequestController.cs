@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Utils;
 using System.Threading.Tasks;
 using CommunicationFramework;
 using System.IO;
@@ -39,7 +39,7 @@ namespace WebServer
                 throw new ArgumentNullException("bytes cannot be null");
 
             //Decode the byte code with the proper encoding.
-            string json = Encoding.GetEncoding("iso-8859-1").GetString(bytes);
+            string json = Encoder.Decode(bytes);
             
             //Then we parse the resulting string through the JSonParser class to get the values contained in the byte code.
             try
@@ -57,9 +57,17 @@ namespace WebServer
             if (method == null)
                 throw new ArgumentNullException("Method cannot be null");
 
+            if (method.Split(' ').Length != 2)
+                throw new UnsplittableStringParameterException("Incoming request method has bad syntax, must be [Method]' '[URL]");
+
             //Get the request value of the url
             string url = method.Split(' ')[1];
-            return url.Split('/').Last();
+            string returnString = url.Split('/').Last();
+
+            if (returnString == "")
+                throw new InvalidUrlParameterException("URL ending was an empty string");
+
+            return returnString;
         }
     }
 }

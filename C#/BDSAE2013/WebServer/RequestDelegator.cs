@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Utils;
 using System.Threading.Tasks;
 using CommunicationFramework;
 using Storage;
@@ -100,7 +100,7 @@ namespace WebServer
             {
                 storageDelegate = controller.ProcessRequest(request);
             }
-            catch (ArgumentException e)
+            catch (Exception e)
             {
                 Console.WriteLine("An error occured while processing request. Error: " + e.Message);
 
