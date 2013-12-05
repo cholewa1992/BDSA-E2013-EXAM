@@ -34,7 +34,7 @@ namespace EntityFrameworkStorageUnitTest
         }
 
         [TestMethod]
-        public void UpdateEntityInContext()
+        public void UpdateEntityInContextTest()
         {
             using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
@@ -50,7 +50,7 @@ namespace EntityFrameworkStorageUnitTest
 
         [TestMethod]
         [ExpectedException(typeof(InternalDbException))]
-        public void UpdateEntityNotInContext()
+        public void UpdateEntityNotInContextTest()
         {
             using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
@@ -64,7 +64,7 @@ namespace EntityFrameworkStorageUnitTest
         }
 
         [TestMethod]
-        public void DeleteEntityInContext()
+        public void DeleteEntityInContextTest()
         {
             using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
@@ -77,7 +77,7 @@ namespace EntityFrameworkStorageUnitTest
         } 
         [TestMethod]
         [ExpectedException(typeof(InternalDbException))]
-        public void DeleteEntityNotInContext()
+        public void DeleteEntityNotInContextTest()
         {
             using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {

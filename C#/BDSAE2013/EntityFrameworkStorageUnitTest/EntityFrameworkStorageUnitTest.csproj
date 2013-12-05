@@ -57,7 +57,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EFStorageTest.cs" />
+    <Compile Include="EFStorageConnectionTest.cs" />
+    <Compile Include="EFStorageIntegrationTest.cs" />
     <Compile Include="TestFakeImdbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
