@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkStorageUnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageCache", "StorageCache\StorageCache.csproj", "{21FBE047-8C05-4193-8B24-AB646EFFB08D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFileStorage", "FlatFileStorage\FlatFileStorage.csproj", "{FE7134AD-4CE3-4AE4-8100-64C95957287E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
