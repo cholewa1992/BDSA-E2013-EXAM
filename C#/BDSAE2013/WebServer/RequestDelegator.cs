@@ -24,7 +24,7 @@ namespace WebServer
         /// This constructor calls the general constructor with the most commonly used storage module.
         /// </summary>
         public RequestDelegator()
-            : this(new StorageConnectionBridgeFacade(new EFConnectionFactory()))
+            : this(new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>()))
         {
         }
 

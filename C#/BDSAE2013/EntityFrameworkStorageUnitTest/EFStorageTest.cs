@@ -11,9 +11,10 @@ namespace EntityFrameworkStorageUnitTest
         [TestMethod]
         public void AddToContextTest()
         {
-            using (var ef = new EFConnectionFactory().GetConnection<FakeContext>())
+            
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeContext>()))
             {
-                ef.Add(new UserAcc());
+                ef.Add(new UserAcc{Id = 1});
                 Assert.AreEqual(0, ef.Get<UserAcc>().Count());
                 ef.SaveChanges();
                 Assert.AreEqual(1, ef.Get<UserAcc>().Count());
