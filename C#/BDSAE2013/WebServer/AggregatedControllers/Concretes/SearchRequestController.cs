@@ -68,6 +68,9 @@ namespace WebServer
                 //Iterate through all movies and add them to the jsonInput
                 foreach (Movies movie in movieSet)
                 {
+                    if ("m" + index + "Title" == "m613Title")
+                        Console.WriteLine(movie.Title);
+
                     //For each movie we add the id of the movie
                     jsonInput.Add("m" + index + "Id");          //Add the attribute name
                     jsonInput.Add(""+movie.Id);                 //Add the attribute value
