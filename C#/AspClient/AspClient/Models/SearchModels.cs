@@ -5,8 +5,10 @@ using System.Web;
 
 namespace AspClient.Models
 {
-    public class SearchModel
+    public class SearchResults
     {
         public string SearchString{ get; set; }
+
+        public Dictionary<String, String> Results{ get; set; }
     }
 }

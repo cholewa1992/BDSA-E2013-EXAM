@@ -1,0 +1,37 @@
+﻿@model AspClient.Models.SearchModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>title</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath">
+                        <img src="~/Content/images/banner.png" />
+                    </a>
+                </td>
+                <td>
+                    @using(Html.BeginForm())
+                    {
+                        //@Html.LabelFor( m => m.SearchString, "Test:" )
+                        @Html.TextBoxFor( m => m.SearchString )
+                        <input type="submit" value="search" />
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

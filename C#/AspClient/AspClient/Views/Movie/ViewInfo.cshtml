@@ -1,0 +1,49 @@
+﻿@model AspClient.Models.MovieModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Search</title>
+</head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath">
+                        <img src="~/Content/images/banner.png" />
+                    </a>
+                </td>
+                <td>
+                    @using(Html.BeginForm())
+                    {
+                        //@Html.LabelFor( m => m.SearchString, "Test:" )
+                        @Html.TextBoxFor( m => m.SearchString )
+                        <input type="submit" value="search" />
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @if( Model != null && Model.Results != null && Model.Results.Count != 0 )
+                    {
+                        foreach( KeyValuePair<String, String> kvp in Model.Results )
+                         {
+                             <a href="@kvp.Value">@kvp.Key</a>
+                         }
+                    }
+                    else
+                    {
+                        @:No results found
+                    }
+                </td>
+            </tr>
+        </table>
+</body>
+</html>
