@@ -40,7 +40,7 @@ namespace WebServer
         {
             //Get the request value of the url
             string searchInput = GetUrlArgument(request.Method);
-            searchInput = searchInput.Replace('_', ' ');
+            string[] searchInputArray = searchInput.Split('_');
 
 #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)
@@ -49,11 +49,15 @@ namespace WebServer
             //Return the delegate 
             return (storage => 
             {
-                //Compute a list of all movies in which the title matches the search input
-                List<Movies> movieList = storage.Get<Movies>().Where(m => m.Title.Contains(searchInput)).ToList();
+                HashSet<Movies> movieSet = new HashSet<Movies>();
 
-                //Compute a list of all people in which the name matches the search input
-                List<People> peopleList = storage.Get<People>().Where(m => m.Name.Contains(searchInput)).ToList();
+                foreach (string searchString in searchInputArray)
+                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)));
+
+                HashSet<People> peopleSet = new HashSet<People>();
+
+                foreach (string searchString in searchInputArray)
+                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.Contains(searchString)));
 
                 //Initialize the list of attribute names/values
                 List<string> jsonInput = new List<string>();
@@ -62,7 +66,7 @@ namespace WebServer
                 int index = 0;
 
                 //Iterate through all movies and add them to the jsonInput
-                foreach (Movies movie in movieList)
+                foreach (Movies movie in movieSet)
                 {
                     //For each movie we add the id of the movie
                     jsonInput.Add("m" + index + "Id");          //Add the attribute name
@@ -79,7 +83,7 @@ namespace WebServer
                 //Reet the index since we now work with person
                 index = 0;
 
-                foreach (People person in peopleList)
+                foreach (People person in peopleSet)
                 {
                     //For each person we add the id of the person
                     jsonInput.Add("p" + index + "Id");          //Add the attribute name
@@ -93,7 +97,7 @@ namespace WebServer
                     index++;
                 }
 
-                //Conver the json input to actual json
+                //Convert the json input to actual json
                 string json = JSonParser.Parse(jsonInput.ToArray());
 
                 //return the json encoded as byte code

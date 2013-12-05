@@ -123,12 +123,25 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        public void Test_RequestDelegator_ProcessRequest_Output_BadRequest_FromParsingError()
+        public void Test_RequestDelegator_ProcessRequest_Output_BadRequest_FromParsingError_Url()
+        {
+            RequestDelegator requestDelegator = new RequestDelegator();
+
+            //Make a request with a wrong method. (Index to search for is not an int)
+            Request req = new Request() { Method = "GET https://www.google.dk/Movie/John" };
+
+            Request requestResult = requestDelegator.ProcessRequest(req);
+
+            Assert.AreEqual(Request.StatusCode.BadRequest, requestResult.ResponseStatusCode);
+        }
+
+        [TestMethod]
+        public void Test_RequestDelegator_ProcessRequest_Output_BadRequest_FromParsingError_Data()
         {
             RequestDelegator requestDelegator = new RequestDelegator();
 
             //Make a request with a wrong method. (No right-hand url input)
-            Request req = new Request() { Method = "GET https://www.google.dk/Movie/John" };
+            Request req = new Request() { Method = "PUT https://www.google.dk/Movie", Data = Encoder.Encode(JSonParser.Parse("id", "John", "title", "Die Hard", "year", "1998")) };
 
             Request requestResult = requestDelegator.ProcessRequest(req);
 

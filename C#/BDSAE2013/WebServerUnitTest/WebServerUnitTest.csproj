@@ -60,12 +60,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ControllerTests\UserRequestControllerTest.cs" />
-    <Compile Include="ControllerTests\PersonRequestControllerTest.cs" />
-    <Compile Include="ControllerTests\PeopleInfoRequestControllerTest.cs" />
-    <Compile Include="ControllerTests\MovieRequestControllerTest.cs" />
-    <Compile Include="ControllerTests\MovieInfoRequestControllerTest.cs" />
-    <Compile Include="ControllerTests\FavouriteRequestControllerTest.cs" />
+    <Compile Include="AggregateControllerTests\SearchRequestControllerTest.cs" />
+    <Compile Include="EntityControllerTests\UserRequestControllerTest.cs" />
+    <Compile Include="EntityControllerTests\PersonRequestControllerTest.cs" />
+    <Compile Include="EntityControllerTests\PeopleInfoRequestControllerTest.cs" />
+    <Compile Include="EntityControllerTests\MovieRequestControllerTest.cs" />
+    <Compile Include="EntityControllerTests\MovieInfoRequestControllerTest.cs" />
+    <Compile Include="EntityControllerTests\FavouriteRequestControllerTest.cs" />
     <Compile Include="RequestControllerTest.cs" />
     <Compile Include="RequestDelegatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
