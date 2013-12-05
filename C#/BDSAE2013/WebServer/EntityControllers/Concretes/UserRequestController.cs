@@ -83,11 +83,8 @@ namespace WebServer
                 //Create e user account entity using the vital information
                 UserAcc userAcc = new UserAcc()
                 {
-                    Firstname = values["firstname"],
-                    Lastname = values["lastname"],
                     Username = values["username"],
-                    Password = values["password"],
-                    Email = values["email"]
+                    Password = values["password"]
                 };
 
                 //Add any other information given through the request
@@ -140,10 +137,10 @@ namespace WebServer
 
                 //Add any other information given through the request
                 if (values.ContainsKey("username"))
-                    userAcc.Firstname = values["username"];
+                    userAcc.Username = values["username"];
 
                 if (values.ContainsKey("password"))
-                    userAcc.Firstname = values["password"];
+                    userAcc.Password = values["password"];
 
                 if (values.ContainsKey("firstname"))
                     userAcc.Firstname = values["firstname"];

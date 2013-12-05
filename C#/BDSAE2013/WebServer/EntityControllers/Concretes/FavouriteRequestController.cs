@@ -76,23 +76,23 @@ namespace WebServer
             Dictionary<string, string> values = GetRequestValues(request.Data);
 
             if (!values.ContainsKey("title") || !values.ContainsKey("userAccId"))
-                throw new InvalidDataException("The data parsed to favourite controller put method did not contain either a title or a user account id");
+                throw new InvalidDataException("The data parsed to favourite controller post method did not contain either a title or a user account id");
 
 #if DEBUG
             //Print the values to the console
             Console.WriteLine("Favourites List Post was invoked...");
 #endif
-
-            //Create the Favourite List object to be created in the database
-            FavouriteList favouriteList = new FavouriteList()
-            {
-                Title = values["title"],
-                UserAccId = int.Parse(values["userAccId"])
-            };
-
+            
             //Return the delegate 
             return (storage =>
             {
+                //Create the Favourite List object to be created in the database
+                FavouriteList favouriteList = new FavouriteList()
+                {
+                    Title = values["title"],
+                    UserAccId = int.Parse(values["userAccId"])
+                };
+
                 //Add the Favourite List to the database
                 storage.Add<FavouriteList>(favouriteList);
 

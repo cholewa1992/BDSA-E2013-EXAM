@@ -26,7 +26,7 @@ namespace WebServerUnitTest
         public void Test_RequestDelegator_Constructor_InjectedStorage()
         {
             //Initialize a request delegator with injection
-            RequestDelegator requestDelegator = new RequestDelegator(new StorageConnectionBridgeFacade(new EFConnectionFactory()));
+            RequestDelegator requestDelegator = new RequestDelegator(new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>()));
 
             //If no exceptions are thrown, the test is passed
         }
@@ -116,6 +116,19 @@ namespace WebServerUnitTest
 
             //Make a request with a wrong method. (No right-hand url input)
             Request req = new Request() { Method = "UPDATE https://www.google.dk/Movie" };
+
+            Request requestResult = requestDelegator.ProcessRequest(req);
+
+            Assert.AreEqual(Request.StatusCode.BadRequest, requestResult.ResponseStatusCode);
+        }
+
+        [TestMethod]
+        public void Test_RequestDelegator_ProcessRequest_Output_BadRequest_FromParsingError()
+        {
+            RequestDelegator requestDelegator = new RequestDelegator();
+
+            //Make a request with a wrong method. (No right-hand url input)
+            Request req = new Request() { Method = "GET https://www.google.dk/Movie/John" };
 
             Request requestResult = requestDelegator.ProcessRequest(req);
 

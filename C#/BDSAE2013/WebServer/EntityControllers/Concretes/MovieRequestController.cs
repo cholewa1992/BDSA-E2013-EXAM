@@ -122,7 +122,7 @@ namespace WebServer
 
                 //Set the response as json
                 string json = JSonParser.Parse(
-                    "response", "The movie was successfully added"
+                    "response", "The Movie was successfully added"
                     );
 
                 //Return the byte encoded json
@@ -183,7 +183,7 @@ namespace WebServer
 
                 //Set the json response message
                 string json = JSonParser.Parse(
-                    "response", "The movie was successfully updated"
+                    "response", "The Movie was successfully updated"
                     );
 
                 //Return the json as encoded bytes
@@ -219,7 +219,7 @@ namespace WebServer
 
                 //Set the json response message
                 string json = JSonParser.Parse(
-                    "response", "The movie was successfully Delete"
+                    "response", "The Movie was successfully deleted"
                     );
 
                 //Return the json as encoded bytes

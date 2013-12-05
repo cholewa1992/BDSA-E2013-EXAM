@@ -100,15 +100,12 @@ namespace WebServer
                 if (values.ContainsKey("note"))
                     personInfo.Note = values["note"];
 
-                if (values.ContainsKey("personInfoId"))
-                    personInfo.PersonInfoId = int.Parse(values["personInfoId"]);
-
                 //Add the person info to the database
                 storage.Add<PersonInfo>(personInfo);
 
                 //Set the json response message
                 string json = JSonParser.Parse(
-                    "response", "The Person Info was successfully added"
+                    "response", "The PersonInfo was successfully added"
                     );
 
                 //Return the json as encoded bytes
@@ -147,8 +144,8 @@ namespace WebServer
                 if (values.ContainsKey("info"))
                     personInfo.Info = values["info"];
 
-                if (values.ContainsKey("Note"))
-                    personInfo.Note = values["Note"];
+                if (values.ContainsKey("note"))
+                    personInfo.Note = values["note"];
 
                 if (values.ContainsKey("personId"))
                     personInfo.Person_Id = int.Parse(values["personId"]);
@@ -164,7 +161,7 @@ namespace WebServer
 
                 //Set the json response string
                 string json = JSonParser.Parse(
-                    "response", "The Person Info was successfully updated"
+                    "response", "The PersonInfo was successfully updated"
                     );
 
                 //Return the json as encoded bytes
@@ -200,7 +197,7 @@ namespace WebServer
 
                 //Set the json response message
                 string json = JSonParser.Parse(
-                    "response", "The Person Info was successfully deleted"
+                    "response", "The PersonInfo was successfully deleted"
                     );
 
                 //Return the json as encoded bytes

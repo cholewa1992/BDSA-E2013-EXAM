@@ -54,7 +54,6 @@ namespace WebServer
                     "id", "" + movieInfo.Id,
                     "info", "" + movieInfo.Info,
                     "movieId", "" + movieInfo.Movie_Id,
-                    "movieInfoId", "" + movieInfo.MovieInfoId,
                     "note", "" + movieInfo.Note,
                     "typeId", "" + movieInfo.Type_Id
                     );
@@ -76,7 +75,7 @@ namespace WebServer
 
             //Check for all vital information in the request. If one information is missing we throw an exception
             if (!values.ContainsKey("movieId") || !values.ContainsKey("typeId") || !values.ContainsKey("info"))
-                throw new InvalidDataException("The data parsed to MovieInfoRequestController delete method did not contain enough information to create MovieInfo");
+                throw new InvalidDataException("The data parsed to MovieInfoRequestController post method did not contain enough information to create MovieInfo");
 
 #if DEBUG
             //Post the values to the console (should be deleted before release)
@@ -97,13 +96,16 @@ namespace WebServer
                 //If the request also contains information about the note we add the information as well
                 if (values.ContainsKey("note"))
                     movieInfo.Note = values["note"];
-                
+
+                if (values.ContainsKey("movieInfoId"))
+                    movieInfo.Note = values["movieInfoId"];
+
                 //Add the movie info to the database
                 storage.Add<MovieInfo>(movieInfo);
 
                 //Compute the json with the response
                 string json = JSonParser.Parse(
-                    "response", "The movie info was successfully added"
+                    "response", "The MovieInfo was successfully added"
                     );
 
                 //Return the json as encoded bytes
@@ -154,7 +156,7 @@ namespace WebServer
 
                 //Set the response string as json
                 string json = JSonParser.Parse(
-                    "response", "The movie info was successfully updated"
+                    "response", "The MovieInfo was successfully updated"
                     );
 
                 //Return the json as encoded bytes
@@ -188,7 +190,7 @@ namespace WebServer
                 storage.Delete<MovieInfo>(id);
 
                 string json = JSonParser.Parse(
-                    "response", "The movie info was successfully deleted"
+                    "response", "The MovieInfo was successfully deleted"
                     );
 
                 return Encoder.Encode(json);

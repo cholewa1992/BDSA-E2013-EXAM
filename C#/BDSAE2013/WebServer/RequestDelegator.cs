@@ -120,6 +120,13 @@ namespace WebServer
                 
                 return request;
             }
+            catch (FormatException e)
+            {
+                //This response code is returned if some data in the request did not have the correct format
+                request.ResponseStatusCode = Request.StatusCode.BadRequest;
+                request.Data = Encoder.Encode(JSonParser.Parse("response", e.Message));
+                return request;
+            }
             catch (InvalidOperationException e)
             {
                 //This response code is returned if the request could not process the request in the database

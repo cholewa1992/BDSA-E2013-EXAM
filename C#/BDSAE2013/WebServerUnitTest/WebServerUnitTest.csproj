@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Visual Studio 2012\Projects\BDSA2013\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.1.1311.0615\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -53,7 +57,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FavouriteRequestControllerTest.cs" />
+    <Compile Include="ControllerTests\UserRequestControllerTest.cs" />
+    <Compile Include="ControllerTests\PersonRequestControllerTest.cs" />
+    <Compile Include="ControllerTests\PeopleInfoRequestControllerTest.cs" />
+    <Compile Include="ControllerTests\MovieRequestControllerTest.cs" />
+    <Compile Include="ControllerTests\MovieInfoRequestControllerTest.cs" />
+    <Compile Include="ControllerTests\FavouriteRequestControllerTest.cs" />
     <Compile Include="RequestControllerTest.cs" />
     <Compile Include="RequestDelegatorTest.cs" />
     <Compile Include="UserDtoTest.cs" />

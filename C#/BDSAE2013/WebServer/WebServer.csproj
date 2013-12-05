@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Visual Studio 2012\Projects\BDSA2013\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -58,7 +62,7 @@
     <Compile Include="EntityControllers\Concretes\UserRequestController.cs" />
     <Compile Include="AggregatedControllers\Interfaces\IAggregatedRequestController.cs" />
     <Compile Include="EntityControllers\Interfaces\IEntityRequestController.cs" />
-    <Compile Include="Exceptions\Copy of InvalidDataException.cs" />
+    <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="Exceptions\InvalidUrlParameterException.cs" />
     <Compile Include="Exceptions\InvalidServiceRequestException.cs" />
     <Compile Include="Exceptions\UnsplittableStringParameterException.cs" />
