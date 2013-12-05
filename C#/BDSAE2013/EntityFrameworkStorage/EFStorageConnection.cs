@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Storage;
@@ -100,14 +101,18 @@ namespace EntityFrameworkStorage
             {
                 return _ef.SaveChanges() > 0;
             }
-            catch (DbEntityValidationException)
+            catch (DbEntityValidationException e)
             {
                 Dispose();
-                throw new InternalDbException("The entities you tried to save violated a db contraint");
+                throw new InternalDbException("The entities you tried to save violated a db contraint",e);
             }
-            catch (EntityException)
+            catch (EntityException e)
             {
-                throw new InternalDbException("The connection to the database failed or timed out");
+                throw new InternalDbException("The connection to the database failed or timed out",e);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new InternalDbException("The entity tried updated is not in the database",e);
             }
             catch(Exception e)
             {

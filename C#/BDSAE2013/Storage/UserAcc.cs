@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Storage
 {
     using System;
@@ -14,9 +16,12 @@ namespace Storage
     
     public partial class UserAcc : IEntityDto
     {
+        [Key]
         public int Id { get; set; }
         public string Username { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }

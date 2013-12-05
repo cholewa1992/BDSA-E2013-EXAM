@@ -58,7 +58,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="EFStorageTest.cs" />
-    <Compile Include="FakeContext.cs" />
+    <Compile Include="TestFakeImdbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
