@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspClient", "AspClient\AspC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspClient.Tests", "AspClient.Tests\AspClient.Tests.csproj", "{48D158D5-E9FF-4C1D-8C0A-474AB5AFFF84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageCache", "StorageCache\StorageCache.csproj", "{21FBE047-8C05-4193-8B24-AB646EFFB08D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{48D158D5-E9FF-4C1D-8C0A-474AB5AFFF84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48D158D5-E9FF-4C1D-8C0A-474AB5AFFF84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48D158D5-E9FF-4C1D-8C0A-474AB5AFFF84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21FBE047-8C05-4193-8B24-AB646EFFB08D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

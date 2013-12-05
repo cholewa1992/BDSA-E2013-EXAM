@@ -19,25 +19,13 @@ namespace EntityFrameworkStorage
         public FakeImdbContext()
             : base("FakeImdbContext")
         {
-
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
-        //public DbSet<Categories> Categories { get; set; }
-        //public DbSet<CustomerDemographics> CustomerDemographics { get; set; }
-        //public DbSet<Customers> Customers { get; set; }
-        //public DbSet<Employees> Employees { get; set; }
-        //public DbSet<Order_Details> Order_Details { get; set; }
-        //public DbSet<Orders> Orders { get; set; }
-        //public DbSet<Products> Products { get; set; }
-        //public DbSet<Region> Region { get; set; }
-        //public DbSet<Shippers> Shippers { get; set; }
-        //public DbSet<Suppliers> Suppliers { get; set; }
-        //public DbSet<Territories> Territories { get; set; }
 
         public new IDbSet<T> Set<T>() where T : class
         {
