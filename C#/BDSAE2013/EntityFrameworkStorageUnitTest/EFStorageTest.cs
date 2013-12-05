@@ -14,9 +14,7 @@ namespace EntityFrameworkStorageUnitTest
             
             using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeContext>()))
             {
-                ef.Add(new UserAcc{Id = 1});
-                Assert.AreEqual(0, ef.Get<UserAcc>().Count());
-                ef.SaveChanges();
+                ef.Add(new UserAcc{Email = "jbec@itu.dk", Password = "1234"});
                 Assert.AreEqual(1, ef.Get<UserAcc>().Count());
             }
         }
@@ -24,10 +22,7 @@ namespace EntityFrameworkStorageUnitTest
         [TestMethod]
         public void AddToContextWithOutSaveTest()
         {
-            using (var ef = new EFConnectionFactory().GetConnection<FakeContext>())
-            {
-                ef.Add(new UserAcc());
-            }
+
         }
     }
 }

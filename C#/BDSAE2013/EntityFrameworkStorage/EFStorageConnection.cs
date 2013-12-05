@@ -129,7 +129,6 @@ namespace EntityFrameworkStorage
         /// </remarks>
         public void Dispose()
         {
-            IsDisposed();
             _isDisposed = true;
             _ef.Dispose();
         }

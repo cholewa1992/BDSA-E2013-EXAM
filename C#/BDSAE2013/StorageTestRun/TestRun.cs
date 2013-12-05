@@ -10,7 +10,7 @@ namespace StorageTestRun
         static void Main(string[] args)
         {
             Console.WriteLine("Now adding a user");
-            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory()))
+            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>()))
             {
                 var user = new UserAcc
                     {
@@ -26,7 +26,7 @@ namespace StorageTestRun
             Console.ReadKey();
             Console.WriteLine();
             Console.WriteLine("Now updating the user");
-            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory()))
+            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>()))
             {
                 var user = db.Get<UserAcc>().First();
                 user.Password = "12345";
@@ -37,7 +37,7 @@ namespace StorageTestRun
             Console.ReadKey();
             Console.WriteLine();
             Console.WriteLine("Now deleteing the user");
-            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory()))
+            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>()))
             {
                 db.Delete(db.Get<UserAcc>().First());
             }
@@ -45,7 +45,7 @@ namespace StorageTestRun
             Console.ReadKey();
             Console.WriteLine();
             Console.WriteLine("Now counting all users contaning the letter A");
-            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory()))
+            using (var db = new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>()))
             {
                 var start = DateTime.Now;
                 Console.WriteLine(db.Get<Movies>().Count(t => t.Title.Contains("A")));
