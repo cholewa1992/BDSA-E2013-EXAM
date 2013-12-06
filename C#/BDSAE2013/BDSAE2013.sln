@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageCache", "StorageCach
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatFileStorage", "FlatFileStorage\FlatFileStorage.csproj", "{FE7134AD-4CE3-4AE4-8100-64C95957287E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilUnitTest", "UtilUnitTest\UtilUnitTest.csproj", "{4DC3E5E4-48BA-422A-A22E-BB2DF819A50E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE7134AD-4CE3-4AE4-8100-64C95957287E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC3E5E4-48BA-422A-A22E-BB2DF819A50E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC3E5E4-48BA-422A-A22E-BB2DF819A50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC3E5E4-48BA-422A-A22E-BB2DF819A50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC3E5E4-48BA-422A-A22E-BB2DF819A50E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
