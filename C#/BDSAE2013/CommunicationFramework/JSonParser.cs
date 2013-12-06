@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Utils
 {
@@ -25,9 +26,9 @@ namespace Utils
                 writer.WriteStartObject();
 
                 for (int i = 0; i < parameters.Length; i += 2)
-                {
+                { 
                     writer.WritePropertyName(parameters[i]);
-                    writer.WriteValue(parameters[i+1]);
+                    writer.WriteValue(Regex.Replace(parameters[i + 1], "[^A-Za-z0-9()\\[\\]\\s\\,]", ""));
                 }
                 
                 writer.WriteEndObject();
@@ -42,22 +43,46 @@ namespace Utils
             string entry = "";
 
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
-
+            
+            
             while (reader.Read())
             {
                 if (reader.Value != null)
                 {
                     if (entry != "")
                     {
+                        Console.WriteLine("key: " + entry);
+                        Console.WriteLine("value: " + reader.Value.ToString());
+
                         dictionary.Add(entry, reader.Value.ToString());
                         entry = "";
                     }
                     else
+                    {
+                        Console.WriteLine("key: " + reader.Value.ToString());
                         entry = reader.Value.ToString();
+                    }
                 }
             }
 
             return dictionary;
+        }
+
+        private void ReadLine(JsonTextReader reader, ref Dictionary<string, string> dictionary)
+        {
+            reader.Read();
+            string entry = "";
+
+            if (reader.Value != null)
+            {
+                if (entry != "")
+                {
+                    dictionary.Add(entry, reader.Value.ToString());
+                    entry = "";
+                }
+                else
+                    entry = reader.Value.ToString();
+            }
         }
 
     }

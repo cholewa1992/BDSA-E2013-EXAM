@@ -35,8 +35,10 @@ namespace WebServer
             Console.ReadKey();
              */
 
-            /*
+            
             //Test movie processing
+            Request request = new Request(); 
+            
             request.Method = "GET http://localhost:112/Search/He";
             Request response = delegator.ProcessRequest(request);
 
@@ -63,7 +65,7 @@ namespace WebServer
             }
 
             Console.WriteLine("Finished");
-            Console.ReadKey();*/
+            Console.ReadKey();
         }
 
         public void Start(String listenAddress, Protocols protocol)
