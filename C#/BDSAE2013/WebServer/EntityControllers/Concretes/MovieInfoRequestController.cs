@@ -96,9 +96,8 @@ namespace WebServer
                 //If the request also contains information about the note we add the information as well
                 if (values.ContainsKey("note"))
                     movieInfo.Note = values["note"];
-
-                if (values.ContainsKey("movieInfoId"))
-                    movieInfo.Note = values["movieInfoId"];
+                else
+                    movieInfo.Note = "";
 
                 //Add the movie info to the database
                 storage.Add<MovieInfo>(movieInfo);

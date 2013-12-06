@@ -16,8 +16,26 @@ namespace WebServer
 
             RequestDelegator delegator = new RequestDelegator();
 
-            Request request = new Request();
+            /*Request request = new Request();
 
+            request.Method = "POST http://localhost:112/Movie";
+            request.Data = Encoder.Encode(JSonParser.Parse("title", "Die Hard", "year", "1998"));
+            */
+
+            /*
+            Request request = new Request() { Method = "POST https://www.google.dk/Movie", Data = Encoder.Encode(JSonParser.Parse("title", "Die Hard 2", "year", "2000", "kind", "TV Series")) };
+            Request response = delegator.ProcessRequest(request);
+
+            Console.WriteLine(Encoder.Decode(request.Data));
+
+            Console.WriteLine(JSonParser.GetValues(Encoder.Decode(request.Data))["response"]);
+
+            Console.WriteLine(response.ResponseStatusCode);
+
+            Console.ReadKey();
+             */
+
+            /*
             //Test movie processing
             request.Method = "GET http://localhost:112/Search/He";
             Request response = delegator.ProcessRequest(request);
@@ -45,76 +63,7 @@ namespace WebServer
             }
 
             Console.WriteLine("Finished");
-            Console.ReadKey();
-
-
-
-            //            Request request = new Request();
-
-            //            //Test movie processing
-            //            request.Method = "GET http://localhost:112/Movie/5";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "POST http://localhost:112/Movie";
-            //            request.Data = Encoding.GetEncoding("iso-8859-1").GetBytes(JSonParser.Parse(
-            //                "title", "Die Hard",
-            //                "kind", "Drama",
-            //                "year", "1992",
-            //                "seasonNumber", "0",
-            //                "episodeNumber", "0",
-            //                "seriesYear", "0",
-            //                "episodeOfId", "0"));
-            //            delegator.ProcessRequest(request);
-
-            //            /*
-            //            request.Method = "PUT http://localhost:112/Movie";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "DELETE http://localhost:112/Movie";
-            //            delegator.ProcessRequest(request);
-
-            //            //Test user processing
-            //            request.Method = "GET http://localhost:112/User";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "POST http://localhost:112/User";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "PUT http://localhost:112/User";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "DELETE http://localhost:112/User";
-            //            delegator.ProcessRequest(request);
-
-            //            //Test Person processing
-
-            //            request.Method = "GET http://localhost:112/Person";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "POST http://localhost:112/Person";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "PUT http://localhost:112/Person";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "DELETE http://localhost:112/Person";
-            //            delegator.ProcessRequest(request);
-
-            //            //Test Favourite processing
-            //            request.Method = "GET http://localhost:112/Favourite";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "POST http://localhost:112/Favourite";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "PUT http://localhost:112/Favourite";
-            //            delegator.ProcessRequest(request);
-
-            //            request.Method = "DELETE http://localhost:112/Favourite";
-            //            delegator.ProcessRequest(request);
-
-            //             * */
-            //            Console.ReadKey();
+            Console.ReadKey();*/
         }
 
         public void Start(String listenAddress, Protocols protocol)

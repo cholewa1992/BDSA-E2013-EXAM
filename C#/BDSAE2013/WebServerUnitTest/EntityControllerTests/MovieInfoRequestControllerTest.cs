@@ -95,6 +95,7 @@ namespace WebServerUnitTest
             Assert.AreEqual(1, testObject.Movie_Id);
             Assert.AreEqual(2, testObject.Type_Id);
             Assert.AreEqual("Bald", testObject.Info);
+            Assert.AreEqual("", testObject.Note);
 
             //Get the values contained in the json returned from the delegate
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));

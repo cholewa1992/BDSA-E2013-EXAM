@@ -90,12 +90,19 @@ namespace WebServer
                 //Add any other information given through the request
                 if (values.ContainsKey("firstname"))
                     userAcc.Firstname = values["firstname"];
+                else
+                    userAcc.Firstname = "";
 
                 if (values.ContainsKey("lastname"))
                     userAcc.Lastname = values["lastname"];
+                else
+                    userAcc.Lastname = "";
 
                 if (values.ContainsKey("email"))
                     userAcc.Email = values["email"];
+                else
+                    userAcc.Email = "";
+
 
                 //Add the user to the database
                 storage.Add<UserAcc>(userAcc);

@@ -83,7 +83,7 @@ namespace WebServer
             Dictionary<string, string> values = GetRequestValues(request.Data);
 
             //Check for all vital information in the request. If one information is missing we throw an exception
-            if (!values.ContainsKey("title") || !values.ContainsKey("year"))
+            if (!values.ContainsKey("title") || !values.ContainsKey("year") || !values.ContainsKey("kind"))
                 throw new InvalidDataException("The data parsed to MovieRequestController post method did not contain enough information to create Movie");
 
 #if DEBUG
@@ -98,21 +98,21 @@ namespace WebServer
                 Movies movie = new Movies()
                 {
                     Title = values["title"],
-                    Year = int.Parse(values["year"])
+                    Year = int.Parse(values["year"]),
+                    Kind = values["kind"]
                 };
 
                 //Add any other information given through the request
-                if(values.ContainsKey("kind"))
-                    movie.Kind = values["kind"];
-
                 if (values.ContainsKey("seasonNumber"))
                     movie.SeasonNumber = int.Parse(values["seasonNumber"]);
 
                 if (values.ContainsKey("episodeNumber"))
-                    movie.EpisodeNumber = int.Parse(values["seasonNumber"]);
+                    movie.EpisodeNumber = int.Parse(values["episodeNumber"]);
 
                 if (values.ContainsKey("seriesYear"))
                     movie.SeriesYear = values["seriesYear"];
+                else
+                    movie.SeriesYear = "";
 
                 if (values.ContainsKey("episodeOfId"))
                     movie.EpisodeOf_Id = int.Parse(values["episodeOfId"]);

@@ -99,6 +99,8 @@ namespace WebServer
                 //Add additional information if it is in the request
                 if (values.ContainsKey("note"))
                     personInfo.Note = values["note"];
+                else
+                    personInfo.Note = "";
 
                 //Add the person info to the database
                 storage.Add<PersonInfo>(personInfo);

@@ -95,6 +95,9 @@ namespace WebServerUnitTest
             Assert.AreEqual(0, testObject.Id);
             Assert.AreEqual("darkknight42", testObject.Username);
             Assert.AreEqual("donttellanyone123", testObject.Password);
+            Assert.AreEqual("", testObject.Firstname);
+            Assert.AreEqual("", testObject.Lastname);
+            Assert.AreEqual("", testObject.Email);
 
             //Get the values contained in the json returned from the delegate
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));

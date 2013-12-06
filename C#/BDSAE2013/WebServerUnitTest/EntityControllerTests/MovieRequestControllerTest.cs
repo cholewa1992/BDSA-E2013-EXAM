@@ -82,7 +82,7 @@ namespace WebServerUnitTest
             var storage = storageMock.Object;
 
             //Make the request to send to the Post Method
-            Request request = new Request() { Method = "POST https://www.google.dk/Movie", Data = Encoder.Encode(JSonParser.Parse("title", "Die Hard 2", "year", "2000")) };
+            Request request = new Request() { Method = "POST https://www.google.dk/Movie", Data = Encoder.Encode(JSonParser.Parse("title", "Die Hard 2", "year", "2000", "kind", "Movie")) };
             
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessPost(request);
@@ -97,6 +97,11 @@ namespace WebServerUnitTest
             Assert.AreEqual(0, testObject.Id);
             Assert.AreEqual("Die Hard 2", testObject.Title);
             Assert.AreEqual(2000, testObject.Year);
+            Assert.AreEqual("Movie", testObject.Kind);
+            Assert.AreEqual(null, testObject.SeasonNumber);
+            Assert.AreEqual(null, testObject.EpisodeNumber);
+            Assert.AreEqual("", testObject.SeriesYear);
+            Assert.AreEqual(null, testObject.EpisodeOf_Id);
 
             //Get the values contained in the json returned from the delegate
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
