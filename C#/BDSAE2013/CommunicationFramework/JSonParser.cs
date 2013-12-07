@@ -81,13 +81,13 @@ namespace Utils
 
         /// <summary>
         /// Cleans the string from any character not being either in the english alphabet or being a number
-        /// Some extra characters are also allowed [' ', ',', '@', '.']
+        /// Some extra characters are also allowed [' ', ',', '@', '.', '-', '/']
         /// </summary>
         /// <param name="input"> The string to be cleaned </param>
         /// <returns> The cleaned string </returns>
         public static string CleanString(string input)
         {
-            return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,\\@\\.]", "");
+            return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,\\@\\.\\-\\/\\:]", "");
         }
 
         /// <summary>

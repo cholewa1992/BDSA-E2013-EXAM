@@ -43,8 +43,8 @@ namespace WebServer
             _storage = storage;
 
             //Initialize the list of controllers as well as adding each controller
-            //Entity Controllers
             _requestControllers = new List<IRequestController>();
+            //Entity Controllers
             _requestControllers.Add(new MovieRequestController());
             _requestControllers.Add(new UserRequestController());
             _requestControllers.Add(new PersonRequestController());
@@ -57,7 +57,6 @@ namespace WebServer
             //Invariant Check
             if (_storage == null)
                 throw new StorageNullException("Storage was null when trying to process request");
-
         }
 
         /// <summary>
@@ -66,6 +65,7 @@ namespace WebServer
         /// @pre _storage != null
         /// </summary>
         /// <param name="request"> The request to process </param>
+        /// <returns> A request object filled with the response data, aswell as the status code </returns>
         public Request ProcessRequest(Request request)
         {
             //pre condition checks

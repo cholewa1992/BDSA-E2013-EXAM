@@ -135,7 +135,7 @@ namespace WebServerUnitTest
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/Search/Live_Hard" };
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Live%20Hard" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -168,7 +168,7 @@ namespace WebServerUnitTest
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/Search/Good_Hard" };
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Good%20Hard" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -204,7 +204,7 @@ namespace WebServerUnitTest
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/Search/Good_To" };
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Good%20To" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -327,6 +327,74 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_Trimming()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { new Movies() { Id = 5, Title = "Die Hard" }, new Movies() { Id = 10, Title = "A Good Day To Die" }, new Movies() { Id = 6, Title = "Die Another Day" }, new Movies() { Id = 11, Title = "Die Hard : Mega Hard" }, new Movies() { Id = 14, Title = "A Game to Die for" }, new Movies() { Id = 23, Title = "DieDieDie" } };
+            IList<People> peopleList = new List<People>() { new People() { Id = 5, Name = "Vin Diesel" }, new People() { Id = 10, Name = "Dien Anderson" }, new People() { Id = 20, Name = "Die Antwoord" }, new People() { Id = 11, Name = "Mierto Dies Luos" }, new People() { Id = 23, Name = "Dies Louise" }, new People() { Id = 30, Name = "Cameron Dies" } };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test, that even though the search criteria matches all entries, the returned amount of hits has still been trimmed to 10
+            Assert.AreEqual(10, values.Count);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_Ordering()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { new Movies() { Id = 5, Title = "Die Hard" }, new Movies() { Id = 10, Title = "A Good Day To Die" }, new Movies() { Id = 6, Title = "Die Another Day" }, new Movies() { Id = 11, Title = "Die Hard : Mega Hard" }, new Movies() { Id = 14, Title = "A Game to Die for" }, new Movies() { Id = 23, Title = "DieDieDie" } };
+            IList<People> peopleList = new List<People>() { new People() { Id = 5, Name = "Vin Diesel" }, new People() { Id = 10, Name = "Dien Anderson" }, new People() { Id = 20, Name = "Die Antwoord" }, new People() { Id = 11, Name = "Mierto Dies Luos" }, new People() { Id = 23, Name = "Dies Louise" }, new People() { Id = 30, Name = "Cameron Dies" } };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die%20Hard%20:%20Mega%20Hard" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test that the first result in the list will be Die Hard : Mega Hard, the next will be Die Hard and after that it is the movie that matches "Die"
+            Assert.AreEqual("Die Hard : Mega Hard", values["m0Title"]);
+            Assert.AreEqual("Die Hard", values["m1Title"]);
+
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidUrlParameterException),
         "Url ending did not contain an argument")]
         public void Test_SearchRequestController_ProcessGet_Error_InvalidUrl()
@@ -348,6 +416,43 @@ namespace WebServerUnitTest
 
             //Use the delegate. This invocation should throw the exception
             byte[] data = myDelegate.Invoke(storage);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_GetSearchKeywords()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            //Set up an input string that we wish to compute
+            string[] searchInput = new string[]{"Hello", "My", "Friend"};
+
+            //Run it through the computation method
+            List<string> searchInputList = controller.GetSearchKeywords(searchInput);
+
+            //Test that we have all the correct results, in the correct order
+            Assert.AreEqual(6, searchInputList.Count);
+            Assert.AreEqual("Hello My Friend", searchInputList[0]);
+            Assert.AreEqual("Hello My", searchInputList[1]);
+            Assert.AreEqual("My Friend", searchInputList[2]);
+            Assert.AreEqual("Hello", searchInputList[3]);
+            Assert.AreEqual("My", searchInputList[4]);
+            Assert.AreEqual("Friend", searchInputList[5]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Input must not be null")]
+        public void Test_SearchRequestController_GetSearchKeywords_Error_Null()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            //Set up an input string array to null
+            string[] searchInput = null;
+
+            //Invoke the method that will throw the exception
+            controller.GetSearchKeywords(searchInput);
         }
     }
 }

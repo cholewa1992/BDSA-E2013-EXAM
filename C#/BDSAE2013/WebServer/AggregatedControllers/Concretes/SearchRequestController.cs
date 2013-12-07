@@ -18,6 +18,8 @@ namespace WebServer
     /// </summary>
     public class SearchRequestController : AbstractAggregatedRequestController
     {
+        private readonly int searchLimit = 5;
+
         /// <summary>
         /// The constructor defines the keyword associated with the controller on creation
         /// </summary>
@@ -39,8 +41,11 @@ namespace WebServer
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
             //Get the request value of the url
-            string searchInput = GetUrlArgument(request.Method);
-            string[] searchInputArray = searchInput.Split('_');
+            string searchInput = GetUrlArgument(request.Method).Replace("%20", " ");
+            string[] splitSearchInput = searchInput.Split(' ');
+
+            //Get the list of keywords based on the split strings
+            List<string> searchInputList = GetSearchKeywords(splitSearchInput);
 
 #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)
@@ -49,15 +54,33 @@ namespace WebServer
             //Return the delegate 
             return (storage => 
             {
+                //Initialize the set of movies
                 HashSet<Movies> movieSet = new HashSet<Movies>();
 
-                foreach (string searchString in searchInputArray)
-                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)));
+                //Iterate through each search input
+                foreach (string searchString in searchInputList)
+                {
+                    //If the amount of movies which has been found exceeds the amount we want, we stop searching
+                    if (movieSet.Count >= searchLimit)
+                        break;
 
+                    //Add any new movie to the list that matches the search credentials
+                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)));
+                }
+
+                //Initialize the set of movies
                 HashSet<People> peopleSet = new HashSet<People>();
 
-                foreach (string searchString in searchInputArray)
+                //Iterate through each search input
+                foreach (string searchString in searchInputList)
+                {
+                    //If the amount of people which has been found exceeds the amount we want, we stop searching
+                    if (peopleSet.Count >= searchLimit)
+                        break;
+
+                    //Add any new person to the list that matches the search credentials
                     peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.Contains(searchString)));
+                }
 
                 //Initialize the list of attribute names/values
                 List<string> jsonInput = new List<string>();
@@ -65,8 +88,8 @@ namespace WebServer
                 //initialize an index to differentiate each different movie/person
                 int index = 0;
 
-                //Iterate through all movies and add them to the jsonInput
-                foreach (Movies movie in movieSet)
+                //Iterate through the first movies, until we have enough based on our search limit, and add them to the jsonInput
+                foreach (Movies movie in movieSet.Take(searchLimit))
                 {
                     //For each movie we add the id of the movie
                     jsonInput.Add("m" + index + "Id");          //Add the attribute name
@@ -80,10 +103,11 @@ namespace WebServer
                     index++;
                 }
 
-                //Reet the index since we now work with person
+                //Reset the index since we now work with person
                 index = 0;
 
-                foreach (People person in peopleSet)
+                //Iterate through the first people, until we have enough based on our search limit, and add them to the jsonInput
+                foreach (People person in peopleSet.Take(searchLimit))
                 {
                     //For each person we add the id of the person
                     jsonInput.Add("p" + index + "Id");          //Add the attribute name
@@ -114,6 +138,54 @@ namespace WebServer
                 return Encoder.Encode(json);
             }
             );
+        }
+
+        /// <summary>
+        /// Computes a list of the concatenation of each adjacent search input, of all lengths from n to 1
+        /// </summary>
+        /// <param name="stringArray"> An array of keywords </param>
+        /// <returns> A list of all relevant keyword combinations </returns>
+        public List<string> GetSearchKeywords(string[] stringArray)
+        {
+            if (stringArray == null)
+                throw new ArgumentNullException("String array parsed to GetSearchKeywords method must not be null");
+
+            //Initialize the search input list
+            List<string> searchInputList = new List<string>();
+
+            //i: The amount of words to be concattenated to form the sentence to be added to the list
+            //j: The start position of the word to be added
+            //k: The current position of the word to be concattenated to the complete string to be added
+            for(int i = stringArray.Length; i > 0; i--)
+            {
+                for (int j = 0; j < stringArray.Length; j++)
+                {
+                    //Check if there are enough array entries to add a sentence concattenated of i words
+                    //counting from start position j
+                    //Otherwise we escape the current iteration
+                    if (j + i > stringArray.Length)
+                        break;
+
+                    //Initialize the word to be added
+                    string concattedWord = "";
+
+                    //Iterate through each word until a sentence with i words in it has been completed
+                    for (int k = j; k < j + i; k++)
+                    {
+                        //Check if the word has just begun, otherwise we add a space between each word
+                        if (concattedWord != "")
+                            concattedWord += " ";
+
+                        //Add the current word to the complete sentence
+                        concattedWord += stringArray[k];
+                    }
+
+                    //Add the completed sentence to the list of search inputs
+                    searchInputList.Add(concattedWord);
+                }
+            }
+
+            return searchInputList;
         }
     }
 }

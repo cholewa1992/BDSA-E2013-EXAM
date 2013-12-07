@@ -109,19 +109,6 @@ namespace UtilUnitTest
         }
 
         [TestMethod]
-        public void Test_JSonParser_CleanString_RemovedColons()
-        {
-            //Initialize the input string.
-            String inputString = "Die Hard : Mega Hard";
-
-            //Clean the string
-            String cleanedString = JSonParser.CleanString(inputString);
-
-            //Assert that the colon has been removed
-            Assert.AreEqual("Die Hard  Mega Hard", cleanedString);
-        }
-
-        [TestMethod]
         public void Test_JSonParser_CleanString_RemovedForeignCharacters()
         {
             //Initialize the input string.

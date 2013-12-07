@@ -15,7 +15,7 @@ namespace WebServer
            // new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
 
             RequestDelegator delegator = new RequestDelegator();
-
+            
             /*Request request = new Request();
 
             request.Method = "POST http://localhost:112/Movie";
@@ -48,6 +48,7 @@ namespace WebServer
 
             int index = 0;
 
+            Console.WriteLine("Movies");
             while (values.ContainsKey("m" + index + "Id"))
             {
                 Console.WriteLine(values["m" + index + "Id"] + ": " + values["m" + index + "Title"]); ;
@@ -56,6 +57,8 @@ namespace WebServer
             }
 
             index = 0;
+
+            Console.WriteLine("People");
 
             while (values.ContainsKey("p" + index + "Id"))
             {
@@ -66,6 +69,7 @@ namespace WebServer
 
             Console.WriteLine("Finished");
             Console.ReadKey();
+
         }
 
         public void Start(String listenAddress, Protocols protocol)
