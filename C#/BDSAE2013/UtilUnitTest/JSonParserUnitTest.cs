@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Utils;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace UtilUnitTest
 {
@@ -28,6 +30,7 @@ namespace UtilUnitTest
             //Use the parse to get the ouput in order to test it.
             string json = JSonParser.Parse(inputString);
 
+            //Tests that the empty attribute name was omitted
             Assert.AreEqual("{\r\n  \"title1\": \"Die Hard\"\r\n}", json);
         }
 
@@ -35,12 +38,13 @@ namespace UtilUnitTest
         public void Test_JSonParser_Parse_EmptyStringOmmitting_AttributeValue()
         {
             //Initialize the input string array.
-            String[] inputString = new String[] { "title1", "Die Hard", "titl2", "" };
+            String[] inputString = new String[] { "title1", "Die Hard", "title2", "" };
 
             //Use the parse to get the ouput in order to test it.
             string json = JSonParser.Parse(inputString);
 
-            Assert.AreEqual("{\r\n  \"title1\": \"Die Hard\"\r\n}", json);
+            //Tests that the empty attribute value was not omitted
+            Assert.AreEqual("{\r\n  \"title1\": \"Die Hard\",\r\n  \"title2\": \"\"\r\n}", json);
         }
 
         [TestMethod]
@@ -128,6 +132,84 @@ namespace UtilUnitTest
 
             //Assert that the foreign characters has been removed
             Assert.AreEqual("D Hrdt Mega Hrdt", cleanedString);
+        }
+
+        [TestMethod]
+        public void Test_JSonParser_GetValues_One_Pair()
+        {
+            //Initialize the input json string.
+            String inputJson = "{\r\n  \"title1\": \"Die Hard\",\r\n}";
+
+            //Get the values from the string to test them
+            Dictionary<string, string> values = JSonParser.GetValues(inputJson);
+
+            //Assert that the dictionary contains the correct values
+            Assert.AreEqual(1, values.Count);
+            Assert.AreEqual("Die Hard", values["title1"]);
+        }
+
+        [TestMethod]
+        public void Test_JSonParser_GetValues_MoreThanOne_Pair()
+        {
+            //Initialize the input json string.
+            String inputJson = "{\r\n  \"title1\": \"Die Hard\",\r\n  \"title2\": \"Die Another Day\"\r\n}";
+
+            //Get the values from the string to test them
+            Dictionary<string, string> values = JSonParser.GetValues(inputJson);
+
+            //Assert that the dictionary contains the correct values
+            Assert.AreEqual(2, values.Count);
+            Assert.AreEqual("Die Hard", values["title1"]);
+            Assert.AreEqual("Die Another Day", values["title2"]);
+        }
+
+        [TestMethod]
+        public void Test_JSonParser_GetValues_EmptyString()
+        {
+            //Initialize the input json string.
+            String inputJson = "";
+
+            //Get the values from the string to test them
+            Dictionary<string, string> values = JSonParser.GetValues(inputJson);
+
+            //Assert that the dictionary does not contain any values
+            Assert.AreEqual(0, values.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(JsonReaderException),
+        "Missing seperator. Excepted ':'")]
+        public void Test_JSonParser_GetValues_Error_InvalidCharacters()
+        {
+            //Initialize the input json string. (Note that there is an '"' too much, which will make the jsonreader unable to read the file
+            String inputJson = "{\r\n  \"title1\": \"Atenshon purÃ®zu supesharu: Ã\"sutoraria ShidonÃ® hen\"\r\n}";
+
+            //Make the invocation that will throw an exception
+            JSonParser.GetValues(inputJson);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(JsonReaderException),
+        "Missing seperator. Excepted ':'")]
+        public void Test_JSonParser_GetValues_Error_Uneven_Pairs_NoSeperator()
+        {
+            //Initialize the input json string. (Note that there are uneven pairs)
+            String inputJson = "{\r\n  \"title1\": \"Die Hard\",\r\n  \"title2\"\r\n}";
+
+            //Make the invocation that will throw an exception
+            JSonParser.GetValues(inputJson);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(JsonReaderException),
+        "Unexpected character, no value found")]
+        public void Test_JSonParser_GetValues_Error_Uneven_Pairs_Seperator()
+        {
+            //Initialize the input json string.  (Note that there are uneven pairs, even though the seperator is given)
+            String inputJson = "{\r\n  \"title1\": \"Die Hard\",\r\n  \"title2\":\r\n}";
+
+            //Make the invocation that will throw an exception
+            JSonParser.GetValues(inputJson);
         }
     }
 }

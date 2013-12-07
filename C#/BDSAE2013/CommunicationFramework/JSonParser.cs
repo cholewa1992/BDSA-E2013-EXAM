@@ -29,7 +29,7 @@ namespace Utils
 
             //Check that the incoming array actually has values
             if (parameters.Length == 0)
-                throw new ArgumentException("Input string array must contain strings");
+                throw new ArgumentException("JSonParser: Input string array must contain strings");
 
             //Check if the incoming string array is even. The strings must be ordered in pairs for the method to work
             if (parameters.Length % 2 != 0)
@@ -54,8 +54,8 @@ namespace Utils
                 //Iterate through the string array, 2 entries at a time
                 for (int i = 0; i < parameters.Length; i += 2)
                 {
-                    //Skip the entry if either the attribute name or values is an empty
-                    if (parameters[i] == "" || parameters[i + 1] == "")
+                    //Skip the entry if the attribute name is an empty string
+                    if (parameters[i] == "")
                         continue;
 
                     //Write the attribute name
@@ -80,13 +80,14 @@ namespace Utils
         }
 
         /// <summary>
-        /// Cleans the string from any character not being either in the english alphabet, being a number, a space character or a comma
+        /// Cleans the string from any character not being either in the english alphabet or being a number
+        /// Some extra characters are also allowed [' ', ',', '@', '.']
         /// </summary>
         /// <param name="input"> The string to be cleaned </param>
         /// <returns> The cleaned string </returns>
         public static string CleanString(string input)
         {
-            return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,]", "");
+            return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,\\@\\.]", "");
         }
 
         /// <summary>

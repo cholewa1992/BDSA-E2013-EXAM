@@ -97,8 +97,18 @@ namespace WebServer
                     index++;
                 }
 
-                //Convert the json input to actual json
-                string json = JSonParser.Parse(jsonInput.ToArray());
+                string json = "";
+
+                if (jsonInput.Count > 0)
+                {
+                    //If there was any search hits we convert the json input to actual json
+                    json = JSonParser.Parse(jsonInput.ToArray());
+                }
+                else
+                {
+                    //Otherwise we input a response message
+                    json = JSonParser.Parse(new string[]{"response", "There was no search hits"});
+                }
 
                 //return the json encoded as byte code
                 return Encoder.Encode(json);

@@ -114,7 +114,9 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct
-            Assert.AreEqual(0, values.Count);
+            Assert.AreEqual(1, values.Count);
+            Assert.AreEqual("There was no search hits", values["response"]);
+
         }
 
         [TestMethod]
