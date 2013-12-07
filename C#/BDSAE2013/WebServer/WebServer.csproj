@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRequestController.cs" />
+    <Compile Include="AggregatedControllers\Concretes\MovieDataRequestController.cs" />
     <Compile Include="AggregatedControllers\Concretes\SearchRequestController.cs" />
     <Compile Include="EntityControllers\Abstracts\AbstractEntityRequestController.cs" />
     <Compile Include="AggregatedControllers\Abstracts\AbstractAggregatedRequestController.cs" />

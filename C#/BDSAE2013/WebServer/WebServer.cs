@@ -38,8 +38,8 @@ namespace WebServer
             
             //Test movie processing
             Request request = new Request(); 
-            
-            request.Method = "GET http://localhost:112/Search/He";
+            /*
+            request.Method = "GET http://localhost:112/Search/Lord";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);
@@ -65,6 +65,36 @@ namespace WebServer
                 Console.WriteLine(values["p" + index + "Id"] + ": " + values["p" + index + "Name"]); ;
 
                 index++;
+            }
+            */
+
+            request.Method = "GET http://localhost:112/MovieData/770240";
+            Request response = delegator.ProcessRequest(request);
+
+            string json = Encoder.Decode(response.Data);
+            Console.WriteLine(response.ResponseStatusCode);
+
+            Dictionary<string, string> values = JSonParser.GetValues(json);
+
+            Console.WriteLine(values["title"]);
+            Console.WriteLine(values["year"]);
+            Console.WriteLine(values["kind"]);
+            Console.WriteLine(values["seasonNumber"]);
+            Console.WriteLine(values["seriesYear"]);
+            Console.WriteLine(values["episodeNumber"]);
+
+            int index = 0;
+
+            for (int i = 0; i < 20; i++)
+            {
+                while (values.ContainsKey("mi" + i + "," + index))
+                {
+                    Console.WriteLine(values["mi" + i + "," + index]) ;
+
+                    index++;
+                }
+
+                index = 0;
             }
 
             Console.WriteLine("Finished");
