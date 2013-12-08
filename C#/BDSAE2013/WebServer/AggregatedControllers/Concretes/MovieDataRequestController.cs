@@ -159,7 +159,6 @@ namespace WebServer
             movieInfoTypeTable.Add(2, "displayType");
             movieInfoTypeTable.Add(3, "genre");
             movieInfoTypeTable.Add(4, "language");
-
         }
     }
 }
