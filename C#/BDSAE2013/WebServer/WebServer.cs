@@ -15,7 +15,7 @@ namespace WebServer
            // new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
 
             RequestDelegator delegator = new RequestDelegator();
-            
+            Request request = new Request();
             /*Request request = new Request();
 
             request.Method = "POST http://localhost:112/Movie";
@@ -34,12 +34,10 @@ namespace WebServer
 
             Console.ReadKey();
              */
-
+            /*
             
             //Test movie processing
-            Request request = new Request(); 
-            /*
-            request.Method = "GET http://localhost:112/Search/Lord";
+            request.Method = "GET http://localhost:112/Search/Willis";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);
@@ -67,8 +65,8 @@ namespace WebServer
                 index++;
             }
             */
-
-            request.Method = "GET http://localhost:112/MovieData/770240";
+            /*
+            request.Method = "GET http://localhost:112/MovieData/2208821";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);
@@ -95,6 +93,46 @@ namespace WebServer
                 }
 
                 index = 0;
+            }
+
+            while (values.ContainsKey("a" + index + "Id"))
+            {
+                Console.WriteLine("Id: " + values["a" + index + "Id"] + " Name: " + values["a" + index + "Name"] + " Character: " + values["a" + index + "CharacterName"] + "Role: " + values["a" + index + "Role"] + "Note: " + values["a" + index + "Note"] + "NrOrder: " + values["a" + index + "NrOrder"]);
+
+                index++;
+            }
+            */
+
+            request.Method = "GET http://localhost:112/PersonData/1630018";
+            Request response = delegator.ProcessRequest(request);
+
+            string json = Encoder.Decode(response.Data);
+            Console.WriteLine(response.ResponseStatusCode);
+
+            Dictionary<string, string> values = JSonParser.GetValues(json);
+
+            Console.WriteLine(values["name"]);
+            Console.WriteLine(values["gender"]);
+
+            int index = 0;
+
+            for (int i = 0; i < 20; i++)
+            {
+                while (values.ContainsKey("pi" + i + "," + index))
+                {
+                    Console.WriteLine(values["pi" + i + "," + index]);
+
+                    index++;
+                }
+
+                index = 0;
+            }
+
+            while (values.ContainsKey("m" + index + "Id"))
+            {
+                Console.WriteLine("Id: " + values["m" + index + "Id"] + " Title: " + values["m" + index + "Title"] + " Kind: " + values["m" + index + "Kind"] + "Year: " + values["m" + index + "Year"] + "Character: " + values["m" + index + "CharacterName"] + "Role: " + values["m" + index + "Role"]);
+
+                index++;
             }
 
             Console.WriteLine("Finished");

@@ -54,6 +54,7 @@ namespace WebServer
             //Aggregated Controllers
             _requestControllers.Add(new SearchRequestController());
             _requestControllers.Add(new MovieDataRequestController());
+            _requestControllers.Add(new PersonDataRequestController());
 
             //Invariant Check
             if (_storage == null)

@@ -33,11 +33,11 @@ namespace WebServer
         }
 
         /// <summary>
-        /// This method returns a delegate that can be used to get a movie from a given storage.
-        /// The id of the movie is determined by the parsed request
+        /// This method returns a delegate that can be used to search for movies that matches certain criteria
+        /// The search criteria is determined by the parsed request
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
-        /// <returns> A delegate that gets a movie from a given storage, based on the contents of the request </returns>
+        /// <returns> A delegate that searches for movies in the database based on the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
             //Get the request value of the url
