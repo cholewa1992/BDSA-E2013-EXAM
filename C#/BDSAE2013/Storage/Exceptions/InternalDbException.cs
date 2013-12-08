@@ -1,6 +1,9 @@
 ﻿using System;
 namespace Storage
 {
+    ///<author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public class InternalDbException : Exception
     {
         public InternalDbException(){}

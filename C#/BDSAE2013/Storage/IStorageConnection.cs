@@ -6,6 +6,9 @@ namespace Storage
     /// <summary>
     /// Interface for defining storage connections
     /// </summary>
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public interface IStorageConnection : IDisposable
     {
         /// <summary>
