@@ -11,23 +11,19 @@ using Utils;
 namespace WebServer
 {
     /// <summary>
-    /// A request controller that handle the rest methods GET, POST, PUT and DELETE.
+    /// A aggregated request controller that handle the rest methods GET
     /// The controller receives the request and based on the type of method being invoked, the class will return a delegate
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
     /// </summary>
     public class MovieDataRequestController : AbstractAggregatedRequestController
     {
-         private Dictionary<int, string> movieInfoTypeTable;
-
         /// <summary>
         /// The constructor defines the keyword associated with the controller on creation
         /// </summary>
         public MovieDataRequestController()
         {
             Keyword = "MovieData";
-
-            SetupMovieInfoTypeTable();
 
             //Check the invariant
             if (Keyword == null)
@@ -70,21 +66,28 @@ namespace WebServer
                 //Iterate through all associated movie info
                 foreach (MovieInfo movieInfo in movieInfoList)
                 {
-                    if (movieInfo.Type_Id != currentType)
+                    try
                     {
-                        //If the type id of the current movie info is different from the type id, we reset the index.
-                        index = 0;
+                        if (movieInfo.Type_Id != currentType)
+                        {
+                            //If the type id of the current movie info is different from the type id, we reset the index.
+                            index = 0;
 
-                        //Furthermore we set the current type to be the type id of the current movie info
-                        currentType = (int)movieInfo.Type_Id;
+                            //Furthermore we set the current type to be the type id of the current movie info
+                            currentType = (int)movieInfo.Type_Id;
+                        }
+
+                        //We add the attribute name and value of the current movie info, based on it's type and the index of the current type
+                        jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index);
+                        jsonInput.Add("" + movieInfo.Info);
+
+                        //Increment the index
+                        index++;
                     }
-
-                    //We add the attribute name and value of the current movie info, based on it's type and the index of the current type
-                    jsonInput.Add("mi"+movieInfo.Type_Id+","+index);
-                    jsonInput.Add(""+movieInfo.Info);
-                    
-                    //Increment the index
-                    index++;
+                    catch (FormatException e)
+                    {
+                        //Do nothing - We just skip the addition of the information
+                    }
                 }
 
                 //Compute the information of actors associated with the movie
@@ -150,15 +153,6 @@ namespace WebServer
                 return Encoder.Encode(json);
             }
             );
-        }
-
-        private void SetupMovieInfoTypeTable()
-        {
-            movieInfoTypeTable = new Dictionary<int, string>();
-
-            movieInfoTypeTable.Add(2, "displayType");
-            movieInfoTypeTable.Add(3, "genre");
-            movieInfoTypeTable.Add(4, "language");
         }
     }
 }
