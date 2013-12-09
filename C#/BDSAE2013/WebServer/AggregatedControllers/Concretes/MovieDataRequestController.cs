@@ -66,28 +66,26 @@ namespace WebServer
                 //Iterate through all associated movie info
                 foreach (MovieInfo movieInfo in movieInfoList)
                 {
-                    try
+                    //Check if the type id is null - if it is, we skip the addition of the current information
+                    if (movieInfo.Type_Id == null)
+                        continue;
+
+                    if (movieInfo.Type_Id != currentType)
                     {
-                        if (movieInfo.Type_Id != currentType)
-                        {
-                            //If the type id of the current movie info is different from the type id, we reset the index.
-                            index = 0;
+                        //If the type id of the current movie info is different from the type id, we reset the index.
+                        index = 0;
 
-                            //Furthermore we set the current type to be the type id of the current movie info
-                            currentType = (int)movieInfo.Type_Id;
-                        }
-
-                        //We add the attribute name and value of the current movie info, based on it's type and the index of the current type
-                        jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index);
-                        jsonInput.Add("" + movieInfo.Info);
-
-                        //Increment the index
-                        index++;
+                        //Furthermore we set the current type to be the type id of the current movie info
+                        currentType = (int)movieInfo.Type_Id;
                     }
-                    catch (FormatException e)
-                    {
-                        //Do nothing - We just skip the addition of the information
-                    }
+
+                    //We add the attribute name and value of the current movie info, based on it's type and the index of the current type
+                    jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index);
+                    jsonInput.Add("" + movieInfo.Info);
+
+                    //Increment the index
+                    index++;
+                    
                 }
 
                 //Compute the information of actors associated with the movie

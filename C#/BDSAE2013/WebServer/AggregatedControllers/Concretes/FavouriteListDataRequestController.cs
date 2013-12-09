@@ -64,6 +64,10 @@ namespace WebServer
                 //Iterate through all associated movie info
                 foreach (FavouritedMovie favouritedMovie in favouritedMoviesList)
                 {
+                    //Check if the movie id is null - if it is, we skip the addition of the current information
+                    if (favouritedMovie.MovieId == null)
+                        continue;
+
                     //Attempt to get the movie associated with the participate entity
                     //If the movie does not exist in the database, the favouritedMovie entity is faulty and should be deleted
                     try
