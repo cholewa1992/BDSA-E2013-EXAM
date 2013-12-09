@@ -2,6 +2,9 @@
 
 namespace Storage
 {
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public class ChangesWasNotSavedException : Exception
     {
         public ChangesWasNotSavedException(){}

@@ -5,6 +5,9 @@ namespace Storage
     /// <summary>
     /// Bridge implementation to provide stubs to builde storage module on
     /// </summary>
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public abstract class AbstractStorageConnectionBridgeFacade : IStorageConnectionBridgeFacade
     {
         /// <summary>

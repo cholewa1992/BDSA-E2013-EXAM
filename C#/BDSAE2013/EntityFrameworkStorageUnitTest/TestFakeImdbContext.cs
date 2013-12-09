@@ -4,6 +4,9 @@ using Storage;
 
 namespace EntityFrameworkStorageUnitTest
 {
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     class MockFakeImdbContext : DbContext, IDbContext
     {
         public MockFakeImdbContext()

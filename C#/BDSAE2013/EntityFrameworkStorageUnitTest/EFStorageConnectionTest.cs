@@ -5,6 +5,9 @@ using Storage;
 
 namespace EntityFrameworkStorageUnitTest
 {
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     [TestClass]
     public class EFStorageConnectionTest
     {
@@ -13,7 +16,24 @@ namespace EntityFrameworkStorageUnitTest
         {
             using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
             {
-                var user = new UserAcc {Id = 1, Email = "jbec@itu.dk", Password = "1234" };
+                var user = new UserAcc {Email = "jbec@itu.dk", Password = "1234" };
+                Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
+
+                ef.Add(user);
+                Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
+
+                Assert.IsTrue(ef.SaveChanges());
+                Assert.IsTrue(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InternalDbException))]
+        public void AddInvalidDataToContextTest()
+        {
+            using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
+            {
+                var user = new UserAcc {Email = "jbec@itu.dk"};
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
                 ef.Add(user);
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
@@ -24,22 +44,11 @@ namespace EntityFrameworkStorageUnitTest
 
         [TestMethod]
         [ExpectedException(typeof(InternalDbException))]
-        public void AddEntityWithoutIdContextTest()
+        public void AddWithIdSetTest()
         {
             using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
             {
-                var user = new UserAcc();
-                ef.Add(user);
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InternalDbException))]
-        public void AddInvalidDataToContextTest()
-        {
-            using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
-            {
-                var user = new UserAcc {Id = 1};
+                var user = new UserAcc { Id = 1 };
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
                 ef.Add(user);
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
@@ -53,7 +62,7 @@ namespace EntityFrameworkStorageUnitTest
         {
             using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
             {
-                var user = new UserAcc { Id = 1, Email = "jbec@itu.dk", Password = "1234" };
+                var user = new UserAcc { Email = "jbec@itu.dk", Password = "1234" };
                 ef.Add(user);
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id && t.Email == "jbec@itu.dk"));
                 ef.SaveChanges();
@@ -79,7 +88,7 @@ namespace EntityFrameworkStorageUnitTest
         {
             using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
             {
-                var user = new UserAcc { Id = 1, Email = "jbec@itu.dk", Password = "1234" };
+                var user = new UserAcc { Email = "jbec@itu.dk", Password = "1234" };
                 user.Email = "jbec1@itu.dk";
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id && t.Email == user.Email));
                 ef.Update(user);
@@ -93,7 +102,7 @@ namespace EntityFrameworkStorageUnitTest
         {
             using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
             {
-                var user = new UserAcc {Id = 1, Email = "jbec@itu.dk", Password = "1234" };
+                var user = new UserAcc { Email = "jbec@itu.dk", Password = "1234" };
                 ef.Add(user);
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id));
 
@@ -114,14 +123,12 @@ namespace EntityFrameworkStorageUnitTest
         {
             using (var ef = new EFConnectionFactory<MockFakeImdbContext>().CreateConnection())
             {
-                var user = new UserAcc { Id = 1, Email = "jbec@itu.dk", Password = "1234" };
+                var user = new UserAcc { Email = "jbec@itu.dk", Password = "1234" };
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id));
                 ef.Delete(user);
                 ef.SaveChanges();
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id));
             }
         }
-
-
     }
 }

@@ -12,7 +12,7 @@ namespace Storage
     using System;
     using System.Collections.Generic;
     
-    public partial class InfoType
+    public partial class InfoType : IEntityDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -3,6 +3,9 @@
     /// <summary>
     /// Abstractfactory implementation for creating storage connections
     /// </summary>
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public interface IStorageConnectionFactory
     {
         /// <summary>

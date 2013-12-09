@@ -1,31 +1,31 @@
 ﻿using System;
-using System.Data;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
+using System.Collections.Generic;
 using System.Linq;
 using Storage;
 
-namespace EntityFrameworkStorage
+namespace InMemoryStorage
 {
     /// <summary>
-    /// Represents an Entity framework connection
+    /// In-memory implementation of IStorageConnetion for storing entities in memory
     /// </summary>
-    /// <typeparam name="TContext">The context to connect to</typeparam>
-    /// <author>
-    /// Jacob Cholewa (jbec@itu.dk)
-    /// </author>
-    public class EFStorageConnection<TContext> : IStorageConnection where TContext : IDbContext, new()
+    internal class InMemoryStorageConnection : IStorageConnection
     {
-        private readonly TContext _ef;
+        private readonly Dictionary<Type, ISaveable> _sets = new Dictionary<Type, ISaveable>();
         private bool _isDisposed;
-        private static object IsAdding = new object();
+
 
         /// <summary>
-        /// Contructs an EFStorageConnection
+        /// Gets the set need for the entity currently used
         /// </summary>
-        internal EFStorageConnection()
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        private InMemoryStorageSet<TEntity> GetSet<TEntity>() where TEntity : class, IEntityDto
         {
-            _ef = new TContext();
+            if (!_sets.ContainsKey(typeof (TEntity)))
+            {
+                _sets[typeof (TEntity)] = new InMemoryStorageSet<TEntity>();
+            } 
+            return (InMemoryStorageSet<TEntity>) _sets[typeof(TEntity)];
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace EntityFrameworkStorage
         public IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto
         {
             IsDisposed();
-            return _ef.Set<TEntity>();
+            return GetSet<TEntity>().Get();
         }
 
         /// <summary>
@@ -51,26 +51,11 @@ namespace EntityFrameworkStorage
         /// <remarks>
         /// @pre entity.Id == 0
         /// @pre IsDisposed == false
-        /// @post entity.Id != 0
         /// </remarks>
         public void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
-            lock (IsAdding)
-            {
-                IsDisposed();
-                if (entity.Id != 0) throw new InternalDbException("The id was set");
-                try
-                {
-                    entity.Id = Get<TEntity>().Max(t => t.Id) + 1;
-                }
-                catch (InvalidOperationException)
-                {
-                    entity.Id = 1;
-                }
-                if (entity.Id == 0) throw new InternalDbException("The id was not set");
-                _ef.Entry(entity).State = EntityState.Added;
-                _ef.Set<TEntity>().Add(entity);
-            }
+            IsDisposed();
+            GetSet<TEntity>().Add(entity);
         }
 
         /// <summary>
@@ -86,7 +71,7 @@ namespace EntityFrameworkStorage
         public void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
             IsDisposed();
-            _ef.Entry(entity).State = EntityState.Modified;
+            GetSet<TEntity>().Update(entity);
         }
 
         /// <summary>
@@ -101,7 +86,7 @@ namespace EntityFrameworkStorage
         public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
             IsDisposed();
-            _ef.Entry(entity).State = EntityState.Deleted;
+            GetSet<TEntity>().Delete(entity);
         }
 
         /// <summary>
@@ -114,34 +99,13 @@ namespace EntityFrameworkStorage
         public bool SaveChanges()
         {
             IsDisposed();
-            try
+            foreach (var o in _sets)
             {
-                return _ef.SaveChanges() > 0;
+                o.Value.SaveChanges();
             }
-            catch (DbEntityValidationException e)
-            {
-                Dispose();
-                throw new InternalDbException("The entities you tried to save violated a db contraint",e);
-            }
-            catch (EntityException e)
-            {
-                throw new InternalDbException("The connection to the database failed or timed out",e);
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                throw new InternalDbException("The entity tried updated is not in the database",e);
-            }
-            catch(Exception e)
-            {
-                Dispose();
-                throw new InternalDbException("The data was not saved due to an unexpected error", e);
-            }
+            return true;
         }
 
-        private void IsDisposed()
-        {
-            if(_isDisposed) throw new InternalDbException("The context has been disposed");
-        }
 
         /// <summary>
         /// Disposes the current context
@@ -151,8 +115,13 @@ namespace EntityFrameworkStorage
         /// </remarks>
         public void Dispose()
         {
+            IsDisposed();
             _isDisposed = true;
-            _ef.Dispose();
+        }
+
+        private void IsDisposed()
+        {
+            if (_isDisposed) throw new InternalDbException("The context has been disposed");
         }
     }
 }

@@ -7,6 +7,9 @@ namespace EntityFrameworkStorage
     /// <summary>
     /// Interface for defining Entity framework contexts
     /// </summary>
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public interface IDbContext : IDisposable
     {
         /// <summary>
