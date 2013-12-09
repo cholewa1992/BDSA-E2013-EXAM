@@ -18,12 +18,10 @@ namespace InMemoryStorage
         internal static SynchronizedCollection<TEntity> Entities = new SynchronizedCollection<TEntity>(new EntityCompare());
         private HashSet<EntityEntryDto> _states;
 
-        internal static void Clear()
-        {
-            Entities = new SynchronizedCollection<TEntity>();
-        }
-
-        public InMemoryStorageSet()
+        /// <summary>
+        /// Constructs a new In-Memory storage for storing IEntityDTO objects
+        /// </summary>
+        internal InMemoryStorageSet()
         {
             _states = new HashSet<EntityEntryDto>();
         }
@@ -53,7 +51,6 @@ namespace InMemoryStorage
             if (entity.Id != 0) throw new InternalDbException("Id must be set!");
             _states.Add(new EntityEntryDto
             {
-                Id = entity.Id,
                 State = EntityState.Added,
                 Entity = entity
             });
@@ -75,7 +72,6 @@ namespace InMemoryStorage
             if (entity.Id == 0) throw new InternalDbException("Id must be set!");
             _states.Add(new EntityEntryDto
             {
-                Id = entity.Id,
                 State = EntityState.Modified,
                 Entity = entity
             });
@@ -92,7 +88,6 @@ namespace InMemoryStorage
             if (entity.Id == 0) throw new InternalDbException("Id must be set!");
             _states.Add(new EntityEntryDto
             {
-                Id = entity.Id,
                 State = EntityState.Deleted,
                 Entity = entity
             });
@@ -124,7 +119,7 @@ namespace InMemoryStorage
                     {
                         try
                         {
-                            Entities.Remove(Entities.Single(t => t.Id == o.Id));
+                            Entities.Remove(Entities.Single(t => t.Id == o.Entity.Id));
                             Entities.Add(o.Entity);
                         }
                         catch
@@ -136,7 +131,7 @@ namespace InMemoryStorage
                     {
                         try
                         {
-                            Entities.Remove(Entities.Single(t => t.Id == o.Id));
+                            Entities.Remove(Entities.Single(t => t.Id == o.Entity.Id));
                         }
                         catch
                         {
@@ -157,13 +152,14 @@ namespace InMemoryStorage
 
         }
 
+        //Helper class to keep track of unsaved changes
         private class EntityEntryDto
         {
-            public int Id { set; get; }
             public EntityState State { set; get; }
             public TEntity Entity { set; get; }
         }
 
+        //Helper class for comparing entities
         private class EntityCompare : IEqualityComparer<TEntity>
         {
 
@@ -177,6 +173,12 @@ namespace InMemoryStorage
                 return (bx.Id + bx.GetType().GetHashCode()).GetHashCode();
             }
 
+        }
+
+        //Helper methode for tests 
+        internal static void Clear()
+        {
+            Entities = new SynchronizedCollection<TEntity>();
         }
     }
 }

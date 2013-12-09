@@ -78,7 +78,6 @@ namespace InMemoryStorageTest
             }
         }
 
-
         [TestInitialize]
         public void Init()
         {

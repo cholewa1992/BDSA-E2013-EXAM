@@ -4,6 +4,9 @@ using Storage;
 
 namespace EntityFrameworkStorageUnitTest
 {
+    /// <summary>
+    /// Helper class to test Linq-to-sql
+    /// </summary>
     /// <author>
     /// Jacob Cholewa (jbec@itu.dk)
     /// </author>

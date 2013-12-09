@@ -9,10 +9,10 @@ namespace InMemoryStorageTestRun
     {
         static void Main(string[] args)
         {
-            for (var i = 0; i < 2; i++)
+            int n = 0;
+            for (var i = 0; i < 3; i++)
             {
-                var i2 = i;
-                var t = new Task(() => Fs(i2));
+                var t = new Task(() => Fs(n++));
                 t.Start();
                 Console.WriteLine("Started " +i);
             }
