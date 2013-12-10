@@ -34,7 +34,8 @@ namespace EntityFrameworkStorage
         public DbSet<People> People { get; set; }
         public DbSet<PersonInfo> PersonInfo { get; set; }
         public DbSet<UserAcc> UserAcc { get; set; }
-        public IDbSet<T> Set<T>() where T : class
+
+        public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();
         }

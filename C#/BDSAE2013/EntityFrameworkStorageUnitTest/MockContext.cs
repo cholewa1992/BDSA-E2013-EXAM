@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using EntityFrameworkStorage;
-using Storage;
 
 namespace EntityFrameworkStorageUnitTest
 {

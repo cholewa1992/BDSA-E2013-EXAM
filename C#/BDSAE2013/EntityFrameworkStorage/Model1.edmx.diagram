@@ -5,15 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0bde94a0aab548cdb79f6aed23b5e20c" Name="Diagram1">
-        <EntityTypeShape EntityType="fakeimdbModel.FavouritedMovie" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.FavouriteList" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.FavouritedMovie" Width="1.5" PointX="3.125" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.FavouriteList" Width="1.5" PointX="0.625" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="fakeimdbModel.InfoType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.MovieInfo" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.Movies" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.Participate" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.People" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.PersonInfo" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="fakeimdbModel.UserAcc" Width="1.5" PointX="1.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.MovieInfo" Width="1.5" PointX="5.125" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.Movies" Width="1.5" PointX="7.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.Participate" Width="1.5" PointX="9.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.People" Width="1.5" PointX="11.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.PersonInfo" Width="1.5" PointX="11.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="fakeimdbModel.UserAcc" Width="1.5" PointX="3.375" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_FavList_Id" ManuallyRouted="false" />
         <AssociationConnector Association="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_Movie_Id" ManuallyRouted="false" />
         <AssociationConnector Association="fakeimdbModel.FK_dbo_FavouriteList_dbo_UserAcc_Id" ManuallyRouted="false" />
