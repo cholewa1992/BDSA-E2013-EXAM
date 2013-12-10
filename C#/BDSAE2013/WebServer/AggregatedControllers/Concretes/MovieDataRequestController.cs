@@ -122,8 +122,9 @@ namespace WebServer
                     try
                     {
                         //Get the person associated with the participation entity
-                        People person = storage.Get<People>(participate.Person_Id.Value);
-
+                        //People person = storage.Get<People>(participate.Person_Id.Value);
+                        People person = participate.People;
+                        
                         //Add all relevant information of the person using the person and the participant entities
                         jsonInput.Add("p" + index + "Id");
                         jsonInput.Add("" + person.Id);
