@@ -103,7 +103,8 @@ namespace WebServer
                     try
                     {
                         //Get the movie associated with the participation entity
-                        Movies movie = storage.Get<Movies>((int)participate.Movie_Id);
+                        //Movies movie = storage.Get<Movies>((int)participate.Movie_Id);
+                        Movies movie = participate.Movies;
 
                         //Add all relevant information of the movie using the movie and the participant entities
                         jsonInput.Add("m" + index + "Id");

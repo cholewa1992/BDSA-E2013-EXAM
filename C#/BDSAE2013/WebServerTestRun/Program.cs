@@ -14,12 +14,17 @@ namespace WebServerTestRun
         {
             RequestDelegator delegator = new RequestDelegator();
             Request request = new Request();
-            /*Request request = new Request();
+            /*
+            request.Method = "GET http://localhost:112/Movie/795";
 
-            request.Method = "POST http://localhost:112/Movie";
-            request.Data = Encoder.Encode(JSonParser.Parse("title", "Die Hard", "year", "1998"));
+            Request response = delegator.ProcessRequest(request);
+
+            Console.WriteLine(response.ResponseStatusCode);
+
+            var values = JSonParser.GetValues(Encoder.Decode(response.Data));
+
+            Console.WriteLine(values["response"]);
             */
-
             /*
             Request request = new Request() { Method = "POST https://www.google.dk/Movie", Data = Encoder.Encode(JSonParser.Parse("title", "Die Hard 2", "year", "2000", "kind", "TV Series")) };
             Request response = delegator.ProcessRequest(request);
@@ -32,39 +37,39 @@ namespace WebServerTestRun
 
             Console.ReadKey();
              */
-            /*
             
-            //Test movie processing
-            request.Method = "GET http://localhost:112/Search/Willis";
-            Request response = delegator.ProcessRequest(request);
+            
+            ////Test movie processing
+            //request.Method = "GET http://localhost:112/Search/Titanic";
+            //Request response = delegator.ProcessRequest(request);
 
-            string json = Encoder.Decode(response.Data);
+            //string json = Encoder.Decode(response.Data);
 
-            Dictionary<string, string> values = JSonParser.GetValues(json);
+            //Dictionary<string, string> values = JSonParser.GetValues(json);
 
-            int index = 0;
+            //int index = 0;
 
-            Console.WriteLine("Movies");
-            while (values.ContainsKey("m" + index + "Id"))
-            {
-                Console.WriteLine(values["m" + index + "Id"] + ": " + values["m" + index + "Title"]); ;
+            //Console.WriteLine("Movies");
+            //while (values.ContainsKey("m" + index + "Id"))
+            //{
+            //    Console.WriteLine(values["m" + index + "Id"] + ": " + values["m" + index + "Title"]); ;
 
-                index++;
-            }
+            //    index++;
+            //}
 
-            index = 0;
+            //index = 0;
 
-            Console.WriteLine("People");
+            //Console.WriteLine("People");
 
-            while (values.ContainsKey("p" + index + "Id"))
-            {
-                Console.WriteLine(values["p" + index + "Id"] + ": " + values["p" + index + "Name"]); ;
+            //while (values.ContainsKey("p" + index + "Id"))
+            //{
+            //    Console.WriteLine(values["p" + index + "Id"] + ": " + values["p" + index + "Name"]); ;
 
-                index++;
-            }
-            */
-            /*
-            request.Method = "GET http://localhost:112/MovieData/2208821";
+            //    index++;
+            //}
+
+
+            request.Method = "GET http://localhost:112/MovieData/2332647";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);
@@ -91,17 +96,17 @@ namespace WebServerTestRun
                 }
 
                 index = 0;
-            }
+            } 
 
-            while (values.ContainsKey("a" + index + "Id"))
+            while (values.ContainsKey("p" + index + "Id"))
             {
-                Console.WriteLine("Id: " + values["a" + index + "Id"] + " Name: " + values["a" + index + "Name"] + " Character: " + values["a" + index + "CharacterName"] + "Role: " + values["a" + index + "Role"] + "Note: " + values["a" + index + "Note"] + "NrOrder: " + values["a" + index + "NrOrder"]);
+                Console.WriteLine("Id: " + values["p" + index + "Id"] + " Name: " + values["p" + index + "Name"] + " Character: " + values["p" + index + "CharacterName"] + "Role: " + values["p" + index + "Role"] + "Note: " + values["p" + index + "Note"] + "NrOrder: " + values["p" + index + "NrOrder"]);
 
                 index++;
             }
-            */
             
-
+            
+            /*
             request.Method = "GET http://localhost:112/PersonData/1630018";
             Request response = delegator.ProcessRequest(request);
 
@@ -133,7 +138,7 @@ namespace WebServerTestRun
 
                 index++;
             }
-
+            */
             Console.WriteLine("Finished");
             Console.ReadKey();
         }
