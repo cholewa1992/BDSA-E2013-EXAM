@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using CommunicationFramework;
 using EntityFrameworkStorage;
 using Storage;
-using System.Collections.Generic;
-using Utils;
 
 namespace WebServer
 {
@@ -12,8 +10,12 @@ namespace WebServer
     {
         public static void Main( String[] args )
         {
-           // new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
+# if DEBUG
+#else
 
+            new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
+#endif
+# if DEBUG
             RequestDelegator delegator = new RequestDelegator();
             Request request = new Request();
             /*Request request = new Request();
@@ -137,6 +139,8 @@ namespace WebServer
 
             Console.WriteLine("Finished");
             Console.ReadKey();
+
+#endif
 
         }
 
