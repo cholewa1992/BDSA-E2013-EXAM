@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EntityFrameworkStorage;
 using InMemoryStorage;
 using Storage;
 
@@ -14,7 +15,9 @@ namespace InMemoryStorageTestRun
             {
                 var t = new Task(() => Fs(n++));
                 t.Start();
+                #if DEBUG
                 Console.WriteLine("Started " +i);
+                #endif
             }
             Console.ReadKey();
         }

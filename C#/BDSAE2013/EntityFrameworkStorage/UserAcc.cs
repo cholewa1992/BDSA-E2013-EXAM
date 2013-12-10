@@ -8,22 +8,30 @@
 //------------------------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
+using Storage;
 
-namespace Storage
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
     public partial class UserAcc : IEntityDto
     {
+        public UserAcc()
+        {
+            this.FavouriteList = new HashSet<FavouriteList>();
+        }
+    
         [Key]
         public int Id { get; set; }
-        public string Username { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string Username { get; set; }
+    
+        public virtual ICollection<FavouriteList> FavouriteList { get; set; }
     }
 }

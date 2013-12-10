@@ -56,7 +56,7 @@ namespace WebServer
                 string json = JSonParser.Parse(
                     "id", "" + favouriteList.Id,
                     "title", "" + favouriteList.Title,
-                    "userAccId", "" + favouriteList.UserAccId
+                    "userAccId", "" + favouriteList.UserAcc_Id
                     );
 
                 //Encode the json to bytes and return them
@@ -90,7 +90,7 @@ namespace WebServer
                 FavouriteList favouriteList = new FavouriteList()
                 {
                     Title = values["title"],
-                    UserAccId = int.Parse(values["userAccId"])
+                    UserAcc_Id = int.Parse(values["userAccId"])
                 };
 
                 //Add the Favourite List to the database
@@ -135,7 +135,7 @@ namespace WebServer
                     favouriteList.Title = values["title"];
 
                 if (values.ContainsKey("userAccId"))
-                    favouriteList.UserAccId = int.Parse(values["userAccId"]);
+                    favouriteList.UserAcc_Id = int.Parse(values["userAccId"]);
 
                 //Updated the favourite list in the database
                 storage.Update<FavouriteList>(favouriteList);

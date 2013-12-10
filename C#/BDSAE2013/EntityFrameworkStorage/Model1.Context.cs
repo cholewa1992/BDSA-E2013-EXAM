@@ -7,27 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
 namespace EntityFrameworkStorage
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
-    public partial class FakeImdbContext : DbContext, IDbContext
+    
+    public partial class fakeimdbEntities : DbContext, IDbContext
     {
-        public FakeImdbContext()
-            : base("FakeImdbContext")
+        public fakeimdbEntities()
+            : base("name=fakeimdbEntities")
         {
-            this.Configuration.LazyLoadingEnabled = true;
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
-        public new IDbSet<T> Set<T>() where T : class
+    
+        public DbSet<FavouritedMovie> FavouritedMovie { get; set; }
+        public DbSet<FavouriteList> FavouriteList { get; set; }
+        public DbSet<InfoType> InfoType { get; set; }
+        public DbSet<MovieInfo> MovieInfo { get; set; }
+        public DbSet<Movies> Movies { get; set; }
+        public DbSet<Participate> Participate { get; set; }
+        public DbSet<People> People { get; set; }
+        public DbSet<PersonInfo> PersonInfo { get; set; }
+        public DbSet<UserAcc> UserAcc { get; set; }
+        public IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();
         }

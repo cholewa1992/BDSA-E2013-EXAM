@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Storage
+using Storage;
+
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Participate : IEntityDto
     {
         public int ParticipateId { get; set; }
@@ -21,11 +23,20 @@ namespace Storage
         public string Note { get; set; }
         public Nullable<int> Movie_Id { get; set; }
         public Nullable<int> Person_Id { get; set; }
+    
+        public virtual Movies Movies { get; set; }
+        public virtual People People { get; set; }
 
         public int Id
         {
-            set { ParticipateId = value; }
-            get { return ParticipateId; }
+            get
+            {
+                return ParticipateId;
+            }
+            set
+            {
+                ParticipateId = value;
+            }
         }
     }
 }

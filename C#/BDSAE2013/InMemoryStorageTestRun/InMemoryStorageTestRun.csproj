@@ -48,6 +48,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityFrameworkStorage\EntityFrameworkStorage.csproj">
+      <Project>{531A3239-9797-4D54-AEBD-224C5868BB19}</Project>
+      <Name>EntityFrameworkStorage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InMemoryStorage\InMemoryStorage.csproj">
       <Project>{89b491a8-0f90-4856-994d-19e47cbd88b9}</Project>
       <Name>InMemoryStorage</Name>

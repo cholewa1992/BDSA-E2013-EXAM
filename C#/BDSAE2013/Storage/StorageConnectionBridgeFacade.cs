@@ -114,12 +114,15 @@ namespace Storage
         /// <remarks>
         /// @pre IsDisposed();
         /// @pre entity != null
+        /// @pre entity.Id > 0
+        /// @pre int.MaxValue >= entity.Id
         /// </remarks>
         public override void Update<TEntity>(TEntity entity)
         {
             IsDisposed(); //Checks that the context is not disposed
             if (entity == null){ throw new ArgumentNullException("entity");} //Checks that the entity is not null
-            if (entity.Id == 0) throw new InternalDbException("Id was not set");
+            if (entity.Id <= 0) throw new InternalDbException("Id was zero or below");
+            if (entity.Id > int.MaxValue) throw new InternalDbException("Id was zero or below");
             Db.Update(entity); //Updates the entity
             SaveChanges(); //Saves the changes to the context
         }
@@ -133,12 +136,15 @@ namespace Storage
         /// <remarks>
         /// @pre IsDisposed();
         /// @pre entity != null
+        /// @pre entity.Id > 0
+        /// @pre int.MaxValue >= entity.Id
         /// </remarks>
         public override void Delete<TEntity>(TEntity entity)
         {
             IsDisposed(); //Checks that the context is not disposed
             if (entity == null){ throw new ArgumentNullException("entity"); } //Checks that the entity is not null
-            if (entity.Id == 0) throw new InternalDbException("Id was not set");
+            if (entity.Id <= 0) throw new InternalDbException("Id was zero or below");
+            if (entity.Id > int.MaxValue) throw new InternalDbException("Id was zero or below");
             Db.Delete(entity); //Deletes the entity
             SaveChanges(); //Saves the changes to the database
         }
@@ -152,7 +158,7 @@ namespace Storage
         /// <remarks>
         /// @pre IsDisposed();
         /// @pre id >= 0
-        /// @pre id < int.max
+        /// @pre int.MaxValue > id
         /// </remarks>
         public override void Delete<TEntity>(int id)
         {

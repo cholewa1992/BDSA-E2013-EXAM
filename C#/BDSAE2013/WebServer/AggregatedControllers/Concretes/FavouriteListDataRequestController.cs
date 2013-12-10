@@ -57,19 +57,23 @@ namespace WebServer
                 
                 //Compute the information of the person info associated with the person
                 //Get the list of person info associated with the person. Sort the results by type_id
-                List<FavouritedMovie> favouritedMoviesList = storage.Get<FavouritedMovie>().Where(fm => fm.FLId == favouriteList.Id).ToList();
+                List<FavouritedMovie> favouritedMoviesList = storage.Get<FavouritedMovie>().Where(fm => fm.FavList_Id == favouriteList.Id).ToList();
 
                 int index = 0;
 
                 //Iterate through all associated movie info
                 foreach (FavouritedMovie favouritedMovie in favouritedMoviesList)
                 {
+                    //Check if the movie id is null - if it is, we skip the addition of the current information
+                    if (favouritedMovie.Movie_Id == null)
+                        continue;
+
                     //Attempt to get the movie associated with the participate entity
                     //If the movie does not exist in the database, the favouritedMovie entity is faulty and should be deleted
                     try
                     {
                         //Get the movie associated with the participation entity
-                        Movies movie = storage.Get<Movies>(favouritedMovie.MovieId);
+                        Movies movie = storage.Get<Movies>((int)favouritedMovie.Movie_Id);
 
                         //Add all relevant information of the movie using the movie
                         jsonInput.Add("m" + index + "Id");
@@ -95,7 +99,7 @@ namespace WebServer
                 string json = JSonParser.Parse(new string[]{
                     "id", "" + favouriteList.Id,
                     "title", "" + favouriteList.Title,
-                    "userAccountId", "" + favouriteList.UserAccId}.Concat(
+                    "userAccountId", "" + favouriteList.UserAcc_Id}.Concat(
                     jsonInput).ToArray()
                     );
 

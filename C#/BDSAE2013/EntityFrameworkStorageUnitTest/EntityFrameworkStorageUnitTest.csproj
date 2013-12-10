@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="EFStorageConnectionTest.cs" />
     <Compile Include="EFStorageIntegrationTest.cs" />
-    <Compile Include="TestFakeImdbContext.cs" />
+    <Compile Include="MockContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

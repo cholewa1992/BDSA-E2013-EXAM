@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2930F64B-67A1-408C-BEA0-7CB3F937682D}</ProjectGuid>
+    <ProjectGuid>{5253BE38-2E5A-437F-91B0-ED75B2446B14}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InMemoryStorageTest</RootNamespace>
-    <AssemblyName>InMemoryStorageTest</AssemblyName>
+    <RootNamespace>StorageTest</RootNamespace>
+    <AssemblyName>StorageTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.1.1311.0615\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -50,8 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="InMemoryIntegrationTest.cs" />
-    <Compile Include="InMemoryUnitTest.cs" />
+    <Compile Include="StorageBridgeFacadeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,14 +61,13 @@
       <Project>{531A3239-9797-4D54-AEBD-224C5868BB19}</Project>
       <Name>EntityFrameworkStorage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InMemoryStorage\InMemoryStorage.csproj">
-      <Project>{89b491a8-0f90-4856-994d-19e47cbd88b9}</Project>
-      <Name>InMemoryStorage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.csproj">
       <Project>{7F6ED44D-0AA8-4D4B-8DBE-FBFB0F20E9A5}</Project>
       <Name>Storage</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
