@@ -18,55 +18,179 @@ namespace StorageTest
         private Mock<IStorageConnection> _mock;
         private Mock<IStorageConnectionFactory> _factoryMock;
 
+        [TestMethod]
+        public void GetByIdEquals1Test()
+        {
+            const int id = 1;
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Get<UserAcc>(id);
+        }
 
         [TestMethod]
-        public void AddIdEquals1Test()
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetByIdBelow1Test()
+        {
+            const int id = -1;
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Get<UserAcc>(id);
+        }
+
+        [TestMethod]
+        public void GetByIdIntMaxTest()
+        {
+            const int id = int.MaxValue;
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Get<UserAcc>(id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetByIdAbowIntMaxTest()
+        {
+            var id = int.MaxValue;
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Get<UserAcc>(id + 1);
+        }
+
+
+        [TestMethod]
+        public void UpdateIdEquals1Test()
         {
             var user = new UserAcc();
-            var id = 1;
-            _mock.Setup(foo => foo.Add(user)).Callback(() => user.Id = (id ));
+            const int id = 1;
+            user.Id = id;
 
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            sud.Add(user);
+            sud.Update(user);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InternalDbException))]
-        public void AddIdBelow1Test()
+        public void UpdateIdBelow1Test()
         {
             var user = new UserAcc();
-            var id = -1;
-            _mock.Setup(foo => foo.Add(user)).Callback(() => user.Id = (id));
+            const int id = -1;
+            user.Id = id;
 
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            sud.Add(user);
+            sud.Update(user);
         }
 
         [TestMethod]
-        public void AddIdIntMaxTest()
+        public void UpdateIdIntMaxTest()
         {
             var user = new UserAcc();
-            var id = int.MaxValue;
-            _mock.Setup(foo => foo.Add(user)).Callback(() => user.Id = (id));
+            const int id = int.MaxValue;
+            user.Id = id;
 
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            sud.Add(user);
+            sud.Update(user);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InternalDbException))]
-        public void AddIdAbowIntMaxTest()
+        public void UpdateIdAbowIntMaxTest()
         {
             var user = new UserAcc();
             var id = int.MaxValue;
-            _mock.Setup(foo => foo.Add(user)).Callback(() => user.Id = (id + 1) );
+            user.Id = id + 1;
 
             _mock.Setup(foo => foo.SaveChanges()).Returns(true);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
-            sud.Add(user);
+            sud.Update(user);
+        }
+
+
+        [TestMethod]
+        public void DeleteIdEquals1Test()
+        {
+            var user = new UserAcc();
+            const int id = 1;
+            user.Id = id;
+
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Delete(user);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InternalDbException))]
+        public void DeleteIdBelow1Test()
+        {
+            var user = new UserAcc();
+            const int id = -1;
+            user.Id = id;
+
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Update(user);
+        }
+
+        [TestMethod]
+        public void DeleteIdIntMaxTest()
+        {
+            var user = new UserAcc();
+            const int id = int.MaxValue;
+            user.Id = id;
+
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Update(user);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InternalDbException))]
+        public void DeleteIdAbowIntMaxTest()
+        {
+            var user = new UserAcc();
+            var id = int.MaxValue;
+            user.Id = id + 1;
+
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Update(user);
+        }
+
+        [TestMethod]
+        public void DeleteByIdEquals1Test()
+        {
+            const int id = 1;
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Delete<UserAcc>(id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DeleteByIdBelow1Test()
+        {
+            const int id = -1;
+
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Delete<UserAcc>(id);
+        }
+
+        [TestMethod]
+        public void DeleteByIdIntMaxTest()
+        {
+            const int id = int.MaxValue;
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Delete<UserAcc>(id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DeleteByIdAbowIntMaxTest()
+        {
+            var id = int.MaxValue;
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            sud.Delete<UserAcc>(id + 1);
         }
 
 
@@ -154,7 +278,7 @@ namespace StorageTest
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.AreEqual(_user1, sud.Get<UserAcc>(1));
             Assert.AreEqual(_user2, sud.Get<UserAcc>(2));
-            Assert.AreEqual(_user3, sud.Get<UserAcc>(3));
+            Assert.AreEqual(_user3, sud.Get<UserAcc>(int.MaxValue));
         }
 
         [TestMethod]
@@ -172,7 +296,7 @@ namespace StorageTest
             var e = sud.Get<UserAcc>();
             Assert.AreEqual(_user1, e.Single(t => t.Id == 1));
             Assert.AreEqual(_user2, e.Single(t => t.Id == 2));
-            Assert.AreEqual(_user3, e.Single(t => t.Id == 3));
+            Assert.AreEqual(_user3, e.Single(t => t.Id == int.MaxValue));
         }
 
         [TestMethod]
@@ -181,6 +305,33 @@ namespace StorageTest
             _mock.Setup(foo => foo.Get<UserAcc>()).Returns(new List<UserAcc>().AsQueryable);
             var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
             Assert.AreEqual(0, sud.Get<UserAcc>().Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AddNull()
+        {
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            sud.Add((UserAcc) null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void UpdateNull()
+        {
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            sud.Update((UserAcc)null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DeleteNull()
+        {
+            var sud = new StorageConnectionBridgeFacade(_factoryMock.Object);
+            _mock.Setup(foo => foo.SaveChanges()).Returns(true);
+            sud.Delete((UserAcc)null);
         }
 
         [TestInitialize]
@@ -220,7 +371,7 @@ namespace StorageTest
                 Email = "mart@itu.dk",
                 Firstname = "Martin",
                 Lastname = "T",
-                Id = 3,
+                Id = int.MaxValue,
                 Password = "3",
                 Username = "U3"
             };
