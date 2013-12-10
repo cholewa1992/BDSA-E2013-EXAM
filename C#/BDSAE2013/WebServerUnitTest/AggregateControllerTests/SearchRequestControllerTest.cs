@@ -356,7 +356,7 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Test, that even though the search criteria matches all entries, the returned amount of hits has still been trimmed to 10
-            Assert.AreEqual(10, values.Count);
+            Assert.AreEqual(20, values.Count);
         }
 
         [TestMethod]

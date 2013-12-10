@@ -64,6 +64,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AggregateControllerTests\PersonDataRequestControllerTest.cs" />
     <Compile Include="AggregateControllerTests\MovieDataRequestControllerTest.cs" />
     <Compile Include="AggregateControllerTests\SearchRequestControllerTest.cs" />
     <Compile Include="EntityControllerTests\UserRequestControllerTest.cs" />
