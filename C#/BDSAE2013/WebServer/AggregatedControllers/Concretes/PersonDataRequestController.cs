@@ -67,21 +67,19 @@ namespace WebServer
                 //Iterate through all associated movie info
                 foreach (PersonInfo personInfo in personInfoList)
                 {
-                    //Check if the type id is null - if it is, we skip the addition of the current information
-                    if (personInfo.Type_Id == null)
-                        continue;
-
                     if (personInfo.Type_Id != currentType)
                     {
                         //If the type id of the current person info is different from the type id, we reset the index.
                         index = 0;
 
                         //Furthermore we set the current type to be the type id of the current person info
-                        currentType = (int)personInfo.Type_Id;
+                        currentType = personInfo.Type_Id;
                     }
 
                     //We add the attribute name and value of the current person info, based on it's type and the index of the current type
-                    jsonInput.Add("pi" + InfoTypes.GetTypeString((int)personInfo.Type_Id) + "," + index);
+                    jsonInput.Add("pi" + InfoTypes.GetTypeString((int)personInfo.Type_Id) + index + "Id");
+                    jsonInput.Add("" + personInfo.Id);
+                    jsonInput.Add("pi" + InfoTypes.GetTypeString((int)personInfo.Type_Id) + index + "Info");
                     jsonInput.Add("" + personInfo.Info);
 
                     //Increment the index
@@ -90,7 +88,7 @@ namespace WebServer
 
                 //Compute the information of actors associated with the person
                 //Get the list of participants associated with the person
-                List<Participate> participateList = storage.Get<Participate>().Where(p => p.Person_Id == person.Id).ToList();
+                List<Participate> participateList = storage.Get<Participate>().Where(p => p.Person_Id == person.Id).Distinct().ToList();
 
                 //Reset the index, used when assigning attribute names
                 index = 0;

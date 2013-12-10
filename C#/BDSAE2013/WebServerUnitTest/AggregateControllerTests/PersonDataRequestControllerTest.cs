@@ -13,19 +13,20 @@ using System.Linq;
 namespace WebServerUnitTest
 {
     [TestClass]
-    public class MovieDataRequestControllerTest
+    public class PersonDataRequestControllerTest
     {
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseAllInfo()
+        public void Test_PersonDataRequestControllerTest_ProcessGet_UseAllInfo()
         {
             //Initialize the request controller that is being tested
-            MovieDataRequestController controller = new MovieDataRequestController();
+            PersonDataRequestController controller = new PersonDataRequestController();
 
-            //Make a list of movie info for the movie to search in
-            IList<MovieInfo> movieInfoList = new List<MovieInfo>() { 
-                new MovieInfo() { Id = 20, Info = "Color", Movie_Id = 5, Type_Id = 2 }
+            //Make a list of person info for the person to search in
+            IList<PersonInfo> personInfoList = new List<PersonInfo>() { 
+                new PersonInfo() { Id = 20, Info = "Yipee Ki Yay Motherfucker", Person_Id = 10, Type_Id = 15 }
             };
-            //Make a list of participants in the movie for the movie to search in
+
+            //Make a list of participants entities that the person is associated with
             IList<Participate> participateList = new List<Participate>() { 
                 new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" }
             };
@@ -34,14 +35,14 @@ namespace WebServerUnitTest
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Map the returned values of the storage Get methods
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 } );
-            storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
+            storageMock.Setup(x => x.Get<PersonInfo>()).Returns(personInfoList.AsQueryable());
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
             storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -54,48 +55,45 @@ namespace WebServerUnitTest
             
             //Check that the values returned by the delegate are correct
             //Assert the amount of information
-            Assert.AreEqual(17, values.Count);
+            Assert.AreEqual(13, values.Count);
+
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
+
+            //Assert the person info details
+            Assert.AreEqual("20", values["piQuotes0Id"]);
+            Assert.AreEqual("Yipee Ki Yay Motherfucker", values["piQuotes0Info"]);
 
             //Assert the movie details
-            Assert.AreEqual("5", values["id"]);
-            Assert.AreEqual("Die Hard", values["title"]);
-            Assert.AreEqual("1998", values["year"]);
-            Assert.AreEqual("Movie", values["kind"]);
-            Assert.AreEqual("0", values["seasonNumber"]);
-            Assert.AreEqual("0", values["episodeNumber"]);
-            Assert.AreEqual("", values["seriesYear"]);
-            Assert.AreEqual("0", values["episodeOfId"]);
-
-            //Assert the movie info details
-            Assert.AreEqual("20", values["miColorInfo0Id"]);
-            Assert.AreEqual("Color", values["miColorInfo0Info"]);
-
-            //Assert the actor details
-            Assert.AreEqual("10", values["p0Id"]);
-            Assert.AreEqual("Willis, Bruce", values["p0Name"]);
-            Assert.AreEqual("Officer John McClane", values["p0CharacterName"]);
-            Assert.AreEqual("Actor", values["p0Role"]);
-            Assert.AreEqual("Star", values["p0Note"]);
-            Assert.AreEqual("Male", values["p0Gender"]);
-            Assert.AreEqual("1", values["p0NrOrder"]);
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("Movie", values["m0Kind"]);
+            Assert.AreEqual("1998", values["m0Year"]);
+            Assert.AreEqual("Officer John McClane", values["m0CharacterName"]);
+            Assert.AreEqual("Actor", values["m0Role"]);
+            Assert.AreEqual("Star", values["m0Note"]);
+            Assert.AreEqual("1", values["m0NrOrder"]);
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseAllInfo_NoMovieInfo()
+        public void Test_PersonDataRequestControllerTest_ProcessGet_UseAllInfo_NoPersonInfo()
         {
             //Initialize the request controller that is being tested
-            MovieDataRequestController controller = new MovieDataRequestController();
+            PersonDataRequestController controller = new PersonDataRequestController();
 
             //Make a list of participants in the movie for the movie to search in
             IList<Participate> participateList = new List<Participate>() { 
                 new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" },
-                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star" }
+                new Participate() { Id = 2, Movie_Id = 6, Person_Id = 10, CharName = "Dr. Malcom Crowe", Role = "Actor", NrOrder = 2, Note = "Star" }
             };
 
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Map the returned values of the storage Get methods
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
+            storageMock.Setup(x => x.Get<Movies>(6)).Returns(new Movies() { Id = 6, Title = "Sixth Sense", Year = 2001, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
             storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
             storageMock.Setup(x => x.Get<People>(11)).Returns(new People() { Id = 11, Name = "Rickman, Alan", Gender = "Male" });
@@ -103,7 +101,7 @@ namespace WebServerUnitTest
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -116,56 +114,53 @@ namespace WebServerUnitTest
 
             //Check that the values returned by the delegate are correct
             //Assert the amount of information
-            Assert.AreEqual(22, values.Count);
+            Assert.AreEqual(19, values.Count);
             
-            //Assert the movie details
-            Assert.AreEqual("5", values["id"]);
-            Assert.AreEqual("Die Hard", values["title"]);
-            Assert.AreEqual("1998", values["year"]);
-            Assert.AreEqual("Movie", values["kind"]);
-            Assert.AreEqual("0", values["seasonNumber"]);
-            Assert.AreEqual("0", values["episodeNumber"]);
-            Assert.AreEqual("", values["seriesYear"]);
-            Assert.AreEqual("0", values["episodeOfId"]);
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
 
-            //Assert the actor details
-            Assert.AreEqual("10", values["p0Id"]);
-            Assert.AreEqual("Willis, Bruce", values["p0Name"]);
-            Assert.AreEqual("Officer John McClane", values["p0CharacterName"]);
-            Assert.AreEqual("Actor", values["p0Role"]);
-            Assert.AreEqual("Star", values["p0Note"]);
-            Assert.AreEqual("Male", values["p0Gender"]);
-            Assert.AreEqual("1", values["p0NrOrder"]);
-            Assert.AreEqual("11", values["p1Id"]);
-            Assert.AreEqual("Rickman, Alan", values["p1Name"]);
-            Assert.AreEqual("Hans Gruber", values["p1CharacterName"]);
-            Assert.AreEqual("Actor", values["p1Role"]);
-            Assert.AreEqual("Star", values["p1Note"]);
-            Assert.AreEqual("Male", values["p1Gender"]);
-            Assert.AreEqual("2", values["p1NrOrder"]);
+            //Assert the movie details
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("Movie", values["m0Kind"]);
+            Assert.AreEqual("1998", values["m0Year"]);
+            Assert.AreEqual("Officer John McClane", values["m0CharacterName"]);
+            Assert.AreEqual("Actor", values["m0Role"]);
+            Assert.AreEqual("Star", values["m0Note"]);
+            Assert.AreEqual("1", values["m0NrOrder"]);
+            Assert.AreEqual("6", values["m1Id"]);
+            Assert.AreEqual("Sixth Sense", values["m1Title"]);
+            Assert.AreEqual("Movie", values["m1Kind"]);
+            Assert.AreEqual("2001", values["m1Year"]);
+            Assert.AreEqual("Dr. Malcom Crowe", values["m1CharacterName"]);
+            Assert.AreEqual("Actor", values["m1Role"]);
+            Assert.AreEqual("Star", values["m1Note"]);
+            Assert.AreEqual("2", values["m1NrOrder"]);
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseAllInfo_NoActors()
+        public void Test_PersonDataRequestControllerTest_ProcessGet_UseAllInfo_NoMovies()
         {
             //Initialize the request controller that is being tested
-            MovieDataRequestController controller = new MovieDataRequestController();
+            PersonDataRequestController controller = new PersonDataRequestController();
 
             //Make a list of movie info for the movie to search in
-            IList<MovieInfo> movieInfoList = new List<MovieInfo>() { 
-                new MovieInfo() { Id = 20, Info = "Color", Movie_Id = 5, Type_Id = 2 }
+            IList<PersonInfo> personInfoList = new List<PersonInfo>() { 
+                new PersonInfo() { Id = 20, Info = "Yipee Ki Yay Motherfucker", Person_Id = 10, Type_Id = 15 }
             };
 
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Map the returned values of the storage Get methods
-            storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
-            storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
+            storageMock.Setup(x => x.Get<PersonInfo>()).Returns(personInfoList.AsQueryable());
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -178,39 +173,34 @@ namespace WebServerUnitTest
 
             //Check that the values returned by the delegate are correct
             //Assert the amount of information
-            Assert.AreEqual(10, values.Count);
-            
-            //Assert the movie details
-            Assert.AreEqual("5", values["id"]);
-            Assert.AreEqual("Die Hard", values["title"]);
-            Assert.AreEqual("1998", values["year"]);
-            Assert.AreEqual("Movie", values["kind"]);
-            Assert.AreEqual("0", values["seasonNumber"]);
-            Assert.AreEqual("0", values["episodeNumber"]);
-            Assert.AreEqual("", values["seriesYear"]);
-            Assert.AreEqual("0", values["episodeOfId"]);
-            
-            //Assert the movie info details
-            Assert.AreEqual("20", values["miColorInfo0Id"]);
-            Assert.AreEqual("Color", values["miColorInfo0Info"]);
+            Assert.AreEqual(5, values.Count);
+
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
+
+            //Assert the person info details
+            Assert.AreEqual("20", values["piQuotes0Id"]);
+            Assert.AreEqual("Yipee Ki Yay Motherfucker", values["piQuotes0Info"]);
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseSomeInfo()
+        public void Test_PersonDataRequestControllerTest_ProcessGet_UseSomeInfo()
         {
             //Initialize the request controller that is being tested
-            MovieDataRequestController controller = new MovieDataRequestController();
+            PersonDataRequestController controller = new PersonDataRequestController();
 
             //Make a list of movie info for the movie to search in
-            IList<MovieInfo> movieInfoList = new List<MovieInfo>() { 
-                new MovieInfo() { Id = 20, Info = "Color", Movie_Id = 5, Type_Id = 2 },
-                new MovieInfo() { Id = 22, Info = "Black&White", Movie_Id = 10, Type_Id = 2 }
+            IList<PersonInfo> personInfoList = new List<PersonInfo>() { 
+                new PersonInfo() { Id = 20, Info = "Yipee Ki Yay Motherfucker", Person_Id = 10, Type_Id = 15 },
+                new PersonInfo() { Id = 22, Info = "Surprise Motherfucker", Person_Id = 15, Type_Id = 15 }
             };
 
             //Make a list of participants in the movie for the movie to search in
             IList<Participate> participateList = new List<Participate>() { 
                 new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" },
-                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star" },
+                new Participate() { Id = 2, Movie_Id = 6, Person_Id = 10, CharName = "Dr. Malcom Crowe", Role = "Actor", NrOrder = 2, Note = "Star" },
                 new Participate() { Id = 3, Movie_Id = 10, Person_Id = 12, CharName = "Aragorn", Role = "Actor", NrOrder = 2, Note = "Star" }
             };
 
@@ -218,16 +208,16 @@ namespace WebServerUnitTest
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Map the returned values of the storage Get methods
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
-            storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
+            storageMock.Setup(x => x.Get<Movies>(6)).Returns(new Movies() { Id = 7, Title = "Lord of the Rings", Year = 2005, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
+            storageMock.Setup(x => x.Get<PersonInfo>()).Returns(personInfoList.AsQueryable());
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
             storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
-            storageMock.Setup(x => x.Get<People>(11)).Returns(new People() { Id = 11, Name = "Rickman, Alan", Gender = "Male" });
             storageMock.Setup(x => x.Get<People>(12)).Returns(new People() { Id = 12, Name = "Mortensen, Viggo", Gender = "Male" });
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -240,62 +230,52 @@ namespace WebServerUnitTest
 
             //Check that the values returned by the delegate are correct
             //Assert the amount of information
-            Assert.AreEqual(24, values.Count);
+            Assert.AreEqual(21, values.Count);
 
-            //Assert the movie details
-            Assert.AreEqual("5", values["id"]);
-            Assert.AreEqual("Die Hard", values["title"]);
-            Assert.AreEqual("1998", values["year"]);
-            Assert.AreEqual("Movie", values["kind"]);
-            Assert.AreEqual("0", values["seasonNumber"]);
-            Assert.AreEqual("0", values["episodeNumber"]);
-            Assert.AreEqual("", values["seriesYear"]);
-            Assert.AreEqual("0", values["episodeOfId"]);
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
 
-            //Assert the movie info details
-            Assert.AreEqual("20", values["miColorInfo0Id"]);
-            Assert.AreEqual("Color", values["miColorInfo0Info"]);
+            //Assert the person info details
+            Assert.AreEqual("20", values["piQuotes0Id"]);
+            Assert.AreEqual("Yipee Ki Yay Motherfucker", values["piQuotes0Info"]);
 
             //Assert the actor details
-            Assert.AreEqual("10", values["p0Id"]);
-            Assert.AreEqual("Willis, Bruce", values["p0Name"]);
-            Assert.AreEqual("Officer John McClane", values["p0CharacterName"]);
-            Assert.AreEqual("Actor", values["p0Role"]);
-            Assert.AreEqual("Star", values["p0Note"]);
-            Assert.AreEqual("Male", values["p0Gender"]);
-            Assert.AreEqual("1", values["p0NrOrder"]);
-            Assert.AreEqual("11", values["p1Id"]);
-            Assert.AreEqual("Rickman, Alan", values["p1Name"]);
-            Assert.AreEqual("Hans Gruber", values["p1CharacterName"]);
-            Assert.AreEqual("Actor", values["p1Role"]);
-            Assert.AreEqual("Star", values["p1Note"]);
-            Assert.AreEqual("Male", values["p1Gender"]);
-            Assert.AreEqual("2", values["p1NrOrder"]);
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("Movie", values["m0Kind"]);
+            Assert.AreEqual("1998", values["m0Year"]);
+            Assert.AreEqual("Officer John McClane", values["m0CharacterName"]);
+            Assert.AreEqual("Actor", values["m0Role"]);
+            Assert.AreEqual("Star", values["m0Note"]);
+            Assert.AreEqual("1", values["m0NrOrder"]);
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_SkipErronousParticipants()
+        public void Test_PersonDataRequestControllerTest_ProcessGet_SkipErronousParticipants()
         {
             //Initialize the request controller that is being tested
-            MovieDataRequestController controller = new MovieDataRequestController();
+            PersonDataRequestController controller = new PersonDataRequestController();
 
             //Make a list of participants in the movie for the movie to search in
             IList<Participate> participateList = new List<Participate>() { 
-                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" }
+                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" },
+                new Participate() { Id = 2, Movie_Id = 6, Person_Id = 10, CharName = "Dr. Malcom Crowe", Role = "Actor", NrOrder = 2, Note = "Star" }
             };
 
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Map the returned values of the storage Get methods
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
+            storageMock.Setup(x => x.Get<Movies>(6)).Throws(new InvalidOperationException("No movie with that id exists")); //Simulate the exception being thrown when no entity with the specified id is found
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
             storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
-            storageMock.Setup(x => x.Get<People>(11)).Throws(new InvalidOperationException("No person with that id exists")); //Simulate the exception being thrown when no entity with the specified id is found
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
 
             //Call the process method to get the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
@@ -306,37 +286,33 @@ namespace WebServerUnitTest
             //Convert the received json bytes to a value dictionary
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
-            //Check that the values returned by the delegate are correct (and that the person from participation entity with id 2 was not included in the data)
+            //Check that the values returned by the delegate are correct
             //Assert the amount of information
-            Assert.AreEqual(15, values.Count);
+            Assert.AreEqual(11, values.Count);
+            
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
 
             //Assert the movie details
-            Assert.AreEqual("5", values["id"]);
-            Assert.AreEqual("Die Hard", values["title"]);
-            Assert.AreEqual("1998", values["year"]);
-            Assert.AreEqual("Movie", values["kind"]);
-            Assert.AreEqual("0", values["seasonNumber"]);
-            Assert.AreEqual("0", values["episodeNumber"]);
-            Assert.AreEqual("", values["seriesYear"]);
-            Assert.AreEqual("0", values["episodeOfId"]);
-
-            //Assert the actor details
-            Assert.AreEqual("10", values["p0Id"]);
-            Assert.AreEqual("Willis, Bruce", values["p0Name"]);
-            Assert.AreEqual("Officer John McClane", values["p0CharacterName"]);
-            Assert.AreEqual("Actor", values["p0Role"]);
-            Assert.AreEqual("Star", values["p0Note"]);
-            Assert.AreEqual("Male", values["p0Gender"]);
-            Assert.AreEqual("1", values["p0NrOrder"]);
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("Movie", values["m0Kind"]);
+            Assert.AreEqual("1998", values["m0Year"]);
+            Assert.AreEqual("Officer John McClane", values["m0CharacterName"]);
+            Assert.AreEqual("Actor", values["m0Role"]);
+            Assert.AreEqual("Star", values["m0Note"]);
+            Assert.AreEqual("1", values["m0NrOrder"]);
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidUrlParameterException),
         "Url ending did not contain an argument")]
-        public void Test_MovieDataRequestController_ProcessGet_Error_InvalidUrl()
+        public void Test_PersonDataRequestController_ProcessGet_Error_InvalidUrl()
         {
             //Initialize the request controller that is being tested
-            MovieDataRequestController controller = new MovieDataRequestController();
+            PersonDataRequestController controller = new PersonDataRequestController();
 
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
@@ -345,7 +321,7 @@ namespace WebServerUnitTest
             var storage = storageMock.Object;
 
             //Set up the request that is being parsed to the process method
-            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/" };
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/" };
             
             //Make the invocation that will throw the exception
             controller.ProcessGet(request);
