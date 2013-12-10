@@ -304,6 +304,102 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        public void Test_PersonDataRequestControllerTest_ProcessGet_InfoSyntax_2SameTypes()
+        {
+            //Initialize the request controller that is being tested
+            PersonDataRequestController controller = new PersonDataRequestController();
+
+            //Make a list of person info for the person to search in
+            IList<PersonInfo> personInfoList = new List<PersonInfo>() { 
+                new PersonInfo() { Id = 20, Info = "Yipee Ki Yay Motherfucker", Person_Id = 10, Type_Id = 15 },
+                new PersonInfo() { Id = 22, Info = "Surprise Motherfucker", Person_Id = 10, Type_Id = 15 }
+            };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get methods
+            storageMock.Setup(x => x.Get<PersonInfo>()).Returns(personInfoList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Check that the values returned by the delegate are correct
+            //Assert the amount of information
+            Assert.AreEqual(7, values.Count);
+
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
+
+            //Assert the person info details
+            Assert.AreEqual("20", values["piQuotes0Id"]);
+            Assert.AreEqual("Yipee Ki Yay Motherfucker", values["piQuotes0Info"]);
+            Assert.AreEqual("22", values["piQuotes1Id"]);
+            Assert.AreEqual("Surprise Motherfucker", values["piQuotes1Info"]);
+        }
+
+        [TestMethod]
+        public void Test_PersonDataRequestControllerTest_ProcessGet_InfoSyntax_2DifferentTypes()
+        {
+            //Initialize the request controller that is being tested
+            PersonDataRequestController controller = new PersonDataRequestController();
+
+            //Make a list of person info for the person to search in
+            IList<PersonInfo> personInfoList = new List<PersonInfo>() { 
+                new PersonInfo() { Id = 20, Info = "Yipee Ki Yay Motherfucker", Person_Id = 10, Type_Id = 15 },
+                new PersonInfo() { Id = 22, Info = "Very Bad", Person_Id = 10, Type_Id = 54 }
+            };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get methods
+            storageMock.Setup(x => x.Get<PersonInfo>()).Returns(personInfoList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/PersonData/10" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Check that the values returned by the delegate are correct
+            //Assert the amount of information
+            Assert.AreEqual(7, values.Count);
+
+            //Assert the person details
+            Assert.AreEqual("10", values["id"]);
+            Assert.AreEqual("Willis, Bruce", values["name"]);
+            Assert.AreEqual("Male", values["gender"]);
+
+            //Assert the person info details
+            Assert.AreEqual("20", values["piQuotes0Id"]);
+            Assert.AreEqual("Yipee Ki Yay Motherfucker", values["piQuotes0Info"]);
+            Assert.AreEqual("22", values["piPictureFormat0Id"]);
+            Assert.AreEqual("Very Bad", values["piPictureFormat0Info"]);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidUrlParameterException),
         "Url ending did not contain an argument")]
         public void Test_PersonDataRequestController_ProcessGet_Error_InvalidUrl()

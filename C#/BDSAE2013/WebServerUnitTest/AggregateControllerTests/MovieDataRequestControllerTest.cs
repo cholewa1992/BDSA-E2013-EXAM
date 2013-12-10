@@ -328,6 +328,112 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        public void Test_MovieDataRequestControllerTest_ProcessGet_InfoSyntax_2SameTypes()
+        {
+            //Initialize the request controller that is being tested
+            MovieDataRequestController controller = new MovieDataRequestController();
+
+            //Make a list of movie info for the movie to search in
+            IList<MovieInfo> movieInfoList = new List<MovieInfo>() { 
+                new MovieInfo() { Id = 20, Info = "Color", Movie_Id = 5, Type_Id = 2 },
+                new MovieInfo() { Id = 22, Info = "Black And White", Movie_Id = 5, Type_Id = 2 }
+            };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get methods
+            storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
+            storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Check that the values returned by the delegate are correct
+            //Assert the amount of information
+            Assert.AreEqual(12, values.Count);
+
+            //Assert the movie details
+            Assert.AreEqual("5", values["id"]);
+            Assert.AreEqual("Die Hard", values["title"]);
+            Assert.AreEqual("1998", values["year"]);
+            Assert.AreEqual("Movie", values["kind"]);
+            Assert.AreEqual("0", values["seasonNumber"]);
+            Assert.AreEqual("0", values["episodeNumber"]);
+            Assert.AreEqual("", values["seriesYear"]);
+            Assert.AreEqual("0", values["episodeOfId"]);
+
+            //Assert the movie info details
+            Assert.AreEqual("20", values["miColorInfo0Id"]);
+            Assert.AreEqual("Color", values["miColorInfo0Info"]);
+            Assert.AreEqual("22", values["miColorInfo1Id"]);
+            Assert.AreEqual("Black And White", values["miColorInfo1Info"]);
+        }
+
+        [TestMethod]
+        public void Test_MovieDataRequestControllerTest_ProcessGet_InfoSyntax_2DifferentTypes()
+        {
+            //Initialize the request controller that is being tested
+            MovieDataRequestController controller = new MovieDataRequestController();
+
+            //Make a list of movie info for the movie to search in
+            IList<MovieInfo> movieInfoList = new List<MovieInfo>() { 
+                new MovieInfo() { Id = 20, Info = "Color", Movie_Id = 5, Type_Id = 2 },
+                new MovieInfo() { Id = 22, Info = "English", Movie_Id = 5, Type_Id = 4 }
+            };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get methods
+            storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
+            storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/MovieData/5" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Check that the values returned by the delegate are correct
+            //Assert the amount of information
+            Assert.AreEqual(12, values.Count);
+
+            //Assert the movie details
+            Assert.AreEqual("5", values["id"]);
+            Assert.AreEqual("Die Hard", values["title"]);
+            Assert.AreEqual("1998", values["year"]);
+            Assert.AreEqual("Movie", values["kind"]);
+            Assert.AreEqual("0", values["seasonNumber"]);
+            Assert.AreEqual("0", values["episodeNumber"]);
+            Assert.AreEqual("", values["seriesYear"]);
+            Assert.AreEqual("0", values["episodeOfId"]);
+
+            //Assert the movie info details
+            Assert.AreEqual("20", values["miColorInfo0Id"]);
+            Assert.AreEqual("Color", values["miColorInfo0Info"]);
+            Assert.AreEqual("22", values["miLanguage0Id"]);
+            Assert.AreEqual("English", values["miLanguage0Info"]);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidUrlParameterException),
         "Url ending did not contain an argument")]
         public void Test_MovieDataRequestController_ProcessGet_Error_InvalidUrl()

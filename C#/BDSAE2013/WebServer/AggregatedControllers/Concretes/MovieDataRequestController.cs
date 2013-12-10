@@ -48,23 +48,15 @@ namespace WebServer
             //Return the delegate 
             return (storage => 
             {
-                Console.WriteLine("Start Processing");
-
                 //Get the movie details
                 Movies movie = storage.Get<Movies>(movieIndex);
 
                 //Initialize the list in which we store the strings to be parsed into json
                 List<string> jsonInput = new List<string>();
 
-                Console.WriteLine("Start movie info search");
-
                 //Compute the information of the movie info associated with the movie
                 //Get the list of movie info associated with the movie. Sort the results by type_id
                 List<MovieInfo> movieInfoList = storage.Get<MovieInfo>().Where(mi => mi.Movie_Id == movie.Id).OrderBy(x => x.Type_Id).ToList();
-
-                Console.WriteLine("Finished movie info search");
-
-                Console.WriteLine("Start movie info iteration");
 
                 //Set up an index to differentiate each movie info
                 int index = 0;
@@ -97,20 +89,13 @@ namespace WebServer
                     index++;
                 }
 
-                Console.WriteLine("Finish movie info iteration");
-                Console.WriteLine("Start participate search");
-
                 //Compute the information of actors associated with the movie
                 //Get the list of participants associated with the movie
                 List<Participate> participateList = storage.Get<Participate>().Where(p => p.Movie_Id == movie.Id).Distinct().ToList();
                 
-                Console.WriteLine("Finished participate search");
-                
                 //Reset the index, used when assigning attribute names
                 index = 0;
 
-                Console.WriteLine("Start participate iteration. Participate Count: "+participateList.Count);
-                
                 //Iterate through all participants
                 foreach (Participate participate in participateList)
                 {
@@ -142,12 +127,9 @@ namespace WebServer
                     jsonInput.Add("p" + index + "NrOrder");
                     jsonInput.Add("" + participate.NrOrder);
 
-
                     //Increment the index
                     index++;
                 }
-
-                Console.WriteLine("Finished participate iteration");
 
                 //Convert the object to json attributes
                 string json = JSonParser.Parse(new string[]{
