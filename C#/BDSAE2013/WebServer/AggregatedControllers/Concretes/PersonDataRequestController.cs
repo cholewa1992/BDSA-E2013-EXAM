@@ -11,7 +11,7 @@ using Utils;
 namespace WebServer
 {
     /// <summary>
-    /// A request controller that handle the rest methods GET, POST, PUT and DELETE.
+    /// An aggregated request controller that handle the rest methods GET
     /// The controller receives the request and based on the type of method being invoked, the class will return a delegate
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
@@ -67,19 +67,23 @@ namespace WebServer
                 //Iterate through all associated movie info
                 foreach (PersonInfo personInfo in personInfoList)
                 {
+                    //Check if the type id is null - if it is, we skip the addition of the current information
+                    if (personInfo.Type_Id == null)
+                        continue;
+
                     if (personInfo.Type_Id != currentType)
                     {
                         //If the type id of the current person info is different from the type id, we reset the index.
                         index = 0;
-                        
+
                         //Furthermore we set the current type to be the type id of the current person info
                         currentType = (int)personInfo.Type_Id;
                     }
 
                     //We add the attribute name and value of the current person info, based on it's type and the index of the current type
-                    jsonInput.Add("pi" + personInfo.Type_Id + "," + index);
+                    jsonInput.Add("pi" + InfoTypes.GetTypeString((int)personInfo.Type_Id) + "," + index);
                     jsonInput.Add("" + personInfo.Info);
-                    
+
                     //Increment the index
                     index++;
                 }

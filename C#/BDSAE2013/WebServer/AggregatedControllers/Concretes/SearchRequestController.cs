@@ -11,7 +11,7 @@ using Utils;
 namespace WebServer
 {
     /// <summary>
-    /// A request controller that handle the rest methods GET, POST, PUT and DELETE.
+    /// A aggregated request controller that handle the rest methods GET.
     /// The controller receives the request and based on the type of method being invoked, the class will return a delegate
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
