@@ -26,8 +26,9 @@ namespace WebServerUnitTest
                 new MovieInfo() { Id = 20, Info = "Color", Movie_Id = 5, Type_Id = 2 }
             };
             //Make a list of participants in the movie for the movie to search in
+            //(Note that we add the lazy loaded person entity. This will normally be found in the database)
             IList<Participate> participateList = new List<Participate>() { 
-                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" }
+                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star", People = new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male"}}
             };
 
             //Make a mock of the storage.
@@ -36,7 +37,6 @@ namespace WebServerUnitTest
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 } );
             storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
-            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
@@ -87,9 +87,10 @@ namespace WebServerUnitTest
             MovieDataRequestController controller = new MovieDataRequestController();
 
             //Make a list of participants in the movie for the movie to search in
+            //(Note that we add the lazy loaded person entity. This will normally be found in the database)
             IList<Participate> participateList = new List<Participate>() { 
-                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" },
-                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star" }
+                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star", People = new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" } },
+                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star", People = new People() { Id = 11, Name = "Rickman, Alan", Gender = "Male" } }
             };
 
             //Make a mock of the storage.
@@ -97,8 +98,6 @@ namespace WebServerUnitTest
             //Map the returned values of the storage Get methods
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
-            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
-            storageMock.Setup(x => x.Get<People>(11)).Returns(new People() { Id = 11, Name = "Rickman, Alan", Gender = "Male" });
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
@@ -208,10 +207,11 @@ namespace WebServerUnitTest
             };
 
             //Make a list of participants in the movie for the movie to search in
+            //(Note that we add the lazy loaded person entity. This will normally be found in the database)
             IList<Participate> participateList = new List<Participate>() { 
-                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" },
-                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star" },
-                new Participate() { Id = 3, Movie_Id = 10, Person_Id = 12, CharName = "Aragorn", Role = "Actor", NrOrder = 2, Note = "Star" }
+                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star", People = new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" } },
+                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star", People = new People() { Id = 11, Name = "Rickman, Alan", Gender = "Male" } },
+                new Participate() { Id = 3, Movie_Id = 10, Person_Id = 12, CharName = "Aragorn", Role = "Actor", NrOrder = 2, Note = "Star", People = new People() { Id = 12, Name = "Mortensen, Viggo", Gender = "Male" } }
             };
 
             //Make a mock of the storage.
@@ -220,9 +220,6 @@ namespace WebServerUnitTest
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
             storageMock.Setup(x => x.Get<MovieInfo>()).Returns(movieInfoList.AsQueryable());
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
-            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
-            storageMock.Setup(x => x.Get<People>(11)).Returns(new People() { Id = 11, Name = "Rickman, Alan", Gender = "Male" });
-            storageMock.Setup(x => x.Get<People>(12)).Returns(new People() { Id = 12, Name = "Mortensen, Viggo", Gender = "Male" });
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
@@ -280,8 +277,10 @@ namespace WebServerUnitTest
             MovieDataRequestController controller = new MovieDataRequestController();
 
             //Make a list of participants in the movie for the movie to search in
+            //(Note that we add the lazy loaded person entity. This will normally be found in the database)
             IList<Participate> participateList = new List<Participate>() { 
-                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star" }
+                new Participate() { Id = 1, Movie_Id = 5, Person_Id = 10, CharName = "Officer John McClane", Role = "Actor", NrOrder = 1, Note = "Star", People = new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" } },
+                new Participate() { Id = 2, Movie_Id = 5, Person_Id = 11, CharName = "Hans Gruber", Role = "Actor", NrOrder = 2, Note = "Star", People = null},
             };
 
             //Make a mock of the storage.
@@ -289,8 +288,6 @@ namespace WebServerUnitTest
             //Map the returned values of the storage Get methods
             storageMock.Setup(x => x.Get<Movies>(5)).Returns(new Movies() { Id = 5, Title = "Die Hard", Year = 1998, Kind = "Movie", SeasonNumber = 0, EpisodeNumber = 0, SeriesYear = "", EpisodeOf_Id = 0 });
             storageMock.Setup(x => x.Get<Participate>()).Returns(participateList.AsQueryable());
-            storageMock.Setup(x => x.Get<People>(10)).Returns(new People() { Id = 10, Name = "Willis, Bruce", Gender = "Male" });
-            storageMock.Setup(x => x.Get<People>(11)).Throws(new InvalidOperationException("No person with that id exists")); //Simulate the exception being thrown when no entity with the specified id is found
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 

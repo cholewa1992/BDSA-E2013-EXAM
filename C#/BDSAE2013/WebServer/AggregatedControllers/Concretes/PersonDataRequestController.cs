@@ -100,38 +100,33 @@ namespace WebServer
                     
                     //Attempt to get the movie associated with the participate entity
                     //If the movie does not exist in the database, the participate entity is faulty and should be deleted
-                    try
-                    {
-                        //Get the movie associated with the participation entity
-                        //Movies movie = storage.Get<Movies>((int)participate.Movie_Id);
-                        Movies movie = participate.Movies;
+                    if(participate.Movies == null)
+                        continue;
 
-                        //Add all relevant information of the movie using the movie and the participant entities
-                        jsonInput.Add("m" + index + "Id");
-                        jsonInput.Add("" + movie.Id);
-                        jsonInput.Add("m" + index + "Title");
-                        jsonInput.Add("" + movie.Title);
-                        jsonInput.Add("m" + index + "Kind");
-                        jsonInput.Add("" + movie.Kind);
-                        jsonInput.Add("m" + index + "Year");
-                        jsonInput.Add("" + movie.Year);
-                        jsonInput.Add("m" + index + "CharacterName");
-                        jsonInput.Add("" + participate.CharName);
-                        jsonInput.Add("m" + index + "Role");
-                        jsonInput.Add("" + participate.Role);
-                        jsonInput.Add("m" + index + "Note");
-                        jsonInput.Add("" + participate.Note);
-                        jsonInput.Add("m" + index + "NrOrder");
-                        jsonInput.Add("" + participate.NrOrder);
+                    //Get the movie associated with the participation entity
+                    //Movies movie = storage.Get<Movies>((int)participate.Movie_Id);
+                    Movies movie = participate.Movies;
 
-                        //Increment the index
-                        index++;
-                    }
-                    catch (InvalidOperationException e)
-                    {
-                        //Deletes the faulty entity from the database
-                        //storage.Delete<Participate>(participate.Id);
-                    }
+                    //Add all relevant information of the movie using the movie and the participant entities
+                    jsonInput.Add("m" + index + "Id");
+                    jsonInput.Add("" + movie.Id);
+                    jsonInput.Add("m" + index + "Title");
+                    jsonInput.Add("" + movie.Title);
+                    jsonInput.Add("m" + index + "Kind");
+                    jsonInput.Add("" + movie.Kind);
+                    jsonInput.Add("m" + index + "Year");
+                    jsonInput.Add("" + movie.Year);
+                    jsonInput.Add("m" + index + "CharacterName");
+                    jsonInput.Add("" + participate.CharName);
+                    jsonInput.Add("m" + index + "Role");
+                    jsonInput.Add("" + participate.Role);
+                    jsonInput.Add("m" + index + "Note");
+                    jsonInput.Add("" + participate.Note);
+                    jsonInput.Add("m" + index + "NrOrder");
+                    jsonInput.Add("" + participate.NrOrder);
+
+                    //Increment the index
+                    index++;
                 }
 
                 //Convert the object to json attributes

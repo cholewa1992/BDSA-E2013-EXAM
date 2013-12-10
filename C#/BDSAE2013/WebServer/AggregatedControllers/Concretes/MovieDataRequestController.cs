@@ -119,37 +119,32 @@ namespace WebServer
 
                     //Attempt to get the person associated with the participate entity
                     //If the person does not exist in the database, the participate entity is faulty and should be deleted
-                    try
-                    {
-                        //Get the person associated with the participation entity
-                        //People person = storage.Get<People>(participate.Person_Id.Value);
-                        People person = participate.People;
+                    if(participate.People == null)
+                        continue;
+
+                    //Get the person associated with the participation entity
+                    //People person = storage.Get<People>(participate.Person_Id.Value);
+                    People person = participate.People;
                         
-                        //Add all relevant information of the person using the person and the participant entities
-                        jsonInput.Add("p" + index + "Id");
-                        jsonInput.Add("" + person.Id);
-                        jsonInput.Add("p" + index + "Name");
-                        jsonInput.Add("" + person.Name);
-                        jsonInput.Add("p" + index + "Gender");
-                        jsonInput.Add("" + person.Gender);
-                        jsonInput.Add("p" + index + "CharacterName");
-                        jsonInput.Add("" + participate.CharName);
-                        jsonInput.Add("p" + index + "Role");
-                        jsonInput.Add("" + participate.Role);
-                        jsonInput.Add("p" + index + "Note");
-                        jsonInput.Add("" + participate.Note);
-                        jsonInput.Add("p" + index + "NrOrder");
-                        jsonInput.Add("" + participate.NrOrder);
+                    //Add all relevant information of the person using the person and the participant entities
+                    jsonInput.Add("p" + index + "Id");
+                    jsonInput.Add("" + person.Id);
+                    jsonInput.Add("p" + index + "Name");
+                    jsonInput.Add("" + person.Name);
+                    jsonInput.Add("p" + index + "Gender");
+                    jsonInput.Add("" + person.Gender);
+                    jsonInput.Add("p" + index + "CharacterName");
+                    jsonInput.Add("" + participate.CharName);
+                    jsonInput.Add("p" + index + "Role");
+                    jsonInput.Add("" + participate.Role);
+                    jsonInput.Add("p" + index + "Note");
+                    jsonInput.Add("" + participate.Note);
+                    jsonInput.Add("p" + index + "NrOrder");
+                    jsonInput.Add("" + participate.NrOrder);
 
 
-                        //Increment the index
-                        index++;
-                    }
-                    catch(InvalidOperationException e)
-                    {
-                        //Deletes the faulty entity from the database
-                        //storage.Delete<Participate>(participate.Id);
-                    }
+                    //Increment the index
+                    index++;
                 }
 
                 Console.WriteLine("Finished participate iteration");

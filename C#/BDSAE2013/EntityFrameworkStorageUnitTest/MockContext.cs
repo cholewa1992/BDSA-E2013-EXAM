@@ -9,9 +9,9 @@ namespace EntityFrameworkStorageUnitTest
     /// <author>
     /// Jacob Cholewa (jbec@itu.dk)
     /// </author>
-    class MockContext : DbContext, IDbContext
+    class MockImdbContext : DbContext, IDbContext
     {
-        public MockContext()
+        public MockImdbContext()
         {
             Database.ExecuteSqlCommand("DELETE FROM UserAccs");
         }
