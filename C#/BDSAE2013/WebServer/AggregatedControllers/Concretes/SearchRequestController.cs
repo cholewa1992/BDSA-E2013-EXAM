@@ -57,6 +57,8 @@ namespace WebServer
                 //Initialize the set of movies
                 HashSet<Movies> movieSet = new HashSet<Movies>();
 
+                int entitiesLeftToLimit = searchLimit;
+
                 //Iterate through each search input
                 foreach (string searchString in searchInputList)
                 {
@@ -65,11 +67,16 @@ namespace WebServer
                         break;
 
                     //Add any new movie to the list that matches the search credentials
-                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)));
+                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)).Take(entitiesLeftToLimit));
+
+                    entitiesLeftToLimit = searchLimit - movieSet.Count;
                 }
 
                 //Initialize the set of movies
                 HashSet<People> peopleSet = new HashSet<People>();
+
+                //Reset the counting variable
+                entitiesLeftToLimit = searchLimit;
 
                 //Iterate through each search input
                 foreach (string searchString in searchInputList)
@@ -79,7 +86,9 @@ namespace WebServer
                         break;
 
                     //Add any new person to the list that matches the search credentials
-                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.Contains(searchString)));
+                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.Contains(searchString)).Take(entitiesLeftToLimit));
+
+                    entitiesLeftToLimit = searchLimit - movieSet.Count;
                 }
 
                 //Initialize the list of attribute names/values
@@ -89,7 +98,7 @@ namespace WebServer
                 int index = 0;
 
                 //Iterate through the first movies, until we have enough based on our search limit, and add them to the jsonInput
-                foreach (Movies movie in movieSet.Take(searchLimit))
+                foreach (Movies movie in movieSet)
                 {
                     //For each movie we add the id of the movie
                     jsonInput.Add("m" + index + "Id");          //Add the attribute name
@@ -107,7 +116,7 @@ namespace WebServer
                 index = 0;
 
                 //Iterate through the first people, until we have enough based on our search limit, and add them to the jsonInput
-                foreach (People person in peopleSet.Take(searchLimit))
+                foreach (People person in peopleSet)
                 {
                     //For each person we add the id of the person
                     jsonInput.Add("p" + index + "Id");          //Add the attribute name
