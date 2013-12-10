@@ -1,0 +1,685 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="fakeimdbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="fakeimdbModelStoreContainer">
+          <EntitySet Name="FavouritedMovie" EntityType="fakeimdbModel.Store.FavouritedMovie" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FavouriteList" EntityType="fakeimdbModel.Store.FavouriteList" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="InfoType" EntityType="fakeimdbModel.Store.InfoType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieInfo" EntityType="fakeimdbModel.Store.MovieInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Movies" EntityType="fakeimdbModel.Store.Movies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Participate" EntityType="fakeimdbModel.Store.Participate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="People" EntityType="fakeimdbModel.Store.People" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PersonInfo" EntityType="fakeimdbModel.Store.PersonInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserAcc" EntityType="fakeimdbModel.Store.UserAcc" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_dbo_FavouritedMovie_dbo_FavList_Id" Association="fakeimdbModel.Store.FK_dbo_FavouritedMovie_dbo_FavList_Id">
+            <End Role="FavouriteList" EntitySet="FavouriteList" />
+            <End Role="FavouritedMovie" EntitySet="FavouritedMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FavouritedMovie_dbo_Movie_Id" Association="fakeimdbModel.Store.FK_dbo_FavouritedMovie_dbo_Movie_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="FavouritedMovie" EntitySet="FavouritedMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FavouriteList_dbo_UserAcc_Id" Association="fakeimdbModel.Store.FK_dbo_FavouriteList_dbo_UserAcc_Id">
+            <End Role="UserAcc" EntitySet="UserAcc" />
+            <End Role="FavouriteList" EntitySet="FavouriteList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id" Association="fakeimdbModel.Store.FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
+            <End Role="InfoType" EntitySet="InfoType" />
+            <End Role="MovieInfo" EntitySet="MovieInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MovieInfo_dbo_Movies_Movie_Id" Association="fakeimdbModel.Store.FK_dbo_MovieInfo_dbo_Movies_Movie_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieInfo" EntitySet="MovieInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" Association="fakeimdbModel.Store.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Movies1" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Participate_dbo_Movies_Movie_Id" Association="fakeimdbModel.Store.FK_dbo_Participate_dbo_Movies_Movie_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Participate" EntitySet="Participate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Participate_dbo_People_Person_Id" Association="fakeimdbModel.Store.FK_dbo_Participate_dbo_People_Person_Id">
+            <End Role="People" EntitySet="People" />
+            <End Role="Participate" EntitySet="Participate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PersonInfo_dbo_InfoType_Type_Id" Association="fakeimdbModel.Store.FK_dbo_PersonInfo_dbo_InfoType_Type_Id">
+            <End Role="InfoType" EntitySet="InfoType" />
+            <End Role="PersonInfo" EntitySet="PersonInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PersonInfo_dbo_People_Person_Id" Association="fakeimdbModel.Store.FK_dbo_PersonInfo_dbo_People_Person_Id">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonInfo" EntitySet="PersonInfo" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FavouritedMovie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Movie_Id" Type="int" Nullable="false" />
+          <Property Name="FavList_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FavouriteList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="UserAcc_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InfoType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MovieInfo">
+          <Key>
+            <PropertyRef Name="MovieInfoId" />
+          </Key>
+          <Property Name="MovieInfoId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Info" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="Movie_Id" Type="int" Nullable="false" />
+          <Property Name="Type_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Kind" Type="nvarchar" Nullable="false" MaxLength="15" />
+          <Property Name="Year" Type="int" />
+          <Property Name="SeasonNumber" Type="int" />
+          <Property Name="EpisodeNumber" Type="int" />
+          <Property Name="SeriesYear" Type="nvarchar" MaxLength="15" />
+          <Property Name="EpisodeOf_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Participate">
+          <Key>
+            <PropertyRef Name="ParticipateId" />
+          </Key>
+          <Property Name="ParticipateId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NrOrder" Type="int" />
+          <Property Name="CharName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Role" Type="nvarchar" MaxLength="30" />
+          <Property Name="Note" Type="nvarchar" MaxLength="200" />
+          <Property Name="Movie_Id" Type="int" />
+          <Property Name="Person_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PersonInfo">
+          <Key>
+            <PropertyRef Name="PersonInfoId" />
+          </Key>
+          <Property Name="PersonInfoId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Info" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="Person_Id" Type="int" Nullable="false" />
+          <Property Name="Type_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAcc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_dbo_FavouritedMovie_dbo_FavList_Id">
+          <End Role="FavouriteList" Type="fakeimdbModel.Store.FavouriteList" Multiplicity="1" />
+          <End Role="FavouritedMovie" Type="fakeimdbModel.Store.FavouritedMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FavouriteList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavouritedMovie">
+              <PropertyRef Name="FavList_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FavouritedMovie_dbo_Movie_Id">
+          <End Role="Movies" Type="fakeimdbModel.Store.Movies" Multiplicity="1" />
+          <End Role="FavouritedMovie" Type="fakeimdbModel.Store.FavouritedMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavouritedMovie">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FavouriteList_dbo_UserAcc_Id">
+          <End Role="UserAcc" Type="fakeimdbModel.Store.UserAcc" Multiplicity="1" />
+          <End Role="FavouriteList" Type="fakeimdbModel.Store.FavouriteList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAcc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavouriteList">
+              <PropertyRef Name="UserAcc_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
+          <End Role="InfoType" Type="fakeimdbModel.Store.InfoType" Multiplicity="0..1" />
+          <End Role="MovieInfo" Type="fakeimdbModel.Store.MovieInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieInfo">
+              <PropertyRef Name="Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MovieInfo_dbo_Movies_Movie_Id">
+          <End Role="Movies" Type="fakeimdbModel.Store.Movies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MovieInfo" Type="fakeimdbModel.Store.MovieInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieInfo">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Movies_dbo_Movies_EpisodeOf_Id">
+          <End Role="Movies" Type="fakeimdbModel.Store.Movies" Multiplicity="0..1" />
+          <End Role="Movies1" Type="fakeimdbModel.Store.Movies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movies1">
+              <PropertyRef Name="EpisodeOf_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Participate_dbo_Movies_Movie_Id">
+          <End Role="Movies" Type="fakeimdbModel.Store.Movies" Multiplicity="0..1" />
+          <End Role="Participate" Type="fakeimdbModel.Store.Participate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participate">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Participate_dbo_People_Person_Id">
+          <End Role="People" Type="fakeimdbModel.Store.People" Multiplicity="0..1" />
+          <End Role="Participate" Type="fakeimdbModel.Store.Participate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participate">
+              <PropertyRef Name="Person_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PersonInfo_dbo_InfoType_Type_Id">
+          <End Role="InfoType" Type="fakeimdbModel.Store.InfoType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonInfo" Type="fakeimdbModel.Store.PersonInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonInfo">
+              <PropertyRef Name="Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PersonInfo_dbo_People_Person_Id">
+          <End Role="People" Type="fakeimdbModel.Store.People" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonInfo" Type="fakeimdbModel.Store.PersonInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonInfo">
+              <PropertyRef Name="Person_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="fakeimdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="fakeimdbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="FavouritedMovie" EntityType="fakeimdbModel.FavouritedMovie" />
+          <EntitySet Name="FavouriteList" EntityType="fakeimdbModel.FavouriteList" />
+          <EntitySet Name="InfoType" EntityType="fakeimdbModel.InfoType" />
+          <EntitySet Name="MovieInfo" EntityType="fakeimdbModel.MovieInfo" />
+          <EntitySet Name="Movies" EntityType="fakeimdbModel.Movies" />
+          <EntitySet Name="Participate" EntityType="fakeimdbModel.Participate" />
+          <EntitySet Name="People" EntityType="fakeimdbModel.People" />
+          <EntitySet Name="PersonInfo" EntityType="fakeimdbModel.PersonInfo" />
+          <EntitySet Name="UserAcc" EntityType="fakeimdbModel.UserAcc" />
+          <AssociationSet Name="FK_dbo_FavouritedMovie_dbo_FavList_Id" Association="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_FavList_Id">
+            <End Role="FavouriteList" EntitySet="FavouriteList" />
+            <End Role="FavouritedMovie" EntitySet="FavouritedMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FavouritedMovie_dbo_Movie_Id" Association="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_Movie_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="FavouritedMovie" EntitySet="FavouritedMovie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_FavouriteList_dbo_UserAcc_Id" Association="fakeimdbModel.FK_dbo_FavouriteList_dbo_UserAcc_Id">
+            <End Role="UserAcc" EntitySet="UserAcc" />
+            <End Role="FavouriteList" EntitySet="FavouriteList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id" Association="fakeimdbModel.FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
+            <End Role="InfoType" EntitySet="InfoType" />
+            <End Role="MovieInfo" EntitySet="MovieInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PersonInfo_dbo_InfoType_Type_Id" Association="fakeimdbModel.FK_dbo_PersonInfo_dbo_InfoType_Type_Id">
+            <End Role="InfoType" EntitySet="InfoType" />
+            <End Role="PersonInfo" EntitySet="PersonInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MovieInfo_dbo_Movies_Movie_Id" Association="fakeimdbModel.FK_dbo_MovieInfo_dbo_Movies_Movie_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieInfo" EntitySet="MovieInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" Association="fakeimdbModel.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Movies1" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Participate_dbo_Movies_Movie_Id" Association="fakeimdbModel.FK_dbo_Participate_dbo_Movies_Movie_Id">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Participate" EntitySet="Participate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Participate_dbo_People_Person_Id" Association="fakeimdbModel.FK_dbo_Participate_dbo_People_Person_Id">
+            <End Role="People" EntitySet="People" />
+            <End Role="Participate" EntitySet="Participate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PersonInfo_dbo_People_Person_Id" Association="fakeimdbModel.FK_dbo_PersonInfo_dbo_People_Person_Id">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonInfo" EntitySet="PersonInfo" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FavouritedMovie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Movie_Id" Type="Int32" Nullable="false" />
+          <Property Name="FavList_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FavouriteList" Relationship="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_FavList_Id" FromRole="FavouritedMovie" ToRole="FavouriteList" />
+          <NavigationProperty Name="Movies" Relationship="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_Movie_Id" FromRole="FavouritedMovie" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="FavouriteList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserAcc_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FavouritedMovie" Relationship="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_FavList_Id" FromRole="FavouriteList" ToRole="FavouritedMovie" />
+          <NavigationProperty Name="UserAcc" Relationship="fakeimdbModel.FK_dbo_FavouriteList_dbo_UserAcc_Id" FromRole="FavouriteList" ToRole="UserAcc" />
+        </EntityType>
+        <EntityType Name="InfoType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="MovieInfo" Relationship="fakeimdbModel.FK_dbo_MovieInfo_dbo_InfoType_Type_Id" FromRole="InfoType" ToRole="MovieInfo" />
+          <NavigationProperty Name="PersonInfo" Relationship="fakeimdbModel.FK_dbo_PersonInfo_dbo_InfoType_Type_Id" FromRole="InfoType" ToRole="PersonInfo" />
+        </EntityType>
+        <EntityType Name="MovieInfo">
+          <Key>
+            <PropertyRef Name="MovieInfoId" />
+          </Key>
+          <Property Name="MovieInfoId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Note" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Movie_Id" Type="Int32" Nullable="false" />
+          <Property Name="Type_Id" Type="Int32" />
+          <NavigationProperty Name="InfoType" Relationship="fakeimdbModel.FK_dbo_MovieInfo_dbo_InfoType_Type_Id" FromRole="MovieInfo" ToRole="InfoType" />
+          <NavigationProperty Name="Movies" Relationship="fakeimdbModel.FK_dbo_MovieInfo_dbo_Movies_Movie_Id" FromRole="MovieInfo" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="SeasonNumber" Type="Int32" />
+          <Property Name="EpisodeNumber" Type="Int32" />
+          <Property Name="SeriesYear" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+          <Property Name="EpisodeOf_Id" Type="Int32" />
+          <NavigationProperty Name="FavouritedMovie" Relationship="fakeimdbModel.FK_dbo_FavouritedMovie_dbo_Movie_Id" FromRole="Movies" ToRole="FavouritedMovie" />
+          <NavigationProperty Name="MovieInfo" Relationship="fakeimdbModel.FK_dbo_MovieInfo_dbo_Movies_Movie_Id" FromRole="Movies" ToRole="MovieInfo" />
+          <NavigationProperty Name="Movies1" Relationship="fakeimdbModel.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" FromRole="Movies" ToRole="Movies1" />
+          <NavigationProperty Name="Movies2" Relationship="fakeimdbModel.FK_dbo_Movies_dbo_Movies_EpisodeOf_Id" FromRole="Movies1" ToRole="Movies" />
+          <NavigationProperty Name="Participate" Relationship="fakeimdbModel.FK_dbo_Participate_dbo_Movies_Movie_Id" FromRole="Movies" ToRole="Participate" />
+        </EntityType>
+        <EntityType Name="Participate">
+          <Key>
+            <PropertyRef Name="ParticipateId" />
+          </Key>
+          <Property Name="ParticipateId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NrOrder" Type="Int32" />
+          <Property Name="CharName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="Role" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Note" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="Movie_Id" Type="Int32" />
+          <Property Name="Person_Id" Type="Int32" />
+          <NavigationProperty Name="Movies" Relationship="fakeimdbModel.FK_dbo_Participate_dbo_Movies_Movie_Id" FromRole="Participate" ToRole="Movies" />
+          <NavigationProperty Name="People" Relationship="fakeimdbModel.FK_dbo_Participate_dbo_People_Person_Id" FromRole="Participate" ToRole="People" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Participate" Relationship="fakeimdbModel.FK_dbo_Participate_dbo_People_Person_Id" FromRole="People" ToRole="Participate" />
+          <NavigationProperty Name="PersonInfo" Relationship="fakeimdbModel.FK_dbo_PersonInfo_dbo_People_Person_Id" FromRole="People" ToRole="PersonInfo" />
+        </EntityType>
+        <EntityType Name="PersonInfo">
+          <Key>
+            <PropertyRef Name="PersonInfoId" />
+          </Key>
+          <Property Name="PersonInfoId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Note" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Person_Id" Type="Int32" Nullable="false" />
+          <Property Name="Type_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InfoType" Relationship="fakeimdbModel.FK_dbo_PersonInfo_dbo_InfoType_Type_Id" FromRole="PersonInfo" ToRole="InfoType" />
+          <NavigationProperty Name="People" Relationship="fakeimdbModel.FK_dbo_PersonInfo_dbo_People_Person_Id" FromRole="PersonInfo" ToRole="People" />
+        </EntityType>
+        <EntityType Name="UserAcc">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Username" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="FavouriteList" Relationship="fakeimdbModel.FK_dbo_FavouriteList_dbo_UserAcc_Id" FromRole="UserAcc" ToRole="FavouriteList" />
+        </EntityType>
+        <Association Name="FK_dbo_FavouritedMovie_dbo_FavList_Id">
+          <End Role="FavouriteList" Type="fakeimdbModel.FavouriteList" Multiplicity="1" />
+          <End Role="FavouritedMovie" Type="fakeimdbModel.FavouritedMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FavouriteList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavouritedMovie">
+              <PropertyRef Name="FavList_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FavouritedMovie_dbo_Movie_Id">
+          <End Role="Movies" Type="fakeimdbModel.Movies" Multiplicity="1" />
+          <End Role="FavouritedMovie" Type="fakeimdbModel.FavouritedMovie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavouritedMovie">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_FavouriteList_dbo_UserAcc_Id">
+          <End Role="UserAcc" Type="fakeimdbModel.UserAcc" Multiplicity="1" />
+          <End Role="FavouriteList" Type="fakeimdbModel.FavouriteList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAcc">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavouriteList">
+              <PropertyRef Name="UserAcc_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MovieInfo_dbo_InfoType_Type_Id">
+          <End Role="InfoType" Type="fakeimdbModel.InfoType" Multiplicity="0..1" />
+          <End Role="MovieInfo" Type="fakeimdbModel.MovieInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieInfo">
+              <PropertyRef Name="Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PersonInfo_dbo_InfoType_Type_Id">
+          <End Role="InfoType" Type="fakeimdbModel.InfoType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonInfo" Type="fakeimdbModel.PersonInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonInfo">
+              <PropertyRef Name="Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MovieInfo_dbo_Movies_Movie_Id">
+          <End Role="Movies" Type="fakeimdbModel.Movies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MovieInfo" Type="fakeimdbModel.MovieInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieInfo">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Movies_dbo_Movies_EpisodeOf_Id">
+          <End Role="Movies" Type="fakeimdbModel.Movies" Multiplicity="0..1" />
+          <End Role="Movies1" Type="fakeimdbModel.Movies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movies1">
+              <PropertyRef Name="EpisodeOf_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Participate_dbo_Movies_Movie_Id">
+          <End Role="Movies" Type="fakeimdbModel.Movies" Multiplicity="0..1" />
+          <End Role="Participate" Type="fakeimdbModel.Participate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participate">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Participate_dbo_People_Person_Id">
+          <End Role="People" Type="fakeimdbModel.People" Multiplicity="0..1" />
+          <End Role="Participate" Type="fakeimdbModel.Participate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participate">
+              <PropertyRef Name="Person_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PersonInfo_dbo_People_Person_Id">
+          <End Role="People" Type="fakeimdbModel.People" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonInfo" Type="fakeimdbModel.PersonInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonInfo">
+              <PropertyRef Name="Person_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="fakeimdbModelStoreContainer" CdmEntityContainer="fakeimdbEntities">
+          <EntitySetMapping Name="FavouritedMovie">
+            <EntityTypeMapping TypeName="fakeimdbModel.FavouritedMovie">
+              <MappingFragment StoreEntitySet="FavouritedMovie">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+                <ScalarProperty Name="FavList_Id" ColumnName="FavList_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FavouriteList">
+            <EntityTypeMapping TypeName="fakeimdbModel.FavouriteList">
+              <MappingFragment StoreEntitySet="FavouriteList">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="UserAcc_Id" ColumnName="UserAcc_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InfoType">
+            <EntityTypeMapping TypeName="fakeimdbModel.InfoType">
+              <MappingFragment StoreEntitySet="InfoType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieInfo">
+            <EntityTypeMapping TypeName="fakeimdbModel.MovieInfo">
+              <MappingFragment StoreEntitySet="MovieInfo">
+                <ScalarProperty Name="MovieInfoId" ColumnName="MovieInfoId" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+                <ScalarProperty Name="Type_Id" ColumnName="Type_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="fakeimdbModel.Movies">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="SeasonNumber" ColumnName="SeasonNumber" />
+                <ScalarProperty Name="EpisodeNumber" ColumnName="EpisodeNumber" />
+                <ScalarProperty Name="SeriesYear" ColumnName="SeriesYear" />
+                <ScalarProperty Name="EpisodeOf_Id" ColumnName="EpisodeOf_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participate">
+            <EntityTypeMapping TypeName="fakeimdbModel.Participate">
+              <MappingFragment StoreEntitySet="Participate">
+                <ScalarProperty Name="ParticipateId" ColumnName="ParticipateId" />
+                <ScalarProperty Name="NrOrder" ColumnName="NrOrder" />
+                <ScalarProperty Name="CharName" ColumnName="CharName" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+                <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="fakeimdbModel.People">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonInfo">
+            <EntityTypeMapping TypeName="fakeimdbModel.PersonInfo">
+              <MappingFragment StoreEntitySet="PersonInfo">
+                <ScalarProperty Name="PersonInfoId" ColumnName="PersonInfoId" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Person_Id" ColumnName="Person_Id" />
+                <ScalarProperty Name="Type_Id" ColumnName="Type_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAcc">
+            <EntityTypeMapping TypeName="fakeimdbModel.UserAcc">
+              <MappingFragment StoreEntitySet="UserAcc">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

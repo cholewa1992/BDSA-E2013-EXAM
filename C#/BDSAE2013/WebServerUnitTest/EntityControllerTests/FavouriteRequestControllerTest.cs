@@ -23,7 +23,7 @@ namespace WebServerUnitTest
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Map the returned values of the storage Get method when given the id 5
-            storageMock.Setup(x => x.Get<FavouriteList>(5)).Returns(new FavouriteList() { Id = 5, Title = "Best Movies", UserAccId = 10 });
+            storageMock.Setup(x => x.Get<FavouriteList>(5)).Returns(new FavouriteList() { Id = 5, Title = "Best Movies", UserAcc_Id = 10 });
             //Make an intance of the storage class using the mock
             var storage = storageMock.Object;
 
@@ -91,7 +91,7 @@ namespace WebServerUnitTest
             //Check that the object that was parsed to the add method was correct relative to our input
             Assert.AreEqual(0, testObject.Id);
             Assert.AreEqual("MyMovies", testObject.Title);
-            Assert.AreEqual(5, testObject.UserAccId);
+            Assert.AreEqual(5, testObject.UserAcc_Id);
 
             //Get the values contained in the json returned from the delegate
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
@@ -175,7 +175,7 @@ namespace WebServerUnitTest
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Setup the get method of the storage so it returns something when using the put request
-            storageMock.Setup(x => x.Get<FavouriteList>(10)).Returns(new FavouriteList() { Id = 10, Title = "OtherMovies", UserAccId = 2 });
+            storageMock.Setup(x => x.Get<FavouriteList>(10)).Returns(new FavouriteList { Id = 10, Title = "OtherMovies", UserAcc_Id = 2 });
             //Setup the mock so it saves the callback object in our test object variable;
             storageMock.Setup(x => x.Update<FavouriteList>(It.IsAny<FavouriteList>())).Callback<FavouriteList>((obj => testObject = obj));
             //Make an intance of the storage class using the mock
@@ -196,7 +196,7 @@ namespace WebServerUnitTest
             //Check that the object that was parsed to the Put method was correct relative to our input
             Assert.AreEqual(10, testObject.Id);
             Assert.AreEqual("MyMovies", testObject.Title);
-            Assert.AreEqual(5, testObject.UserAccId);
+            Assert.AreEqual(5, testObject.UserAcc_Id);
             
             //Get the values contained in the returned bytes
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
@@ -216,7 +216,7 @@ namespace WebServerUnitTest
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Setup the get method of the storage so it returns something when using the put request
-            storageMock.Setup(x => x.Get<FavouriteList>(10)).Returns(new FavouriteList() { Id = 10, Title = "OtherMovies", UserAccId = 2 });
+            storageMock.Setup(x => x.Get<FavouriteList>(10)).Returns(new FavouriteList() { Id = 10, Title = "OtherMovies", UserAcc_Id = 2 });
             //Setup the mock so it does not actually use the functionality of the storage class
             storageMock.Setup(x => x.Update<FavouriteList>(It.IsAny<FavouriteList>()));
             //Make an intance of the storage class using the mock
@@ -240,7 +240,7 @@ namespace WebServerUnitTest
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
             //Setup the get method of the storage so it returns something when using the put request
-            storageMock.Setup(x => x.Get<FavouriteList>(10)).Returns(new FavouriteList() { Id = 10, Title = "OtherMovies", UserAccId = 2 });
+            storageMock.Setup(x => x.Get<FavouriteList>(10)).Returns(new FavouriteList() { Id = 10, Title = "OtherMovies", UserAcc_Id = 2 });
             //Setup the mock so it does not actually use the functionality of the storage class
             storageMock.Setup(x => x.Update<FavouriteList>(It.IsAny<FavouriteList>()));
             //Make an intance of the storage class using the mock

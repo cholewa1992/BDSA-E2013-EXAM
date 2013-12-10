@@ -7,15 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Storage
+using Storage;
+
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class FavouriteList : IEntityDto
     {
+        public FavouriteList()
+        {
+            this.FavouritedMovie = new HashSet<FavouritedMovie>();
+        }
+    
         public int Id { get; set; }
-        public int UserAccId { get; set; }
         public string Title { get; set; }
+        public int UserAcc_Id { get; set; }
+    
+        public virtual ICollection<FavouritedMovie> FavouritedMovie { get; set; }
+        public virtual UserAcc UserAcc { get; set; }
     }
 }

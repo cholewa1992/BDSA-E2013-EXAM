@@ -7,14 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Storage
+using Storage;
+
+namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class InfoType : IEntityDto
+    public partial class FavouritedMovie : IEntityDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public int Movie_Id { get; set; }
+        public int FavList_Id { get; set; }
+    
+        public virtual FavouriteList FavouriteList { get; set; }
+        public virtual Movies Movies { get; set; }
     }
 }

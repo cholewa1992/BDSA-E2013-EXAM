@@ -105,40 +105,40 @@ namespace WebServer
             }
             */
 
-            request.Method = "GET http://localhost:112/PersonData/1630018";
-            Request response = delegator.ProcessRequest(request);
-
-            string json = Encoder.Decode(response.Data);
-            Console.WriteLine(response.ResponseStatusCode);
-
-            Dictionary<string, string> values = JSonParser.GetValues(json);
-
-            Console.WriteLine(values["name"]);
-            Console.WriteLine(values["gender"]);
-
-            int index = 0;
-
-            for (int i = 0; i < 20; i++)
-            {
-                while (values.ContainsKey("pi" + i + "," + index))
-                {
-                    Console.WriteLine(values["pi" + i + "," + index]);
-
-                    index++;
-                }
-
-                index = 0;
-            }
-
-            while (values.ContainsKey("m" + index + "Id"))
-            {
-                Console.WriteLine("Id: " + values["m" + index + "Id"] + " Title: " + values["m" + index + "Title"] + " Kind: " + values["m" + index + "Kind"] + "Year: " + values["m" + index + "Year"] + "Character: " + values["m" + index + "CharacterName"] + "Role: " + values["m" + index + "Role"]);
-
-                index++;
-            }
-
-            Console.WriteLine("Finished");
-            Console.ReadKey();
+           // request.Method = "GET http://localhost:112/PersonData/1630018";
+           // Request response = delegator.ProcessRequest(request);
+           //
+           // string json = Encoder.Decode(response.Data);
+           // Console.WriteLine(response.ResponseStatusCode);
+           //
+           // Dictionary<string, string> values = JSonParser.GetValues(json);
+           //
+           // Console.WriteLine(values["name"]);
+           // Console.WriteLine(values["gender"]);
+           //
+           // int index = 0;
+           //
+           // for (int i = 0; i < 20; i++)
+           // {
+           //     while (values.ContainsKey("pi" + i + "," + index))
+           //     {
+           //         Console.WriteLine(values["pi" + i + "," + index]);
+           //
+           //         index++;
+           //     }
+           //
+           //     index = 0;
+           // }
+           //
+           // while (values.ContainsKey("m" + index + "Id"))
+           // {
+           //     Console.WriteLine("Id: " + values["m" + index + "Id"] + " Title: " + values["m" + index + "Title"] + " Kind: " + values["m" + index + "Kind"] + "Year: " + values["m" + index + "Year"] + "Character: " + values["m" + index + "CharacterName"] + "Role: " + values["m" + index + "Role"]);
+           //
+           //     index++;
+           // }
+           //
+           // Console.WriteLine("Finished");
+           // Console.ReadKey();
 
 #endif
 
@@ -160,7 +160,8 @@ namespace WebServer
 
         public void StartRequestDelegatorThread( Request request, CommunicationHandler ch )
         {
-            using (var rd = new RequestDelegator(new StorageConnectionBridgeFacade(new EFConnectionFactory<FakeImdbContext>())))
+
+            using (var rd = new RequestDelegator(new StorageConnectionBridgeFacade(new EFConnectionFactory<fakeimdbEntities>())))
             {
                 var result = rd.ProcessRequest( request );
 
