@@ -127,9 +127,12 @@ namespace WebServer
                 //Invoke the delegate to get the bytes to return
                 byte[] returnValue = storageDelegate.Invoke(_storage);
 
+                //Set the returned data to the request to return
                 request.Data = returnValue;
+                //Set the response code of the data to return
                 request.ResponseStatusCode = Request.StatusCode.Ok;
                 
+                //Return the request
                 return request;
             }
             catch (FormatException e)
@@ -167,10 +170,6 @@ namespace WebServer
         /// <returns> The controller to be used to determine the work that has to be done on the storage module </returns>
         public IRequestController DefineController(string method)
         {
-#if DEBUG
-            Console.WriteLine(method);
-#endif
-
             //pre condition checks
             if (_requestControllers == null)
                 throw new RequestControllerListException("List of request controllers cannot be null when invoking DefineController method");

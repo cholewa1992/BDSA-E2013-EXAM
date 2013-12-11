@@ -69,6 +69,10 @@ namespace WebServer
                 //Get the list of movie info associated with the movie. Sort the results by type_id
                 var movieInfoList = storage.Get<MovieInfo>().Where(mi => mi.Movie_Id == movie.Id).OrderBy(x => x.Type_Id);
 
+
+                string[] movieInfoStringArray = new string[movieInfoList.Count()*4];
+                int movieInfoStringArrayIndex = 0;
+
                 //Set up an index to differentiate each movie info
                 int index = 0;
                 //Set the current type of movie info to an invalid number
@@ -91,19 +95,29 @@ namespace WebServer
                     }
 
                     //We add the attribute name and value of the current movie info, based on it's type and the index of the current type
-                    jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index + "Id");
-                    jsonInput.Add("" + movieInfo.Id);
-                    jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index + "Info");
-                    jsonInput.Add("" + movieInfo.Info);
+                    //jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index + "Id");
+                    //jsonInput.Add("" + movieInfo.Id);
+                    //jsonInput.Add("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index + "Info");
+                    //jsonInput.Add("" + movieInfo.Info);
+
+                    movieInfoStringArray[movieInfoStringArrayIndex++] = ("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index + "Id");
+                    movieInfoStringArray[movieInfoStringArrayIndex++] = ("" + movieInfo.Id);
+                    movieInfoStringArray[movieInfoStringArrayIndex++] = ("mi" + InfoTypes.GetTypeString((int)movieInfo.Type_Id) + index + "Info");
+                    movieInfoStringArray[movieInfoStringArrayIndex++] = ("" + movieInfo.Info);
 
                     //Increment the index
                     index++;
                 }
 
+                jsonInput = jsonInput.Concat(movieInfoStringArray).ToList();
+
                 //Compute the information of actors associated with the movie
                 //Get the list of participants associated with the movie
                 var participateList = storage.Get<Participate>().Where(p => p.Movie_Id == movie.Id);
-                
+
+                string[] personStringArray = new string[participateList.Count() * 14];
+                int personStringArrayIndex = 0;
+
                 //Reset the index, used when assigning attribute names
                 index = 0;
 
@@ -122,24 +136,42 @@ namespace WebServer
                     People person = participate.People;
                         
                     //Add all relevant information of the person using the person and the participant entities
-                    jsonInput.Add("p" + index + "Id");
-                    jsonInput.Add("" + person.Id);
-                    jsonInput.Add("p" + index + "Name");
-                    jsonInput.Add("" + person.Name);
-                    jsonInput.Add("p" + index + "Gender");
-                    jsonInput.Add("" + person.Gender);
-                    jsonInput.Add("p" + index + "CharacterName");
-                    jsonInput.Add("" + participate.CharName);
-                    jsonInput.Add("p" + index + "Role");
-                    jsonInput.Add("" + participate.Role);
-                    jsonInput.Add("p" + index + "Note");
-                    jsonInput.Add("" + participate.Note);
-                    jsonInput.Add("p" + index + "NrOrder");
-                    jsonInput.Add("" + participate.NrOrder);
+                    //jsonInput.Add("p" + index + "Id");
+                    //jsonInput.Add("" + person.Id);
+                    //jsonInput.Add("p" + index + "Name");
+                    //jsonInput.Add("" + person.Name);
+                    //jsonInput.Add("p" + index + "Gender");
+                    //jsonInput.Add("" + person.Gender);
+                    //jsonInput.Add("p" + index + "CharacterName");
+                    //jsonInput.Add("" + participate.CharName);
+                    //jsonInput.Add("p" + index + "Role");
+                    //jsonInput.Add("" + participate.Role);
+                    //jsonInput.Add("p" + index + "Note");
+                    //jsonInput.Add("" + participate.Note);
+                    //jsonInput.Add("p" + index + "NrOrder");
+                    //jsonInput.Add("" + participate.NrOrder);
+
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "Id");
+                    personStringArray[personStringArrayIndex++] = ("" + person.Id);
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "Name");
+                    personStringArray[personStringArrayIndex++] = ("" + person.Name);
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "Gender");
+                    personStringArray[personStringArrayIndex++] = ("" + person.Gender);
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "CharacterName");
+                    personStringArray[personStringArrayIndex++] = ("" + participate.CharName);
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "Role");
+                    personStringArray[personStringArrayIndex++] = ("" + participate.Role);
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "Note");
+                    personStringArray[personStringArrayIndex++] = ("" + participate.Note);
+                    personStringArray[personStringArrayIndex++] = ("p" + index + "NrOrder");
+                    personStringArray[personStringArrayIndex++] = ("" + participate.NrOrder);
 
                     //Increment the index
                     index++;
                 }
+
+                jsonInput = jsonInput.Concat(personStringArray).ToList();
+
 
                 //Convert the object to json attributes
                 string json = JSonParser.Parse(new string[]{

@@ -55,7 +55,7 @@ namespace Utils
                 for (int i = 0; i < parameters.Length; i += 2)
                 {
                     //Skip the entry if the attribute name is an empty string
-                    if (parameters[i] == "")
+                    if (parameters[i] == "" || parameters[i] == null || parameters[i+1] == null)
                         continue;
 
                     //Write the attribute name
