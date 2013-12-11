@@ -33,11 +33,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to get a complete set of data about a specified person
         /// The id of the person is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that gets a person and all their associated data from the database </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Method == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the request value of the url
             int favouriteListId = int.Parse(GetUrlArgument(request.Method));
 
@@ -64,35 +74,26 @@ namespace WebServer
                 //Iterate through all associated movie info
                 foreach (FavouritedMovie favouritedMovie in favouritedMoviesList)
                 {
-                    //Check if the movie id is null - if it is, we skip the addition of the current information
-                    if (favouritedMovie.Movie_Id == null)
+                    //Attempt to get the movies associated with the favourite movie entity
+                    //If the person does not exist in the database, the participate entity is faulty and should be deleted
+                    if (favouritedMovie.Movies == null)
                         continue;
 
-                    //Attempt to get the movie associated with the participate entity
-                    //If the movie does not exist in the database, the favouritedMovie entity is faulty and should be deleted
-                    try
-                    {
-                        //Get the movie associated with the participation entity
-                        Movies movie = storage.Get<Movies>((int)favouritedMovie.Movie_Id);
+                    //Get the movie associated with the participation entity
+                    Movies movie = favouritedMovie.Movies;
 
-                        //Add all relevant information of the movie using the movie
-                        jsonInput.Add("m" + index + "Id");
-                        jsonInput.Add("" + movie.Id);
-                        jsonInput.Add("m" + index + "Title");
-                        jsonInput.Add("" + movie.Title);
-                        jsonInput.Add("m" + index + "Kind");
-                        jsonInput.Add("" + movie.Kind);
-                        jsonInput.Add("m" + index + "Year");
-                        jsonInput.Add("" + movie.Year);
+                    //Add all relevant information of the movie using the movie
+                    jsonInput.Add("m" + index + "Id");
+                    jsonInput.Add("" + movie.Id);
+                    jsonInput.Add("m" + index + "Title");
+                    jsonInput.Add("" + movie.Title);
+                    jsonInput.Add("m" + index + "Kind");
+                    jsonInput.Add("" + movie.Kind);
+                    jsonInput.Add("m" + index + "Year");
+                    jsonInput.Add("" + movie.Year);
 
-                        //Increment the index
-                        index++;
-                    }
-                    catch (InvalidOperationException e)
-                    {
-                        //Deletes the faulty entity from the database
-                        //storage.Delete<FavouritedMovie>(favouriteList.Id);
-                    }
+                    //Increment the index
+                    index++;
                 }
 
                 //Convert the object to json attributes

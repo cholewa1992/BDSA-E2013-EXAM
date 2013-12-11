@@ -64,6 +64,36 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_UserRequestController_ProcessGet_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessGet method with null input. This invocation should throw an exception
+            controller.ProcessGet(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request method must no be null")]
+        public void Test_UserRequestController_ProcessGet_Error_NullMethod()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = null };
+
+            //Invoke the ProcessGet method with null input. This invocation should throw an exception
+            controller.ProcessGet(request);
+        }
+
+        [TestMethod]
         public void Test_UserRequestController_ProcessPost_MinimumInfo()
         {
             //Initialize the request controller that is being tested
@@ -190,6 +220,36 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_UserRequestController_ProcessPost_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessPost method with null input. This invocation should throw an exception
+            controller.ProcessPost(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request data must no be null")]
+        public void Test_UserRequestController_ProcessPost_Error_NullData()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Data = null };
+
+            //Invoke the ProcessPost method with null input. This invocation should throw an exception
+            controller.ProcessPost(request);
+        }
+
+        [TestMethod]
         public void Test_UserRequestController_ProcessPut()
         {
             //Initialize the request controller that is being tested
@@ -255,6 +315,36 @@ namespace WebServerUnitTest
             Request request = new Request() { Method = "PUT https://www.google.dk/User", Data = Encoder.Encode(JSonParser.Parse("username", "darkknight42", "password", "donttellanyone123", "firstname", "John", "lastname", "Anderson", "email", "princeOfDarkness333@hotmail.com")) };
 
             //Invoke the method that will throw the exception
+            controller.ProcessPut(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_UserRequestController_ProcessPut_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessPut method with null input. This invocation should throw an exception
+            controller.ProcessPut(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request data must no be null")]
+        public void Test_UserRequestController_ProcessPut_Error_NullData()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Data = null };
+
+            //Invoke the ProcessPut method with null input. This invocation should throw an exception
             controller.ProcessPut(request);
         }
 
@@ -341,6 +431,36 @@ namespace WebServerUnitTest
 
             //Call the delegate which should result in an exception
             myDelegate.Invoke(storage);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_UserRequestController_ProcessDelete_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessDelete method with null input. This invocation should throw an exception
+            controller.ProcessDelete(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request data must no be null")]
+        public void Test_UserRequestController_ProcessDelete_Error_NullData()
+        {
+            //Initialize the request controller that is being tested
+            UserRequestController controller = new UserRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Data = null };
+
+            //Invoke the ProcessDelete method with null input. This invocation should throw an exception
+            controller.ProcessDelete(request);
         }
     }
 }

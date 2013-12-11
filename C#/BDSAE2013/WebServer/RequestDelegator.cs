@@ -65,6 +65,7 @@ namespace WebServer
         /// Method to process incoming requests.
         /// The method will use the underlying controllers to process the request.
         /// @pre _storage != null
+        /// @pre request != null
         /// </summary>
         /// <param name="request"> The request to process </param>
         /// <returns> A request object filled with the response data, aswell as the status code </returns>
@@ -78,16 +79,20 @@ namespace WebServer
             if (request == null)
                 throw new ArgumentNullException("Incoming request must not be null");
 
+            //Initialize the controller
             IRequestController controller;
 
             //A call that defines the controller to process the request
             try
             {
+                //Define the controller to use
                 controller = DefineController(request.Method);
             }
             catch (ArgumentException e)
             {
+#if DEBUG
                 Console.WriteLine("An error occured while defining controller: "+e.Message);
+#endif
 
                 //This response code is returned when no controllers can process the incoming request
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
@@ -95,16 +100,20 @@ namespace WebServer
                 return request;
             }
 
+            //Initialize the delegate
             Func<IStorageConnectionBridgeFacade, byte[]> storageDelegate;
 
             //Process the request using the defined controller.
             try
             {
+                //Process the request
                 storageDelegate = controller.ProcessRequest(request);
             }
             catch (Exception e)
             {
+#if DEBUG
                 Console.WriteLine("An error occured while processing request. Error: " + e.Message);
+#endif
 
                 //This response code is returned if the request was not a restful method or some vital input was null or incorrect syntax (eg. json).
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
@@ -115,6 +124,7 @@ namespace WebServer
             //Invoke the delegate received from the controller using the storage module given through the constructor.
             try
             {
+                //Invoke the delegate to get the bytes to return
                 byte[] returnValue = storageDelegate.Invoke(_storage);
 
                 request.Data = returnValue;
@@ -150,19 +160,17 @@ namespace WebServer
         /// If there is, the method returns the controller.
         /// @pre _requestControllers != null
         /// @pre _requestControllers.Count > 0
+        /// @pre method != null
+        /// @pre request.method != null
         /// </summary>
         /// <param name="method"> The method part of the incoming request </param>
         /// <returns> The controller to be used to determine the work that has to be done on the storage module </returns>
         public IRequestController DefineController(string method)
         {
-            if (method == "GET /favicon.ico")
-            {
-                throw new ArgumentException("favicon request not permitted");
-            }
-
 #if DEBUG
             Console.WriteLine(method);
 #endif
+
             //pre condition checks
             if (_requestControllers == null)
                 throw new RequestControllerListException("List of request controllers cannot be null when invoking DefineController method");
@@ -173,6 +181,10 @@ namespace WebServer
             //Check if the incoming method is null
             if (method == null)
                 throw new ArgumentNullException("Method string must not be null");
+
+            //We check that it is not the standard favicon request
+            if (method == "GET /favicon.ico")
+                throw new ArgumentException("favicon request not permitted");
 
             //Check if the incoming method has the correct syntax. Correct syntax is [Method]' '[URL]
             if (method.Split(' ').Length != 2)

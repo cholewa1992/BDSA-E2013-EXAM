@@ -33,11 +33,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to get a complete set of data about a specified moive
         /// The id of the movie is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that gets a movie and all its associated data from the database </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Method == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the request value of the url
             int movieIndex = int.Parse(GetUrlArgument(request.Method));
 
@@ -45,6 +55,7 @@ namespace WebServer
             //Print the incoming data to the console (Should be deleted before release)
             Console.WriteLine("MovieData Get was invoked... " + "movieIndex: " + movieIndex);
 #endif
+
             //Return the delegate 
             return (storage => 
             {
@@ -56,7 +67,7 @@ namespace WebServer
 
                 //Compute the information of the movie info associated with the movie
                 //Get the list of movie info associated with the movie. Sort the results by type_id
-                List<MovieInfo> movieInfoList = storage.Get<MovieInfo>().Where(mi => mi.Movie_Id == movie.Id).OrderBy(x => x.Type_Id).ToList();
+                var movieInfoList = storage.Get<MovieInfo>().Where(mi => mi.Movie_Id == movie.Id).OrderBy(x => x.Type_Id);
 
                 //Set up an index to differentiate each movie info
                 int index = 0;
@@ -91,7 +102,7 @@ namespace WebServer
 
                 //Compute the information of actors associated with the movie
                 //Get the list of participants associated with the movie
-                List<Participate> participateList = storage.Get<Participate>().Where(p => p.Movie_Id == movie.Id).Distinct().ToList();
+                var participateList = storage.Get<Participate>().Where(p => p.Movie_Id == movie.Id);
                 
                 //Reset the index, used when assigning attribute names
                 index = 0;
@@ -108,7 +119,6 @@ namespace WebServer
                         continue;
 
                     //Get the person associated with the participation entity
-                    //People person = storage.Get<People>(participate.Person_Id.Value);
                     People person = participate.People;
                         
                     //Add all relevant information of the person using the person and the participant entities

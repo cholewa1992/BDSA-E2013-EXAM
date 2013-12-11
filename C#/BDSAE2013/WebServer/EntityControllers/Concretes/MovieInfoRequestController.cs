@@ -33,11 +33,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to get movie info from a given storage.
         /// The id of the movie info is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that get movie info from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Method == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the request value of the url
             int id = int.Parse(GetUrlArgument(request.Method));
             
@@ -66,11 +76,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to post movie info to a given storage.
         /// The parameters of the movie info is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Data != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that posts movie info to a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessPost(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Data == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the values from the request
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
@@ -116,11 +136,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to update movie info in a given storage.
         /// The id of the movie info to update, as well as the parameters to be updated is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Data != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that updates movie info in a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessPut(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Data == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the values from the request
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
@@ -167,11 +197,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to delete movie info from a given storage.
         /// The id of the movie info is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Data != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that deletes movie info from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessDelete(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Data == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
             //Check for any vital information in the request
