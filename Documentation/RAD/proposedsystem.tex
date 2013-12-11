@@ -15,11 +15,18 @@ A distributed system where a user is able to search and find movies. Information
 		\item A Windows Application
 		\item A Web Client
 	\end{itemize}
-	\item All above parts shall be implemented in C\#. The Windows client in WPF, in .NET 4.5, and the web client in ASP.NET
+	\item All above parts shall be implemented in C\#. The Windows client in WPF and the web client in ASP.NET
 	\item Communication between clients and server shall happen in a RESTful manner sending JSON over HTTP
 	\item The server must build on the HttpListener for HTTP communication
 	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
-	\item The server shall be able to merge information from My Movie API. If some data is not stored locally, but is in the My Movie API, it will get the data from there and send it to the client
+	\item The desktop client shall support two ways of storing data. One being XML on the disk, and another being in memory cache.
+	\begin{itemize}
+			\setlength{\itemsep}{-5pt}
+			\item If the client is offline: If the requested data is in memory cache it will be retrieved from there instead of from the disk
+			\item If the client is online: If the requested data is in memory cache it will be retrieved from there instead of from the disk. In both cases the client will check-up with the Server to see if it has the most recent version
+	\end{itemize}
+	\item The server shall be able to merge information from My Movie API. If some data is not stored locally, but is in the My Movie API, it will get the data from there and store it locally.
+	\item The system shall allow for user registration and login
 \end{itemize}
 
 \section{Nonfunctional requirements}
@@ -64,7 +71,7 @@ A distributed system where a user is able to search and find movies. Information
 \begin{itemize}
 \item The system should support at least 7 concurrent users
 \item The server must support storing at least 10 gigabytes of data
-\item The maximum latency the user can experience, when his internet is not a bottleneck, must not surpass 5 seconds
+\item The maximum latency the user can experience, when his internet is not a bottlenect, must not surpass 5 seconds
 \end{itemize}
 
 \vspace{0.2cm}
@@ -81,7 +88,7 @@ A distributed system where a user is able to search and find movies. Information
 \item[\textbf{Implementation}]
 \begin{itemize}
 \item The desktop client will be implemented for the Windows 7/8 operation system
-\item The web client will be implemented with ASP.NET MVC
+\item The web client will be implemented by ASP.NET MVC
 \end{itemize}
 
 \vspace{0.2cm}
@@ -135,7 +142,50 @@ The following scenarios were set up in order to analyze them:
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{create account}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John wants to make a user account so he have the opportunity to make a personal favorite list. He presses Register and is prompted for a the user name and a password for his account and press the OK button. His user is now active.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{log in}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John has now made a user, and he wants to log in. He presses login and enters his login information.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{add movie to favourite list}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John loved Pulp Fiction, so he wants to add it to his favourites list.
+						\item He searches and finds the movie, and presses the favourites icon in order to add it. John has added Pulp Fiction to his favourite list.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
 
 
 \begin{center}
@@ -150,7 +200,7 @@ The following scenarios were set up in order to analyze them:
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
 
 
 \begin{center}
@@ -164,7 +214,7 @@ The following scenarios were set up in order to analyze them:
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
 
 
 \begin{center}
@@ -179,7 +229,7 @@ The following scenarios were set up in order to analyze them:
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
 
 
 \begin{center}
@@ -193,7 +243,8 @@ The following scenarios were set up in order to analyze them:
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
+
 
 \subsection{Use case model}
 
