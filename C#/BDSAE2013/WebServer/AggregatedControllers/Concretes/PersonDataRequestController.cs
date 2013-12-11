@@ -33,11 +33,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to get a complete set of data about a specified person
         /// The id of the person is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that gets a person and all their associated data from the database </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Method == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the request value of the url
             int personId = int.Parse(GetUrlArgument(request.Method));
 
@@ -57,7 +67,7 @@ namespace WebServer
 
                 //Compute the information of the person info associated with the person
                 //Get the list of person info associated with the person. Sort the results by type_id
-                List<PersonInfo> personInfoList = storage.Get<PersonInfo>().Where(pi => pi.Person_Id == person.Id).OrderBy(x => x.Type_Id).ToList();
+                var personInfoList = storage.Get<PersonInfo>().Where(pi => pi.Person_Id == person.Id).OrderBy(x => x.Type_Id);
 
                 //Set up an index to differentiate each person info
                 int index = 0;
@@ -88,7 +98,7 @@ namespace WebServer
 
                 //Compute the information of actors associated with the person
                 //Get the list of participants associated with the person
-                List<Participate> participateList = storage.Get<Participate>().Where(p => p.Person_Id == person.Id).Distinct().ToList();
+                var participateList = storage.Get<Participate>().Where(p => p.Person_Id == person.Id);
 
                 //Reset the index, used when assigning attribute names
                 index = 0;

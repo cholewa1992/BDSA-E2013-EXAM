@@ -31,11 +31,21 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to get a person (People) in a given storage.
         /// The delegate only contain the id value. id is the only thing needed to get a person.
+        /// @pre request != null
+        /// @pre request.Method != null
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns>  A delegate that can be used to get a person from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Method == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             //Get the request value of the url
             int id = int.Parse(GetUrlArgument(request.Method));
             
@@ -64,12 +74,22 @@ namespace WebServer
 
         /// <summary>
         /// This method returns a delegate that can be used to insert a person (People) in a given storage.
-        /// The delegate contain a people byte[].
+        /// The id of the people is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Data != null
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns> A delegate that can be used to insert a person from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessPost(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Data == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             Dictionary<string, string> values = GetRequestValues(request.Data);
 
@@ -107,12 +127,22 @@ namespace WebServer
         
         /// <summary>
         /// This method returns a delegate that can be used to update a person (People) in a given storage.
-        /// The delegate contain a people byte[].
+        /// The id of the person to update, as well as the parameters to be updated is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Data != null
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns> A delegate that can be used to get a person from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessPut(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Data == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             Dictionary<string,string> values = GetRequestValues(request.Data);
 
@@ -152,12 +182,22 @@ namespace WebServer
 
         /// <summary>
         /// This method returns a delegate that can be used to delete a person (People) in a given storage.
-        /// The delegate only contain the id value. id is the only thing needed to get a person.
+        /// The id of the person is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Data != null
         /// </summary>
         /// <param name="request">The original request recieved by the webserver</param>
         /// <returns>  A delegate that can be used to delete a person from a given storage, based on the contents of the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessDelete(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Data == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
             // The Bytes(Data) in the request is converted to a table to retreive the values.
             Dictionary<string,string> values = GetRequestValues(request.Data);
 

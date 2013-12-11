@@ -58,7 +58,37 @@ namespace WebServerUnitTest
             //Set up the request that is being parsed to the process method
             Request request = new Request() { Method = "GET https://www.google.dk/MovieInfo/Die_Hard" };
 
-            //Invoke the ProcessRequest method with null input. This invocation should throw an exception
+            //Invoke the ProcessGet method with null input. This invocation should throw an exception
+            controller.ProcessGet(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_MovieInfoRequestController_ProcessGet_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessGet method with null input. This invocation should throw an exception
+            controller.ProcessGet(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request method must no be null")]
+        public void Test_MovieInfoRequestController_ProcessGet_Error_NullMethod()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = null };
+
+            //Invoke the ProcessGet method with null input. This invocation should throw an exception
             controller.ProcessGet(request);
         }
 
@@ -253,6 +283,36 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_MovieInfoRequestController_ProcessPost_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessPost method with null input. This invocation should throw an exception
+            controller.ProcessPost(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request data must no be null")]
+        public void Test_MovieInfoRequestController_ProcessPost_Error_NullData()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Data = null };
+
+            //Invoke the ProcessPost method with null input. This invocation should throw an exception
+            controller.ProcessPost(request);
+        }
+
+        [TestMethod]
         public void Test_MovieInfoRequestController_ProcessPut()
         {
             //Initialize the request controller that is being tested
@@ -348,6 +408,36 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_MovieInfoRequestController_ProcessPut_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessPut method with null input. This invocation should throw an exception
+            controller.ProcessPut(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request data must no be null")]
+        public void Test_MovieInfoRequestController_ProcessPut_Error_NullData()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Data = null };
+
+            //Invoke the ProcessPut method with null input. This invocation should throw an exception
+            controller.ProcessPut(request);
+        }
+
+        [TestMethod]
         public void Test_MovieInfoRequestController_ProcessDelete()
         {
             //Initialize the request controller that is being tested
@@ -430,6 +520,36 @@ namespace WebServerUnitTest
 
             //Call the delegate which should result in an exception
             myDelegate.Invoke(storage);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request must no be null")]
+        public void Test_MovieInfoRequestController_ProcessDelete_Error_NullRequest()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = null;
+
+            //Invoke the ProcessPut method with null input. This invocation should throw an exception
+            controller.ProcessDelete(request);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+        "Incoming request data must no be null")]
+        public void Test_MovieInfoRequestController_ProcessDelete_Error_NullData()
+        {
+            //Initialize the request controller that is being tested
+            MovieInfoRequestController controller = new MovieInfoRequestController();
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Data = null };
+
+            //Invoke the ProcessPut method with null input. This invocation should throw an exception
+            controller.ProcessDelete(request);
         }
     }
 }

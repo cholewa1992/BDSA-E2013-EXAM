@@ -39,7 +39,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommunicationFramework">
+    <Reference Include="CommunicationFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BDSAE2013\CommunicationFramework\bin\Debug\CommunicationFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -131,6 +132,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +229,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\Movie\ViewInfo.cshtml" />
+    <Content Include="Views\Person\ViewInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

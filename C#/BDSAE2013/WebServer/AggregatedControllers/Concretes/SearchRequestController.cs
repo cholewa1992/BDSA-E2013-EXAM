@@ -16,7 +16,8 @@ namespace WebServer
     /// </summary>
     public class SearchRequestController : AbstractAggregatedRequestController
     {
-        private const int SearchLimit = 5;
+        //The search standard search limit, used in case no other is defined in the request
+        private const int SearchLimit = 10;
 
         /// <summary>
         /// The constructor defines the keyword associated with the controller on creation
@@ -33,11 +34,22 @@ namespace WebServer
         /// <summary>
         /// This method returns a delegate that can be used to search for movies that matches certain criteria
         /// The search criteria is determined by the parsed request
+        /// @pre request != null
+        /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
         /// <returns> A delegate that searches for movies in the database based on the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
+            //Pre condition check that the incoming request is not null
+            if (request == null)
+                throw new ArgumentNullException("Incoming request must not be null");
+
+            //Pre condition check that the incoming requests method is not null
+            if (request.Method == null)
+                throw new ArgumentNullException("Incoming request method must not be null");
+
+
             //Get the request value of the url
             string searchInput = GetUrlArgument(request.Method).Replace("%20", " ");
             string[] splitSearchInput = searchInput.Split(' ');
@@ -55,7 +67,8 @@ namespace WebServer
                 //Initialize the set of movies
                 HashSet<Movies> movieSet = new HashSet<Movies>();
 
-                int entitiesLeftToLimit = SearchLimit;
+                //Initialize a variable defining how many search hits are left to fill the search limit
+                int hitsLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
                 foreach (string searchString in searchInputList)
@@ -64,17 +77,20 @@ namespace WebServer
                     if (movieSet.Count >= SearchLimit)
                         break;
 
-                    //Add any new movie to the list that matches the search credentials
-                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)).Take(entitiesLeftToLimit));
+                    //Add the first amount of movies that matches the search credentials
+                    //The amount is the amount of search hits left to reach the search limit
+                    //If we try to take more than the amount, the method only takes the amount of hits
+                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.ToLower().Contains(searchString.ToLower())).Take(hitsLeftToLimit));
 
-                    entitiesLeftToLimit = SearchLimit - movieSet.Count;
+                    //Update the search hits left to hit the limit
+                    hitsLeftToLimit = SearchLimit - movieSet.Count;
                 }
 
                 //Initialize the set of movies
                 HashSet<People> peopleSet = new HashSet<People>();
 
                 //Reset the counting variable
-                entitiesLeftToLimit = SearchLimit;
+                hitsLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
                 foreach (string searchString in searchInputList)
@@ -83,10 +99,13 @@ namespace WebServer
                     if (peopleSet.Count >= SearchLimit)
                         break;
 
-                    //Add any new person to the list that matches the search credentials
-                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.Contains(searchString)).Take(entitiesLeftToLimit));
+                    //Add the first amount of persons that matches the search credentials
+                    //The amount is the amount of search hits left to reach the search limit
+                    //If we try to take more than the amount, the method only takes the amount of hits
+                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.ToLower().Contains(searchString.ToLower())).Take(hitsLeftToLimit));
 
-                    entitiesLeftToLimit = SearchLimit - peopleSet.Count;
+                    //Update the search hits left to hit the limit
+                    hitsLeftToLimit = SearchLimit - peopleSet.Count;
                 }
 
                 //Initialize the list of attribute names/values
@@ -128,6 +147,7 @@ namespace WebServer
                     index++;
                 }
 
+                //Initialize the json string
                 string json = "";
 
                 if (jsonInput.Count > 0)
