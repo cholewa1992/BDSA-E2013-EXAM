@@ -70,21 +70,21 @@ namespace WebServer
                 
                 //Compute the information of the person info associated with the person
                 //Get the list of person info associated with the person. Sort the results by type_id
-                List<FavouritedMovie> favouritedMoviesList = storage.Get<FavouritedMovie>().Where(fm => fm.FavList_Id == favouriteList.Id).ToList();
+                var favouritedMoviesList = favouriteList.FavouritedMovie;
 
                 int index = 0;
 
                 //Iterate through all associated movie info
                 foreach (FavouritedMovie favouritedMovie in favouritedMoviesList)
                 {
-                    //Attempt to get the movies associated with the favourite movie entity
-                    //If the person does not exist in the database, the participate entity is faulty and should be deleted
-                    if (favouritedMovie.Movies == null)
-                        continue;
-
                     //Get the movie associated with the participation entity
                     Movies movie = favouritedMovie.Movies;
 
+                    //Attempt to get the movies associated with the favourite movie entity
+                    //If the person does not exist in the database, the participate entity is faulty and should be deleted
+                    if (movie == null)
+                        continue;
+                    
                     //Add all relevant information of the movie using the movie
                     jsonInput.Add("m" + index + "Id");
                     jsonInput.Add("" + movie.Id);

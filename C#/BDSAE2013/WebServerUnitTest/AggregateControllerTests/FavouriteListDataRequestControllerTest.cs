@@ -148,11 +148,14 @@ namespace WebServerUnitTest
 
             //Convert the received json bytes to a value dictionary
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+            
+            Assert.AreEqual("", Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct
             //Assert the amount of information
             Assert.AreEqual(7, values.Count);
 
+            
             //Assert the person details
             Assert.AreEqual("10", values["id"]);
             Assert.AreEqual("Best Movies of 2013", values["title"]);

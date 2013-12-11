@@ -70,7 +70,7 @@ namespace WebServer
 
                 //Compute the information of the person info associated with the person
                 //Get the list of person info associated with the person. Sort the results by type_id
-                var personInfoList = storage.Get<PersonInfo>().Where(pi => pi.Person_Id == person.Id).OrderBy(x => x.Type_Id);
+                var personInfoList = person.PersonInfo.OrderBy(x => x.Type_Id);
 
                 //Initialize an array of strings to contain the information we get by iteration through the information of each person info
                 string[] personInfoStringArray = new string[personInfoList.Count() * 4];
@@ -108,7 +108,7 @@ namespace WebServer
 
                 //Compute the information of actors associated with the person
                 //Get the list of participants associated with the person
-                var participateList = storage.Get<Participate>().Where(p => p.Person_Id == person.Id);
+                var participateList = person.Participate;
 
                 //Initialize an array of strings to contain the information we get by iteration through the information of each movie
                 string[] movieStringArray = new string[participateList.Count() * 16];
