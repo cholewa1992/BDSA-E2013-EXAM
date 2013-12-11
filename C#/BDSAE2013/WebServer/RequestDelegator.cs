@@ -87,7 +87,7 @@ namespace WebServer
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("No valid controller was found");
+                Console.WriteLine("An error occured while defining controller: "+e.Message);
 
                 //This response code is returned when no controllers can process the incoming request
                 request.ResponseStatusCode = Request.StatusCode.BadRequest;
@@ -155,6 +155,14 @@ namespace WebServer
         /// <returns> The controller to be used to determine the work that has to be done on the storage module </returns>
         public IRequestController DefineController(string method)
         {
+            if (method == "GET /favicon.ico")
+            {
+                throw new ArgumentException("favicon request not permitted");
+            }
+
+#if DEBUG
+            Console.WriteLine(method);
+#endif
             //pre condition checks
             if (_requestControllers == null)
                 throw new RequestControllerListException("List of request controllers cannot be null when invoking DefineController method");

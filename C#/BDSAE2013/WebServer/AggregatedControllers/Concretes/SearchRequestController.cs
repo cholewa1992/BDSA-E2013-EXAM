@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CommunicationFramework;
 using Storage;
 using EntityFrameworkStorage;
-using System.Collections.Specialized;
 using Utils;
 
 namespace WebServer
@@ -18,7 +16,7 @@ namespace WebServer
     /// </summary>
     public class SearchRequestController : AbstractAggregatedRequestController
     {
-        private readonly int searchLimit = 5;
+        private const int SearchLimit = 5;
 
         /// <summary>
         /// The constructor defines the keyword associated with the controller on creation
@@ -57,38 +55,38 @@ namespace WebServer
                 //Initialize the set of movies
                 HashSet<Movies> movieSet = new HashSet<Movies>();
 
-                int entitiesLeftToLimit = searchLimit;
+                int entitiesLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
                 foreach (string searchString in searchInputList)
                 {
                     //If the amount of movies which has been found exceeds the amount we want, we stop searching
-                    if (movieSet.Count >= searchLimit)
+                    if (movieSet.Count >= SearchLimit)
                         break;
 
                     //Add any new movie to the list that matches the search credentials
                     movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.Contains(searchString)).Take(entitiesLeftToLimit));
 
-                    entitiesLeftToLimit = searchLimit - movieSet.Count;
+                    entitiesLeftToLimit = SearchLimit - movieSet.Count;
                 }
 
                 //Initialize the set of movies
                 HashSet<People> peopleSet = new HashSet<People>();
 
                 //Reset the counting variable
-                entitiesLeftToLimit = searchLimit;
+                entitiesLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
                 foreach (string searchString in searchInputList)
                 {
                     //If the amount of people which has been found exceeds the amount we want, we stop searching
-                    if (peopleSet.Count >= searchLimit)
+                    if (peopleSet.Count >= SearchLimit)
                         break;
 
                     //Add any new person to the list that matches the search credentials
                     peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.Contains(searchString)).Take(entitiesLeftToLimit));
 
-                    entitiesLeftToLimit = searchLimit - movieSet.Count;
+                    entitiesLeftToLimit = SearchLimit - peopleSet.Count;
                 }
 
                 //Initialize the list of attribute names/values
