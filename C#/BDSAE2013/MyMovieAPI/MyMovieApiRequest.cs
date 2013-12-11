@@ -1,4 +1,5 @@
-﻿using CommunicationFramework;
+﻿using System;
+using CommunicationFramework;
 using Newtonsoft.Json;
 
 namespace MyMovieAPI
@@ -14,13 +15,20 @@ namespace MyMovieAPI
         /// <returns></returns>
         public static string MakeRequest(string searchWord, int limit = 3, int timeout = 5000)
         {
-            var comHandler = new CommunicationHandler(Protocols.HTTP);
-            var restAddress = "http://http://mymovieapi.com/?title=" + searchWord + "&limit=" + limit;
+            try
+            {
+                var comHandler = new CommunicationHandler(Protocols.HTTP);
+                var restAddress = "http://http://mymovieapi.com/?title=" + searchWord + "&limit=" + limit;
 
-            comHandler.Send(restAddress, new byte[0], "GET");
-            var json = Utils.Encoder.Decode(comHandler.Receive(timeout));
+                comHandler.Send(restAddress, new byte[0], "GET");
+                var json = Utils.Encoder.Decode(comHandler.Receive(timeout));
 
-            return json;
+                return json;
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Error connection to MyMovieApi",e);
+            }
         }
 
         /// <summary>
@@ -30,7 +38,14 @@ namespace MyMovieAPI
         /// <returns>An array of MyMovieAPIDTOs derived from the JSON</returns>
         public static MyMovieAPIDTO[] ParseJson(string json)
         {
-            return JsonConvert.DeserializeObject<MyMovieAPIDTO[]>(json);
+            try
+            {
+                return JsonConvert.DeserializeObject<MyMovieAPIDTO[]>(json);
+            }
+            catch (Exception e)
+            {
+                throw new JsonException("Could not deserialize the json respons", e);
+            }
         }
     }
 }
