@@ -121,9 +121,6 @@ namespace WebServer
                 //Iterate through all participants
                 foreach (Participate participate in participateList)
                 {
-                    //TODO differentiate between actors and directors
-                    //TODO clean up data to avoid duplicates
-
                     //Attempt to get the person associated with the participate entity
                     //If the person does not exist in the database, the participate entity is faulty and should be deleted
                     if(participate.People == null)
@@ -154,7 +151,6 @@ namespace WebServer
 
                 //We concat the json input list with the array of found person info
                 jsonInput = jsonInput.Concat(personStringArray).ToList();
-
 
                 //Convert the object to json attributes
                 string json = JSonParser.Parse(new string[]{

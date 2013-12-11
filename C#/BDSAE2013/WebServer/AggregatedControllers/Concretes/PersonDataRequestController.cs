@@ -116,9 +116,6 @@ namespace WebServer
 
                 foreach (Participate participate in participateList)
                 {
-                    //TODO differentiate between actors and directors
-                    //TODO clean up data to avoid duplicates
-                    
                     //Attempt to get the movie associated with the participate entity
                     //If the movie does not exist in the database, the participate entity is faulty and should be deleted
                     if(participate.Movies == null)
@@ -127,24 +124,6 @@ namespace WebServer
                     //Get the movie associated with the participation entity
                     //Movies movie = storage.Get<Movies>((int)participate.Movie_Id);
                     Movies movie = participate.Movies;
-
-                    //Add all relevant information of the movie using the movie and the participant entities
-                    //jsonInput.Add("m" + index + "Id");
-                    //jsonInput.Add("" + movie.Id);
-                    //jsonInput.Add("m" + index + "Title");
-                    //jsonInput.Add("" + movie.Title);
-                    //jsonInput.Add("m" + index + "Kind");
-                    //jsonInput.Add("" + movie.Kind);
-                    //jsonInput.Add("m" + index + "Year");
-                    //jsonInput.Add("" + movie.Year);
-                    //jsonInput.Add("m" + index + "CharacterName");
-                    //jsonInput.Add("" + participate.CharName);
-                    //jsonInput.Add("m" + index + "Role");
-                    //jsonInput.Add("" + participate.Role);
-                    //jsonInput.Add("m" + index + "Note");
-                    //jsonInput.Add("" + participate.Note);
-                    //jsonInput.Add("m" + index + "NrOrder");
-                    //jsonInput.Add("" + participate.NrOrder);
 
                     movieStringArray[movieStringArrayIndex++] = ("m" + index + "Id");
                     movieStringArray[movieStringArrayIndex++] = ("" + movie.Id);

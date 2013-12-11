@@ -187,6 +187,7 @@ namespace WebServer
 
         /// <summary>
         /// Computes a list of the concatenation of each adjacent search input, of all lengths from n to 1
+        /// @pre stringArray != null
         /// </summary>
         /// <param name="stringArray"> An array of keywords </param>
         /// <returns> A list of all relevant keyword combinations </returns>

@@ -497,13 +497,11 @@ namespace WebServerUnitTest
             List<string> searchInputList = controller.GetSearchKeywords(searchInput);
 
             //Test that we have all the correct results, in the correct order
-            Assert.AreEqual(6, searchInputList.Count);
+            Assert.AreEqual(4, searchInputList.Count);
             Assert.AreEqual("Hello My Friend", searchInputList[0]);
-            Assert.AreEqual("Hello My", searchInputList[1]);
-            Assert.AreEqual("My Friend", searchInputList[2]);
-            Assert.AreEqual("Hello", searchInputList[3]);
-            Assert.AreEqual("My", searchInputList[4]);
-            Assert.AreEqual("Friend", searchInputList[5]);
+            Assert.AreEqual("Hello", searchInputList[1]);
+            Assert.AreEqual("My", searchInputList[2]);
+            Assert.AreEqual("Friend", searchInputList[3]);
         }
 
         [TestMethod]
