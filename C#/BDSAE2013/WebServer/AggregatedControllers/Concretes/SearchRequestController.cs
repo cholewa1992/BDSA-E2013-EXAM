@@ -197,40 +197,22 @@ namespace WebServer
 
             //Initialize the search input list
             List<string> searchInputList = new List<string>();
+            
+            string completeWord = "";
 
-            //i: The amount of words to be concattenated to form the sentence to be added to the list
-            //j: The start position of the word to be added
-            //k: The current position of the word to be concattenated to the complete string to be added
-            for(int i = stringArray.Length; i > 0; i--)
+            for (int i = 0; i < stringArray.Count(); i++)
             {
-                for (int j = 0; j < stringArray.Length; j++)
-                {
-                    //Check if there are enough array entries to add a sentence concattenated of i words
-                    //counting from start position j
-                    //Otherwise we escape the current iteration
-                    if (j + i > stringArray.Length)
-                        break;
+                //Check if the word has just begun, otherwise we add a space between each word
+                if (completeWord != "")
+                    completeWord += " ";
 
-                    //Initialize the word to be added
-                    string concattedWord = "";
-
-                    //Iterate through each word until a sentence with i words in it has been completed
-                    for (int k = j; k < j + i; k++)
-                    {
-                        //Check if the word has just begun, otherwise we add a space between each word
-                        if (concattedWord != "")
-                            concattedWord += " ";
-
-                        //Add the current word to the complete sentence
-                        concattedWord += stringArray[k];
-                    }
-
-                    //Add the completed sentence to the list of search inputs
-                    searchInputList.Add(concattedWord);
-                }
+                //Add the current word to the complete sentence
+                completeWord += stringArray[i];
             }
 
-            return searchInputList;
+            searchInputList.Add(completeWord);
+            
+            return searchInputList.Concat(stringArray).ToList();
         }
     }
 }
