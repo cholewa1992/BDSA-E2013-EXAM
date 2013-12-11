@@ -115,7 +115,7 @@ The following scenarios were set up in order to analyze them:
 		Scenario name & \underline{find the movie Pulp Fiction}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enter the title in the search field.
+						\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enters the title in the search field.
 						\item John receive information for the movie, such as a list of actors, roles, a description for the movie, rating ect.
 						\end{enumerate}
 						\\ \hline
@@ -145,7 +145,7 @@ The following scenarios were set up in order to analyze them:
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
 						\item John has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name so it is spelled correctly. He searches for and find woll smoth.
-						\item John change the name to Will Smith and enter the save button.
+						\item John change the name to Will Smith.
 						\end{enumerate}
 						\\ \hline
 						
@@ -160,7 +160,7 @@ The following scenarios were set up in order to analyze them:
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
 						\item John notices that their is a mistake in the genre of 'The Hobbit 3'. The genre is set to a horror movie.
-						\item John edit the genre to fantasy.
+						\item John edits the genre to fantasy.
 						\end{enumerate}
 						\\ \hline
 						
@@ -413,9 +413,6 @@ The explanations furthermore include the relation between the actors and the use
 	\item[2.] Person \hfill \\
 	The person entity defines data about a specific person. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age.
 	
-	\item[3.] User \hfill \\
-	The user entity defines data about each specific user. Each entity instances includes attributes defining the log in informtion of the user. Each user has a list of favourite movies.
-	
 \end{enumerate}
 
 \subsubsection{Boundary objects}
@@ -440,17 +437,11 @@ The explanations furthermore include the relation between the actors and the use
 	\item LogOutButton \hfill \\
 	The user can press this button to log out of his account
 	
-	\item FavouritesList \hfill \\
-	The list containing all the users favourite movies. The user can remove movie from the list
-	
-	\item FavouriteButton \hfill \\
-	A button on every movie to add the movie to the users favourites list
-	
 	\item MovieInformationForm \hfill \\
-	A form where an Administrator can input data about a movie
+	A form where a user can input data about a movie
 	
 	\item ActorInformationForm \hfill \\
-	A form where an Administrator can input data about an Actor
+	A form where a user can input data about an Actor
 	
 	
 \end{enumerate}
@@ -462,19 +453,8 @@ These controllers are all more or less self-explanatory. They enable the user to
 \begin{enumerate}
 	\item[1.] FindMovieController
 	\item[2.] FindActorController
-	\item[3.] MakeAccountController 
-	\item[4.] AddToFavouritesListController
-	\item[5.] RemoveFromFavouritesListController
-	\item[6.] ViewFavouritesListController
-	\item[7.] LogInToAccountController
-	\item[8.] LogOutFromAccountController 
-	
-	\item[9.] AddMovieController
  	\item[10.] EditMovieController
- 	\item[11.] DeleteMovieController
- 	\item[12.] AddActorController
  	\item[13.] EditActorController
- 	\item[14.] DeleteActorController
  	
 \end{enumerate}
 
@@ -513,7 +493,7 @@ The sequence diagrams explains some of the more apparant use cases of the system
 \subsubsection{State machines}
 An entity can have different states. As seen in figure \ref{fig:Entity State Machine Diagram}, after its creation (POST), it is stores in the persistent database module on the server. From here it can either be deleted (DELETE), or it can be fetched (GET). When a object is queried from the database the server will fetch it as a DTO (Data transfer object) into the servers memory. Often used objects will be saved in the server's cache. The DTO is then sent to the client requesting the object. The client-side also have a cache. This means that if the user has recently queried the object, it will not be fetched from the server, but from the local cache. A DTO can from there either be updated (PUT) and pushed back to the server, or cache time-out and be deleted (This means that only the DTO will be deleted and not the entity in the database).
 
-This is valid for Movies and Actors. Users is not implementing these states as users should not be cached, and only have one state, which is In Database.   
+This is valid for Movies and Actors.
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{img/EntityStateMachineDiagram.png}
