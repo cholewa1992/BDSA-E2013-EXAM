@@ -9,6 +9,20 @@ namespace AspClient.Models
     {
         public string SearchString{ get; set; }
 
-        public Dictionary<String, String> Results{ get; set; }
+        public Dictionary<int, MovieResult> Results{ get; set; }
+    }
+
+    public class MovieResult
+    {
+        public int Id;
+        public string Title;
+        public string Url;
+    }
+
+    public class PersonResult
+    {
+        public int Id;
+        public string Name;
+        public string Url;
     }
 }

@@ -1,0 +1,48 @@
+﻿@model AspClient.Models.PersonModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Search</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath">
+                        <img src="~/Content/images/banner.png" />
+                    </a>
+                </td>
+                <td>
+                    @using( Html.BeginForm( "Search", "Search" ) )
+                    {
+                        @Html.TextBoxFor( m => m.SearchString )
+                        <input type="submit" value="search" />
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.Raw( !string.IsNullOrEmpty( Model.Name ) ? "Name: " + Model.Name + "<br />" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.Gender ) ? "Gender: " + Model.Gender + "<br / >" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.BirthDate ) ? "Birth Date: " + Model.BirthDate + "<br / >" : "" )
+                    
+                    <hr />
+                    
+                    @foreach (var movie in Model.starring)
+                    {
+                        @Html.Raw( "<a href=\"http://localhost:8485/Movie/ViewInfo?id=" + movie.Id + "&SearchString=" + Model.SearchString + "\">" + movie.Title + "(" + movie.Year + ")" + "(" + movie.Kind + ")" + "</a>" );
+                        @Html.Raw( "<br />" );
+                    }
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

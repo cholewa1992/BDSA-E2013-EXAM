@@ -1,4 +1,5 @@
-﻿@model AspClient.Models.SearchResults
+﻿@using AspClient.Models
+@model AspClient.Models.SearchResults
 
 @{
     Layout = null;
@@ -33,10 +34,11 @@
                 <td colspan="2">
                     @if( Model != null && Model.Results != null && Model.Results.Count != 0 )
                     {
-                        foreach( KeyValuePair<String, String> kvp in Model.Results )
-                         {
-                             <a href="@kvp.Value">@kvp.Key</a>
-                         }
+                        foreach( KeyValuePair<int, MovieResult> kvp in Model.Results )
+                        {
+                            <a href="@kvp.Value.Url">@kvp.Value.Title</a>
+                            <br />
+                        }
                     }
                     else
                     {
