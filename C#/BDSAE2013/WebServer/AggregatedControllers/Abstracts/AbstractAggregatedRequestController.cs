@@ -15,9 +15,11 @@ namespace WebServer
     /// Abstract class that implements parts of the RequestController class hierachy
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public abstract class AbstractAggregatedRequestController : AbstractRequestController
     {
-
         /// <summary>
         /// A general method for all request controllers that processes the part of the request that defines the type of the rest method (GET, PUT, POST, DELETE)
         /// The method determines which rest method to invoked and returns the product.

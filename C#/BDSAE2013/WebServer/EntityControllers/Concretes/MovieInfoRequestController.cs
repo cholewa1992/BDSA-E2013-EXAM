@@ -16,6 +16,10 @@ namespace WebServer
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// Morten Rosenmeier (morr@itu.dk)
+    /// </author>
     public class MovieInfoRequestController : AbstractEntityRequestController
     {
         /// <summary>

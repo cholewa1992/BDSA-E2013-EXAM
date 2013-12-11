@@ -16,6 +16,9 @@ namespace WebServer
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public class FavouriteListDataRequestController : AbstractAggregatedRequestController
     {
         /// <summary>

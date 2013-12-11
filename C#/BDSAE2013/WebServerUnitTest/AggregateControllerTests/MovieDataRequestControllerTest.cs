@@ -12,6 +12,9 @@ using System.Linq;
 
 namespace WebServerUnitTest
 {
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     [TestClass]
     public class MovieDataRequestControllerTest
     {

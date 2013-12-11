@@ -10,6 +10,10 @@ namespace WebServer
     /// The general interface that defines the structure of the request controller
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// Morten Rosenmeier (morr@itu.dk)
+    /// </author>
     public interface IRequestController
     {
         string Keyword { get; set; }

@@ -11,6 +11,9 @@ using Utils;
 
 namespace WebServerUnitTest
 {
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     [TestClass]
     public class MovieInfoRequestControllerTest
     {

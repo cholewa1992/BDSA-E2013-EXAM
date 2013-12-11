@@ -15,6 +15,9 @@ namespace WebServer
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public class SearchRequestController : AbstractAggregatedRequestController
     {
         //The search standard search limit, used in case no other is defined in the request

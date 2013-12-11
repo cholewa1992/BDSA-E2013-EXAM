@@ -15,6 +15,10 @@ namespace WebServer
     /// Abstract class that implements parts of the RequestController class hierachy
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// Morten Rosenmeier (morr@itu.dk)
+    /// </author>
     public abstract class AbstractEntityRequestController : AbstractRequestController
     {
 

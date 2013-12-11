@@ -14,6 +14,10 @@ namespace WebServer
     /// The class contains a list of control objects that can process different types of request when invoked. This results in delegates that can be used to access the storage module.
     /// @invariant _storage != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// Morten Rosenmeier (morr@itu.dk)
+    /// </author>
     public class RequestDelegator : IDisposable
     {
         private readonly List<IRequestController> _requestControllers;        //A list of the available controllers used by the class

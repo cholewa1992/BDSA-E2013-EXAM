@@ -16,6 +16,9 @@ namespace WebServer
     /// which can be used by the RequestDelegator to contact the database.
     /// @invariant Keyword != null
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public class MovieDataRequestController : AbstractAggregatedRequestController
     {
         /// <summary>
@@ -121,14 +124,13 @@ namespace WebServer
                 //Iterate through all participants
                 foreach (Participate participate in participateList)
                 {
-                    //Attempt to get the person associated with the participate entity
-                    //If the person does not exist in the database, the participate entity is faulty and should be deleted
-                    if(participate.People == null)
-                        continue;
-
                     //Get the person associated with the participation entity
                     People person = participate.People;
-                        
+                     
+                    //If the person does not exist in the database we skip the addition of its data
+                    if (person == null)
+                        continue;
+ 
                     //Add all relevant information of the person using the person and the participant entities
                     personStringArray[personStringArrayIndex++] = ("p" + index + "Id");
                     personStringArray[personStringArrayIndex++] = ("" + person.Id);
