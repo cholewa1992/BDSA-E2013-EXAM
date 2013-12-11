@@ -93,6 +93,10 @@
       <Project>{531a3239-9797-4d54-aebd-224c5868bb19}</Project>
       <Name>EntityFrameworkStorage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyMovieAPI\MyMovieAPI.csproj">
+      <Project>{82c5872a-2900-4975-875e-f7ba4df2dde3}</Project>
+      <Name>MyMovieAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.csproj">
       <Project>{7f6ed44d-0aa8-4d4b-8dbe-fbfb0f20e9a5}</Project>
       <Name>Storage</Name>

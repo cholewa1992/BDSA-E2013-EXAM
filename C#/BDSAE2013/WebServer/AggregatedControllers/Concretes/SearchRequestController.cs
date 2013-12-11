@@ -5,6 +5,7 @@ using CommunicationFramework;
 using Storage;
 using EntityFrameworkStorage;
 using Utils;
+using MyMovieAPI;
 
 namespace WebServer
 {
@@ -49,7 +50,6 @@ namespace WebServer
             if (request.Method == null)
                 throw new ArgumentNullException("Incoming request method must not be null");
 
-
             //Get the request value of the url
             string searchInput = GetUrlArgument(request.Method).Replace("%20", " ");
             string[] splitSearchInput = searchInput.Split(' ');
@@ -61,6 +61,7 @@ namespace WebServer
             //Print the incoming data to the console (Should be deleted before release)
             Console.WriteLine("Search Get was invoked... " + "searchInput: " + searchInput);
 #endif
+
             //Return the delegate 
             return (storage => 
             {
@@ -71,11 +72,13 @@ namespace WebServer
                 int hitsLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
-                foreach (string searchString in searchInputList)
+                for (int i = 0; i < searchInputList.Count; i++ )
                 {
                     //If the amount of movies which has been found exceeds the amount we want, we stop searching
                     if (movieSet.Count >= SearchLimit)
                         break;
+
+                    string searchString = searchInputList[i];
 
                     //Add the first amount of movies that matches the search credentials
                     //The amount is the amount of search hits left to reach the search limit
@@ -84,6 +87,17 @@ namespace WebServer
 
                     //Update the search hits left to hit the limit
                     hitsLeftToLimit = SearchLimit - movieSet.Count;
+                    
+                    //If this is the first iteration (with the complete search input), and if we haven't reached the search limit yet
+                    //We search in the MyMovieAPI database
+                    if (i == 0 && hitsLeftToLimit > 0)
+                    {
+                        //Union the results of the MyMovieAPI search with the current list
+                        movieSet.UnionWith(MyMovieApiAdapter.MakeRequest(storage, searchString, hitsLeftToLimit));
+
+                        //Update the search hits left to hit the limit
+                        hitsLeftToLimit = SearchLimit - movieSet.Count;
+                    }
                 }
 
                 //Initialize the set of movies
