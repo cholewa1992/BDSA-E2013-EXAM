@@ -69,7 +69,7 @@ namespace WebServer
             return (storage => 
             {
                 //Initialize the set of movies
-                HashSet<Movies> movieSet = new HashSet<Movies>();
+                HashSet<Movies> movieSet = new HashSet<Movies>(new EntityComparer());
 
                 //Initialize a variable defining how many search hits are left to fill the search limit
                 int hitsLeftToLimit = SearchLimit;
@@ -105,7 +105,7 @@ namespace WebServer
                 }
 
                 //Initialize the set of movies
-                HashSet<People> peopleSet = new HashSet<People>();
+                HashSet<People> peopleSet = new HashSet<People>(new EntityComparer());
 
                 //Reset the counting variable
                 hitsLeftToLimit = SearchLimit;
@@ -214,9 +214,24 @@ namespace WebServer
                 completeWord += stringArray[i];
             }
 
+            //Add the complete word to the list
             searchInputList.Add(completeWord);
             
+            //Add the completed word as well as the entire string array to the returned list
             return searchInputList.Concat(stringArray).ToList();
+        }
+
+        /// <summary>
+        /// A comparer to compare two entities.
+        /// Used for optimizing the UnionWith method of the HashMap class.
+        /// This comparer only needs to compare the id's rather than the entire objects
+        /// </summary>
+        class EntityComparer : IEqualityComparer<IEntityDto>
+        {
+            public bool Equals(IEntityDto e1, IEntityDto e2)
+            {
+                return e1.Id == e2.Id;
+            }
         }
     }
 }
