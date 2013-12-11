@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CommunicationFramework
 {
@@ -18,14 +12,7 @@ namespace CommunicationFramework
         private IProtocol _protocolInstance;
         private IProtocol ProtocolInstance
         {
-            get
-            {
-                if( _protocolInstance == null )
-                    _protocolInstance = getProtocol( Protocol );
-
-                return _protocolInstance;
-            }
-            set { _protocolInstance = value; }
+            get { return _protocolInstance ?? (_protocolInstance = getProtocol(Protocol)); }
         }
 
         /// <summary>
