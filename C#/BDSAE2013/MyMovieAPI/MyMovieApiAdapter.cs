@@ -50,8 +50,15 @@ namespace MyMovieAPI
                         Title = m.title,
                         Year = m.year
                     };
-                    sb.Add(newM);
+
+                    if (sb.Get<Movies>().Any(t => t.Title == newM.Title && t.Year == newM.Year))
+                    {
+                        newMovies.Add(sb.Get<Movies>().Single(t => t.Title == newM.Title && t.Year == newM.Year));
+                        continue;
+                    }
+
                     newMovies.Add(newM);
+                    sb.Add(newM);
 
                     foreach (var p in m.actors)
                     {
