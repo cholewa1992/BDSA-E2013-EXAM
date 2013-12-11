@@ -30,6 +30,7 @@ namespace WebServer
 
         /// <summary>
         /// Converts a byte code into a dictionary of values.
+        /// @pre bytes != null
         /// </summary>
         /// <param name="bytes"> The bytes containing the values </param>
         /// <returns> A dictionary with the values contained in the byte code </returns>
@@ -52,6 +53,14 @@ namespace WebServer
             }
         }
 
+        /// <summary>
+        /// Gets the argument contained withing the url and returns it as a string
+        /// @pre method != null
+        /// @pre method.Split(' ').Length == 2
+        /// @post returnString != ''
+        /// </summary>
+        /// <param name="method"> The entire url contained in a request object. Format shoudl be [method]' '[url] </param>
+        /// <returns> The argument contained in the url as a string </returns>
         public string GetUrlArgument(string method)
         {
             if (method == null)
