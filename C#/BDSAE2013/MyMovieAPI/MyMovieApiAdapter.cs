@@ -27,7 +27,7 @@ namespace MyMovieAPI
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Could not get movies from MyMovieApi",e);
+                return new List<Movies>();
             }
         } 
 
