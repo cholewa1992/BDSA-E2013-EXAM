@@ -15,11 +15,18 @@ A distributed system where a user is able to search and find movies. Information
 		\item A Windows Application
 		\item A Web Client
 	\end{itemize}
-	\item All above parts shall be implemented in C\#. The Windows client in WPF, in .NET 4.5, and the web client in ASP.NET
+	\item All above parts shall be implemented in C\#. The Windows client in WPF and the web client in ASP.NET
 	\item Communication between clients and server shall happen in a RESTful manner sending JSON over HTTP
 	\item The server must build on the HttpListener for HTTP communication
 	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
-	\item The server shall be able to merge information from My Movie API. If some data is not stored locally, but is in the My Movie API, it will get the data from there and send it to the client
+	\item The desktop client shall support two ways of storing data. One being XML on the disk, and another being in memory cache.
+	\begin{itemize}
+			\setlength{\itemsep}{-5pt}
+			\item If the client is offline: If the requested data is in memory cache it will be retrieved from there instead of from the disk
+			\item If the client is online: If the requested data is in memory cache it will be retrieved from there instead of from the disk. In both cases the client will check-up with the Server to see if it has the most recent version
+	\end{itemize}
+	\item The server shall be able to merge information from My Movie API. If some data is not stored locally, but is in the My Movie API, it will get the data from there and store it locally.
+	\item The system shall allow for user registration and login
 \end{itemize}
 
 \section{Nonfunctional requirements}
@@ -64,7 +71,7 @@ A distributed system where a user is able to search and find movies. Information
 \begin{itemize}
 \item The system should support at least 7 concurrent users
 \item The server must support storing at least 10 gigabytes of data
-\item The maximum latency the user can experience, when his internet is not a bottleneck, must not surpass 5 seconds
+\item The maximum latency the user can experience, when his internet is not a bottlenect, must not surpass 5 seconds
 \end{itemize}
 
 \vspace{0.2cm}
@@ -81,7 +88,7 @@ A distributed system where a user is able to search and find movies. Information
 \item[\textbf{Implementation}]
 \begin{itemize}
 \item The desktop client will be implemented for the Windows 7/8 operation system
-\item The web client will be implemented with ASP.NET MVC
+\item The web client will be implemented by ASP.NET MVC
 \end{itemize}
 
 \vspace{0.2cm}
@@ -112,7 +119,7 @@ The following scenarios were set up in order to analyze them:
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{find the movie Pulp Fiction}  \\ \hline
+		Scenario name & \underline{find movie}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
 						\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enter the title in the search field.
@@ -127,7 +134,7 @@ The following scenarios were set up in order to analyze them:
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{find the actor Samuel L. Jackson}  \\ \hline
+		Scenario name & \underline{find actor}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
 						\item John liked the performance of Samuel L. Jackson in Pulp Fiction, and wants to find other movies where he stars in. He searches for Samuel L. Jackson and recieves his personal information. Ex. Gender and a list of movis he stairs in.
@@ -135,40 +142,112 @@ The following scenarios were set up in order to analyze them:
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
 
 
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{Edit name of the actor Will Smith}  \\ \hline
+		Scenario name & \underline{create account}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name so it is spelled correctly. He searches for and find woll smoth.
+						\item John wants to make a user account so he have the opportunity to make a personal favorite list. He presses Register and is prompted for a the user name and a password for his account and press the OK button. His user is now active.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{log in}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John has now made a user, and he wants to log in. He presses login and enters his login information.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{add movie to favourite list}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John loved Pulp Fiction, so he wants to add it to his favourites list.
+						\item He searches and finds the movie, and presses the favourites icon in order to add it. John has added Pulp Fiction to his favourite list.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{Edit name of actor}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item The admin, George, has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name so it is spelled correctly. He logs into his administrator account, searches for and find woll smoth.
 						\item John change the name to Will Smith and enter the save button.
 						\end{enumerate}
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
 
 
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{edit the movie The Hobbit 3}  \\ \hline
-		Participating Actors & \underline{John} \\ \hline
+		Scenario name & \underline{add movie and actor to Data Base}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John notices that their is a mistake in the genre of 'The Hobbit 3'. The genre is set to a horror movie.
-						\item John edit the genre to fantasy.
+						\item The new movie, The Hobbit 3, needs to be added to the database. The admin, George, logs into his administrator account and enter The Hobbit 3 with a description, actors and all other information that fits the movie. He notices that an actor which stair in The Hobbit 3, Hans Lars Christiansen, does not exist in the database. George adds the actor to the database, and makes sure that the new actor is linked to the corresponding movie.
 						\end{enumerate}
 						\\ \hline
 						
 	\end{tabular}
-\end{center}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{edit movie}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item George notices that he made a mistake when adding 'The Hobbit 3' to the database. He had set the genre to a horror movie.
+						\item George logs in to his administrator account and edits the movie genre to fantasy.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{delete movie}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item George realises that an incompetent intern has added a fake movie to the database. He promptly deletes it and get a notification that the movie is deleted.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
 
 
 \subsection{Use case model}
+
 
 
 \begin{itemize}
@@ -187,8 +266,22 @@ User use cases:
 	\setlength{\itemsep}{-5pt}
 	\item Find movie
 	\item Find actor
+	\item Make account
+	\item Add to favourites list
+	\item Remove from favourites list
+	\item View favourites list
+	\item Log in to account
+	\item Log out from account
+\end{itemize}
+
+Administrator use cases:
+\begin{itemize}
+	\item Add movie
 	\item Edit movie information
+	\item Delete movie
+	\item Add actor
 	\item Edit actor information
+	\item Delete actor
 \end{itemize}
 
 After refining the system design, we have added the following boundary scenarios:
@@ -261,8 +354,165 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Make account \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user}, via the client, wishes to create an account
+						\begin{enumerate}
+							\item[2.] The client presents the user with an account creation page
+						\end{enumerate}
+						\item[3.] The \emph{user} fills in the required information (username, password)
+						\begin{enumerate}
+							\item[4.] The client makes the account, and the user is logged in.
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully creates an account and is logged in.
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Add to favourites list \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} is logged into his account, has selected a movie and wants to add it to his favourites list
+						\begin{enumerate}
+							\item[2.] The client adds the movie to the users' favourites list, and displays a confirmation to the user
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open, has a movie selected and is logged into an account
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully added the movie to an accounts favourites list
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Remove from favourites list \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} has selected a movie that is on his favourites list, and removes it
+						\begin{enumerate}
+							\item[2.] The client removes the movie from the users favourite list, and displays a confirmation
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open, is logged into his account, and has selected a movie from his favourites list
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully removes the movie from the favourites list
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & View favourites list \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} is logged into his account, and choses to display his favourites list
+						\begin{enumerate}
+							\item[2.] The client presents the user with a list of all movies on the users' favourites list
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open, and is logged into his user
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully opened the favourites list of his account
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Log in to account \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} opens a client and wishes to login
+						\begin{enumerate}
+							\item[2.] The client presents the user with input boxes for required login information (username, password)
+						\end{enumerate}
+						\item[3.] The \emph{user} inputs the relevant information
+						\begin{enumerate}
+							\item[4.] The client either denies the information, and presents an error to the user, or the information is accepted and the user is logged in
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully logged in
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Log out from account \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} has a client open, is logged in, and wishes to log out
+						\begin{enumerate}
+							\item[2.] The client presents the user with a confirmation dialogue and, should the user accept, logs the user out
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open and is logged in
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} is succesfully logged out
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Add movie \\ \hline
+		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{administrator} goes to his control panel, via the client, and choses to add a movie
+						\begin{enumerate}
+							\item[2.] The client presents the administrator with a movie creation page
+						\end{enumerate}
+						\item[3.] The \emph{administrator} fills in the required information and confirms
+						\begin{enumerate}
+							\item[4.] The client creates the movie and stores it in the database
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{administrator} has a client open, and is logged in
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{administrator} succesfully creates a movie
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
@@ -289,7 +539,56 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Delete movie \\ \hline
+		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{administrator} uses the client to search for, and find, a movie. On the movie page he choses to delete the movie
+						\begin{enumerate}
+							\item[2.] The client presents the \emph{administrator} with a confirmation dialogue
+						\end{enumerate}
+						\item[3.] The \emph{administrator} confirms that he wants the movie deleted
+						\begin{enumerate}
+							\item[4.] The client deletes the movie from the database
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{administrator} has logged in and has selected a movie
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{administrator} has succesfully deleted the movie from the database
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Add actor \\ \hline
+		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{administrator} navigates to his control panel, via the client, and choses to add an actor
+						\begin{enumerate}
+							\item[2.] The client presents the \emph{administrator} with a page where he can add the actor information
+						\end{enumerate}
+						\item[3.] The \emph{administrator} inputs the needed information, and chooses to save the actor
+						\begin{enumerate}
+							\item[4.] The client saves the changes to the database
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{administrator} has logged in
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{administrator} has succesfully added the actor to the database
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
 
 \begin{center}
@@ -317,7 +616,30 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
-
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		\hline
+		Use Case Name & DeleteActor \\ \hline
+		Participating Actors & Initiated by \emph{adminstrator} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{adminstrator} uses the client to search for, and find, an actor. On the actor page, he choses to delete the actor
+						\begin{enumerate}
+							\item[2.] The client presents the \emph{administrator} with a dialogue box, asking if he is sure
+						\end{enumerate}
+						\item[3.] The \emph{administrator} confirms his choice
+						\begin{enumerate}
+							\item[4.] The client deletes the actor from the database
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{administrator} has logged in and has selected an actor
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{administrator} has succesfully deleted the actor
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }

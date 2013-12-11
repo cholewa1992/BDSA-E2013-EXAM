@@ -7,10 +7,10 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Search</title>
-</head>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Search</title>
+    </head>
     <body>
         <table>
             <tr>
@@ -20,9 +20,8 @@
                     </a>
                 </td>
                 <td>
-                    @using(Html.BeginForm())
+                    @using( Html.BeginForm( "Search", "Search" ) )
                     {
-                        //@Html.LabelFor( m => m.SearchString, "Test:" )
                         @Html.TextBoxFor( m => m.SearchString )
                         <input type="submit" value="search" />
                     }
@@ -31,19 +30,23 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    @if( Model != null && Model.Results != null && Model.Results.Count != 0 )
+                    ID: @Model.Id <br />
+                    @Html.Raw( !string.IsNullOrEmpty( Model.Title ) ? "Title: " + Model.Title + "<br />" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.Kind ) ? "Type: " + Model.Kind + "<br / >" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.SeasonNumber ) ? "Season Number: " + Model.SeasonNumber + "<br / >" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.SeriesYear ) ? "Series Year: " + Model.SeriesYear + "<br / >" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeNumber ) ? "Episode Number: " + Model.EpisodeNumber + "<br / >" : "" )
+                    @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeOfId ) ? "EpisodeOfId: " + Model.EpisodeOfId + "<br / >" : "" )
+                    
+                    <hr />
+                    
+                    @foreach (var person in Model.cast)
                     {
-                        foreach( KeyValuePair<String, String> kvp in Model.Results )
-                         {
-                             <a href="@kvp.Value">@kvp.Key</a>
-                         }
-                    }
-                    else
-                    {
-                        @:No results found
+                        @Html.Raw( "<a href=\"http://localhost:8485/Person/ViewInfo?id=" + person.Id + "&SearchString=" + Model.SearchString + "\">" + person.Role + ": " + person.Name + " - " + person.CharacterName + "</a>" );
+                        @Html.Raw( "<br />" );
                     }
                 </td>
             </tr>
         </table>
-</body>
+    </body>
 </html>
