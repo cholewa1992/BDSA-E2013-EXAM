@@ -40,7 +40,7 @@ namespace WebServerTestRun
 
 
             //Test movie processing
-            request.Method = "GET http://localhost:112/Search/Lord%20of%20the%20Rings";
+            request.Method = "GET http://localhost:112/Search/Atenshon";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);

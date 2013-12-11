@@ -87,8 +87,7 @@ namespace Utils
         /// <returns> The cleaned string </returns>
         public static string CleanString(string input)
         {
-            //return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,\\@\\.\\-\\/\\:]", "");
-            return input.Replace("\"", "");
+            return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,\\@\\.\\-\\/\\:]", "");
         }
 
         /// <summary>
