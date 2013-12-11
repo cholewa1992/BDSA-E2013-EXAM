@@ -215,22 +215,8 @@ User use cases:
 	\setlength{\itemsep}{-5pt}
 	\item Find movie
 	\item Find actor
-	\item Make account
-	\item Add to favourites list
-	\item Remove from favourites list
-	\item View favourites list
-	\item Log in to account
-	\item Log out from account
-\end{itemize}
-
-Administrator use cases:
-\begin{itemize}
-	\item Add movie
 	\item Edit movie information
-	\item Delete movie
-	\item Add actor
 	\item Edit actor information
-	\item Delete actor
 \end{itemize}
 
 After refining the system design, we have added the following boundary scenarios:
@@ -303,165 +289,8 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Make account \\ \hline
-		Participating Actors & Initiated by \emph{User} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{user}, via the client, wishes to create an account
-						\begin{enumerate}
-							\item[2.] The client presents the user with an account creation page
-						\end{enumerate}
-						\item[3.] The \emph{user} fills in the required information (username, password)
-						\begin{enumerate}
-							\item[4.] The client makes the account, and the user is logged in.
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{user} has a client open
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{user} successfully creates an account and is logged in.
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Add to favourites list \\ \hline
-		Participating Actors & Initiated by \emph{User} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{user} is logged into his account, has selected a movie and wants to add it to his favourites list
-						\begin{enumerate}
-							\item[2.] The client adds the movie to the users' favourites list, and displays a confirmation to the user
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{user} has a client open, has a movie selected and is logged into an account
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{user} successfully added the movie to an accounts favourites list
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Remove from favourites list \\ \hline
-		Participating Actors & Initiated by \emph{User} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{user} has selected a movie that is on his favourites list, and removes it
-						\begin{enumerate}
-							\item[2.] The client removes the movie from the users favourite list, and displays a confirmation
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{user} has a client open, is logged into his account, and has selected a movie from his favourites list
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{user} successfully removes the movie from the favourites list
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & View favourites list \\ \hline
-		Participating Actors & Initiated by \emph{User} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{user} is logged into his account, and choses to display his favourites list
-						\begin{enumerate}
-							\item[2.] The client presents the user with a list of all movies on the users' favourites list
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{user} has a client open, and is logged into his user
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{user} successfully opened the favourites list of his account
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Log in to account \\ \hline
-		Participating Actors & Initiated by \emph{User} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{user} opens a client and wishes to login
-						\begin{enumerate}
-							\item[2.] The client presents the user with input boxes for required login information (username, password)
-						\end{enumerate}
-						\item[3.] The \emph{user} inputs the relevant information
-						\begin{enumerate}
-							\item[4.] The client either denies the information, and presents an error to the user, or the information is accepted and the user is logged in
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{user} has a client open
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{user} successfully logged in
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
 
 
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Log out from account \\ \hline
-		Participating Actors & Initiated by \emph{User} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{user} has a client open, is logged in, and wishes to log out
-						\begin{enumerate}
-							\item[2.] The client presents the user with a confirmation dialogue and, should the user accept, logs the user out
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{user} has a client open and is logged in
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{user} is succesfully logged out
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Add movie \\ \hline
-		Participating Actors & Initiated by \emph{administrator} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{administrator} goes to his control panel, via the client, and choses to add a movie
-						\begin{enumerate}
-							\item[2.] The client presents the administrator with a movie creation page
-						\end{enumerate}
-						\item[3.] The \emph{administrator} fills in the required information and confirms
-						\begin{enumerate}
-							\item[4.] The client creates the movie and stores it in the database
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{administrator} has a client open, and is logged in
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{administrator} succesfully creates a movie
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
 
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
@@ -488,56 +317,7 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Delete movie \\ \hline
-		Participating Actors & Initiated by \emph{administrator} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{administrator} uses the client to search for, and find, a movie. On the movie page he choses to delete the movie
-						\begin{enumerate}
-							\item[2.] The client presents the \emph{administrator} with a confirmation dialogue
-						\end{enumerate}
-						\item[3.] The \emph{administrator} confirms that he wants the movie deleted
-						\begin{enumerate}
-							\item[4.] The client deletes the movie from the database
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{administrator} has logged in and has selected a movie
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{administrator} has succesfully deleted the movie from the database
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
 
-
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		 \hline
-		Use Case Name & Add actor \\ \hline
-		Participating Actors & Initiated by \emph{administrator} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{administrator} navigates to his control panel, via the client, and choses to add an actor
-						\begin{enumerate}
-							\item[2.] The client presents the \emph{administrator} with a page where he can add the actor information
-						\end{enumerate}
-						\item[3.] The \emph{administrator} inputs the needed information, and chooses to save the actor
-						\begin{enumerate}
-							\item[4.] The client saves the changes to the database
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{administrator} has logged in
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{administrator} has succesfully added the actor to the database
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
 
 
 \begin{center}
@@ -565,30 +345,7 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
-\begin{center}
-	\begin{tabular}{ | l | p{10cm} |  }
-		\hline
-		Use Case Name & DeleteActor \\ \hline
-		Participating Actors & Initiated by \emph{adminstrator} \\ \hline
-		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{adminstrator} uses the client to search for, and find, an actor. On the actor page, he choses to delete the actor
-						\begin{enumerate}
-							\item[2.] The client presents the \emph{administrator} with a dialogue box, asking if he is sure
-						\end{enumerate}
-						\item[3.] The \emph{administrator} confirms his choice
-						\begin{enumerate}
-							\item[4.] The client deletes the actor from the database
-						\end{enumerate}
-					\end{enumerate} \\ \hline
-		Entry Condition & \begin{itemize}
-						\item The \emph{administrator} has logged in and has selected an actor
-					\end{itemize} \\ \hline
-		Exit Condition & \begin{itemize}
-						\item The \emph{administrator} has succesfully deleted the actor
-					\end{itemize} \\
-		\hline
-	\end{tabular}
-\end{center}
+
 
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
