@@ -45,8 +45,7 @@ namespace WebServerTestRun
 
             string json = Encoder.Decode(response.Data);
 
-            Console.WriteLine(json);
-
+           
             Dictionary<string, string> values = JSonParser.GetValues(json);
 
             int index = 0;

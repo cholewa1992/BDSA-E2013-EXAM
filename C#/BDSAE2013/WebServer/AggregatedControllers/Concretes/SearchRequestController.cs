@@ -72,18 +72,19 @@ namespace WebServer
                 int hitsLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
-                for (int i = 0; i < searchInputList.Count; i++ )
+                for (int i = 0; i < searchInputList.Count; i++)
                 {
                     //If the amount of movies which has been found exceeds the amount we want, we stop searching
                     if (movieSet.Count >= SearchLimit)
                         break;
 
-                    string searchString = searchInputList[i];
+                    //Set the search string to search for
+                    string searchString = searchInputList[i].ToLower(); ;
 
                     //Add the first amount of movies that matches the search credentials
                     //The amount is the amount of search hits left to reach the search limit
                     //If we try to take more than the amount, the method only takes the amount of hits
-                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.ToLower().Contains(searchString.ToLower())).Take(hitsLeftToLimit));
+                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.ToLower().Contains(searchString)).Take(hitsLeftToLimit));
 
                     //Update the search hits left to hit the limit
                     hitsLeftToLimit = SearchLimit - movieSet.Count;
@@ -107,16 +108,19 @@ namespace WebServer
                 hitsLeftToLimit = SearchLimit;
 
                 //Iterate through each search input
-                foreach (string searchString in searchInputList)
+                for (int i = 0; i < searchInputList.Count; i++)
                 {
                     //If the amount of people which has been found exceeds the amount we want, we stop searching
                     if (peopleSet.Count >= SearchLimit)
                         break;
 
+                    //Set the search string to search for
+                    string searchString = searchInputList[i].ToLower(); ;
+
                     //Add the first amount of persons that matches the search credentials
                     //The amount is the amount of search hits left to reach the search limit
                     //If we try to take more than the amount, the method only takes the amount of hits
-                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.ToLower().Contains(searchString.ToLower())).Take(hitsLeftToLimit));
+                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.ToLower().Contains(searchString)).Take(hitsLeftToLimit));
 
                     //Update the search hits left to hit the limit
                     hitsLeftToLimit = SearchLimit - peopleSet.Count;
