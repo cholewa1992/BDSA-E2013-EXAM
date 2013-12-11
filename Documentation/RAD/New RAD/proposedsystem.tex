@@ -124,21 +124,119 @@ The following scenarios were set up in order to analyze them:
 \end{center}
 
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{find actor}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John liked the performance of Samuel L. Jackson in Pulp Fiction, and wants to find other movies where he stars in. He searches for Samuel L. Jackson and recieves his personal information. Ex. Gender and a list of movis he stairs in.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
 
-\begin{itemize}
-	\setlength{\itemsep}{-5pt}
-	
-	\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enter the title in the search field. John receive information for the movie, such as a list of actors, roles, a description for the movie, rating ect.
-	\item John liked the performance of Samuel L. Jackson in a movie, and wants to find other movies where he stars in. He searches for and selects Samuel L. Jackson, to enter his page, where a list of other movies he stars in is found.
-	\item John wants to make a favourites list, but he needs a user account beforehand. He presses Register and is prompted for a the user name and a password for his account and press the OK button. His user is now active.
-	\item John has now made a user, and he wants to log in. He presses login and enters his login information.
-	\item John loved Pulp Fiction, so he wants to add it to his favourites list. He searches and finds the movie, and presses the favourites icon in order to add it.
-	
-	\item The admin, George, has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name back. He logs into his administrator account, searches for and find woll smoth. John change the name to Will Smith.
-	\item The new movie, The Hobbit 3, needs to be added to the database. The admin, George, logs into his administrator account. He notices that an actor which stair in The Hobbit 3, Hans Lars Christiansen, does not exist in the database. George adds both the actor and the movie to the database, and makes sure that the new actor is linked to the corresponding movie.
-	\item George notices that he made a mistake when adding 'The Hobbit 3' to the database. He logs into his administrator account and edits the movie description accordingly.
-	\item George realises that an incompetent intern has added a fake movie to the database. He promptly deletes it.
-\end{itemize}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{create account}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John wants to make a user account so he have the opportunity to make a personal favorite list. He presses Register and is prompted for a the user name and a password for his account and press the OK button. His user is now active.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{log in}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John has now made a user, and he wants to log in. He presses login and enters his login information.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{add movie to favourite list}  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John loved Pulp Fiction, so he wants to add it to his favourites list.
+						\item He searches and finds the movie, and presses the favourites icon in order to add it. John has added Pulp Fiction to his favourite list.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{Edit name of actor}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item The admin, George, has discovered that Will Smith is incorrectly called Woll Smoth, and needs to change the name so it is spelled correctly. He logs into his administrator account, searches for and find woll smoth.
+						\item John change the name to Will Smith and enter the save button.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{add movie and actor to Data Base}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item The new movie, The Hobbit 3, needs to be added to the database. The admin, George, logs into his administrator account and enter The Hobbit 3 with a description, actors and all other information that fits the movie. He notices that an actor which stair in The Hobbit 3, Hans Lars Christiansen, does not exist in the database. George adds the actor to the database, and makes sure that the new actor is linked to the corresponding movie.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{edit movie}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item George notices that he made a mistake when adding 'The Hobbit 3' to the database. He had set the genre to a horror movie.
+						\item George logs in to his administrator account and edits the movie genre to fantasy.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline{delete movie}  \\ \hline
+		Participating Actors & \underline{George} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item George realises that an incompetent intern has added a fake movie to the database. He promptly deletes it and get a notification that the movie is deleted.
+						\end{enumerate}
+						\\ \hline
+						
+	\end{tabular}
+\end{center}}
 
 \subsection{Use case model}
 
