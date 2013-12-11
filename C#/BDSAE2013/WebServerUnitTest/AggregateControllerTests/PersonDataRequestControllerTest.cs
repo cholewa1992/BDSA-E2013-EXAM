@@ -402,7 +402,7 @@ namespace WebServerUnitTest
         [TestMethod]
         [ExpectedException(typeof(InvalidUrlParameterException),
         "Url ending did not contain an argument")]
-        public void Test_PersonDataRequestController_ProcessGet_Error_InvalidUrl()
+        public void Test_PersonDataRequestControllerTest_ProcessGet_Error_InvalidUrl()
         {
             //Initialize the request controller that is being tested
             PersonDataRequestController controller = new PersonDataRequestController();

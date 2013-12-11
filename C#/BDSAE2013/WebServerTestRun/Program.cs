@@ -68,7 +68,7 @@ namespace WebServerTestRun
             //    index++;
             //}
 
-
+            /*
             request.Method = "GET http://localhost:112/MovieData/2332647";
             Request response = delegator.ProcessRequest(request);
 
@@ -104,10 +104,10 @@ namespace WebServerTestRun
 
                 index++;
             }
+            */
             
             
-            /*
-            request.Method = "GET http://localhost:112/PersonData/1630018";
+            request.Method = "GET http://localhost:112/PersonData/381455";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);
@@ -138,7 +138,7 @@ namespace WebServerTestRun
 
                 index++;
             }
-            */
+            
             Console.WriteLine("Finished");
             Console.ReadKey();
         }
