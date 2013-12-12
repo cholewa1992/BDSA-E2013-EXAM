@@ -180,7 +180,7 @@ namespace CommunicationFramework
             //Wait until we actually receive a request, then process it
             HttpListenerContext context = Listener.GetContext();
 
-            var request = new Request {Method = context.Request.HttpMethod + " " + context.Request.Url};
+            var request = new Request {Method = context.Request.HttpMethod + " " + context.Request.RawUrl};
 
             //Add a mapping from the request object to the context that received it
             //so we know where to send a response to

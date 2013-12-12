@@ -23,6 +23,7 @@ namespace AspClient.Models
         public string SeriesYear{ get; set; }
         public string EpisodeNumber{ get; set; }
         public string EpisodeOfId{ get; set; }
+        public Dictionary<string, IList<string>> data;
 
         public List<ActorModel> cast;
     }

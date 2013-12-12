@@ -38,13 +38,25 @@ namespace AspClient.Controllers
             {
                 //newModel.MovieResults.Add( jsonAttributes[ "m" + i + "Title" ], "http://localhost:8485/Movie/ViewInfo?Id=" + jsonAttributes[ "m" + i + "Id" ] + "&SearchString=" + model.SearchString );
                 int movieId = Int32.Parse( jsonAttributes[ "m" + i + "Id" ] );
-                newModel.MovieResults.Add( movieId, new MovieResult() { Id = movieId, Title = jsonAttributes[ "m" + i + "Title" ], Url = "http://localhost:8485/Movie/ViewInfo?Id=" + movieId + "&SearchString=" + model.SearchString } );
+                newModel.MovieResults.Add( movieId, new MovieResult
+                {
+                    Id = movieId, 
+                    Title = jsonAttributes[ "m" + i + "Title" ], 
+                    Url = HttpRuntime.AppDomainAppVirtualPath + "../Movie/ViewInfo?Id=" + movieId + "&SearchString=" + model.SearchString,
+                    Plot = jsonAttributes["m" + i + "Plot"], 
+                } );
             }
             
             for( int i = 0; jsonAttributes.ContainsKey( "p" + i + "Id" ); i++ )
             {
                 int personId = Int32.Parse( jsonAttributes[ "p" + i + "Id" ] );
-                newModel.PersonResults.Add( personId, new PersonResult() { Id = personId, Name = jsonAttributes[ "p" + i + "Name" ], Url = "http://localhost:8485/Person/ViewInfo?Id=" + personId + "&SearchString=" + model.SearchString } );
+                newModel.PersonResults.Add( personId, new PersonResult
+                {
+                    Id = personId, 
+                    Name = jsonAttributes[ "p" + i + "Name" ], 
+                    Url = HttpRuntime.AppDomainAppVirtualPath + "../Person/ViewInfo?Id=" + personId + "&SearchString=" + model.SearchString,
+                    Biography = jsonAttributes["p" + i + "Biography"]
+                } );
             }
             return View( newModel );
         }

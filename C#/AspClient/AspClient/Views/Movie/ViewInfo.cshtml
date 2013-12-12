@@ -3,50 +3,112 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Search</title>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <td>
-                    <a href="@HttpRuntime.AppDomainAppVirtualPath">
-                        <img src="~/Content/images/banner.png" />
-                    </a>
-                </td>
-                <td>
-                    @using( Html.BeginForm( "Search", "Search" ) )
-                    {
-                        @Html.TextBoxFor( m => m.SearchString )
-                        <input type="submit" value="search" />
-                    }
+<head>
+    <title>Fake IMDb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
+    <style id="holderjs-style" type="text/css"></style>
 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    ID: @Model.Id <br />
-                    @Html.Raw( !string.IsNullOrEmpty( Model.Title ) ? "Title: " + Model.Title + "<br />" : "" )
-                    @Html.Raw( !string.IsNullOrEmpty( Model.Kind ) ? "Type: " + Model.Kind + "<br / >" : "" )
-                    @Html.Raw( !string.IsNullOrEmpty( Model.SeasonNumber ) ? "Season Number: " + Model.SeasonNumber + "<br / >" : "" )
-                    @Html.Raw( !string.IsNullOrEmpty( Model.SeriesYear ) ? "Series Year: " + Model.SeriesYear + "<br / >" : "" )
-                    @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeNumber ) ? "Episode Number: " + Model.EpisodeNumber + "<br / >" : "" )
-                    @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeOfId ) ? "EpisodeOfId: " + Model.EpisodeOfId + "<br / >" : "" )
-                    
-                    <hr />
-                    
-                    @foreach (var person in Model.cast)
-                    {
-                        @Html.Raw( "<a href=\"http://localhost:8485/Person/ViewInfo?id=" + person.Id + "&SearchString=" + Model.SearchString + "\">" + person.Role + ": " + person.Name + " - " + person.CharacterName + "</a>" );
-                        @Html.Raw( "<br />" );
-                    }
-                </td>
-            </tr>
-        </table>
-    </body>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="wrap">
+        <!-- Begin page content -->
+        <div class="container">
+            <nav class="navbar navbar-inverse" role="navigation" style="margin-top: 10px;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath" class="navbar-brand">FakeIMDb
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form role="form" action="/Search/Search" class="navbar-form navbar-right" method="POST" style="max-width: 300px;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+
+            <!-- #Context -->
+
+            @Html.Raw(!string.IsNullOrEmpty(Model.Title) ? "<div class=\"page-header\"><h1>" + Model.Title + "&nbsp;<small>" + Model.Year + "</small></h1></div>" : "<div class=\"page-header\"><h1>No title</h1></div>")
+
+
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#cast">Cast
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="cast" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @foreach (var a in Model.cast)
+                            {
+                                <a href="@Html.ActionLink(a.Name, "ViewInfo", "Person", new {Id = a.Id}, null)">
+                                    @a.Name
+
+                                </a>
+                                <br />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var kvp in Model.data)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#@kvp.Key">@kvp.Key
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@kvp.Key" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                @foreach (var s in kvp.Value)
+                                {
+                                    @s <br />
+                                }
+    
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted">For all you movies Db needs...</p>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../Bootstrap/js/bootstrap.min.js"></script>
+</body>
 </html>

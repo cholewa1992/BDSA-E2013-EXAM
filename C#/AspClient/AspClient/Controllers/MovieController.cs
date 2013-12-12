@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using AspClient.Models;
 using CommunicationFramework;
 
@@ -28,17 +29,57 @@ namespace AspClient.Controllers
             {
                 var dictionary = Utils.JSonParser.GetValues( Utils.Encoder.Decode( receivedData ) );
                 model.Title = dictionary.ContainsKey( "title" ) ? dictionary[ "title" ] : "";
+                dictionary.Remove("title");
                 model.Year = dictionary.ContainsKey( "year" ) ? dictionary[ "year" ] : "";
+                dictionary.Remove("year");
                 model.Kind = dictionary.ContainsKey( "kind" ) ? dictionary[ "kind" ] : "";
+                dictionary.Remove("kind");
                 model.SeasonNumber = dictionary.ContainsKey( "seasonNumber" ) ? dictionary[ "seasonNumber" ] : "";
+                dictionary.Remove("seasonNumber");
                 model.SeriesYear = dictionary.ContainsKey( "seriesYear" ) ? dictionary[ "seriesYear" ] : "";
+                dictionary.Remove("seriesYear");
                 model.EpisodeNumber = dictionary.ContainsKey( "episodeNumber" ) ? dictionary[ "episodeNumber" ] : "";
-                model.EpisodeOfId = dictionary.ContainsKey( "episodeOfId" ) ? dictionary[ "episodeOfId" ] : "";
+                dictionary.Remove("episodeNumber");
+                model.EpisodeOfId = dictionary.ContainsKey("episodeOfId") ? dictionary["episodeOfId"] : "";
+                dictionary.Remove("episodeOfId");
+
+                model.data = new Dictionary<string, IList<string>>();
+
+                foreach (var kvp in dictionary)
+                {
+                    //Do regex
+                    var match = Regex.Match(kvp.Key, @"(?![mi])[a-zA-Z]+(?=[0-9]+Info)");
+
+                    if (!match.Success) continue;
+
+                    string key = match.Value;
+
+
+
+
+                    if (!model.data.ContainsKey(key))
+                    {
+                        model.data[key] = new List<string>();
+                    }
+                    model.data[key].Add(kvp.Value);
+                }
+                
+
+
 
                 model.cast = new List<ActorModel>();
+
+
                 for( int i = 0; dictionary.ContainsKey( "p" + i + "Id" ); i++ )
                 {
-                    model.cast.Add( new ActorModel() { Id = Int32.Parse( dictionary[ "p" + i + "Id" ] ), Name = dictionary[ "p" + i + "Name" ], Role = dictionary[ "p" + i + "Role" ], CharacterName = dictionary[ "p" + i + "CharacterName" ], SearchString = model.SearchString } );
+                    model.cast.Add( new ActorModel()
+                    {
+                        Id = Int32.Parse( dictionary[ "p" + i + "Id" ] ), 
+                        Name = dictionary[ "p" + i + "Name" ], 
+                        Role = dictionary[ "p" + i + "Role" ], 
+                        CharacterName = dictionary[ "p" + i + "CharacterName" ], 
+                        SearchString = model.SearchString
+                    } );
                 }
             }
             return View( model );

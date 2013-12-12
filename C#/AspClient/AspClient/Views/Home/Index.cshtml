@@ -30,19 +30,17 @@
 
             <form role="form" action="/Search/Search" class="form-horizontal" method="POST">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+                        </span>
+                    </div>
                 </div>
-                <button style="display: none;" class="btn btn-default" type="submit">Search</button>
             </form>
         </div>
     </div>
-
-    <div id="footer">
-        <div class="container">
-            <p class="text-muted">Place sticky footer content here.</p>
-        </div>
-    </div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

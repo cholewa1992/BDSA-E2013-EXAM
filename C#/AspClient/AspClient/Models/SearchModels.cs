@@ -13,17 +13,19 @@ namespace AspClient.Models
         public Dictionary<int, PersonResult> PersonResults { get; set; }
     }
 
-    public class MovieResult
+    public struct MovieResult
     {
         public int Id;
         public string Title;
         public string Url;
+        public string Plot;
     }
 
-    public class PersonResult
+    public struct PersonResult
     {
         public int Id;
         public string Name;
         public string Url;
+        public string Biography;
     }
 }

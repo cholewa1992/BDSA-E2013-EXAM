@@ -12,7 +12,6 @@
     <!-- Bootstrap -->
     <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -23,38 +22,33 @@
 <body>
     <div id="wrap">
         <!-- Begin page content -->
-        <nav class="navbar navbar-inverse" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Brand</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-right" role="form" action="/Search/Search" method="POST">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
-                    </div>
-                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span>Search</button>
-                </form>
-            </div>
-        </nav>
         <div class="container">
-
-
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
+            <nav class="navbar navbar-inverse" role="navigation" style="margin-top: 10px;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath" class="navbar-brand">FakeIMDb
+                    </a>
                 </div>
-            </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form role="form" action="/Search/Search" class="navbar-form navbar-right" method="POST" style="max-width: 300px;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+
+            <!-- #Context -->
 
             <div class="list-group">
                 @if (Model != null)
@@ -65,9 +59,29 @@
                         {
                     <a href="@kvp.Value.Url" class="list-group-item" >
                         <h4 class="list-group-item-heading">
-                            <span class="glyphicon glyphicon-film"></span>@kvp.Value.Title
+                            <span class="glyphicon glyphicon-film"></span>
+                            @kvp.Value.Title
                         </h4>
-                        <p class="list-group-item-text">... If we had more data, we would put it here</p>
+                        @if (!string.IsNullOrEmpty(kvp.Value.Plot))
+                        {
+                            if (kvp.Value.Plot.Length > 200)
+                            {
+                                string stringToDisplay = "";
+                                for (int i = 200; i != 0; i--)
+                                {
+                                    if (kvp.Value.Plot[i] == ' ')
+                                    {
+                                        stringToDisplay = kvp.Value.Plot.Substring(0, i);
+                                        break;
+                                    }
+                                }
+                            <p class="list-group-item-text">@stringToDisplay [...]</p>
+                            }
+                            else
+                            {
+                            <p class="list-group-item-text">@kvp.Value.Plot</p>
+                            }
+                        }
                     </a>
                         }
                     }
@@ -78,9 +92,28 @@
                         {
                     <a href="@kvp.Value.Url" class="list-group-item" >
                         <h4 class="list-group-item-heading">
-                            <span class="glyphicon glyphicon-user"></span>@kvp.Value.Name
+                            <span class="glyphicon glyphicon-user"></span> @kvp.Value.Name
                         </h4>
-                        <p class="list-group-item-text">... If we had more data, we would put it here</p>
+                        @if (!string.IsNullOrEmpty(kvp.Value.Biography))
+                        {
+                            if (kvp.Value.Biography.Length > 200)
+                            {
+                                string stringToDisplay = "";
+                                for (int i = 200; i != 0; i--)
+                                {
+                                    if (kvp.Value.Biography[i] == ' ')
+                                    {
+                                        stringToDisplay = kvp.Value.Biography.Substring(0, i);
+                                        break;
+                                    }
+                                }
+                            <p class="list-group-item-text">@stringToDisplay [...]</p>
+                            }
+                            else
+                            {
+                            <p class="list-group-item-text">@kvp.Value.Biography</p>
+                            }
+                        }
                     </a>
                         }
                     }
@@ -98,7 +131,7 @@
 
     <div id="footer">
         <div class="container">
-            <p class="text-muted">Place sticky footer content here.</p>
+            <p class="text-muted">For all you movies Db needs...</p>
         </div>
     </div>
 
