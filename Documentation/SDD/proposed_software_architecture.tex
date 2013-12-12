@@ -55,10 +55,25 @@ Below are the generalized components mapped to hardware or software
 \section{Global software control}
 
 \section{Identifying services}
+We have identified subsystem services for our program. They are shown in the figure below, and more detailed explanations for the services can be found beneath the diagram.
+
+\begin{figure}[H]
+\includegraphics[scale=0.8]{img/SubsystemServices.jpg}
+\caption{Software/Hardware Mapping}
+\label{fig:Subsystem Services}
+\end{figure}
+
+
+\begin{itemize}
+	\item Communication provider, which provides the clients and webserver with access to the communication framework, allowing them to send messages to each other.
+	\item Storage provider, which provides the webserver with the methods required to get information / post information to the database.
+	\item Framework storage provider, which provides the storage subsystem with the methods needed to store entities in-memory.
+	\item Memory storage provider, which provides the storage subsystem with the methods required for storing entities via the entity framework.
+\end{itemize}
 
 \section{Boundary conditions}
 
-We have indentified the following boundary conditiens, and added them to the list of use cases in the RAD:
+We have indentified the following boundary conditions, and added them to the list of use cases in the RAD:
 
 \begin{itemize}
 	\item Start up and shutdown boundary use cases:
