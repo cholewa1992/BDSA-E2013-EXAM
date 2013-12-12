@@ -155,7 +155,7 @@ namespace WebServer
             }
             catch (Exception e)
             {
-                //This response code is returned if the request could not process the request in the database
+                //This response code is returned if any other unhandled exception is caugt. This means that there was an error underway and we therefore respond so
                 request.ResponseStatusCode = Request.StatusCode.InternalError;
                 request.Data = Encoder.Encode(JSonParser.Parse("response", e.Message));
                 return request;
