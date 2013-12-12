@@ -5837,7 +5837,7 @@ $.extend( $.ui.accordion, {
 				.animate( hideProps, {
 				step: function( now, settings ) {
 					// only calculate the percent when animating height
-					// IE gets very inconsistent results when animating elements
+					// IE gets very inconsistent MovieResults when animating elements
 					// with small values, which is common for padding
 					if ( settings.prop == "height" ) {
 						percentDone = ( settings.end - settings.start === 0 ) ? 0 :

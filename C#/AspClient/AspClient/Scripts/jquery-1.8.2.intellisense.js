@@ -1704,7 +1704,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'multiple': function() {
     /// <signature>
-    ///   <summary>Selects the combined results of all the specified selectors.</summary>
+    ///   <summary>Selects the combined MovieResults of all the specified selectors.</summary>
     ///   <param name="selector1" type="String">Any valid selector.</param>
     ///   <param name="selector2" type="String">Another valid selector.</param>
     ///   <param name="selectorN" type="String">As many more valid selectors as you like.</param>
@@ -2361,20 +2361,20 @@ intellisense.annotate(jQuery.fn, {
   'undelegate': function() {
     /// <signature>
     ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
-    ///   <param name="selector" type="String">A selector which will be used to filter the event results.</param>
+    ///   <param name="selector" type="String">A selector which will be used to filter the event MovieResults.</param>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as "click" or "keydown"</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
     ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
-    ///   <param name="selector" type="String">A selector which will be used to filter the event results.</param>
+    ///   <param name="selector" type="String">A selector which will be used to filter the event MovieResults.</param>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as "click" or "keydown"</param>
     ///   <param name="handler(eventObject)" type="Function">A function to execute at the time the event is triggered.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
     ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
-    ///   <param name="selector" type="String">A selector which will be used to filter the event results.</param>
+    ///   <param name="selector" type="String">A selector which will be used to filter the event MovieResults.</param>
     ///   <param name="events" type="Object">A map of one or more event types and previously bound functions to unbind from them.</param>
     ///   <returns type="jQuery" />
     /// </signature>
