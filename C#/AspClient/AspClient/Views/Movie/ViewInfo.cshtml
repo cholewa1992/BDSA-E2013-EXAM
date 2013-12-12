@@ -36,7 +36,7 @@
                     </a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form role="form" action="/Search/Search" class="navbar-form navbar-right" method="POST" style="max-width: 300px;">
+                    <form role="form" action="/Search/Search" class="navbar-form navbar-right" method="GET" style="max-width: 300px;">
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
@@ -53,6 +53,8 @@
 
             @Html.Raw(!string.IsNullOrEmpty(Model.Title) ? "<div class=\"page-header\"><h1>" + Model.Title + "&nbsp;<small>" + Model.Year + "</small></h1></div>" : "<div class=\"page-header\"><h1>No title</h1></div>")
 
+            
+            @Model.Kind
 
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
@@ -66,10 +68,7 @@
                         <div class="panel-body">
                             @foreach (var a in Model.cast)
                             {
-                                <a href="@Html.ActionLink(a.Name, "ViewInfo", "Person", new {Id = a.Id}, null)">
-                                    @a.Name
-
-                                </a>
+                                @Html.ActionLink(a.Name, "ViewInfo", "Person", new {Id = a.Id}, null)
                                 <br />
                             }
                         </div>

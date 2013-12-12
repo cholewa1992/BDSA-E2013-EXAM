@@ -18,10 +18,11 @@ namespace AspClient.Controllers
             return RedirectToAction( "Index", "Home" );
         }
 
-        public ActionResult ViewInfo( PersonModel model )
+        public ActionResult ViewInfo( int Id )
         {
+            var model = new PersonModel();
             var handler = new CommunicationHandler( Protocols.HTTP );
-            handler.Send( "http://localhost:1337/PersonData/" + model.Id, null, "GET" );
+            handler.Send( "http://localhost:1337/PersonData/" + Id, null, "GET" );
 
             byte[] receivedData = handler.Receive( 10000 );
 

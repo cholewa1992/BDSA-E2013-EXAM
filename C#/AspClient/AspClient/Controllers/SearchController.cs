@@ -20,10 +20,12 @@ namespace AspClient.Controllers
             return RedirectToAction( "Index", "Home" );
         }
 
-        public ActionResult Search( SearchModel model )
+        [HttpGet]
+        public ActionResult Search(string searchString)
         {
+            var model = new SearchModel();
             var handler = new CommunicationHandler( Protocols.HTTP );
-            handler.Send( "http://localhost:1337/Search/" + model.SearchString, null, "GET" );
+            handler.Send("http://localhost:1337/Search/" + searchString, null, "GET");
 
             byte[] receivedData = handler.Receive( 10000 );
 
