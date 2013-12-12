@@ -112,13 +112,26 @@ namespace UtilUnitTest
         public void Test_JSonParser_CleanString_RemovedStringIdentifiers()
         {
             //Initialize the input string.
-            String inputString = "Dø Hårdt \"Mega Hårdt\"";
+            String inputString = "Die Hard \"Mega Hard\"";
 
             //Clean the string
             String cleanedString = JSonParser.CleanString(inputString);
 
             //Assert that the foreign characters has been removed
-            Assert.AreEqual("Dø Hårdt Mega Hårdt", cleanedString);
+            Assert.AreEqual("Die Hard Mega Hard", cleanedString);
+        }
+
+        [TestMethod]
+        public void Test_JSonParser_CleanString_RemovedForeignCharacters()
+        {
+            //Initialize the input string.
+            String inputString = "Dø Hårdt Mega Hårdt";
+
+            //Clean the string
+            String cleanedString = JSonParser.CleanString(inputString);
+
+            //Assert that the foreign characters has been removed
+            Assert.AreEqual("D Hrdt Mega Hrdt", cleanedString);
         }
 
         [TestMethod]

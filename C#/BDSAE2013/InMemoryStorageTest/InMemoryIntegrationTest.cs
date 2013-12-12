@@ -48,9 +48,9 @@ namespace InMemoryStorageTest
                 var user = new UserAcc {Id = 1, Email = "jbec@itu.dk", Password = "1234"};
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id && t.Email == "jbec@itu.dk"));
                 user.Email = "jbec1@itu.dk";
+
+                //This invocation will throw the wanted exception
                 ef.Update(user);
-                Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id && t.Email == "jbec@itu.dk"));
-                Assert.IsTrue(ef.Get<UserAcc>().Any(t => t.Id == user.Id && t.Email == "jbec1@itu.dk"));
             }
         }
 

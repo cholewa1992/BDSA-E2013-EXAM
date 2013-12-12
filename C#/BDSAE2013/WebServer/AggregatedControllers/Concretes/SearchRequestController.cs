@@ -82,7 +82,7 @@ namespace WebServer
                         break;
 
                     //Set the search string to search for
-                    string searchString = searchInputList[i].ToLower(); ;
+                    string searchString = searchInputList[i].ToLower();
 
                     //Add the first amount of movies that matches the search credentials
                     //The amount is the amount of search hits left to reach the search limit
@@ -146,6 +146,18 @@ namespace WebServer
                     jsonInput.Add("m" + index + "Title");       //Add the attribute name
                     jsonInput.Add(""+movie.Title);              //Add the attribute value
 
+                    //Find the first plot info
+                    var plotInfo = movie.MovieInfo.First(mi => mi.Type_Id == 98);
+
+                    //Add the attribute name of the plot info
+                    jsonInput.Add("m" + index + "Plot");
+
+                    //Check if we found any plot. If we do, we add it to the json string. Otherwise it is empty
+                    if (plotInfo != null)
+                        jsonInput.Add("" + plotInfo.Info);
+                    else
+                        jsonInput.Add("");
+
                     //Increment the index
                     index++;
                 }
@@ -163,6 +175,18 @@ namespace WebServer
                     //For each person we add the title of the person
                     jsonInput.Add("p" + index + "Name");          //Add the attribute name
                     jsonInput.Add("" + person.Name);              //Add the attribute value
+
+                    //Find the first plot info
+                    var bioInfo = person.PersonInfo.First(pi => pi.Type_Id == 19);
+
+                    //Add the attribute name of the plot info
+                    jsonInput.Add("m" + index + "Biography");
+
+                    //Check if we found any plot. If we do, we add it to the json string. Otherwise it is empty
+                    if (bioInfo != null)
+                        jsonInput.Add("" + bioInfo.Info);
+                    else
+                        jsonInput.Add("");
 
                     //Increment the index
                     index++;
