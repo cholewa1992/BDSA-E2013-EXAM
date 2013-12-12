@@ -147,7 +147,7 @@ namespace WebServer
                     jsonInput.Add(""+movie.Title);              //Add the attribute value
 
                     //Find the first plot info
-                    var plotInfo = movie.MovieInfo.SingleOrDefault(mi => mi.Type_Id == 98);
+                    var plotInfo = movie.MovieInfo.FirstOrDefault(mi => mi.Type_Id == 98);
 
                     //Add the attribute name of the plot info
                     jsonInput.Add("m" + index + "Plot");
@@ -177,7 +177,7 @@ namespace WebServer
                     jsonInput.Add("" + person.Name);              //Add the attribute value
 
                     //Find the first plot info
-                    var bioInfo = person.PersonInfo.SingleOrDefault(pi => pi.Type_Id == 19);
+                    var bioInfo = person.PersonInfo.FirstOrDefault(pi => pi.Type_Id == 19);
 
                     //Add the attribute name of the plot info
                     jsonInput.Add("p" + index + "Biography");

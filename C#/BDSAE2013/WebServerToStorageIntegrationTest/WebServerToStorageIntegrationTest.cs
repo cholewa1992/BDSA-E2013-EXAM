@@ -10,6 +10,11 @@ using Utils;
 
 namespace WebServerToStorageIntegrationTest
 {
+    /// <summary>
+    /// Tests the integration between the web server and the storage.
+    /// Only one sub controller is tested, since all other individual logic is tested during unit testing.
+    /// The tested controller is the movie controller
+    /// </summary>
     [TestClass]
     public class WebServerToStorageIntegrationTest
     {
