@@ -48,7 +48,6 @@ namespace WebServerTestRun
             Dictionary<string, string> values = JSonParser.GetValues(json);
 
             Console.WriteLine(response.ResponseStatusCode);
-            Console.WriteLine(values["response"]);
 
             int index = 0;
 

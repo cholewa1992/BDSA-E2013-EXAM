@@ -53,6 +53,7 @@ Below are the generalized components mapped to hardware or software
 \section{Access control and security}
 
 \section{Global software control}
+The global control flow is designed as procedure driven control flow with the use of threads to support concurrent users. When a user search for a movie a request is send from the web client and recieved by The WebServer. The WebServer receives the request and start a new thread that create a new RequestDelegater who process the request to Storage. If any, the Webserver receives the answer and send it to the webclient through the Communication Framework.
 
 \section{Identifying services}
 We have identified subsystem services for our program. They are shown in the figure below, and more detailed explanations for the services can be found beneath the diagram.
