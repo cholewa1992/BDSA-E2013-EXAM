@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * jQuery JavaScript Library v1.8.2
  * http://jquery.com/
  *
@@ -633,7 +633,7 @@ jQuery.extend({
 				( text + "" ).replace( rtrim, "" );
 		},
 
-	// results is for internal usage only
+	// MovieResults is for internal usage only
 	makeArray: function( arr, results ) {
 		var type,
 			ret = results || [];
@@ -4849,19 +4849,19 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			// Get initial elements from seed or context
 			elems = seed || multipleContexts( selector || "*", context.nodeType ? [ context ] : context, [], seed ),
 
-			// Prefilter to get matcher input, preserving a map for seed-results synchronization
+			// Prefilter to get matcher input, preserving a map for seed-MovieResults synchronization
 			matcherIn = preFilter && ( seed || !selector ) ?
 				condense( elems, preMap, preFilter, context, xml ) :
 				elems,
 
 			matcherOut = matcher ?
-				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
+				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting MovieResults,
 				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
 
 					// ...intermediate processing is necessary
 					[] :
 
-					// ...otherwise use results directly
+					// ...otherwise use MovieResults directly
 					results :
 				matcherIn;
 
@@ -4884,7 +4884,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			}
 		}
 
-		// Keep seed and results synchronized
+		// Keep seed and MovieResults synchronized
 		if ( seed ) {
 			// Ignore postFinder because it can't coexist with seed
 			i = preFilter && matcherOut.length;
@@ -4982,7 +4982,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				cachedruns = superMatcher.el;
 			}
 
-			// Add elements passing elementMatchers directly to results
+			// Add elements passing elementMatchers directly to MovieResults
 			for ( ; (elem = elems[i]) != null; i++ ) {
 				if ( byElement && elem ) {
 					for ( j = 0; (matcher = elementMatchers[j]); j++ ) {
@@ -5032,7 +5032,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 					setMatched = condense( setMatched );
 				}
 
-				// Add matches to results
+				// Add matches to MovieResults
 				push.apply( results, setMatched );
 
 				// Seedless set matches succeeding multiple successful matchers stipulate sorting
@@ -5372,7 +5372,7 @@ jQuery.fn.extend({
 			jQuery.find( selector, this[i], ret );
 
 			if ( i > 0 ) {
-				// Make sure that the results are unique
+				// Make sure that the MovieResults are unique
 				for ( n = length; n < ret.length; n++ ) {
 					for ( r = 0; r < length; r++ ) {
 						if ( ret[r] === ret[n] ) {
@@ -7458,7 +7458,7 @@ jQuery.fn.load = function( url, params, callback ) {
 		// See if a selector was specified
 		self.html( selector ?
 
-			// Create a dummy div to hold the results
+			// Create a dummy div to hold the MovieResults
 			jQuery("<div>")
 
 				// inject the contents of the document in, removing the scripts
@@ -9389,7 +9389,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 				var doc;
 
 				if ( jQuery.isWindow( elem ) ) {
-					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
+					// As of 5/8/2012 this will yield incorrect MovieResults for Mobile Safari, but there
 					// isn't a whole lot we can do. See pull request at this URL for discussion:
 					// https://github.com/jquery/jquery/pull/764
 					return elem.document.documentElement[ "client" + name ];

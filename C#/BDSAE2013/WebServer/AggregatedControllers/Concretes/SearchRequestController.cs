@@ -232,6 +232,11 @@ namespace WebServer
             {
                 return e1.Id == e2.Id;
             }
+
+            public int GetHashCode(IEntityDto obj)
+            {
+                return obj.Id.GetHashCode();
+            }
         }
     }
 }

@@ -26,13 +26,10 @@ namespace AspClient.Controllers
             return View( model );
         }
 
-        /*public ActionResult Search( AspClient.Models.SearchModel model )
+        public ActionResult newIndex ( SearchModel model )
         {
-            Console.WriteLine( model.SearchString );
-            model.SearchString = "test2";
-
-            return View( "~/Views/Home/Index.cshtml" );
-        }*/
+            return View( );
+        }
 
     }
 }

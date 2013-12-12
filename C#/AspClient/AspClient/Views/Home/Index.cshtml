@@ -1,36 +1,51 @@
-﻿@model AspClient.Models.SearchModel
+﻿@using AspClient.Models
+@model AspClient.Models.SearchModel
 
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>title</title>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <td>
-                    <a href="@HttpRuntime.AppDomainAppVirtualPath">
-                        <img src="~/Content/images/banner.png" />
-                    </a>
-                </td>
-                <td>
-                    @using(Html.BeginForm())
-                    {
-                        @Html.TextBoxFor( m => m.SearchString )
-                        <input type="submit" value="search" />
-                    }
+<head>
+    <title>Fake IMDb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                </td>
-            </tr>
-        </table>
-    </body>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="wrap">
+        <!-- Begin page content -->
+        <div class="container">
+            <a href="@HttpRuntime.AppDomainAppVirtualPath">
+                <img src="../../Content/images/banner.png" />
+            </a>
+
+            <form role="form" action="/Search/Search" class="form-horizontal" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+                </div>
+                <button style="display: none;" class="btn btn-default" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted">Place sticky footer content here.</p>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Bootstrap/js/bootstrap.min.js"></script>
+</body>
 </html>
