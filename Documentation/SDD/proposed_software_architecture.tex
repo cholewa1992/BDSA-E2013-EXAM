@@ -53,6 +53,7 @@ Below are the generalized components mapped to hardware or software
 \section{Access control and security}
 
 \section{Global software control}
+The global control flow is designed with the use of threads to support concurrent users. The WebServer listen for new requests from the web client. When the WebServer receives a request it start a new thread that create a new RequestDelegater who process the request to Storage. If any, the Webserver receives the answer and send it to the webclient through the Communication Framework
 
 \section{Identifying services}
 We have identified subsystem services for our program. They are shown in the figure below, and more detailed explanations for the services can be found beneath the diagram.
