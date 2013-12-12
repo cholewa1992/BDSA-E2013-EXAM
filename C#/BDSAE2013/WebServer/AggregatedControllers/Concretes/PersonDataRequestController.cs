@@ -125,7 +125,8 @@ namespace WebServer
                      //If the movie does not exist in the database we skip the addition of its information
                     if (movie == null)
                         continue;
-                    
+
+                    //Add all relevant information of the movie using the movie and the participant entities
                     movieStringArray[movieStringArrayIndex++] = ("m" + index + "Id");
                     movieStringArray[movieStringArrayIndex++] = ("" + movie.Id);
                     movieStringArray[movieStringArrayIndex++] = ("m" + index + "Title");
