@@ -54,7 +54,13 @@
             @Html.Raw(!string.IsNullOrEmpty(Model.Title) ? "<div class=\"page-header\"><h1>" + Model.Title + "&nbsp;<small>" + Model.Year + "</small></h1></div>" : "<div class=\"page-header\"><h1>No title</h1></div>")
 
             
-            @Model.Kind
+            <p>
+                @Html.Raw( !string.IsNullOrEmpty( Model.Kind ) ? "Type: " + Model.Kind + "<br / >" : "" )
+                @Html.Raw( !string.IsNullOrEmpty( Model.SeasonNumber ) ? "Season Number: " + Model.SeasonNumber + "<br / >" : "" )
+                @Html.Raw( !string.IsNullOrEmpty( Model.SeriesYear ) ? "Series Year: " + Model.SeriesYear + "<br / >" : "" )
+                @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeNumber ) ? "Episode Number: " + Model.EpisodeNumber + "<br / >" : "" )
+                @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeOfId ) ? "EpisodeOfId: " + Model.EpisodeOfId + "<br / >" : "" )
+            </p>
 
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
