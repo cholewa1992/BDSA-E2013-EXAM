@@ -88,7 +88,7 @@ namespace WebServer
                 if (movieSet.Count < 1)
                 {
                     //Union the results of the MyMovieAPI search with the current list. (Note that we use the original complete search word)
-                    movieSet.UnionWith(MyMovieApiAdapter.MakeRequest(storage, searchInput, SearchLimit - movieSet.Count));
+                    movieSet.UnionWith(new MyMovieApiAdapter().MakeRequest(storage, searchInput, SearchLimit - movieSet.Count));
                 }
 
                 //Iterate through each search input

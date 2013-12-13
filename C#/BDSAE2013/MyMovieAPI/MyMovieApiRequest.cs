@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace MyMovieAPI
 {
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public class MyMovieApiRequest
     {
         /// <summary>

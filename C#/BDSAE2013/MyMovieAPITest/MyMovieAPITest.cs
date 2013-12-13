@@ -37,8 +37,8 @@ namespace MyMovieAPITest
             using(var s = new StorageConnectionBridgeFacade(new InMemoryStorageConnectionFactory()))
             {
                 //Transforming the MyMovieAPIDTO objects to Movies objects
-                MyMovieApiAdapter.TransformToMovies(s, movies);
-
+                new MyMovieApiAdapter().TransformToMovies(s, movies);
+                
                 //Asserting that the data was transformed corretly and that it was added to the database
                 Assert.IsTrue(s.Get<Movies>().Any(t =>
                     t.Title == "Die Hard XI" &&

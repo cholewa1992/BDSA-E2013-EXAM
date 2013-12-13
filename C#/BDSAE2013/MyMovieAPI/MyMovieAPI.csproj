@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMyMovieApiAdapter.cs" />
     <Compile Include="MyMovieApiAdapter.cs" />
     <Compile Include="MyMovieAPIDTO.cs" />
     <Compile Include="MyMovieApiRequest.cs" />
