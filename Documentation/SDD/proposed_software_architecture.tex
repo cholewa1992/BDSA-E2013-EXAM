@@ -24,14 +24,16 @@ We have chosen to utilise the \textbf{Model-View-Controller} system architecture
 \end{itemize}
 
 \section{Design pattern choices}
-We will here document the design patterns utilized by the program. We will list the advantages and disadvantages of our choices.
+We will here document the design patterns utilized by the program. We will mention the reasoning behind our choices.
 
 \begin{itemize}
 	\item \emph{MVC} (or Model-View-Controller) has not only been utilized on the system as a whole, but also notably in the ASP.net client. By doing this, user interface is clearly separated from the controlling logic of the program, and we get modular code that is easy to maintain and extend.
-	\item The \emph{Object Mapper} pattern has been applied in our database to map entities to the storage.
-	\item empt{Abstract factory} in storage to create instances of storage. Gives extendability, so plugins can be made.
-	\item bridge pattern in storage is used to easily inject stops.
-	\item transaction pattern in in-memory storage and entity framework storage
+	\item The \emph{Database Mapper} pattern has been applied when performing transactions between the web server and the database. The system contains a facade exposed to the web server. The facade can be injected with the wanted mapper, which will then connect to the database based on the mapper.
+	\item The \emph{Abstract factory} is used in the storage subsystem to create instances of storage. By using this design pattern, we give the subsystem added extendability, simplifying the progress of making plugins that utilize the subsystem.
+	\item \emph{bridge pattern} is implemented  in storage is used to easily inject stops.
+	\item The \emph{Adapter pattern} has been used when translating alien movie data from other databases to the format used in the main database.
+	\item The \emph{Front Controller Pattern} is used when processing requests. Incoming requests is sent through a delegator to the relevant request controller. The controller determines how the request will affect the database. This allows for new request types to be implemented easily.
+	\item The \emph{Facade Pattern} is used for each of the subsystems in the program. All subsystems expose a single facade to be accessed by other subsystems, allowing simple communication compared to more complicated communication in which every class could communicate with eachother. Furthermore the pattern allows each subsystem to be self-contained allowing for inner changes to be made frequently as long as the changes does not change the functionality of the facade.
 \end{itemize}
 
 \section{Subsystem decomposition}
