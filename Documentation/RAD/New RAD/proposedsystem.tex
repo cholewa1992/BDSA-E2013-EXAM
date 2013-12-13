@@ -19,7 +19,7 @@ A distributed system where a user is able to search and find movies. Information
 	\item Communication between clients and server shall happen in a RESTful manner sending JSON over HTTP
 	\item The server must build on the HttpListener for HTTP communication
 	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
-	\item The server shall be able to merge information from My Movie API. If some data is not stored locally, but is in the My Movie API, it will get the data from there and send it to the client
+	\item The server must be able to merge information from My Movie API. If a search term is not found in the database, the server will search IMDB using My Movie API. If there is a search result from the My Movie API, it will be sent to the client.
 \end{itemize}
 
 \section{Nonfunctional requirements}
