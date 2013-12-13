@@ -10,7 +10,7 @@ namespace WebServer
     {
         public static void Main( String[] args )
         {
-            new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
+            new WebServer().Start( "http://localhost:1337/", Protocols.Http );
         }
 
         public void Start(String listenAddress, Protocols protocol)
