@@ -4,48 +4,140 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Search</title>
+    <title>Fake IMDb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 </head>
-    <body>
-        <table>
-            <tr>
-                <td>
-                    <a href="@HttpRuntime.AppDomainAppVirtualPath">
-                        <img src="~/Content/images/banner.png" />
+<body>
+    <div id="wrap">
+        <!-- Begin page content -->
+        <div class="container">
+            <nav class="navbar navbar-inverse" role="navigation" style="margin-top: 10px;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath" class="navbar-brand">FakeIMDb
                     </a>
-                </td>
-                <td>
-                    @using(Html.BeginForm())
-                    {
-                        //@Html.LabelFor( m => m.SearchString, "Test:" )
-                        @Html.TextBoxFor( m => m.SearchString )
-                        <input type="submit" value="search" />
-                    }
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form role="form" action="/Search/Search" class="navbar-form navbar-right" method="GET" style="max-width: 300px;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    @if( Model != null && Model.Results != null && Model.Results.Count != 0 )
+            <!-- #Context -->
+
+            <div class="list-group">
+                @if (Model != null)
+                {
+                    if (Model.MovieResults != null)
                     {
-                        foreach( KeyValuePair<int, MovieResult> kvp in Model.Results )
+                        foreach (KeyValuePair<int, MovieResult> kvp in Model.MovieResults)
                         {
-                            <a href="@kvp.Value.Url">@kvp.Value.Title</a>
-                            <br />
+                    <a href="@kvp.Value.Url" class="list-group-item" >
+                        <h4 class="list-group-item-heading">
+                            <span class="glyphicon glyphicon-film"></span>
+                            @kvp.Value.Title
+                        </h4>
+                        @if (!string.IsNullOrEmpty(kvp.Value.Plot))
+                        {
+                            if (kvp.Value.Plot.Length > 200)
+                            {
+                                string stringToDisplay = "";
+                                for (int i = 200; i != 0; i--)
+                                {
+                                    if (kvp.Value.Plot[i] == ' ')
+                                    {
+                                        stringToDisplay = kvp.Value.Plot.Substring(0, i);
+                                        break;
+                                    }
+                                }
+                            <p class="list-group-item-text">@stringToDisplay [...]</p>
+                            }
+                            else
+                            {
+                            <p class="list-group-item-text">@kvp.Value.Plot</p>
+                            }
+                        }
+                    </a>
                         }
                     }
-                    else
+                    Html.Raw("</div><div class=\"list-group\">");
+                    if (Model.PersonResults != null)
                     {
-                        @:No results found
+                        foreach (KeyValuePair<int, PersonResult> kvp in Model.PersonResults)
+                        {
+                    <a href="@kvp.Value.Url" class="list-group-item" >
+                        <h4 class="list-group-item-heading">
+                            <span class="glyphicon glyphicon-user"></span> @kvp.Value.Name
+                        </h4>
+                        @if (!string.IsNullOrEmpty(kvp.Value.Biography))
+                        {
+                            if (kvp.Value.Biography.Length > 200)
+                            {
+                                string stringToDisplay = "";
+                                for (int i = 200; i != 0; i--)
+                                {
+                                    if (kvp.Value.Biography[i] == ' ')
+                                    {
+                                        stringToDisplay = kvp.Value.Biography.Substring(0, i);
+                                        break;
+                                    }
+                                }
+                            <p class="list-group-item-text">@stringToDisplay [...]</p>
+                            }
+                            else
+                            {
+                            <p class="list-group-item-text">@kvp.Value.Biography</p>
+                            }
+                        }
+                    </a>
+                        }
                     }
-                </td>
-            </tr>
-        </table>
+                }
+                else
+                {
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">No results found</h4>
+                    </a>
+                    
+                }
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted">For all you movies Db needs...</p>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

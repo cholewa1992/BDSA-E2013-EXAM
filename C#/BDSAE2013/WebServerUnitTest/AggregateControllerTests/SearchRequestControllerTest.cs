@@ -46,7 +46,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct
-            Assert.AreEqual(2, values.Count);
             Assert.AreEqual("5", values["m0Id"]);
             Assert.AreEqual("Die Hard", values["m0Title"]);
         }
@@ -79,7 +78,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct
-            Assert.AreEqual(6, values.Count);
             Assert.AreEqual(true, values.ContainsValue("Die Hard"));            //name of Die Hard
             Assert.AreEqual(true, values.ContainsValue("5"));                   //id of Die Hard
             Assert.AreEqual(true, values.ContainsValue("A Good Day To Die"));   //name of A Good Day To Die
@@ -149,7 +147,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct
-            Assert.AreEqual(2, values.Count);
             Assert.AreEqual(true, values.ContainsValue("Die Hard"));            //name of Die Hard
             Assert.AreEqual(true, values.ContainsValue("5"));                   //id of Die Hard
         }
@@ -182,7 +179,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct
-            Assert.AreEqual(4, values.Count);
             Assert.AreEqual(true, values.ContainsValue("Die Hard"));            //name of Die Hard
             Assert.AreEqual(true, values.ContainsValue("5"));                   //id of Die Hard
             Assert.AreEqual(true, values.ContainsValue("A Good Day To Die"));   //name of A Good Day To Die
@@ -218,7 +214,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct, and that there are no duplicates
-            Assert.AreEqual(2, values.Count);
             Assert.AreEqual(true, values.ContainsValue("A Good Day To Die"));   //name of A Good Day To Die
             Assert.AreEqual(true, values.ContainsValue("10"));                  //id of A Good Day To Die
         }
@@ -251,7 +246,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct, and that there are no duplicates
-            Assert.AreEqual(2, values.Count);
             Assert.AreEqual(true, values.ContainsValue("Harrison Ford"));   //name of Harrison Ford
             Assert.AreEqual(true, values.ContainsValue("5"));               //id of Harrison Ford
         }
@@ -284,7 +278,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct, and that there are no duplicates
-            Assert.AreEqual(4, values.Count);
             Assert.AreEqual(true, values.ContainsValue("Harrison Ford"));   //name of Harrison Ford
             Assert.AreEqual(true, values.ContainsValue("5"));               //id of Harrison Ford
             Assert.AreEqual(true, values.ContainsValue("Colin Ford"));      //name of Colin Ford
@@ -321,7 +314,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct, and that there are no duplicates
-            Assert.AreEqual(4, values.Count);
             Assert.AreEqual(true, values.ContainsValue("John Goodman"));             //name of John Goodman
             Assert.AreEqual(true, values.ContainsValue("20"));                      //id of John Goodman
             Assert.AreEqual(true, values.ContainsValue("A Good Day To Die"));       //name of A Good Day To Die
@@ -358,7 +350,6 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Check that the values returned by the delegate are correct, and that there are no duplicates
-            Assert.AreEqual(8, values.Count);
             Assert.AreEqual(true, values.ContainsValue("Die Hard"));                 //name of Die Hard
             Assert.AreEqual(true, values.ContainsValue("5"));                       //id of Die Hard
             Assert.AreEqual(true, values.ContainsValue("The diel is right"));       //name of The diel is right
@@ -367,6 +358,226 @@ namespace WebServerUnitTest
             Assert.AreEqual(true, values.ContainsValue("6"));                       //id of Vin Diesel
             Assert.AreEqual(true, values.ContainsValue("Nicole Kidieman"));       //name of Nicole Kidieman
             Assert.AreEqual(true, values.ContainsValue("12"));                       //id of Nicole Kidieman
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_PlotSearch_0_Plots()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { 
+                new Movies() { Id = 5, Title = "Die Hard"}};
+            IList<People> peopleList = new List<People>();
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test that when there are no plots available we return an empty string
+            Assert.AreEqual(3, values.Count);
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("", values["m0Plot"]);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_PlotSearch_1_Plot()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { 
+                new Movies() { Id = 5, Title = "Die Hard", MovieInfo = new List<MovieInfo>(){new MovieInfo(){ Info = "This movie is awesome", Type_Id = 98 }}}};
+            IList<People> peopleList = new List<People>();
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test that we only get the first plot
+            Assert.AreEqual(3, values.Count);
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("This movie is awesome", values["m0Plot"]);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_PlotSearch_MoreThan1_Plot()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { 
+                new Movies() { Id = 5, Title = "Die Hard", MovieInfo = new List<MovieInfo>(){new MovieInfo(){ Info = "This movie is awesome", Type_Id = 98 }, new MovieInfo(){ Info = "Bruce Willis is the man", Type_Id = 98 }}}};
+            IList<People> peopleList = new List<People>();
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test that we only get the first plot
+            Assert.AreEqual(3, values.Count);
+            Assert.AreEqual("5", values["m0Id"]);
+            Assert.AreEqual("Die Hard", values["m0Title"]);
+            Assert.AreEqual("This movie is awesome", values["m0Plot"]);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_BiographySearch_0_Biographies()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() {};
+            IList<People> peopleList = new List<People>() { new People() { Id = 6, Name = "Vin Diesel" } };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test that when there are no biographies available we return an empty string
+            Assert.AreEqual(3, values.Count);
+            Assert.AreEqual("6", values["p0Id"]);
+            Assert.AreEqual("Vin Diesel", values["p0Name"]);
+            Assert.AreEqual("", values["p0Biography"]);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_BiographySearch_1_Biography()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { };
+            IList<People> peopleList = new List<People>() { new People() { Id = 6, Name = "Vin Diesel", PersonInfo = new List<PersonInfo>() { new PersonInfo() { Info = "He is bald", Type_Id = 19 } } } };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+
+            //Test that we only get the first biography
+            Assert.AreEqual(3, values.Count);
+            Assert.AreEqual("6", values["p0Id"]);
+            Assert.AreEqual("Vin Diesel", values["p0Name"]);
+            Assert.AreEqual("He is bald", values["p0Biography"]);
+        }
+
+        [TestMethod]
+        public void Test_SearchRequestController_ProcessGet_BiographySearch_MoreThan1_Biography()
+        {
+            //Initialize the request controller that is being tested
+            SearchRequestController controller = new SearchRequestController();
+
+            IList<Movies> movieList = new List<Movies>() { };
+            IList<People> peopleList = new List<People>() { new People() { Id = 6, Name = "Vin Diesel", PersonInfo = new List<PersonInfo>() { new PersonInfo() { Info = "He is bald", Type_Id = 19 }, new PersonInfo(){ Info = "He is strong", Type_Id = 19} } } };
+
+            //Make a mock of the storage.
+            var storageMock = new Mock<IStorageConnectionBridgeFacade>();
+            //Map the returned values of the storage Get method
+            storageMock.Setup(x => x.Get<Movies>()).Returns(movieList.AsQueryable());
+            storageMock.Setup(x => x.Get<People>()).Returns(peopleList.AsQueryable());
+            //Make an intance of the storage class using the mock
+            var storage = storageMock.Object;
+
+            //Set up the request that is being parsed to the process method
+            Request request = new Request() { Method = "GET https://www.google.dk/Search/Die" };
+
+            //Call the process method to get the delegate
+            Func<IStorageConnectionBridgeFacade, byte[]> myDelegate = controller.ProcessGet(request);
+
+            //Use the delegate to acquire the data from the storage
+            byte[] data = myDelegate.Invoke(storage);
+
+            //Convert the received json bytes to a value dictionary
+            Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
+
+            //Test that we only get the first biography
+            Assert.AreEqual(3, values.Count);
+            Assert.AreEqual("6", values["p0Id"]);
+            Assert.AreEqual("Vin Diesel", values["p0Name"]);
+            Assert.AreEqual("He is bald", values["p0Biography"]);
         }
 
         [TestMethod]
@@ -383,11 +594,11 @@ namespace WebServerUnitTest
                 new Movies() { Id = 14, Title = "A Game to Die for" }, 
                 new Movies() { Id = 23, Title = "DieDieDie" }, 
                 new Movies() { Id = 24, Title = "I Want to die" }, 
-                new Movies() { Id = 23, Title = "A test to die for" }, 
-                new Movies() { Id = 23, Title = "Live or Die" }, 
-                new Movies() { Id = 23, Title = "I am die" }, 
-                new Movies() { Id = 23, Title = "Die 2: Return of die" }, 
-                new Movies() { Id = 23, Title = "Die 3: Die reloaded" } };
+                new Movies() { Id = 25, Title = "A test to die for" }, 
+                new Movies() { Id = 26, Title = "Live or Die" }, 
+                new Movies() { Id = 27, Title = "I am die" }, 
+                new Movies() { Id = 28, Title = "Die 2: Return of die" }, 
+                new Movies() { Id = 29, Title = "Die 3: Die reloaded" } };
             IList<People> peopleList = new List<People>() { 
                 new People() { Id = 5, Name = "Vin Diesel" }, 
                 new People() { Id = 10, Name = "Dien Anderson" }, 
@@ -395,14 +606,14 @@ namespace WebServerUnitTest
                 new People() { Id = 11, Name = "Mierto Dies Luos" }, 
                 new People() { Id = 23, Name = "Dies Louise" }, 
                 new People() { Id = 30, Name = "Luiz Guzdies" }, 
-                new People() { Id = 30, Name = "Celine Dieon" }, 
-                new People() { Id = 30, Name = "Matt Dieson" }, 
-                new People() { Id = 30, Name = "Sindo Dies" }, 
-                new People() { Id = 30, Name = "Die Hard" }, 
-                new People() { Id = 30, Name = "John Dies" }, 
-                new People() { Id = 30, Name = "Samuel Dieson" }, 
-                new People() { Id = 30, Name = "Leonardo DieCaprio" }, 
-                new People() { Id = 30, Name = "Nicolie Kidieman" } };
+                new People() { Id = 31, Name = "Celine Dieon" }, 
+                new People() { Id = 32, Name = "Matt Dieson" }, 
+                new People() { Id = 33, Name = "Sindo Dies" }, 
+                new People() { Id = 34, Name = "Die Hard" }, 
+                new People() { Id = 35, Name = "John Dies" }, 
+                new People() { Id = 36, Name = "Samuel Dieson" }, 
+                new People() { Id = 37, Name = "Leonardo DieCaprio" }, 
+                new People() { Id = 38, Name = "Nicolie Kidieman" } };
 
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
@@ -425,7 +636,7 @@ namespace WebServerUnitTest
             Dictionary<string, string> values = JSonParser.GetValues(Encoder.Decode(data));
 
             //Test, that even though the search criteria matches all entries, the returned amount of hits has still been trimmed to 40
-            Assert.AreEqual(40, values.Count);
+            Assert.AreEqual(60, values.Count);
         }
 
         [TestMethod]

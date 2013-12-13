@@ -34,51 +34,51 @@ namespace MyMovieAPI
         /// <summary>
         /// Transforming MyMovieAPIDTO objects to Movies objects and adds the to the given database
         /// </summary>
-        /// <param name="sb">Active storage to add transformed objects to</param>
+        /// <param name="storageConnectionBridgeFacade">Active storage to add transformed objects to</param>
         /// <param name="movies">The movies to transform</param>
         /// <returns>A list of movie objects</returns>
-        internal static List<Movies> TransformToMovies(IStorageConnectionBridgeFacade sb, MyMovieAPIDTO[] movies)
+        internal static List<Movies> TransformToMovies(IStorageConnectionBridgeFacade storageConnectionBridgeFacade, MyMovieAPIDTO[] movies)
         {
             try
             {
                 var newMovies = new List<Movies>();
-                foreach (var m in movies)
+                foreach (var movie in movies)
                 {
                     var newM = new Movies
                     {
-                        Kind = m.type,
-                        Title = m.title,
-                        Year = m.year
+                        Kind = movie.type,
+                        Title = movie.title,
+                        Year = movie.year
                     };
 
-                    if (sb.Get<Movies>().Any(t => t.Title == newM.Title && t.Year == newM.Year))
+                    if (storageConnectionBridgeFacade.Get<Movies>().Any(t => t.Title == newM.Title && t.Year == newM.Year))
                     {
-                        newMovies.Add(sb.Get<Movies>().Single(t => t.Title == newM.Title && t.Year == newM.Year));
+                        newMovies.Add(storageConnectionBridgeFacade.Get<Movies>().Single(t => t.Title == newM.Title && t.Year == newM.Year));
                         continue;
                     }
 
                     newMovies.Add(newM);
-                    sb.Add(newM);
+                    storageConnectionBridgeFacade.Add(newM);
 
-                    foreach (var p in m.actors)
+                    foreach (var personName in movie.actors)
                     {
                         int id;
-                        if (sb.Get<People>().Any(t => t.Name == p))
+                        if (storageConnectionBridgeFacade.Get<People>().Any(t => t.Name == personName))
                         {
-                            id = sb.Get<People>().Where(t => t.Name == p).Select(t => t.Id).First();
+                            id = storageConnectionBridgeFacade.Get<People>().Where(t => t.Name == personName).Select(t => t.Id).First();
                         }
                         else
                         {
-                            var newP = new People
+                            var newPerson = new People
                             {
-                                Name = p
+                                Name = personName
                             };
-                            sb.Add(newP);
-                            id = newP.Id;
+                            storageConnectionBridgeFacade.Add(newPerson);
+                            id = newPerson.Id;
                         }
 
                         if (id == 0) throw new InvalidOperationException("Id was 0");
-                        sb.Add(new Participate
+                        storageConnectionBridgeFacade.Add(new Participate
                         {
                             Role = "actor",
                             Movie_Id = newM.Id,

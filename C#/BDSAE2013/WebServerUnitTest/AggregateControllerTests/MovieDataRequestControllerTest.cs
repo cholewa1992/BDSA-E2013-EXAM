@@ -19,11 +19,10 @@ namespace WebServerUnitTest
     public class MovieDataRequestControllerTest
     {
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseAllInfo()
+        public void Test_MovieDataRequestController_ProcessGet_UseAllInfo()
         {
             //Initialize the request controller that is being tested
             MovieDataRequestController controller = new MovieDataRequestController();
-
 
             //Make a mock of the storage.
             var storageMock = new Mock<IStorageConnectionBridgeFacade>();
@@ -80,7 +79,7 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseAllInfo_NoMovieInfo()
+        public void Test_MovieDataRequestController_ProcessGet_UseAllInfo_NoMovieInfo()
         {
             //Initialize the request controller that is being tested
             MovieDataRequestController controller = new MovieDataRequestController();
@@ -141,7 +140,7 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_UseAllInfo_NoActors()
+        public void Test_MovieDataRequestController_ProcessGet_UseAllInfo_NoActors()
         {
             //Initialize the request controller that is being tested
             MovieDataRequestController controller = new MovieDataRequestController();
@@ -190,7 +189,7 @@ namespace WebServerUnitTest
         
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_SkipErronousParticipants()
+        public void Test_MovieDataRequestController_ProcessGet_SkipErronousParticipants()
         {
             //Initialize the request controller that is being tested
             MovieDataRequestController controller = new MovieDataRequestController();
@@ -244,7 +243,7 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_InfoSyntax_2SameTypes()
+        public void Test_MovieDataRequestController_ProcessGet_InfoSyntax_2SameTypes()
         {
             //Initialize the request controller that is being tested
             MovieDataRequestController controller = new MovieDataRequestController();
@@ -295,7 +294,7 @@ namespace WebServerUnitTest
         }
 
         [TestMethod]
-        public void Test_MovieDataRequestControllerTest_ProcessGet_InfoSyntax_2DifferentTypes()
+        public void Test_MovieDataRequestController_ProcessGet_InfoSyntax_2DifferentTypes()
         {
             //Initialize the request controller that is being tested
             MovieDataRequestController controller = new MovieDataRequestController();
