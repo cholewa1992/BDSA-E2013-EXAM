@@ -35,7 +35,43 @@ We will here document the design patterns utilized by the program. We will list 
 \end{itemize}
 
 \section{Subsystem decomposition}
-We have grouped our classes into subsystems to create a clearer structure of the program. In this section, we will first show an overview of how the subsystems interact, and then a detailed look at the individual subsystems.
+\label{sec:Subsystem decomposition}
+We have grouped our classes into subsystems to create a clearer structure of the program. In this section, we will first show an overview of how the subsystems interact, and then a detailed look at the individual subsystems.\\
+
+
+\begin{figure}[H]
+\includegraphics[scale=0.2]{img/FakeIMDbSubsystems.png}
+\caption{Fake IMDb Subsystems}
+\label{fig:FakeIMDBSubsystems}
+\end{figure}
+
+Fake IMDb is divided into five main subsystems with one subsystems for each different clients, communicating with WebServer subsystem through Communication Framework subsystem. WebServer sybsystem use Storage subsystem to get/put data to/from the clients.\\
+
+
+\begin{figure}[H]
+\includegraphics[scale=0.2]{img/WebClientSubsystemSnippet.png}
+\caption{A snippet of the Web Client}
+\label{fig:WebClientSubsystem}
+\end{figure}
+
+The Web Client use ASP.Net framework which have a lot of action going on behind the scene and therefor it will not make sense to show a common static class diagram. Instead  a fraction is shown through a search session. The SearchController use SearchResult to get a movieresult or personresult to show in Search(view)\\
+
+
+
+\begin{figure}[H]
+\includegraphics[scale=0.2]{img/CommunicationFrameworkSubsystem.png}
+\caption{Communication Framework Subsystem}
+\label{fig:CommunicationFramework}
+\end{figure}
+Here shall be some very wise text about the communication framework subsystem.
+
+
+\begin{figure}[H]
+\includegraphics[scale=0.2]{img/NewWebserverSubsystem.png}
+\caption{Web Server Subsystem}
+\label{fig:WebServer}
+\end{figure}
+Here Shall be some vise about the web server
 
 %insert subsystem diagrams here
 
