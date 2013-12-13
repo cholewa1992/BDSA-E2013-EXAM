@@ -7,11 +7,12 @@ using AspClient.Models;
 
 namespace AspClient.Controllers
 {
+    /// <summary>
+    /// @Author Jacob Cholewa (jbec@itu.dk)
+    /// @Author Martin
+    /// </summary>
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
-
         public ActionResult Index()
         {
             return View();
@@ -25,11 +26,5 @@ namespace AspClient.Controllers
 
             return View( model );
         }
-
-        public ActionResult newIndex ( SearchModel model )
-        {
-            return View( );
-        }
-
     }
 }

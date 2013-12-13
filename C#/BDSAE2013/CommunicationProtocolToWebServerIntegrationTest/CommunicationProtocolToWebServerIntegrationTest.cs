@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommunicationFramework;
-using WebServer;
 using System.Threading.Tasks;
 
 namespace CommunicationProtocolToWebServerIntegrationTest
@@ -12,13 +10,13 @@ namespace CommunicationProtocolToWebServerIntegrationTest
         [TestMethod]
         public void Test_CommunicationProtocolToWebServerIntegration_Send_GET()
         {
-            var communicationHandler = new CommunicationHandler(Protocols.HTTP);
+            var communicationHandler = new CommunicationHandler(Protocols.Http);
 
             string address = "http://localhost:1000/Movie/5/";
 
             Task.Run( () => 
             {
-                var handler = new CommunicationHandler(Protocols.HTTP); 
+                var handler = new CommunicationHandler(Protocols.Http); 
                 handler.Send(address, null, "GET");
 
                 byte[] respondBytes = communicationHandler.Receive(100);
@@ -39,13 +37,13 @@ namespace CommunicationProtocolToWebServerIntegrationTest
         [TestMethod]
         public void Test_CommunicationProtocolToWebServerIntegration_Send_NotGET()
         {
-            var communicationHandler = new CommunicationHandler(Protocols.HTTP);
+            var communicationHandler = new CommunicationHandler(Protocols.Http);
 
             string address = "http://localhost:1001/Movie/5/";
 
             Task.Run(() =>
             {
-                var handler = new CommunicationHandler(Protocols.HTTP); 
+                var handler = new CommunicationHandler(Protocols.Http); 
                 handler.Send(address, new byte[]{0,1,1,1,0,1,1,0,0}, "POST");
 
                 byte[] respondBytes = communicationHandler.Receive(100);

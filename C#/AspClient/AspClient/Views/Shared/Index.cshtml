@@ -1,0 +1,69 @@
+﻿@using AspClient.Models
+@model AspClient.Models.ErrorModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake IMDb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
+    <style id="holderjs-style" type="text/css"></style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="wrap">
+        <!-- Begin page content -->
+        <div class="container">
+            <nav class="navbar navbar-inverse" role="navigation" style="margin-top: 10px;">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="@HttpRuntime.AppDomainAppVirtualPath" class="navbar-brand">FakeIMDb
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form role="form" action="/Search/Search" class="navbar-form navbar-right" method="GET" style="max-width: 300px;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="SearchString" name="SearchString" placeholder="Enter Search word...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+
+            <!-- #Context -->
+
+            <h1>Error <small>@Model.ErrorCode </small></h1>
+            @if (!string.IsNullOrEmpty(Model.ErrorMsg))
+            {
+                <div class="well well-sm">@Model.ErrorMsg</div>
+            }
+
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../Bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

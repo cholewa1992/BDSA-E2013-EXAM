@@ -17,7 +17,7 @@ namespace MyMovieAPI
         {
             try
             {
-                var comHandler = new CommunicationHandler(Protocols.HTTP);
+                var comHandler = new CommunicationHandler(Protocols.Http);
                 var restAddress = "http://http://mymovieapi.com/?title=" + searchWord + "&limit=" + limit;
 
                 comHandler.Send(restAddress, new byte[0], "GET");

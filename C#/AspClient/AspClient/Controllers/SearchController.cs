@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AspClient.Models;
 using CommunicationFramework;
-using Newtonsoft.Json;
 
 namespace AspClient.Controllers
 {
+    /// <summary>
+    /// @Author Jacob Cholewa (jbec@itu.dk)
+    /// @Author Martin
+    /// </summary>
     public class SearchController : Controller
     {
-        //
-        // GET: /Search/
-
         public ActionResult Index()
         {
             return RedirectToAction( "Index", "Home" );
@@ -23,28 +20,37 @@ namespace AspClient.Controllers
         [HttpGet]
         public ActionResult Search(string searchString)
         {
-            var model = new SearchModel();
-            var handler = new CommunicationHandler( Protocols.HTTP );
-            handler.Send("http://localhost:1337/Search/" + searchString, null, "GET");
+            byte[] receivedData;
 
-            byte[] receivedData = handler.Receive( 10000 );
+            try
+            {
+                var handler = new CommunicationHandler(Protocols.Http);
+                handler.Send("http://localhost:1337/Search/" + searchString, null, "GET");
+                receivedData = handler.Receive();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new
+                {
+                    ErrorCode = e.Message,
+                    ErrorMsg = e.StackTrace
+                });
+            }
 
-            SearchResults newModel = new SearchResults();
-
-            newModel.MovieResults = new Dictionary<int, MovieResult>();
-            newModel.PersonResults = new Dictionary<int, PersonResult>();
-            newModel.SearchString = model.SearchString;
+            var newModel = new SearchResults
+            {
+                MovieResults = new Dictionary<int, MovieResult>(),
+                PersonResults = new Dictionary<int, PersonResult>()
+            };
 
             var jsonAttributes = Utils.JSonParser.GetValues( Utils.Encoder.Decode( receivedData ) );
             for( int i = 0; jsonAttributes.ContainsKey( "m" + i + "Id" ); i++ )
             {
-                //newModel.MovieResults.Add( jsonAttributes[ "m" + i + "Title" ], "http://localhost:8485/Movie/ViewInfo?Id=" + jsonAttributes[ "m" + i + "Id" ] + "&SearchString=" + model.SearchString );
                 int movieId = Int32.Parse( jsonAttributes[ "m" + i + "Id" ] );
                 newModel.MovieResults.Add( movieId, new MovieResult
                 {
                     Id = movieId, 
                     Title = jsonAttributes[ "m" + i + "Title" ], 
-                    Url = HttpRuntime.AppDomainAppVirtualPath + "../Movie/ViewInfo?Id=" + movieId + "&SearchString=" + model.SearchString,
                     Plot = jsonAttributes["m" + i + "Plot"], 
                 } );
             }
@@ -56,7 +62,6 @@ namespace AspClient.Controllers
                 {
                     Id = personId, 
                     Name = jsonAttributes[ "p" + i + "Name" ], 
-                    Url = HttpRuntime.AppDomainAppVirtualPath + "../Person/ViewInfo?Id=" + personId + "&SearchString=" + model.SearchString,
                     Biography = jsonAttributes["p" + i + "Biography"]
                 } );
             }

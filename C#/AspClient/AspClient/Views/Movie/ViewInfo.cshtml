@@ -11,7 +11,10 @@
     <!-- Bootstrap -->
     <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
-    <style id="holderjs-style" type="text/css"></style>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="../../Bootstrap/js/bootstrap.min.js"></script>
+    <link href="~/Bootstrap/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+    <script src="~/Bootstrap/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,17 +54,44 @@
 
             <!-- #Context -->
 
-            @Html.Raw(!string.IsNullOrEmpty(Model.Title) ? "<div class=\"page-header\"><h1>" + Model.Title + "&nbsp;<small>" + Model.Year + "</small></h1></div>" : "<div class=\"page-header\"><h1>No title</h1></div>")
+            @Html.Raw(!string.IsNullOrEmpty(Model.Title) ? "<div class=\"page-header\"><h1><a href=\"#\" id=\"title\">" + Model.Title + "</a>&nbsp;<small>" + Model.Year + "</small></h1></div>" : "<div class=\"page-header\"><h1>No title</h1></div>")
+            <script>
+                $('#title').editable({
+                    type: 'text',
+                    pk: 1,
+                    name: 'title',
+                    url: '/EditInfo',
+                    title: 'Enter title'
+                });
+            </script>
 
-            
+
+            @if (!string.IsNullOrEmpty(Model.Plot))
+            {
+                <h4>Plot</h4>
+                <p>
+                    <div class="well">
+                        @Model.Plot
+                    </div>
+                </p>
+            }
+
+            <h4>Movie info</h4>
             <p>
-                @Html.Raw( !string.IsNullOrEmpty( Model.Kind ) ? "Type: " + Model.Kind + "<br / >" : "" )
-                @Html.Raw( !string.IsNullOrEmpty( Model.SeasonNumber ) ? "Season Number: " + Model.SeasonNumber + "<br / >" : "" )
-                @Html.Raw( !string.IsNullOrEmpty( Model.SeriesYear ) ? "Series Year: " + Model.SeriesYear + "<br / >" : "" )
-                @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeNumber ) ? "Episode Number: " + Model.EpisodeNumber + "<br / >" : "" )
-                @Html.Raw( !string.IsNullOrEmpty( Model.EpisodeOfId ) ? "EpisodeOfId: " + Model.EpisodeOfId + "<br / >" : "" )
-            </p>
+                <div class="well">
+                    @Html.Raw(!string.IsNullOrEmpty(Model.Kind) ? "Type: " + Model.Kind + "<br / >" : "")
+                    @Html.Raw(!string.IsNullOrEmpty(Model.SeasonNumber) ? "Season Number: " + Model.SeasonNumber + "<br / >" : "")
+                    @Html.Raw(!string.IsNullOrEmpty(Model.SeriesYear) ? "Series Year: " + Model.SeriesYear + "<br / >" : "")
+                    @Html.Raw(!string.IsNullOrEmpty(Model.EpisodeNumber) ? "Episode Number: " + Model.EpisodeNumber + "<br / >" : "")
+                    @Html.Raw(!string.IsNullOrEmpty(Model.EpisodeOfId) ? "EpisodeOfId: " + Model.EpisodeOfId + "<br / >" : "")
 
+                    @foreach (var kvp in Model.data.Where(kvp => kvp.Value.Count() == 1))
+                    {
+                        @Html.Raw(kvp.Key + ": " + kvp.Value[0] + "<br/>")
+                    }
+                </div>
+            </p>
+            <h4>Other info</h4>
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -70,18 +100,24 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="cast" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            @foreach (var a in Model.cast)
-                            {
-                                @Html.ActionLink(a.Name, "ViewInfo", "Person", new {Id = a.Id}, null)
-                                <br />
-                            }
-                        </div>
-                    </div>
+                    <ul id="cast" class="list-group collapse">
+                        @foreach (var a in Model.cast)
+                        {
+                            <li class="list-group-item">
+                                @Html.ActionLink(a.Name, "ViewInfo", "Person", new { Id = a.Id }, null)
+                                @Html.Raw(!string.IsNullOrEmpty(a.CharacterName) ? "as " + a.CharacterName : "")
+                                @Html.Raw(!string.IsNullOrEmpty(a.Note) ? " (" + a.Note + ")" : "")
+
+
+                            </li>
+                          
+                            
+
+                        }
+                    </ul>
                 </div>
 
-                @foreach (var kvp in Model.data)
+                @foreach (var kvp in Model.data.Where(info => info.Value.Count() > 1))
                 {
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -90,30 +126,20 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id="@kvp.Key" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                @foreach (var s in kvp.Value)
-                                {
-                                    @s <br />
-                                }
-    
-                            </div>
-                        </div>
+                        <ul id="@kvp.Key"class="list-group collapse">
+                            @foreach (var s in kvp.Value)
+                            {
+                                <li class="list-group-item">@s</li>
+                            }
+                        </ul>
                     </div>
                 }
             </div>
 
         </div>
     </div>
-    <div id="footer">
-        <div class="container">
-            <p class="text-muted">For all you movies Db needs...</p>
-        </div>
-    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../../Bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 </html>

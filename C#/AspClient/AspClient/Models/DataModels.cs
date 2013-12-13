@@ -23,6 +23,8 @@ namespace AspClient.Models
         public string SeriesYear{ get; set; }
         public string EpisodeNumber{ get; set; }
         public string EpisodeOfId{ get; set; }
+        public string Plot { get; set; }
+
         public Dictionary<string, IList<string>> data;
 
         public List<ActorModel> cast;
@@ -50,6 +52,8 @@ namespace AspClient.Models
         public string Name{ get; set; }
         public string Gender{ get; set; }
         public string BirthDate{ get; set; }
+        public string Bio { get; set; }
+        public Dictionary<string, IList<string>> Data { get; set; }
 
         public List<PersonMovieModel> starring;
     }

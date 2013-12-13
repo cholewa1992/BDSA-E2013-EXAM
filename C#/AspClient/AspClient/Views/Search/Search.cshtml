@@ -1,5 +1,8 @@
-﻿@using AspClient.Models
-@model AspClient.Models.SearchResults
+﻿
+<!-- author: Jacob Cholewa (jbec@itu.dk) -->
+
+@using AspClient.Models
+@model SearchResults
 
 @{
     Layout = null;
@@ -57,7 +60,8 @@
                     {
                         foreach (KeyValuePair<int, MovieResult> kvp in Model.MovieResults)
                         {
-                    <a href="@kvp.Value.Url" class="list-group-item" >
+                            
+                    <a href="~/Movie/ViewInfo/@kvp.Value.Id" class="list-group-item" >
                         <h4 class="list-group-item-heading">
                             <span class="glyphicon glyphicon-film"></span>
                             @kvp.Value.Title
@@ -90,7 +94,7 @@
                     {
                         foreach (KeyValuePair<int, PersonResult> kvp in Model.PersonResults)
                         {
-                    <a href="@kvp.Value.Url" class="list-group-item" >
+                    <a href="~/Person/ViewInfo/@kvp.Value.Id" class="list-group-item" >
                         <h4 class="list-group-item-heading">
                             <span class="glyphicon glyphicon-user"></span> @kvp.Value.Name
                         </h4>

@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -138,17 +139,35 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataModels.cs" />
+    <Compile Include="Models\ErrorModels.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\SearchModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bootstrap\bootstrap3-editable\css\bootstrap-editable.css" />
+    <Content Include="Bootstrap\bootstrap3-editable\img\clear.png" />
+    <Content Include="Bootstrap\bootstrap3-editable\img\loading.gif" />
+    <Content Include="Bootstrap\bootstrap3-editable\js\bootstrap-editable.js" />
+    <Content Include="Bootstrap\bootstrap3-editable\js\bootstrap-editable.min.js" />
     <Content Include="Bootstrap\css\bootstrap-theme.css" />
     <Content Include="Bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Bootstrap\css\bootstrap.css" />
     <Content Include="Bootstrap\css\bootstrap.min.css" />
     <Content Include="Bootstrap\css\sticky-footer.css" />
     <Content Include="Bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Bootstrap\inputs-ext\address\address.css" />
+    <Content Include="Bootstrap\inputs-ext\address\address.js" />
+    <Content Include="Bootstrap\inputs-ext\typeaheadjs\lib\typeahead.js" />
+    <Content Include="Bootstrap\inputs-ext\typeaheadjs\lib\typeahead.js-bootstrap.css" />
+    <Content Include="Bootstrap\inputs-ext\typeaheadjs\typeaheadjs.js" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\bootstrap-wysihtml5-0.0.2\bootstrap-wysihtml5-0.0.2.css" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\bootstrap-wysihtml5-0.0.2\bootstrap-wysihtml5-0.0.2.js" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\bootstrap-wysihtml5-0.0.2\bootstrap-wysihtml5-0.0.2.min.js" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\bootstrap-wysihtml5-0.0.2\wysihtml5-0.3.0.js" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\bootstrap-wysihtml5-0.0.2\wysihtml5-0.3.0.min.js" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\bootstrap-wysihtml5-0.0.2\wysiwyg-color.css" />
+    <Content Include="Bootstrap\inputs-ext\wysihtml5\wysihtml5.js" />
     <Content Include="Bootstrap\js\bootstrap.js" />
     <Content Include="Bootstrap\js\bootstrap.min.js" />
     <Content Include="Bootstrap\js\holder.js" />
@@ -236,13 +255,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\Movie\ViewInfo.cshtml" />
     <Content Include="Views\Person\ViewInfo.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

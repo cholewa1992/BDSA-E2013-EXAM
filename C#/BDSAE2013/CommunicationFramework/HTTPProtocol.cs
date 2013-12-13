@@ -143,7 +143,6 @@ namespace CommunicationFramework
             using( var ms = new MemoryStream() )
             {
                 webResponse.GetResponseStream().CopyTo( ms );
-
                 return ms.ToArray();
             }
         }
