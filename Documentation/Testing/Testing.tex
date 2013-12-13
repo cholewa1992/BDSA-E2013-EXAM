@@ -1,0 +1,31 @@
+\documentclass[12pt,a4paper] {report}
+\author{Jonas}
+\title{Testing Strategy}
+\date{\today}
+
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{float}
+
+\DeclareGraphicsExtensions{.png}
+
+\begin{document}
+	\long\def\/*#1*/{}
+	\maketitle
+	
+	
+	When developing the program there was no predefined practice as to how to test the individual pieces of software produced. The individual developer was in charge of their own code, determining whether to use test-driven development or code first.
+	To maintain an initially high quality for the software being comitted during the process of making the program, each developer was tasked to perform tests that thoroughly inspected each possible outcome of their methods in each individual class.
+	
+	There were no further rules about the structure of these tests, meaning that the individual developer themselves chose whether or not to utilize the array of testing methodologies \footnote{equivalence, boundary, state-base, path and polymorphism testing} during the testing phase.
+	
+	Most tests has been designed using the testing methodologies. To increase production time, and lessen the time spend on testing, the majority of tests combine the different approaches, while maintaining the quality factor of each testing formality.
+
+	Integration tests were conducted in forms of double groups, to test the combined functionality of two selected subsystems. The quality and thoroughness of the integration tests were limited to only test the exact interactions between the subsystems, since any other fault should be caught during unit testing.
+	
+	To ensure the quality of tests, each test has been under revision by another developer, tasked to inspect the validity and thoroughness of the tests being conducted.
+	
+	
+\end{document}

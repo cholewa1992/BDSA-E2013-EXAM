@@ -51,14 +51,35 @@ Below are the generalized components mapped to hardware or software
 \subsection{RDBMS mapping}
 
 \section{Access control and security}
+\begin{itemize}
+\item Access Control: The idea with this system is to make a IMDb where the users of the system are in control of the content of the available information. The system doesn't operate with different levels of access control. The system has a user who can post information, get information and edit information so that any user have unlimited access to system data.
+\item Security: To make a secure system in that sense that messages sent from client to sever and back to client again, is encrypted is out of the scobe for this project.\\
+The system do not control who a user is as their is no account with a login and a password in the newest version of FakeIMDb, but the server is prepared for this implementation in a future release.
+\end{itemize}
 
 \section{Global software control}
+The global control flow is designed as procedure driven control flow with the use of threads to support concurrent users. When a user search for a movie a request is send from the web client and recieved by The WebServer. The WebServer receives the request and start a new thread that create a new RequestDelegater who process the request to Storage. If any, the Webserver receives the answer and send it to the webclient through the Communication Framework.
 
 \section{Identifying services}
+We have identified subsystem services for our program. They are shown in the figure below, and more detailed explanations for the services can be found beneath the diagram.
+
+\begin{figure}[H]
+\includegraphics[scale=0.8]{img/SubsystemServices.jpg}
+\caption{Software/Hardware Mapping}
+\label{fig:Subsystem Services}
+\end{figure}
+
+
+\begin{itemize}
+	\item Communication provider, which provides the clients and webserver with access to the communication framework, allowing them to send messages to each other.
+	\item Storage provider, which provides the webserver with the methods required to get information / post information to the database.
+	\item Framework storage provider, which provides the storage subsystem with the methods needed to store entities in-memory.
+	\item Memory storage provider, which provides the storage subsystem with the methods required for storing entities via the entity framework.
+\end{itemize}
 
 \section{Boundary conditions}
 
-We have indentified the following boundary conditiens, and added them to the list of use cases in the RAD:
+We have indentified the following boundary conditions, and added them to the list of use cases in the RAD:
 
 \begin{itemize}
 	\item Start up and shutdown boundary use cases:

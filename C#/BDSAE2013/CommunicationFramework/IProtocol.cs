@@ -23,9 +23,9 @@ namespace CommunicationFramework
         /// The purpose of this method is to receive a response to an earlier sent message, 
         /// using method SendMessage.
         /// </summary>
-        /// <param name="timeout">Amount of miliseconds before timeout</param>
+        /// <param name="timeToWaitFor">Amount of miliseconds before timeToWaitFor</param>
         /// <returns>The received data</returns>
-        byte[] GetResponse( int timeout );
+        byte[] GetResponse( int timeToWaitFor );
 
         /// <summary>
         /// The purpose of this method is to send a package to an Address

@@ -10,19 +10,17 @@ namespace WebServer
     {
         public static void Main( String[] args )
         {
-            new WebServer().Start( "http://localhost:1337/", Protocols.HTTP );
+            new WebServer().Start( "http://localhost:1337/", Protocols.Http );
         }
 
         public void Start(String listenAddress, Protocols protocol)
         {
             Console.WriteLine( "Server started listening on " + listenAddress );
-            var ch = new CommunicationHandler( protocol );
+            var communicationHandler = new CommunicationHandler( protocol );
             while( true )
             {
-
-                var request = ch.GetRequest(listenAddress);
-
-                Task.Run( () => StartRequestDelegatorThread( request, ch ) );
+                var request = communicationHandler.GetRequest( listenAddress );
+                Task.Run( () => StartRequestDelegatorThread( request, communicationHandler ) );
 
                 Console.WriteLine( "new thread started" );
             }

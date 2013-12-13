@@ -40,7 +40,7 @@ namespace WebServerTestRun
 
 
             //Test movie processing
-            request.Method = "GET http://localhost:112/Search/Atenshon";
+            request.Method = "GET http://localhost:112/Search/Rosenmeier,%20Morten";
             Request response = delegator.ProcessRequest(request);
 
             string json = Encoder.Decode(response.Data);
@@ -48,7 +48,6 @@ namespace WebServerTestRun
             Dictionary<string, string> values = JSonParser.GetValues(json);
 
             Console.WriteLine(response.ResponseStatusCode);
-            Console.WriteLine(values["response"]);
 
             int index = 0;
 
