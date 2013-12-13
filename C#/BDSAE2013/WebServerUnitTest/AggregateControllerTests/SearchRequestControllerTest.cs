@@ -697,40 +697,5 @@ namespace WebServerUnitTest
             //Use the delegate. This invocation should throw the exception
             byte[] data = myDelegate.Invoke(storage);
         }
-
-        [TestMethod]
-        public void Test_SearchRequestController_GetSearchKeywords()
-        {
-            //Initialize the request controller that is being tested
-            SearchRequestController controller = new SearchRequestController();
-
-            //Set up an input string that we wish to compute
-            string[] searchInput = new string[]{"Hello", "My", "Friend"};
-
-            //Run it through the computation method
-            List<string> searchInputList = controller.GetSearchKeywords(searchInput);
-
-            //Test that we have all the correct results, in the correct order
-            Assert.AreEqual(4, searchInputList.Count);
-            Assert.AreEqual("Hello My Friend", searchInputList[0]);
-            Assert.AreEqual("Hello", searchInputList[1]);
-            Assert.AreEqual("My", searchInputList[2]);
-            Assert.AreEqual("Friend", searchInputList[3]);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
-        "Input must not be null")]
-        public void Test_SearchRequestController_GetSearchKeywords_Error_Null()
-        {
-            //Initialize the request controller that is being tested
-            SearchRequestController controller = new SearchRequestController();
-
-            //Set up an input string array to null
-            string[] searchInput = null;
-
-            //Invoke the method that will throw the exception
-            controller.GetSearchKeywords(searchInput);
-        }
     }
 }

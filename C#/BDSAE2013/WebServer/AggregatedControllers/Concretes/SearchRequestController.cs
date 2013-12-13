@@ -55,13 +55,8 @@ namespace WebServer
 
             //Get the request value of the url
             string searchInput = GetUrlArgument(request.Method).Replace("%20", " ");
-            string[] splitSearchInput = searchInput.Split(' ');
+            List<string> searchInputList = searchInput.Split(' ').ToList();
 
-            //Get the list of keywords based on the split strings
-            //List<string> searchInputList = GetSearchKeywords(splitSearchInput);
-
-            //Test
-            List<string> searchInputList = splitSearchInput.ToList();
 #if DEBUG
             //Print the incoming data to the console (Should be deleted before release)
             Console.WriteLine("Search Get was invoked... " + "searchInput: " + searchInput);
@@ -73,20 +68,28 @@ namespace WebServer
                 //Initialize the set of movies
                 HashSet<Movies> movieSet = new HashSet<Movies>(new EntityComparer());
 
-                //Initialize a variable defining how many search hits are left to fill the search limit
-                int hitsLeftToLimit = SearchLimit;
-
+                //Initialize an initial result set to find all complete hits
                 IQueryable<Movies> movieResultSet = storage.Get<Movies>();
 
                 for (int i = 0; i < searchInputList.Count; i++)
                 {
+                    //Iterate through the search inputs.
                     string searchString = searchInputList[i].ToLower();
 
+                    //Limit the result set to only contain the words containing the current search input
                     movieResultSet = movieResultSet
                         .Where(m => m.Title.ToLower().Contains(searchString));
                 }
 
-                movieSet.UnionWith(movieResultSet.Take(hitsLeftToLimit));
+                //Take as many hits needed to fill the search limit. If there is not enough it takes all the hits
+                movieSet.UnionWith(movieResultSet.Take(SearchLimit - movieSet.Count));
+
+                //If there was no direct hits we search in the MyMovieAPI database
+                if (movieSet.Count < 1)
+                {
+                    //Union the results of the MyMovieAPI search with the current list. (Note that we use the original complete search word)
+                    movieSet.UnionWith(MyMovieApiAdapter.MakeRequest(storage, searchInput, SearchLimit - movieSet.Count));
+                }
 
                 //Iterate through each search input
                 for (int i = 0; i < searchInputList.Count; i++)
@@ -101,46 +104,34 @@ namespace WebServer
                     //Add the first amount of movies that matches the search credentials
                     //The amount is the amount of search hits left to reach the search limit
                     //If we try to take more than the amount, the method only takes the amount of hits
-                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.ToLower().Contains(searchString)).Take(hitsLeftToLimit));
-
-                    //Update the search hits left to hit the limit
-                    hitsLeftToLimit = SearchLimit - movieSet.Count;
-                    
-                    //If this is the first iteration (with the complete search input), and if we haven't reached the search limit yet
-                    //We search in the MyMovieAPI database
-                    if (i == 0 && hitsLeftToLimit > 0)
-                    {
-                        //Union the results of the MyMovieAPI search with the current list
-                        movieSet.UnionWith(MyMovieApiAdapter.MakeRequest(storage, searchString, hitsLeftToLimit));
-
-                        //Update the search hits left to hit the limit
-                        hitsLeftToLimit = SearchLimit - movieSet.Count;
-                    }
+                    movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.ToLower().Contains(searchString)).Take(SearchLimit - movieSet.Count));
                 }
+
 
                 //Initialize the set of movies
                 HashSet<People> peopleSet = new HashSet<People>(new EntityComparer());
 
-                //Reset the counting variable
-                hitsLeftToLimit = SearchLimit;
-
+                //Initialize an initial result set to find all complete hits
                 IQueryable<People> peopleResultSet = storage.Get<People>();
 
                 for (int i = 0; i < searchInputList.Count; i++)
                 {
+                    //Iterate through the search inputs.
                     string searchString = searchInputList[i].ToLower();
 
-                        peopleResultSet = peopleResultSet
-                            .Where(p => p.Name.ToLower().Contains(searchString));
+                    //Limit the result set to only contain the words containing the current search input
+                    peopleResultSet = peopleResultSet
+                        .Where(p => p.Name.ToLower().Contains(searchString));
                 }
 
-                peopleSet.UnionWith(peopleResultSet.Take(hitsLeftToLimit));
+                //Take as many hits needed to fill the search limit. If there is not enough it takes all the hits
+                peopleSet.UnionWith(peopleResultSet.Take(SearchLimit - peopleSet.Count));
 
                 //Iterate through each search input
                 for (int i = 0; i < searchInputList.Count; i++)
                 {
                     //If the amount of people which has been found exceeds the amount we want, we stop searching
-                    if (peopleSet.Count >= SearchLimit)
+                    if (peopleSet.Count >= SearchLimit - peopleSet.Count)
                         break;
 
                     //Set the search string to search for
@@ -149,15 +140,7 @@ namespace WebServer
                     //Add the first amount of persons that matches the search credentials
                     //The amount is the amount of search hits left to reach the search limit
                     //If we try to take more than the amount, the method only takes the amount of hits
-                    
-                    
-                    peopleSet.UnionWith(
-                        storage.Get<People>()
-                            .Where(p => p.Name.ToLower().Contains(searchString))
-                            .Take(hitsLeftToLimit));
-                    
-                    //Update the search hits left to hit the limit
-                    hitsLeftToLimit = SearchLimit - peopleSet.Count;
+                    peopleSet.UnionWith(storage.Get<People>().Where(p => p.Name.ToLower().Contains(searchString)).Take(SearchLimit - peopleSet.Count));
                 }
 
                 //Initialize the list of attribute names/values
@@ -241,39 +224,6 @@ namespace WebServer
                 return Encoder.Encode(json);
             }
             );
-        }
-
-        /// <summary>
-        /// Computes a list of the concatenation of each adjacent search input, of all lengths from n to 1
-        /// @pre stringArray != null
-        /// </summary>
-        /// <param name="stringArray"> An array of keywords </param>
-        /// <returns> A list of all relevant keyword combinations </returns>
-        public List<string> GetSearchKeywords(string[] stringArray)
-        {
-            if (stringArray == null)
-                throw new ArgumentNullException("String array parsed to GetSearchKeywords method must not be null");
-
-            //Initialize the search input list
-            List<string> searchInputList = new List<string>();
-            
-            string completeWord = "";
-
-            for (int i = 0; i < stringArray.Count(); i++)
-            {
-                //Check if the word has just begun, otherwise we add a space between each word
-                if (completeWord != "")
-                    completeWord += " ";
-
-                //Add the current word to the complete sentence
-                completeWord += stringArray[i];
-            }
-
-            //Add the complete word to the list
-            searchInputList.Add(completeWord);
-            
-            //Add the completed word as well as the entire string array to the returned list
-            return searchInputList.Concat(stringArray).ToList();
         }
 
         /// <summary>
