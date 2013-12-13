@@ -19,7 +19,8 @@ namespace WebServer
             var ch = new CommunicationHandler( protocol );
             while( true )
             {
-                var request = ch.GetRequest( listenAddress );
+
+                var request = ch.GetRequest(listenAddress);
 
                 Task.Run( () => StartRequestDelegatorThread( request, ch ) );
 
@@ -34,7 +35,14 @@ namespace WebServer
             {
                 var result = rd.ProcessRequest( request );
 
-                ch.RespondToRequest( result );
+                try
+                {
+                    ch.RespondToRequest(result);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
     }
