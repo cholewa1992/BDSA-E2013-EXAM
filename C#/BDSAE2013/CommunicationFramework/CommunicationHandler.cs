@@ -4,15 +4,16 @@ namespace CommunicationFramework
 {
     public enum Protocols
     {
-        HTTP
+        Http
     }
 
     public class CommunicationHandler
     {
         private IProtocol _protocolInstance;
+
         private IProtocol ProtocolInstance
         {
-            get { return _protocolInstance ?? (_protocolInstance = getProtocol(Protocol)); }
+            get { return _protocolInstance ?? ( _protocolInstance = getProtocol( Protocol ) ); }
         }
 
         /// <summary>
@@ -41,7 +42,21 @@ namespace CommunicationFramework
             }
         }
 
-        public Protocols Protocol{ get; set; }
+        private Protocols _protocol;
+        public Protocols Protocol
+        {
+            get
+            {
+                return _protocol;
+            }
+            set
+            {
+                if( !Enum.IsDefined( typeof( Protocols ), value ) )
+                    throw new ProtocolException( "ERROR! Supplied protocol does not exist" );
+
+                _protocol = value;
+            }
+        }
 
 
         /// <summary>
@@ -56,7 +71,6 @@ namespace CommunicationFramework
         /// <summary>
         /// Send a request using the protocol specified
         /// 
-        /// @pre Protocol != null
         /// @pre address != null
         /// @pre address != ""
         /// @pre data != null
@@ -68,9 +82,6 @@ namespace CommunicationFramework
         /// <param name="method">Method of the request, such as: "GET", "POST", "PUT, "DELETE". Cannot be null or empty</param>
         public void Send( string address, byte[] data, string method )
         {
-            //CheckPreCondition Protocol != null
-            if( Protocol == null )
-                throw new ProtocolException( "ERROR! Protocol not set" );
             //CheckPreCondition address != null
             //CheckPreCondition address != ""
             if( String.IsNullOrEmpty( address ) )
@@ -81,7 +92,7 @@ namespace CommunicationFramework
                 throw new ProtocolException( "ERROR! Method cannot be null or empty" );
             //CheckPreCondition data != null
             if( data == null && method.ToLower() != "get" )
-                throw new ProtocolException( "ERROR! Data cannot be null" );
+                throw new ProtocolException( "ERROR! Data cannot be null for any methods other than GET" );
 
             ProtocolInstance.Address = address;
             ProtocolInstance.SendMessage( data, method );
@@ -89,32 +100,20 @@ namespace CommunicationFramework
 
         /// <summary>
         /// Receive a request from the protocol, implying a request was already sent. After the timeout has passed, will cast a ProtocolException
-        /// 
-        /// @pre protocol != null
         /// </summary>
         /// <param name="timeout">Amount of time to wait for the response</param>
         /// <returns>The data from the response received</returns>
-        public byte[] Receive( int timeout )
+        public byte[] Receive( int timeout = 10000 )
         {
-            //CheckPreCondition protocol != null
-            if( Protocol == null )
-                throw new ProtocolException( "ERROR! Protocol not set" );
-
             return ProtocolInstance.GetResponse( timeout );
         }
 
         /// <summary>
         /// Await requests sent to the address specified or the default address incase it wasn't set
-        /// 
-        /// @pre Protocol != null
         /// </summary>
         /// <returns>A request object per request received</returns>
-        public Request GetRequest(String address)
+        public Request GetRequest( String address )
         {
-            //CheckPreCondition Protocol != null
-            if( Protocol == null )
-                throw new ProtocolException( "ERROR! Protocol not set" );
-
             ProtocolInstance.Address = address;
 
             return ProtocolInstance.GetRequest();
@@ -123,16 +122,12 @@ namespace CommunicationFramework
         /// <summary>
         /// Respond to a receive request based on the request object
         /// 
-        /// @pre Protocol != null
         /// @pre request != null
         /// @pre request.data != null
         /// </summary>
         /// <param name="request">The request object to respond to. Cannot be null and must be the same as was received by the GetRequest method.</param>
         public void RespondToRequest( Request request )
         {
-            //CheckPreCondition Protocol != null
-            if( Protocol == null )
-                throw new ProtocolException( "ERROR! Protocol not set" );
             //CheckPreCondition Protocol != null
             if( request == null )
                 throw new ProtocolException( "ERROR! Request cannot be null" );
