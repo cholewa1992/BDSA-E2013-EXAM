@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using AspClient.Models;
 using CommunicationFramework;
+using Utils;
 
 namespace AspClient.Controllers
 {
@@ -17,6 +18,61 @@ namespace AspClient.Controllers
         public ActionResult Index()
         {
             return RedirectToAction( "Index", "Home" );
+        }
+
+        [HttpPost]
+        public ActionResult EditInfo(string id, string value)
+        {
+            var model = new ResponsModel();
+            int intId;
+            try
+            {
+                intId = int.Parse(id);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new
+                {
+                    ErrorCode = e.Message,
+                    ErrorMsg = e.StackTrace
+                });
+            }
+
+            if (intId < 0)
+            {
+                return RedirectToAction("Index", "Error", new
+                {
+                    ErrorCode = "Invalid id",
+                    ErrorMsg = "The id was zero or below. Please change the value to a positive integer"
+                });
+            }
+
+            if (value == null)
+            {
+                return RedirectToAction("Index", "Error", new
+                {
+                    ErrorCode = "Invalid input",
+                    ErrorMsg = "The input value was null. Please change the value to a not null string"
+                });
+            }
+
+            byte[] receivedData;
+            try
+            {
+                var handler = new CommunicationHandler(Protocols.Http);
+                handler.Send("http://localhost:1337/Person/", Encoder.Encode("{\"id\": \"" + intId + "\",\"name\": \"" + value + "\"}"), "PUT");
+                receivedData = handler.Receive();
+                model.Msg = Encoder.Decode(receivedData);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new
+                {
+                    ErrorCode = e.Message,
+                    ErrorMsg = e.StackTrace
+                });
+            }
+            return View(model);
         }
 
         public ActionResult ViewInfo( string id )
@@ -64,7 +120,8 @@ namespace AspClient.Controllers
 
             if( receivedData != null && receivedData.Count() != 0 )
             {
-                var dictionary = Utils.JSonParser.GetValues( Utils.Encoder.Decode( receivedData ) );
+                var dictionary = JSonParser.GetValues( Encoder.Decode( receivedData ) );
+                model.Id = intId;
                 model.Name = dictionary.ContainsKey( "name" ) ? dictionary[ "name" ] : "";
                 model.Gender = dictionary.ContainsKey( "gender" ) ? dictionary[ "gender" ] : "";
                 model.BirthDate = dictionary.ContainsKey( "piBirthDate0Info" ) ? dictionary[ "piBirthDate0Info" ] : "";

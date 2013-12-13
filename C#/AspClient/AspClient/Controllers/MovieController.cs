@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using AspClient.Models;
 using CommunicationFramework;
 using Utils;
@@ -23,10 +24,10 @@ namespace AspClient.Controllers
             return RedirectToAction( "Index", "Home" );
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult EditInfo(string id, string value)
         {
-
+            var model = new ResponsModel();
             int intId;
             try
             {
@@ -59,6 +60,7 @@ namespace AspClient.Controllers
                 });
             }
 
+            byte[] receivedData;
             try
             {
                 var handler = new CommunicationHandler(Protocols.Http);
@@ -66,7 +68,9 @@ namespace AspClient.Controllers
                     "http://localhost:1337/Movie/",
                     Encoder.Encode("{\"id\": \""+ intId +"\",\"title\": \""+ value +"\"}"),
                     "PUT");
+                receivedData = handler.Receive();
 
+                model.Msg = Encoder.Decode(receivedData);
             }
             catch (Exception e)
             {
@@ -77,12 +81,8 @@ namespace AspClient.Controllers
                 });
             }
 
-            return RedirectToAction("ViewInfo", "Movie", new
-            {
-                Id = intId
-            });
 
-            //return ViewInfo(id);
+            return View( model );
         }
 
         [HttpGet]
@@ -131,6 +131,7 @@ namespace AspClient.Controllers
             if( receivedData != null && receivedData.Count() != 0 )
             {
                 var dictionary = Utils.JSonParser.GetValues( Encoder.Decode( receivedData ) );
+                model.Id = intId;
                 model.Title = dictionary.ContainsKey( "title" ) ? dictionary[ "title" ] : "";
                 dictionary.Remove("title");
                 model.Year = dictionary.ContainsKey( "year" ) ? dictionary[ "year" ] : "";

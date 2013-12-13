@@ -11,10 +11,11 @@
     <!-- Bootstrap -->
     <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Bootstrap/css/sticky-footer.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <link href="../../Bootstrap/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
     <script src="../../Bootstrap/js/bootstrap.min.js"></script>
-    <link href="~/Bootstrap/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
-    <script src="~/Bootstrap/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script src="../../Bootstrap/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,13 +56,29 @@
             <!-- #Context -->
 
             @Html.Raw(!string.IsNullOrEmpty(Model.Title) ? "<div class=\"page-header\"><h1><a href=\"#\" id=\"title\">" + Model.Title + "</a>&nbsp;<small>" + Model.Year + "</small></h1></div>" : "<div class=\"page-header\"><h1>No title</h1></div>")
+            <div id="response"></div>
             <script>
                 $('#title').editable({
                     type: 'text',
                     pk: 1,
-                    name: 'title',
-                    url: '/EditInfo',
-                    title: 'Enter title'
+                    url: '../EditInfo?id=@Model.Id&value=',
+                    title: 'Enter title',
+                    display: function (value, response) {
+                        if (response.indexOf("successfully") == -1) {
+                            document.getElementById("response").innerHTML =
+                                "<div class=\"alert alert-danger\">" +
+                                    "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" +
+                                    "<strong>Error!</strong> The title was not saved!" +
+                                    "</div>";
+                        } else {
+                            $(this).html(value);
+                            document.getElementById("response").innerHTML =
+                                 "<div class=\"alert alert-success\">" +
+                                    "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" +
+                                    "<strong>Success!</strong> The title was saved!" +
+                                    "</div>";
+                        }
+                    }
                 });
             </script>
 
@@ -140,6 +157,5 @@
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
 </body>
 </html>

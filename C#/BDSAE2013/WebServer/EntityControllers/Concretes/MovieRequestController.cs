@@ -217,8 +217,7 @@ namespace WebServer
 
                 //Set the json response message
                 string json = JSonParser.Parse(
-                    "response", "The Movie was successfully updated"
-                    );
+                    "response", "The Movie was successfully updated");
 
                 //Return the json as encoded bytes
                 return Encoder.Encode(json);

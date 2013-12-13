@@ -141,6 +141,9 @@
     <Compile Include="Models\DataModels.cs" />
     <Compile Include="Models\ErrorModels.cs" />
     <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\ResponsModels.cs">
+      <DependentUpon>SearchModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SearchModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -260,6 +263,7 @@
     <Content Include="Views\Person\ViewInfo.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
+    <Content Include="Views\Shared\EditInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
