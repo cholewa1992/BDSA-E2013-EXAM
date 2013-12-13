@@ -8,7 +8,7 @@
 
 
 \section{System architecture choice}
-We have chosen to utilise the \textbf{Model-View-Controller} system architecture, separating presentation and interaction from system data. 
+We have chosen to utilise the \textbf{Model-View-Controller} system architecture, separating presentation and interaction from system data. Our clients are the view, the webserver is the controller, and the storage module is the model.
 
 \subsubsection{Advantages}
 \begin{itemize}
@@ -23,12 +23,21 @@ We have chosen to utilise the \textbf{Model-View-Controller} system architecture
 	\item The class hierarchy might become messier, as we will need a larger amount of classes for simple tasks.
 \end{itemize}
 
+\section{Design pattern choices}
+We will here document the design patterns utilized by the program. We will list the advantages and disadvantages of our choices.
+
+\begin{itemize}
+	\item \emph{MVC} (or Model-View-Controller) has not only been utilized on the system as a whole, but also notably in the ASP.net client. By doing this, user interface is clearly separated from the controlling logic of the program, and we get modular code that is easy to maintain and extend.
+	\item The \emph{Object Mapper} pattern has been applied in our database to map entities to the storage.
+	\item empt{Abstract factory} in storage to create instances of storage. Gives extendability, so plugins can be made.
+	\item bridge pattern in storage is used to easily inject stops.
+	\item transaction pattern in in-memory storage and entity framework storage
+\end{itemize}
 
 \section{Subsystem decomposition}
 We have grouped our classes into subsystems to create a clearer structure of the program. In this section, we will first show an overview of how the subsystems interact, and then a detailed look at the individual subsystems.
 
 %insert subsystem diagrams here
-
 
 
 \section{Hardware/software mapping}
