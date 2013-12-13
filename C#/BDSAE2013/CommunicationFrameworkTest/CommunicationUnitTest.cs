@@ -174,6 +174,7 @@ namespace CommunicationFrameworkUnitTest
 
                 var Client = new CommunicationHandler( Protocols.Http );
                 Client.Send( "http://localhost:" + portToUse + "/", new byte[ 0 ], "Test" );
+                Client.Receive();
             } );
 
             String[] method = Server.GetRequest( "http://localhost:" + portToUse + "/" ).Method.Split( ' ' );
@@ -193,6 +194,7 @@ namespace CommunicationFrameworkUnitTest
 
                 var Client = new CommunicationHandler( Protocols.Http );
                 Client.Send( "http://localhost:" + portToUse + "/", Encoding.GetEncoding( "iso-8859-1" ).GetBytes( "test".ToCharArray() ), "Test" );
+                Client.Receive();
             } );
 
             Assert.AreEqual( "test", Encoding.GetEncoding( "iso-8859-1" ).GetString( Server.GetRequest( "http://localhost:" + portToUse + "/" ).Data ) );
