@@ -23,7 +23,4 @@ namespace WebServer
         Dictionary<string, string> GetRequestValues(byte[] bytes);
         string GetUrlArgument(string method);
     }
-
-
-
 }

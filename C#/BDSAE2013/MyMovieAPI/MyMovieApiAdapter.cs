@@ -7,7 +7,10 @@ using Storage;
 
 namespace MyMovieAPI
 {
-    public class MyMovieApiAdapter
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
+    public class MyMovieApiAdapter : IMyMovieApiAdapter
     {
         /// <summary>
         /// Requests moviedata from MyMovieApi
@@ -17,7 +20,7 @@ namespace MyMovieAPI
         /// <param name="limit">Limit of how many search results is wanted default = 3</param>
         /// <param name="timeout">How many millisecounds to wait for respons default = 5000ms</param>
         /// <returns>A list of movies fetched from MyMovieApi</returns>
-        public static List<Movies> MakeRequest(IStorageConnectionBridgeFacade storage, string searchWord, int limit = 3,
+        public List<Movies> MakeRequest(IStorageConnectionBridgeFacade storage, string searchWord, int limit = 3,
             int timeout = 5000)
         {
             try
@@ -37,7 +40,7 @@ namespace MyMovieAPI
         /// <param name="storageConnectionBridgeFacade">Active storage to add transformed objects to</param>
         /// <param name="movies">The movies to transform</param>
         /// <returns>A list of movie objects</returns>
-        internal static List<Movies> TransformToMovies(IStorageConnectionBridgeFacade storageConnectionBridgeFacade, MyMovieAPIDTO[] movies)
+        public List<Movies> TransformToMovies(IStorageConnectionBridgeFacade storageConnectionBridgeFacade, MyMovieAPIDTO[] movies)
         {
             try
             {

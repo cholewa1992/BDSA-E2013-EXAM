@@ -1,5 +1,8 @@
 ﻿namespace MyMovieAPI
 {
+    /// <author>
+    /// Jacob Cholewa (jbec@itu.dk)
+    /// </author>
     public class MyMovieAPIDTO
     {
         public string imdb_id { get; set; }
