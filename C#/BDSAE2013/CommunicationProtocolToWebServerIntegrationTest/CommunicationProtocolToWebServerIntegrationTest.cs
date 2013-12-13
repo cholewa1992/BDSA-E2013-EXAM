@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CommunicationProtocolToWebServerIntegrationTest
 {
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     [TestClass]
     public class CommunicationProtocolToWebServerIntegrationTest
     {
