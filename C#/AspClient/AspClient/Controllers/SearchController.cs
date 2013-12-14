@@ -7,19 +7,33 @@ using CommunicationFramework;
 namespace AspClient.Controllers
 {
     /// <summary>
+    /// Controller for handling search requests
     /// @Author Jacob Cholewa (jbec@itu.dk)
     /// @Author Martin
     /// </summary>
     public class SearchController : Controller
     {
+        /// <summary>
+        /// Action result for Search index (~/Search/)
+        /// </summary>
+        /// <returns>Returns an search view with no results</returns>
         public ActionResult Index()
         {
-            return RedirectToAction( "Index", "Home" );
+            return Search(null);
         }
 
+        /// <summary>
+        /// Action result for getting and showing search results from Fake IMDb
+        /// </summary>
+        /// <param name="searchString">The string to search the database for</param>
+        /// <returns>An ActionResult containg the results from the search</returns>
         [HttpGet]
         public ActionResult Search(string searchString)
         {
+            if (string.IsNullOrWhiteSpace(searchString))
+            {
+                return View();
+            }
             byte[] receivedData;
 
             try

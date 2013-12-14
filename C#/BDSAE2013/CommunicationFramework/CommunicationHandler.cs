@@ -41,8 +41,8 @@ namespace CommunicationFramework
             }
             catch
             {
-                //Incase an error happens, we return a default HTTPProtocol because the protocol cannot be null
-                return new HTTPProtocol();
+                //Incase an error happens, we return a default HttpProtocol because the protocol cannot be null
+                return new HttpProtocol();
             }
         }
 
