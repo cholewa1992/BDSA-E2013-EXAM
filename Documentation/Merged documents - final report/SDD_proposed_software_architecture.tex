@@ -13,14 +13,14 @@ The over all system architecture is the \textbf{client server architecture} (fig
 
 \paragraph{Advantages of server client architecture}
 \begin{itemize}
-	\item By keeping the coupling to the sever very light, other developers can easily use our server(api) to build their own clients \\
+	\item By keeping the coupling to the sever very light, other developers can easily use our server(api) to build their own clients. \\
 	\item The server is distributed across a network allowing many users to utilize our service.
 	\item Users can use all or parts of our API through the REST interface making it very customizable to the users needs.
 \end{itemize}
 \paragraph{Disadvantages of server client architecture}
 \begin{itemize}
-	\item The system is distributed which raises a lot of both safety and failure points eg. concurrency  \\
-	\item The solutions performance is heavily relying on the network speed and reliability  
+	\item The system is distributed which raises a lot of both safety and failure points eg. concurrency.  \\
+	\item The solutions performance is heavily relying on the network speed and reliability.  
 \end{itemize}
 
 \begin{figure}[H]
@@ -31,9 +31,9 @@ The over all system architecture is the \textbf{client server architecture} (fig
 \end{center}
 \end{figure}
 
-For the different system components we use different internal software architectures. The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).
+For the different system components we use different internal software architectures. The web server is designed as a layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concrete persistent modules (eg. A database).
 
-The ASP.net client utilise the Model-View-Controller system architecture, separating presentation and interaction from system data.
+The ASP.net client utilises the Model-View-Controller system architecture, separating presentation and interaction from system data.
 
 \paragraph{Advantages of MVC}
 \begin{itemize}
@@ -101,9 +101,9 @@ The WebServer is used to interpret incoming requests, received through the commu
 The RequestDelegator facade will use a delegate given by the specified controller to access the database and retrieve or modify the relevant data. When the request has been handled the WebServer responds to the request using the communication framework.
 
 \begin{figure}[H]
-\includegraphics[scale=0.135]{img/SDD/StoragePackage.png}
+\includegraphics[width=\linewidth]{img/SDD/StoragePackage.png}
 \caption{Storage Subsystem}
-\label{fig:Storage}
+\label{fig:StorageSubsystem}
 \end{figure}
 
 The storage subsystem exposes a bridge facade that allows easy access to the database. The context and the database type (either entity framework or in-memory) is injected through the facade, allowing a generic mapper pattern that doesn't have to know anything about the model being used.
@@ -137,7 +137,7 @@ The persistent objects for the system is already given and implemented in an MSS
 
 \subsubsection{Storage management strategy}
 The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).\\\\
-The storage layer is implemented with different design patterns (see figure ~\ref{fig: storage subsystem}), but the overall architecture is build around the object-mapper pattern. This means that the storage layer doesn't know anything about the object model. This is done so that if a new entity were to be added, only the object model has to been updated in order to implement the change. 
+The storage layer is implemented with different design patterns (see figure \ref{fig:StorageSubsystem}), but the overall architecture is build around the object-mapper pattern. This means that the storage layer doesn't know anything about the object model. This is done so that if a new entity were to be added, only the object model has to been updated in order to implement the change. 
 
 The system implements two storage strategies. A relational database management system implemented using Entity Framework, and a proof of concept In-Memory storage solution that could later be used to implement caching. 
 
