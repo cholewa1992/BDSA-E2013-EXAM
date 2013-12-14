@@ -7,7 +7,7 @@
 
 
 
-\subsection{System architecture choice}
+\subsection{System architecture choice NEED TO BE UPDATED}
 We have chosen to utilise the \textbf{Model-View-Controller} system architecture, separating presentation and interaction from system data. Our clients are the view, the webserver is the controller, and the storage module is the model.
 
 \paragraph{Advantages}
@@ -92,8 +92,26 @@ Below are the generalized components mapped to hardware or software
 \end{itemize}
 
 \subsection{Persistent data management}
+\subsubsection{Identifying persistent objects}
+The persistent objects for the system is was already given and implemented in a MSSQL MDF file. Therefore the system has to adapt the already functional relational database. Some few entities has been added to fulfil the use cases of the system plus making it easily extendible as seen in figure ~\ref{fig:ER Diagram}.
 
-\subsubsection{RDBMS mapping}
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{img/SDD/ER.png}
+\caption{Entity relation diagram (ERD)}
+\label{fig:ER Diagram}
+\end{figure}
+
+\subsubsection{Storage management strategy}
+The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).\\\\
+The storage layer is implemented with different design patterns (see figure ~\ref{fig: storage subsystem}), but the overall architecture is build around the object-mapper pattern. This means that the storage layer doesn't know anything about the object model. This is done so that if a new entity were to be added, only the object model has to been updated in order to implement the change. 
+
+The system is implementing two storage strategies. An relational database management system implemented using Entity Framework and a prove of concept In-Memory storage solution that could later be used to implement cashing. 
+
+Both concert solutions is using the transaction state pattern to ensure that the database is consistent. The state pattern keeps track of the entities states (see figure ~\ref{fig:Entity State Machine Diagram}), and only when Save Changes is invoked, the data is actually saved to the persistent module. This ensures that if the program where to crash while working on ongoing transactions, the persistent data integrity would not be violated.  
+
+\subsubsection{Relational database}
+To improve performance and repose time, we have altered the database to use clustered indexing on key values and non-clustered indexes on often used attributes. The database also uses foreign keys which the entity framework uses for making property references for easy mapping between objects. 
+
 
 \subsection{Access control and security}
 \begin{itemize}
