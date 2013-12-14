@@ -10,13 +10,20 @@ namespace FakeIMDB_DesktopClient.Services
 {
 
     /// <summary>
-    /// 
+    /// Class containing an implementation of a SearchService
     /// </summary>
     /// <author>
-    /// 
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
     /// </author>
     public class SearchService : ISearchService
     {
+
+        /// <summary>
+        /// Method initializing a search
+        /// </summary>
+        /// <param name="callback">Action with callback method to be used</param>
+        /// <param name="searchTerm">String to be searched for</param>
+        /// <param name="connectionModel">ConnectionModel to be used</param>
         public void Search(Action<List<ISearchItem>, Exception> callback, string searchTerm, ConnectionModel connectionModel)
         {
             try
@@ -29,6 +36,13 @@ namespace FakeIMDB_DesktopClient.Services
             }
         }
 
+        /// <summary>
+        /// Method initializing a search in an Async manner
+        /// </summary>
+        /// <param name="callback">Action with callback method to be used</param>
+        /// <param name="searchTerm">String to be searched for</param>
+        /// <param name="connectionModel">ConnectionModel to be used</param>
+        /// <param name="token">CancellationToken to be used</param>
         public async void SearchAsync(Action<List<ISearchItem>, Exception> callback, string searchTerm, ConnectionModel connectionModel,
             CancellationToken token)
         {
@@ -47,19 +61,27 @@ namespace FakeIMDB_DesktopClient.Services
         }
 
 
+        /// <summary>
+        /// Method searching and returning a list of results
+        /// </summary>
+        /// <param name="term">String to be searched for</param>
+        /// <param name="connectionModel">Connection model to be used</param>
+        /// <returns>a list of ISearchItems</returns>
         public List<ISearchItem> FetchData(String term, ConnectionModel connectionModel)
         {
-
+            
             var ch = new CommunicationHandler(connectionModel.Protocol);
 
+            // Build RESTful string
             string restAddress = connectionModel.Address + "Search/" + term;
 
+            // Send message with no Data
             ch.Send(restAddress, new byte[0], "GET");
 
-
+            // Decode result to string
             string json = Encoder.Decode(ch.Receive(5000));
 
-
+            // Build dictionary representation of the json result
             Dictionary<string, string> resultDictionary = JSonParser.GetValues(json);
 
 

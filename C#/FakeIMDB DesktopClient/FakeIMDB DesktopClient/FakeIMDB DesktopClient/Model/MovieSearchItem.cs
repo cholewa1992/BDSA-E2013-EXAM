@@ -11,6 +11,12 @@ using System.Windows.Media.Imaging;
 
 namespace FakeIMDB_DesktopClient.Model
 {
+    /// <summary>
+    /// Model with properties describing a Movie Search Item
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
     public class MovieSearchItem : ISearchItem
     {
         public string Id { get; set; }

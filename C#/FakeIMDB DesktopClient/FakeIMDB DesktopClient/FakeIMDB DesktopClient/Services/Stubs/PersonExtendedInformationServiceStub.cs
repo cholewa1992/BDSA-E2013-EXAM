@@ -8,7 +8,13 @@ using FakeIMDB_DesktopClient.Model;
 
 namespace FakeIMDB_DesktopClient.Services.Stubs
 {
-    class PersonExtendedInformationServiceStub : IPersonExtendedInformationService
+    /// <summary>
+    /// Implementation stub of a PersonExtendedInformationService
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
+    public class PersonExtendedInformationServiceStub : IPersonExtendedInformationService
     {
 
         public void GetData(Action<PersonSearchItem, Exception> callback, PersonSearchItem searchItem, ConnectionModel connectionModel)

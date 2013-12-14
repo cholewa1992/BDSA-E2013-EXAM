@@ -6,7 +6,13 @@ using FakeIMDB_DesktopClient.Model;
 
 namespace FakeIMDB_DesktopClient.Services.Stubs
 {
-    internal class SearchServiceStub : ISearchService
+    /// <summary>
+    /// Implementation stub of a SearchService
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
+    public class SearchServiceStub : ISearchService
     {
         public void Search(Action<List<ISearchItem>, Exception> callback, string searchTerm, ConnectionModel connectionModel)
         {
