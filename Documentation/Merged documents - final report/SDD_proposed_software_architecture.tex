@@ -48,8 +48,7 @@ We have grouped our classes into subsystems to create a clearer structure of the
 \label{fig:FakeIMDBSubsystems}
 \end{figure}
 
-Fake IMDb is divided into five main subsystems with one subsystems for each different clients, communicating with WebServer subsystem through Communication Framework subsystem. WebServer sybsystem use Storage subsystem to get/put data to/from the clients.\\
-
+The software is divided into five main subsystems with one subsystem for each different clients, communicating with the WebServer subsystem through the Communication Framework subsystem. The WebServer subsystem use the Storage subsystem to get/put data to/from the clients.\\
 
 \begin{figure}[H]
 \includegraphics[scale=0.2]{img/SDD/WebClientSubsystemSnippet.png}
@@ -57,24 +56,22 @@ Fake IMDb is divided into five main subsystems with one subsystems for each diff
 \label{fig:WebClientSubsystem}
 \end{figure}
 
-The Web Client use ASP.Net framework which have a lot of action going on behind the scene and therefor it will not make sense to show a common static class diagram. Instead  a fraction is shown through a search session. The SearchController use SearchResult to get a movieresult or personresult to show in Search(view)\\
-
-
+The Web Client utilizes the ASP.Net framework which contains a lot of classes which are redundant to visualize through a common static class diagram. Instead only the classes used when searching is shown. The SearchController uses the SearchResult to get a movieresult or personresult to show in the Search(view)\\
 
 \begin{figure}[H]
 \includegraphics[scale=0.2]{img/SDD/CommunicationFrameworkSubsystem.png}
 \caption{Communication Framework Subsystem}
 \label{fig:CommunicationFramework}
 \end{figure}
-Here shall be some very wise text about the communication framework subsystem.
-
+The communication framework subsystem is used when sending and receiving requests. The framework is used by both the WebServer and each of the clients for communication purposes. The subsystem allows for easy extensibility of more protocol types, though the software at hand only utilizes the Http protocol.
 
 \begin{figure}[H]
 \includegraphics[scale=0.2]{img/SDD/NewWebserverSubsystem.png}
 \caption{Web Server Subsystem}
 \label{fig:WebServer}
 \end{figure}
-Here Shall be some vise about the web server
+The WebServer is used to interpret incoming requests, received through the communication framework. The requests will be handled by the designated controller (if any exists), or discarded with an error code, since the server is not able to furtherly process it.
+The RequestDelegator facade will use a delegate given by the specified controller to access the database and retrieve or modify the relevant data. When the request has been handled the WebServer responds to the request using the communication framework.
 
 %insert subsystem diagrams here
 
