@@ -23,6 +23,12 @@ The over all system architecture is the \textbf{client server architecture} (fig
 	\item The solutions performance is heavily relying on the network speed and reliability  
 \end{itemize}
 
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{img/SDD/bdsaproject.png}
+\caption{System architecture}
+\label{fig:System architecture}
+\end{figure}
+
 For the different system components we use different internal software architectures. The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).
 
 The WCF clients uses the Model-View-Viewmodel (MVVM)
@@ -41,12 +47,6 @@ The ASP.net client utilise the Model-View-Controller system architecture, separa
 	\item We will most likely have a larger amount of classes than necessary for a project of this scope. \\
 	\item The class hierarchy might become messier, as we will need a larger amount of classes for simple tasks.
 \end{itemize}
-
-\begin{figure}[H]
-\includegraphics[width=\linewidth]{img/SDD/bdsaproject.png}
-\caption{System architecture}
-\label{fig:System architecture}
-\end{figure}
 
 \subsection{Design pattern choices}
 We will in this section document the design patterns utilized by the program. We will mention the reasoning behind our choices.
