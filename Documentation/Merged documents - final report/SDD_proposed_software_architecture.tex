@@ -34,6 +34,7 @@ We will here document the design patterns utilized by the program. We will menti
 	\item The \emph{Adapter pattern} has been used when translating alien movie data from other databases to the format used in the main database.
 	\item The \emph{Front Controller Pattern} is used when processing requests. Incoming requests is sent through a delegator to the relevant request controller. The controller determines how the request will affect the database. This allows for new request types to be implemented easily.
 	\item The \emph{Facade Pattern} is used for each of the subsystems in the program. All subsystems expose a single facade to be accessed by other subsystems, allowing simple communication compared to more complicated communication in which every class could communicate with eachother. Furthermore the pattern allows each subsystem to be self-contained allowing for inner changes to be made frequently as long as the changes does not change the functionality of the facade.
+	\item The \emph{Command Pattern} has been used to invoke delegates in the ViewModels bound by controllers in the Views. A button, for example, will be bound to a command in the ViewModel, and hence code can be executed by the hand of the user.
 \end{itemize}
 
 \subsection{Subsystem decomposition}
