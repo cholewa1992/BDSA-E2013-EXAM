@@ -550,7 +550,7 @@ The sequence diagrams explains some of the more apparant use cases of the system
 \end{figure}
 
 \paragraph{State machines}
-An entity can have different states. As seen in figure \ref{fig:Entity State Machine Diagram}, after its creation (POST), it is stores in the persistent database module on the server. From here it can either be deleted (DELETE), or it can be fetched (GET). When a object is queried from the database the server will fetch it as a DTO (Data transfer object) into the servers memory. Often used objects will be saved in the server's cache. The DTO is then sent to the client requesting the object. The client-side also have a cache. This means that if the user has recently queried the object, it will not be fetched from the server, but from the local cache. A DTO can from there either be updated (PUT) and pushed back to the server, or cache time-out and be deleted (This means that only the DTO will be deleted and not the entity in the database).
+An entity can have different states. As seen in figure \ref{fig:Entity State Machine Diagram}, after its creation (POST), it is stored in the persistent database module on the server. From here it can either be deleted (DELETE), or it can be fetched (GET). When a object is queried from the database the server will fetch it as a DTO (Data transfer object) into the servers memory and the DTO is sent to the client requesting the object. A DTO can from there either be updated (PUT) and pushed back to the server or it can go out of scope, meaning it's removed from the server's memory. (This means that only the DTO will be deleted and not the entity in the database).
 
 This is valid for Movies and Actors.
 
