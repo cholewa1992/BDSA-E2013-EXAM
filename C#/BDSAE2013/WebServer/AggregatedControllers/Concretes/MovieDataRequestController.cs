@@ -34,7 +34,7 @@ namespace WebServer
         }
 
         /// <summary>
-        /// This method returns a delegate that can be used to get a complete set of data about a specified moive
+        /// This method returns a delegate that can be used to get a complete set of data about a specified movie
         /// The id of the movie is determined by the parsed request
         /// @pre request != null
         /// @pre request.Method != null

@@ -36,13 +36,13 @@ namespace WebServer
         }
 
         /// <summary>
-        /// This method returns a delegate that can be used to search for movies that matches certain criteria
+        /// This method returns a delegate that can be used to search for movies and people that matches certain criteria
         /// The search criteria is determined by the parsed request
         /// @pre request != null
         /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
-        /// <returns> A delegate that searches for movies in the database based on the request </returns>
+        /// <returns> A delegate that searches for movies and people in the database based on the request </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
             //Pre condition check that the incoming request is not null

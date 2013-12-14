@@ -18,9 +18,9 @@ namespace CommunicationFramework
     /// Mathias Pedersen (mkin@itu.dk)
     /// Martin Juul Petersen (mjup@itu.dk)
     /// </author>
-    internal class HTTPProtocol : IProtocol
+    internal class HttpProtocol : IProtocol
     {
-        //Lookup table based on the request object and it's ListenerContext. This is specific for the HTTPProtocol
+        //Lookup table based on the request object and it's ListenerContext. This is specific for the HttpProtocol
         private Dictionary<Request, HttpListenerContext> _lookupTable = new Dictionary<Request, HttpListenerContext>();
 
         private readonly Dictionary<Request, HttpListenerContext> _writeableLookupTable = new Dictionary<Request, HttpListenerContext>();
@@ -32,15 +32,15 @@ namespace CommunicationFramework
         /// <summary>
         ///     Default constructor, initializes the Address to the default address
         /// </summary>
-        public HTTPProtocol() : this( "http://*:1337/" )
+        public HttpProtocol() : this( "http://*:1337/" )
         {
         }
 
         /// <summary>
-        ///     Construct a HTTPProtocol and sets the Address to the address parameter
+        ///     Construct a HttpProtocol and sets the Address to the address parameter
         /// </summary>
         /// <param name="address">address of the protocol to connect to</param>
-        public HTTPProtocol( string address )
+        public HttpProtocol( string address )
         {
             Address = address;
         }
@@ -71,7 +71,7 @@ namespace CommunicationFramework
             {
                 //Check that the address is actually valid. This is specific for each protocol.
                 //This regex makes sure that the address is either of the form "http://my.web.url/", "http://localhost:1337/" or "http://192.168.1.10/"
-                if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|\*|localhost|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
+                if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|\*|[\wÆæØøÅå]+?|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
                     throw new ProtocolException( "ERROR! Address not valid" );
 
                 _address = value;
@@ -83,7 +83,7 @@ namespace CommunicationFramework
         }
 
         /// <summary>
-        ///     Get a response using the HTTPProtocol. After timeToWaitFor amount of time has passed, casts a ProtocolException
+        ///     Get a response using the HttpProtocol. After timeToWaitFor amount of time has passed, casts a ProtocolException
         ///     @pre _request != null
         ///     @post response != null
         ///     @post webResponse.StatusDescription == "Ok"
@@ -152,7 +152,7 @@ namespace CommunicationFramework
         }
 
         /// <summary>
-        ///     Send a request using the HTTPProtocol
+        ///     Send a request using the HttpProtocol
         /// </summary>
         /// <param name="data">Data to include in the request</param>
         /// <param name="method">Method to send the request as</param>
@@ -175,7 +175,7 @@ namespace CommunicationFramework
         }
 
         /// <summary>
-        ///     Get a request using the HTTPProtocol
+        ///     Get a request using the HttpProtocol
         /// </summary>
         /// <returns>A request object created from the request that was received using the http protocol</returns>
         public Request GetRequest()
