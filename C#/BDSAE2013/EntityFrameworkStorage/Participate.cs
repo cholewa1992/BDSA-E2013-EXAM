@@ -13,7 +13,7 @@ namespace EntityFrameworkStorage
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Participate : IEntityDto
     {
         public int ParticipateId { get; set; }
