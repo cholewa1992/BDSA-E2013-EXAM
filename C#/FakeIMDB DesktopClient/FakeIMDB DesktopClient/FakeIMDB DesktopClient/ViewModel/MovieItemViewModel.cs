@@ -23,22 +23,27 @@ namespace FakeIMDB_DesktopClient.ViewModel
     /// </author>
     public class MovieItemViewModel : ViewModelBase
     {
+        // Services to use
         private readonly IMovieExtendedInformationService _informationService;
         private readonly IPutMovieDataService _moviePutService;
 
+        // Model containing connection information for the services to use
         private ConnectionModel _connectionModel;
 
-
+        // Cancellationtoken sent with async services
         private CancellationToken _extendedInfoCancellationToken;
         private CancellationToken _putInfoCancellationToken;
 
+
         // Property Names
-        public const string WelcomeTitlePropertyName = "WelcomeTitle";
-        public const string CurrentViewPropertyName = "CurrentView";
-        public const string ProgramBannerPropertyName = "ProgramBanner";
+        public const string MovieItemPropertyName = "MovieItem";
+
 
 
         private MovieSearchItem _movieItem;
+        /// <summary>
+        /// Property containing the MovieItem to be showed
+        /// </summary>
         public MovieSearchItem MovieItem
         {
             get { return _movieItem; }
@@ -48,15 +53,21 @@ namespace FakeIMDB_DesktopClient.ViewModel
                     return;
 
                 _movieItem = value;
-                RaisePropertyChanged("MovieItem");
+                RaisePropertyChanged(MovieItemPropertyName);
             }
         }
 
 
+        // Commands
         public RelayCommand<PersonSearchItem> SelectionCommand { get; set; } 
         public RelayCommand PutCommand { get; set; }
 
 
+        /// <summary>
+        /// Initializes a new instance of the class
+        /// </summary>
+        /// <param name="informationService">A service setting a MovieItem with extended information by callback</param>
+        /// <param name="moviePutService">A service updating the MovieItem properties offshore</param>
         public MovieItemViewModel(IMovieExtendedInformationService informationService, IPutMovieDataService moviePutService)
         {
 
@@ -64,6 +75,8 @@ namespace FakeIMDB_DesktopClient.ViewModel
             _moviePutService = moviePutService;
 
 
+            // Register to receive ConnectionModelMessages
+            // When received, the local _connectionModel will be set accordingly
             Messenger.Default.Register<ConnectionModelMessage>(this,
                 (connectionMessage) =>
                 {

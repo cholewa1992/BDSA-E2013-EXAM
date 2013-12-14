@@ -8,6 +8,12 @@ using FakeIMDB_DesktopClient.Model;
 
 namespace FakeIMDB_DesktopClient.Message
 {
+    /// <summary>
+    /// Message for sending a view
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
     class ChangeViewMessage
     {
         public ContentControl view;

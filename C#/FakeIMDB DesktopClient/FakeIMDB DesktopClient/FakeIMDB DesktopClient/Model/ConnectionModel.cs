@@ -7,6 +7,12 @@ using CommunicationFramework;
 
 namespace FakeIMDB_DesktopClient.Model
 {
+    /// <summary>
+    /// Model with properties describing a Connection
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
     public class ConnectionModel
     {
         public string Address { get; set; }

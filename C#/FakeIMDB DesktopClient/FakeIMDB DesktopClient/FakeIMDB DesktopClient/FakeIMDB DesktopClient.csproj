@@ -79,7 +79,6 @@
     <Compile Include="Control\CaptionButtons.xaml.cs">
       <DependentUpon>CaptionButtons.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ShortDescriptionWidthConverter.cs" />
     <Compile Include="Converters\WidthConverter.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
@@ -91,7 +90,6 @@
     <Compile Include="Message\SearchTermMessage.cs" />
     <Compile Include="Message\SelectionMessage.cs" />
     <Compile Include="Model\ConnectionModel.cs" />
-    <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\SearchProgressBar.cs" />
     <Compile Include="Services\IMovieExtendedInformationService.cs" />
     <Compile Include="Model\ISearchItem.cs" />

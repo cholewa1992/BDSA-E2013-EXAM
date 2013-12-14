@@ -19,19 +19,28 @@ namespace FakeIMDB_DesktopClient.ViewModel
     /// </author>
     public class SearchViewModel : ViewModelBase
     {
+
+        // Services to use
         private readonly ISearchService _searchService;
 
+
+        // Model containing connection information for the services to use
         private ConnectionModel _connectionModel;
+
+
+        // Cancellationtoken sent with async services
+        private CancellationToken _searchServiceCancellationToken;
+
 
         // Property names
         public const string SearchResultPropertyName = "SearchResult";
 
 
-        private CancellationToken _searchServiceCancellationToken;
-
-
+        
         private List<ISearchItem> _searchResults;
-
+        /// <summary>
+        /// List of searchresults from an injected service
+        /// </summary>
         public List<ISearchItem> SearchResult
         {
             get { return _searchResults; }
@@ -48,20 +57,25 @@ namespace FakeIMDB_DesktopClient.ViewModel
         }
 
 
+        // Commands
         public RelayCommand<ISearchItem> SelectionCommand { get; set; }
 
 
         /// <summary>
-        ///     Initializes a new instance of the SearchViewModel class.
+        /// Initializes a new instance of the class
         /// </summary>
+        /// <param name="searchService">A service setting a list of searchresults by callback</param>
         public SearchViewModel(ISearchService searchService)
         {
+            // Set the injected service
             _searchService = searchService;
 
 
             _searchServiceCancellationToken = new CancellationToken();
 
 
+            // Register to receive ConnectionModelMessages
+            // When received, the local _connectionModel will be set accordingly
             Messenger.Default.Register<ConnectionModelMessage>(this,
                 (connectionMessage) =>
                 {
@@ -69,6 +83,8 @@ namespace FakeIMDB_DesktopClient.ViewModel
                 });
 
 
+            // Register to receive SearchTermMessages
+            // When received the set service will be used to set the local searchResult
             Messenger.Default.Register<SearchTermMessage>(this, msg => _searchService.SearchAsync(
                 (item, error) =>
                 {
@@ -83,7 +99,8 @@ namespace FakeIMDB_DesktopClient.ViewModel
                 ));
 
 
-            // Setup command actions
+            // Set SelectionCommand. The ISearchItem command parameter's type is checked and
+            // an appropriate view is sent in a message
             SelectionCommand = new RelayCommand<ISearchItem>(searchItem
                 =>
             {
@@ -105,17 +122,7 @@ namespace FakeIMDB_DesktopClient.ViewModel
                         });
                         break;
 
-                        /*
-                    case ItemType.Person:
-                        Messenger.Default.Send(new ChangeViewMessage()
-                        {
-                            view = new Person();
-                            viewAction = () => Messenger.Default.Send(new SelectionMessage(
-                            {
-                                SelectedItem = searchItem
-                            });
-                        });
-                        break;*/
+                        
                 }
             });
         }

@@ -22,16 +22,21 @@ namespace FakeIMDB_DesktopClient.ViewModel
     public class ConnectionViewModel : ViewModelBase
     {
 
+        // Commands
         public RelayCommand<string> ConnectionCommand { get; set; }
 
 
+        /// <summary>
+        /// Initializes a new instance of the class
+        /// </summary>
         public ConnectionViewModel() 
         {
             
+            // Set command which first sends a ConnectionModelMessage with the address received through Command parameter
+            // Then sends a ChangeViewMessage with a SearchView
             ConnectionCommand = new RelayCommand<string>((address)
                 =>
             {
-                MessageBox.Show(address);
                 Messenger.Default.Send(new ConnectionModelMessage()
                 {
                     ConnectionModel = new ConnectionModel()

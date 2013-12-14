@@ -9,7 +9,13 @@ using FakeIMDB_DesktopClient.Model;
 
 namespace FakeIMDB_DesktopClient.Services.Stubs
 {
-    class MovieExtendedInformationServiceStub : IMovieExtendedInformationService
+    /// <summary>
+    /// Implementation stub of a MovieExtendedInformationService
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
+    public class MovieExtendedInformationServiceStub : IMovieExtendedInformationService
     {
 
 
