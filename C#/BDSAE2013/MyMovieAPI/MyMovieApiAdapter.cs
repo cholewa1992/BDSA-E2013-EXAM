@@ -44,34 +44,46 @@ namespace MyMovieAPI
         {
             try
             {
+                //Initialize a new list of movies to return
                 var newMovies = new List<Movies>();
+
+                //Iterate through all movies from the MyMovieAPIDTO list
                 foreach (var movie in movies)
                 {
-                    var newM = new Movies
+                    //Initialize the new movie converted from MyMovieAPI to the program main database structure
+                    var newMovie = new Movies
                     {
                         Kind = movie.type,
                         Title = movie.title,
                         Year = movie.year
                     };
 
-                    if (storageConnectionBridgeFacade.Get<Movies>().Any(t => t.Title == newM.Title && t.Year == newM.Year))
+                    //If the movie already exists in the database we add it to the list of results, without adding it to the database
+                    if (storageConnectionBridgeFacade.Get<Movies>().Any(t => t.Title == newMovie.Title && t.Year == newMovie.Year))
                     {
-                        newMovies.Add(storageConnectionBridgeFacade.Get<Movies>().Single(t => t.Title == newM.Title && t.Year == newM.Year));
+                        newMovies.Add(storageConnectionBridgeFacade.Get<Movies>().Single(t => t.Title == newMovie.Title && t.Year == newMovie.Year));
                         continue;
                     }
 
-                    newMovies.Add(newM);
-                    storageConnectionBridgeFacade.Add(newM);
+                    newMovies.Add(newMovie);
+                    storageConnectionBridgeFacade.Add(newMovie);
 
+                    //Iterate through all persons in the movie
                     foreach (var personName in movie.actors)
                     {
-                        int id;
-                        if (storageConnectionBridgeFacade.Get<People>().Any(t => t.Name == personName))
+                        //try to find the person in our own database
+                        People person = storageConnectionBridgeFacade.Get<People>().FirstOrDefault(t => t.Name == personName);
+
+                        int id = 0;
+
+                        //If the person exists we simply use our own id
+                        if (person != null)
                         {
-                            id = storageConnectionBridgeFacade.Get<People>().Where(t => t.Name == personName).Select(t => t.Id).First();
+                            id = person.Id;
                         }
                         else
                         {
+                            //If he does not we initialize a new one and add it to the database, and use the new id
                             var newPerson = new People
                             {
                                 Name = personName
@@ -80,11 +92,14 @@ namespace MyMovieAPI
                             id = newPerson.Id;
                         }
 
-                        if (id == 0) throw new InvalidOperationException("Id was 0");
+                        if (id == 0) 
+                            throw new InvalidOperationException("Id was 0");
+                        
+                        //Add a parcitipate link between the actor and the movie
                         storageConnectionBridgeFacade.Add(new Participate
                         {
                             Role = "actor",
-                            Movie_Id = newM.Id,
+                            Movie_Id = newMovie.Id,
                             Person_Id = id
                         });
                     }
@@ -93,7 +108,7 @@ namespace MyMovieAPI
             }
             catch(Exception e)
             {
-                throw new JsonException("Could not parse the respons from mymovie api", e);
+                throw new JsonException("Could not parse the response from mymovie api", e);
             }
         }
     }

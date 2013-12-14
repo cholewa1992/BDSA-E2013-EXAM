@@ -46,7 +46,7 @@ namespace WebServer
             string input = request.Method.Split(' ')[0];
 
             //Check which rest request type the request is and parse it to the proper method
-            switch (input) 
+            switch (input.ToUpper()) 
             { 
                 case "GET":
                     return ProcessGet(request);

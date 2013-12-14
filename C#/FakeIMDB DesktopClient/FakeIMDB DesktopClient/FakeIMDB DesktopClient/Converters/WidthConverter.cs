@@ -8,6 +8,12 @@ using System.Windows.Data;
 
 namespace FakeIMDB_DesktopClient.Converters
 {
+    /// <summary>
+    /// Converter for binding to substract 40
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
     class WidthConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

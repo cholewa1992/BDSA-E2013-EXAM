@@ -3,6 +3,11 @@ using System.Runtime.Serialization;
 
 namespace CommunicationFramework
 {
+
+    /// <author>
+    /// Mathias Pedersen (mkin@itu.dk)
+    /// Martin Juul Petersen (mjup@itu.dk)
+    /// </author>
     public class ProtocolException : Exception
     {
         public ProtocolException()

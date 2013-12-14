@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace FakeIMDB_DesktopClient.Exceptions
 {
+    /// <summary>
+    /// ConnectionException
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
     class ConnectionException: Exception
     {
         public ConnectionException()

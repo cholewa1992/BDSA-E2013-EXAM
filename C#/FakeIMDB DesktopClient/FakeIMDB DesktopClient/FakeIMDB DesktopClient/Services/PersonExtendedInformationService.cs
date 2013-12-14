@@ -11,10 +11,21 @@ using Utils;
 
 namespace FakeIMDB_DesktopClient.Services
 {
-    class PersonExtendedInformationService : IPersonExtendedInformationService
+    /// <summary>
+    /// Implementation of a PersonExtendedInformationService
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
+    public class PersonExtendedInformationService : IPersonExtendedInformationService
     {
 
-
+        /// <summary>
+        /// Method initializing fetching of extended data
+        /// </summary>
+        /// <param name="callback">Action with callback method to be used</param>
+        /// <param name="searchItem">SearchItem which properties shall be used</param>
+        /// <param name="connectionModel">ConnectionModel to be used</param>
         public void GetData(Action<PersonSearchItem, Exception> callback, PersonSearchItem searchItem, ConnectionModel connectionModel)
         {
             try
@@ -27,6 +38,13 @@ namespace FakeIMDB_DesktopClient.Services
             }
         }
 
+        /// <summary>
+        /// Method initializing fetching of data in an Async manner
+        /// </summary>
+        /// <param name="callback">Action with callback method to be used</param>
+        /// <param name="searchItem">SearchItem which properties shall be used</param>
+        /// <param name="connectionModel">ConnectionModel to be used</param>
+        /// <param name="token">CancellationToken to be used</param>
         public async void GetDataAsync(Action<PersonSearchItem, Exception> callback, PersonSearchItem searchItem, ConnectionModel connectionModel, CancellationToken token)
         {
             await Task.Run(() =>
@@ -42,31 +60,35 @@ namespace FakeIMDB_DesktopClient.Services
             }, token);
         }
 
-
-        public void GetData(Action<PersonSearchItem, Exception> callback, ISearchItem searchItem)
-        {
-            
-        }
-
+        /// <summary>
+        /// Method for fetching extended information
+        /// </summary>
+        /// <param name="item">SearchItem which properties shall be used</param>
+        /// <param name="connectionModel">ConnectionModel to be used</param>
+        /// <returns>The same PersonSearchItem from parameters</returns>
         public PersonSearchItem FetchInfo(PersonSearchItem item, ConnectionModel connectionModel)
         {
 
             var ch = new CommunicationHandler(connectionModel.Protocol);
 
+            //Build RESTful address
             string restAddress = connectionModel.Address + "PersonData/" + item.Id;
 
+            // send message with no data
             ch.Send(restAddress, new byte[0], "GET");
 
+            // decode response to string dictionary representation of the json
+            Dictionary<string, string> json = JSonParser.GetValues(Encoder.Decode(ch.Receive(10000)));
 
-            var json = JSonParser.GetValues(Encoder.Decode(ch.Receive(10000)));
-
+            // set values from json dictionary
             item.Id = json["id"];
             item.Name = json["name"];
             item.Gender = json["gender"];
 
+            // if dictionary does't contain birthday, set it to null
             item.Birthdate = json.ContainsKey("piBirthDate0Info") ? json["piBirthDate0Info"] : null;
 
-
+            // set movies participated in from dictionary
             item.ParticipatesInList = new List<MovieSearchItem>();
             for (int i = 0; json.ContainsKey("m" + i + "Id"); i++)
             {

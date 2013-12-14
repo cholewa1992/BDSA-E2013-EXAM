@@ -7,6 +7,10 @@ namespace CommunicationFramework
         Http
     }
 
+    /// <author>
+    /// Mathias Pedersen (mkin@itu.dk)
+    /// Martin Juul Petersen (mjup@itu.dk)
+    /// </author>
     public class CommunicationHandler
     {
         private IProtocol _protocolInstance;

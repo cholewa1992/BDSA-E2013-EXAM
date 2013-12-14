@@ -1,0 +1,66 @@
+\chapter{Requirements Analysis Document}
+
+\section{Introduction}
+\label{sec:introduction}
+
+\subsection{Revision History}
+\begin{center}
+    \begin{tabular}{ | l | l | p{6cm} | p{4cm} |}
+    \hline
+    Version & Date & Description & Author(s) \\ \hline
+    0.1.0 & 19/11/2013 & Initial Document & MIFR, JKAS, MJUP, JBEC, MKIN, MORR
+    \\ \hline
+    0.2.0 & 20/11/2013 & Added scenarios and use cases & MIFR, JKAS, MJUP, JBEC, MKIN
+    \\ \hline
+    0.3.0 & 20/11/2013 & Added glossary, functional and non-functional requirements, object model, Use case diagram, State machine diagram and refined introduction formulation & MIFR, JKAS, MJUP, JBEC, MKIN
+    \\ \hline
+    0.4.0 & 21/11/2013 & Refined scenarios, added sequence diagrams, added boundary objects & MIFR, JKAS, MJUP, JBEC, MKIN, MORR
+    \\ \hline
+    1.0.0 & 10/12/2013 & Complete revision of the RAD. Reworked functional and non-functional requirements to fit what we are actually able to do & MIFR
+    \\ \hline
+    1.1.0 & 11/12/2013 & Removed irrelevant scenarios and use cases, spell checked & MIFR, MORR
+    \\ \hline
+    1.2.0 & 12/12/2013 & Revised glossary, added updated sequence diagrams and use case diagrams & MIFR, MORR
+    \\ \hline
+    1.2.1 & 13/12/2013 & Revised a non-functional requirement slightly & MIFR
+    \\ \hline
+    \end{tabular}
+\end{center}
+
+\subsection{Purpose of the system}
+
+The purpose of the system is to create a tool for people watching movies. We want to give our users access to a movie database available at their fingertips for inspiration and the possibility to read about their favourite movies.
+
+Two clients shall be available . A browser based client enabling access from a browser, as well as a desktop application for their personal computer.  
+
+
+%Init formulation The purpose of the system is to create a tool for easy access to a movie database through the use of two clients: A desktop- and browser-version.
+
+
+\subsection{Scope of the system}
+
+The scope of the system is as follows
+
+Scope is making a system containing most movies with related information, and making this data available though a distributed RESTful web service. Two clients will also be implemented: An ASP.net web browser client, and a desktop application done with WPF.
+
+Part of the scope will also be to work with responsiveness enabling caching and database optimizing through indexing and optimized SQL quires.
+
+Out of scope is looking into user security issues
+
+%Init definition
+%\begin{itemize}
+%\item A Database which contains most movies related information
+%\item An Application Server which exposes services making the Database %information accessible
+%\item A Desktop Client which presents the user with movie information from the %Database
+%\item A Web Client which also presents the user with movie information from the %Database
+%\end{itemize} 
+
+\subsection{Objectives and success criteria of the project}
+
+The success criteria for this project is reached if end-users, in an easy and fast manner, are able to find movie information through both the desktop- and web-client. Success will be measured by how many users, without complications, are able to use our system to find desired information.
+
+This goal is achieved if 9/10 users are able to do so.
+
+%Init definition
+%The success criteria for this project is reached if end-users, in an easy and fast manner, are able to find movie information through both the desktop- and web-client.
+

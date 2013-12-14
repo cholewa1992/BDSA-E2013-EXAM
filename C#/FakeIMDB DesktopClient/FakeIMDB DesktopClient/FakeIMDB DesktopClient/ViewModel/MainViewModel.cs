@@ -18,11 +18,12 @@ namespace FakeIMDB_DesktopClient.ViewModel
     /// </author>
     public class MainViewModel : ViewModelBase
     {
+
+        // Model containing connection information for the services to use
         private readonly ConnectionModel _connectionModel;
 
 
         // Property Names
-        public const string WelcomeTitlePropertyName = "WelcomeTitle";
         public const string CurrentViewPropertyName = "CurrentView";
         public const string ProgramBannerPropertyName = "ProgramBanner";
         public const string BusyIndicatorPropertyName = "BusyIndicator";
@@ -32,31 +33,11 @@ namespace FakeIMDB_DesktopClient.ViewModel
         public const string IsAddressSetPropertyName = "IsAddressSet";
 
 
-        private string _welcomeTitle = string.Empty;
-
-        /// <summary>
-        ///     Gets the WelcomeTitle property.
-        ///     Changes to that property's value raise the PropertyChanged event.
-        /// </summary>
-        public string WelcomeTitle
-        {
-            get { return _welcomeTitle; }
-
-            set
-            {
-                if (_welcomeTitle == value)
-                {
-                    return;
-                }
-
-                _welcomeTitle = value;
-                RaisePropertyChanged(WelcomeTitlePropertyName);
-            }
-        }
-
 
         private ContentControl _currentView;
-
+        /// <summary>
+        /// Property with the current ContentControl to be displayed
+        /// </summary>
         public ContentControl CurrentView
         {
             get { return _currentView; }
@@ -70,8 +51,11 @@ namespace FakeIMDB_DesktopClient.ViewModel
             }
         }
 
-        private ContentControl _busyIndicator;
 
+        private ContentControl _busyIndicator;
+        /// <summary>
+        /// Property with a ContentControl
+        /// </summary>
         public ContentControl BusyIndicator
         {
             get { return _busyIndicator; }
@@ -85,8 +69,11 @@ namespace FakeIMDB_DesktopClient.ViewModel
             }
         }
 
-        private SearchProgressBar _searchProgress;
 
+        private SearchProgressBar _searchProgress;
+        /// <summary>
+        /// Property with a SearchProgressBar object
+        /// </summary>
         public SearchProgressBar SearchProgress
         {
             get { return _searchProgress; }
@@ -100,8 +87,11 @@ namespace FakeIMDB_DesktopClient.ViewModel
             }
         }
 
-        private double _searchProgressValue;
 
+        private double _searchProgressValue;
+        /// <summary>
+        /// Property with the value of search progress
+        /// </summary>
         public double SearchProgressValue
         {
             get { return _searchProgressValue; }
@@ -117,7 +107,9 @@ namespace FakeIMDB_DesktopClient.ViewModel
 
 
         private Visibility _searchProgressVisibility;
-
+        /// <summary>
+        /// Property describing the visibility of a Progress Bar
+        /// </summary>
         public Visibility SearchProgressVisibility
         {
             get { return _searchProgressVisibility; }
@@ -133,7 +125,9 @@ namespace FakeIMDB_DesktopClient.ViewModel
 
 
         private string _programBanner = string.Empty;
-
+        /// <summary>
+        /// Property containing the program banner to be displayed
+        /// </summary>
         public string ProgramBanner
         {
             get { return _programBanner; }
@@ -149,7 +143,9 @@ namespace FakeIMDB_DesktopClient.ViewModel
 
 
         private bool _isAddressSet = false;
-
+        /// <summary>
+        /// Property describing if the address had been set
+        /// </summary>
         public bool IsAddressSet
         {
             get { return _isAddressSet; }
@@ -164,13 +160,15 @@ namespace FakeIMDB_DesktopClient.ViewModel
         }
 
 
-
+        // Commands
         public RelayCommand<string> SearchCommand { get; set; }
         public RelayCommand ConnectionModelCommand { get; set; }
         public RelayCommand OptionsViewCommand { get; set; }
 
+
+
         /// <summary>
-        ///     Initializes a new instance of the MainViewModel class.
+        /// Initializes a new instance of the class
         /// </summary>
         public MainViewModel()
         {
@@ -190,9 +188,12 @@ namespace FakeIMDB_DesktopClient.ViewModel
                 Timeout = 10000
             };
 
+
+            // Initialize Views so they register to receive messages
             new SearchView();
             new MovieItemView();
             new PersonItemView();
+
 
             // Set default address in viewModels
             Messenger.Default.Send(new ConnectionModelMessage { ConnectionModel = _connectionModel });
@@ -201,15 +202,19 @@ namespace FakeIMDB_DesktopClient.ViewModel
             IsAddressSet = true;
 
 
+            // Set command to change to the connection view
             OptionsViewCommand = new RelayCommand(() 
                 => CurrentView = new ConnectionView()
             );
 
+
+            // Set command which sends a ConnectionModelMessage
             ConnectionModelCommand =
                 new RelayCommand(
-                    () => { Messenger.Default.Send(new ConnectionModelMessage {ConnectionModel = _connectionModel}); });
+                    () => Messenger.Default.Send(new ConnectionModelMessage {ConnectionModel = _connectionModel}));
 
-
+            // Set command for what happend when searching.
+            // The current view will be changed and a message will be sent with the Command parameter
             SearchCommand = new RelayCommand<string>(searchTerm =>
             {
                 //SearchProgressVisibility = Visibility.Visible;
@@ -223,7 +228,9 @@ namespace FakeIMDB_DesktopClient.ViewModel
             });
 
 
-            // Register to receive messages
+            // Register to receive ChangeViewMessage messages
+            // The view will be set accordingly, and the SearchItem type will be checked, casted
+            // and sent to the set view
             Messenger.Default.Register<ChangeViewMessage>(this, changeViewMessage =>
             {
                 CurrentView = changeViewMessage.view;
@@ -247,6 +254,7 @@ namespace FakeIMDB_DesktopClient.ViewModel
                 }
             });
 
+            // Register to receive ChangeToConnectionViewMessage messages
             Messenger.Default.Register<ChangeToConnectionViewMessage>(this, (a) => CurrentView = new MovieItemView());
         }
 

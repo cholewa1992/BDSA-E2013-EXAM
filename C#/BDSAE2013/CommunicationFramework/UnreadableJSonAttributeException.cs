@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public class UnreadableJSonAttributeException : Exception
     {
         public UnreadableJSonAttributeException() : base() { }

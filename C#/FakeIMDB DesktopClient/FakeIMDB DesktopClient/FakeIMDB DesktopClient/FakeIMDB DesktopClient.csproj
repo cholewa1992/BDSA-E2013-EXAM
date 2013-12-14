@@ -38,7 +38,7 @@
   <ItemGroup>
     <Reference Include="CommunicationFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\Mathias\Documents\GitHub\BDSA-E2013-EXAM\C#\BDSAE2013\CommunicationFramework\bin\Debug\CommunicationFramework.dll</HintPath>
+      <HintPath>..\..\..\BDSAE2013\CommunicationFramework\bin\Debug\CommunicationFramework.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF45">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\net45\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
@@ -79,7 +79,6 @@
     <Compile Include="Control\CaptionButtons.xaml.cs">
       <DependentUpon>CaptionButtons.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ShortDescriptionWidthConverter.cs" />
     <Compile Include="Converters\WidthConverter.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
@@ -91,7 +90,6 @@
     <Compile Include="Message\SearchTermMessage.cs" />
     <Compile Include="Message\SelectionMessage.cs" />
     <Compile Include="Model\ConnectionModel.cs" />
-    <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\SearchProgressBar.cs" />
     <Compile Include="Services\IMovieExtendedInformationService.cs" />
     <Compile Include="Model\ISearchItem.cs" />

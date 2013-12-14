@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace FakeIMDB_DesktopClient.Message
 {
+    /// <summary>
+    /// Message for changing to ConnectionView
+    /// </summary>
+    /// <author>
+    /// Mathias Kindsholm Pedersen(mkin@itu.dk)
+    /// </author>
     class ChangeToConnectionViewMessage
     {
     }

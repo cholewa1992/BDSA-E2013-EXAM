@@ -14,6 +14,10 @@ namespace CommunicationFramework
     ///     over with Http
     ///     @inv !String.IsNullOrEmpty(_address)
     /// </summary>
+    /// <author>
+    /// Mathias Pedersen (mkin@itu.dk)
+    /// Martin Juul Petersen (mjup@itu.dk)
+    /// </author>
     internal class HTTPProtocol : IProtocol
     {
         //Lookup table based on the request object and it's ListenerContext. This is specific for the HTTPProtocol
@@ -67,8 +71,8 @@ namespace CommunicationFramework
             {
                 //Check that the address is actually valid. This is specific for each protocol.
                 //This regex makes sure that the address is either of the form "http://my.web.url/", "http://localhost:1337/" or "http://192.168.1.10/"
-                //if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|localhost|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
-                //    throw new ProtocolException( "ERROR! Address not valid" );
+                if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|\*|localhost|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
+                    throw new ProtocolException( "ERROR! Address not valid" );
 
                 _address = value;
 
@@ -187,8 +191,6 @@ namespace CommunicationFramework
             Interlocked.Exchange( ref _lookupTable, _writeableLookupTable );
 
             request.Data = Encoding.GetEncoding( "iso-8859-1" ).GetBytes( new StreamReader( context.Request.InputStream ).ReadToEnd() );
-
-            //Listener.Close();
 
             return request;
         }

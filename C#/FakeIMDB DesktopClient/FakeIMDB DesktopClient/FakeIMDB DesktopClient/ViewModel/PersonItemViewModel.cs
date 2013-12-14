@@ -23,22 +23,27 @@ namespace FakeIMDB_DesktopClient.ViewModel
     /// </author>
     public class PersonItemViewModel : ViewModelBase
     {
-
+        // Services to use
         private readonly IPersonExtendedInformationService _informationService;
         private readonly IPutPersonDataService _moviePutService;
 
+        // Model containing connection information for the services to use
         private ConnectionModel _connectionModel;
 
-
+        // Cancellationtoken sent with async services
         private CancellationToken _extendedInfoCancellationToken;
         private CancellationToken _putInfoCancellationToken;
 
 
+        // Property names
         public const string PersonSearchItemPropertyName = "PersonItem";
 
 
 
         private PersonSearchItem _personItem;
+        /// <summary>
+        /// Property containing the PersonItem to be showed
+        /// </summary>
         public PersonSearchItem PersonItem
         {
             get { return _personItem; }
@@ -52,9 +57,16 @@ namespace FakeIMDB_DesktopClient.ViewModel
             }
         }
 
+        // Commands
         public RelayCommand<MovieSearchItem> SelectionCommand { get; set; }
         public RelayCommand PutCommand { get; set; } 
 
+
+        /// <summary>
+        /// Initializes a new instance of the class
+        /// </summary>
+        /// <param name="informationService"></param>
+        /// <param name="moviePutService"></param>
         public PersonItemViewModel(IPersonExtendedInformationService informationService, IPutPersonDataService moviePutService)
         {
 
@@ -62,6 +74,8 @@ namespace FakeIMDB_DesktopClient.ViewModel
             _moviePutService = moviePutService;
 
 
+            // Register to receive ConnectionModelMessages
+            // When received, the local _connectionModel will be set accordingly
             Messenger.Default.Register<ConnectionModelMessage>(this,
                 (connectionMessage) =>
                 {
@@ -69,6 +83,8 @@ namespace FakeIMDB_DesktopClient.ViewModel
                 });
 
             
+            // Register to receive PersonSelectionMessages
+            // When received, the set informationservice will be used to fetch extended data and the local item will be set
             Messenger.Default.Register<PersonSelectionMessage>(this,
                 (selectionMessage) => _informationService.GetDataAsync(
                     (item, error) =>
@@ -84,6 +100,7 @@ namespace FakeIMDB_DesktopClient.ViewModel
                     }, selectionMessage.SearchItem, _connectionModel, _extendedInfoCancellationToken));
 
 
+            // Command sending a ChangeViewMessage with a selected item and View accordingly
             SelectionCommand = new RelayCommand<MovieSearchItem>((selectedItem) =>
                 Messenger.Default.Send(new ChangeViewMessage()
                         {
@@ -92,6 +109,7 @@ namespace FakeIMDB_DesktopClient.ViewModel
                         })
                 );
 
+            // Command using the set putservice will be given the local PersonItem to update offshore
             PutCommand = new RelayCommand(() => _moviePutService.PutDataAsync(
                 (msg, error) =>
                 {

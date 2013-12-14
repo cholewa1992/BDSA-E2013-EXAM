@@ -65,8 +65,6 @@
     <Compile Include="EntityControllers\Concretes\PersonRequestController.cs" />
     <Compile Include="EntityControllers\Concretes\FavouriteRequestController.cs" />
     <Compile Include="EntityControllers\Concretes\UserRequestController.cs" />
-    <Compile Include="AggregatedControllers\Interfaces\IAggregatedRequestController.cs" />
-    <Compile Include="EntityControllers\Interfaces\IEntityRequestController.cs" />
     <Compile Include="Exceptions\InvalidDataException.cs" />
     <Compile Include="Exceptions\InvalidUrlParameterException.cs" />
     <Compile Include="Exceptions\InvalidServiceRequestException.cs" />
