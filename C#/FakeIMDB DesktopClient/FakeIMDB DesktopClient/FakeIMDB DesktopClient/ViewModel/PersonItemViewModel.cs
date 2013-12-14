@@ -102,11 +102,14 @@ namespace FakeIMDB_DesktopClient.ViewModel
 
             // Command sending a ChangeViewMessage with a selected item and View accordingly
             SelectionCommand = new RelayCommand<MovieSearchItem>((selectedItem) =>
+            {
+                PersonItem = null;
                 Messenger.Default.Send(new ChangeViewMessage()
-                        {
-                            view = new MovieItemView(),
-                            SearchItem = selectedItem
-                        })
+                {
+                    view = new MovieItemView(),
+                    SearchItem = selectedItem
+                });
+            }
                 );
 
             // Command using the set putservice will be given the local PersonItem to update offshore
