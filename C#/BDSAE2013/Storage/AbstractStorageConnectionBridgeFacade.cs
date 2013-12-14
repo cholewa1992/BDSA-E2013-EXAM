@@ -63,7 +63,6 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
-        /// <returns>The entity just added</returns>
         public abstract void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
@@ -72,7 +71,6 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
-        /// <returns>The just updated entity</returns>
         public abstract void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
@@ -80,7 +78,6 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
-        /// <returns>True if the operation was successfull</returns>
         public abstract void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto;
 
         /// <summary>
@@ -88,13 +85,11 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="id">The id of the entity to delete</param>
-        /// <returns>True if the operation was successfull</returns>
         public abstract void Delete<TEntity>(int id) where TEntity : class, IEntityDto;
 
         /// <summary>
         /// Saves changes to the context
         /// </summary>
-        /// <returns>true if entities was saved</returns>
         protected void SaveChanges()
         {
             IsDisposed();

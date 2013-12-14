@@ -13,7 +13,7 @@ namespace InMemoryStorage
     /// <author>
     /// Jacob Cholewa (jbec@itu.dk)
     /// </author>
-    internal class InMemoryStorageSet<TEntity> : ISaveable, IDisposable where TEntity : class, IEntityDto
+    public class InMemoryStorageSet<TEntity> : ISaveable, IDisposable where TEntity : class, IEntityDto
     {
         internal static SynchronizedCollection<TEntity> Entities = new SynchronizedCollection<TEntity>(new EntityCompare());
         private HashSet<EntityEntryDto> _states;
@@ -34,7 +34,9 @@ namespace InMemoryStorage
         public IQueryable<TEntity> Get()
         {
             lock (Entities)
-            return Entities.ToList().AsQueryable();
+            {
+                return Entities.ToList().AsQueryable();
+            }
         }
 
         /// <summary>
@@ -42,7 +44,6 @@ namespace InMemoryStorage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
-        /// <returns>The entity just added</returns>
         /// <remarks>
         /// @pre entity.Id == 0
         /// </remarks>
@@ -133,9 +134,9 @@ namespace InMemoryStorage
                         {
                             Entities.Remove(Entities.Single(t => t.Id == o.Entity.Id));
                         }
-                        catch
+                        catch(Exception e)
                         {
-                            throw new InternalDbException("No entites with that id found");
+                            throw new InternalDbException("No entites with that id found", e);
                         }
 
                     }
@@ -172,7 +173,6 @@ namespace InMemoryStorage
             {
                 return (bx.Id + bx.GetType().GetHashCode()).GetHashCode();
             }
-
         }
 
         //Helper methode for tests 

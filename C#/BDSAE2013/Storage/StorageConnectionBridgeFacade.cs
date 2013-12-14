@@ -15,8 +15,6 @@ namespace Storage
         /// Constructs a new StorageBridgeFacade
         /// </summary>
         /// <param name="storageFactory">The storage to use</param>
-        /// <remarks>
-        /// </remarks>
         public StorageConnectionBridgeFacade(IStorageConnectionFactory storageFactory)
             : base(storageFactory)
         {
@@ -31,6 +29,7 @@ namespace Storage
         /// <remarks>
         /// @pre id > 0
         /// @pre int.max > id
+        /// @pre !IsDisposed
         /// </remarks>
         public override TEntity Get<TEntity>(int id)
         {
@@ -50,7 +49,7 @@ namespace Storage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <returns>The entities as an IQueryable</returns>
         /// <remarks>
-        /// @pre IsDisposed();
+        /// @pre !IsDisposed()
         /// </remarks>
         public override IQueryable<TEntity> Get<TEntity>()
         {
@@ -63,11 +62,10 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
-        /// <returns>The entity just added</returns>
         /// <remarks>
         /// @pre entity != null
         /// @pre entity.Id == 0
-        /// @pre IsDisposed();
+        /// @pre !IsDisposed();
         /// @post entity.Id != 0
         /// </remarks>
         public override void Add<TEntity>(TEntity entity)
@@ -98,9 +96,8 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
-        /// <returns>The just updated entity</returns>
         /// <remarks>
-        /// @pre IsDisposed();
+        /// @pre !IsDisposed();
         /// @pre entity != null
         /// @pre entity.Id > 0
         /// @pre int.MaxValue >= entity.Id
@@ -109,8 +106,8 @@ namespace Storage
         {
             IsDisposed(); //Checks that the context is not disposed
             if (entity == null){ throw new ArgumentNullException("entity");} //Checks that the entity is not null
-            if (entity.Id <= 0) throw new InternalDbException("Id was zero or below");
-            if (entity.Id > int.MaxValue) throw new InternalDbException("Id was larger than int.MaxValue");
+            if (entity.Id <= 0){ throw new InternalDbException("Id was zero or below");}
+            if (entity.Id > int.MaxValue){ throw new InternalDbException("Id was larger than int.MaxValue");}
             Db.Update(entity); //Updates the entity
             SaveChanges(); //Saves the changes to the context
         }
@@ -120,9 +117,8 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
-        /// <returns>True if the operation was successfull</returns>
         /// <remarks>
-        /// @pre IsDisposed();
+        /// @pre !IsDisposed();
         /// @pre entity != null
         /// @pre entity.Id > 0
         /// @pre int.MaxValue >= entity.Id
@@ -142,9 +138,8 @@ namespace Storage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="id">The id of the entity to delete</param>
-        /// <returns>True if the operation was successfull</returns>
         /// <remarks>
-        /// @pre IsDisposed();
+        /// @pre !IsDisposed();
         /// @pre id >= 0
         /// @pre int.MaxValue > id
         /// </remarks>

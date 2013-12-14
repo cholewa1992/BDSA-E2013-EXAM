@@ -18,7 +18,7 @@ namespace InMemoryStorage
         /// Gets the set need for the entity currently used
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
+        /// <returns>An active in memory storage set</returns>
         private InMemoryStorageSet<TEntity> GetSet<TEntity>() where TEntity : class, IEntityDto
         {
             if (!_sets.ContainsKey(typeof (TEntity)))
@@ -34,7 +34,7 @@ namespace InMemoryStorage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <returns>The entities as an IQueryable</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto
         {
@@ -47,10 +47,9 @@ namespace InMemoryStorage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
-        /// <returns>The entity just added</returns>
         /// <remarks>
         /// @pre entity.Id == 0
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
@@ -64,9 +63,8 @@ namespace InMemoryStorage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
-        /// <returns>The just updated entity</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
@@ -81,7 +79,7 @@ namespace InMemoryStorage
         /// <param name="entity">The entity to delete</param>
         /// <returns>True if the operation was successfull</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
@@ -99,9 +97,9 @@ namespace InMemoryStorage
         public bool SaveChanges()
         {
             IsDisposed();
-            foreach (var o in _sets)
+            foreach (var kvp in _sets)
             {
-                o.Value.SaveChanges();
+                kvp.Value.SaveChanges();
             }
             return true;
         }

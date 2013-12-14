@@ -25,16 +25,6 @@ namespace EntityFrameworkStorage
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<FavouritedMovie> FavouritedMovie { get; set; }
-        public DbSet<FavouriteList> FavouriteList { get; set; }
-        public DbSet<InfoType> InfoType { get; set; }
-        public DbSet<MovieInfo> MovieInfo { get; set; }
-        public DbSet<Movies> Movies { get; set; }
-        public DbSet<Participate> Participate { get; set; }
-        public DbSet<People> People { get; set; }
-        public DbSet<PersonInfo> PersonInfo { get; set; }
-        public DbSet<UserAcc> UserAcc { get; set; }
-
         public new IDbSet<T> Set<T>() where T : class
         {
             return base.Set<T>();

@@ -18,7 +18,7 @@ namespace EntityFrameworkStorage
     {
         private readonly TContext _ef;
         private bool _isDisposed;
-        private static object IsAdding = new object();
+        private static object IsAddingMutex = new object();
 
         /// <summary>
         /// Contructs an EFStorageConnection
@@ -34,7 +34,7 @@ namespace EntityFrameworkStorage
         /// <typeparam name="TEntity">The entity type to fetch</typeparam>
         /// <returns>The entities as an IQueryable</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public IQueryable<TEntity> Get<TEntity>() where TEntity : class, IEntityDto
         {
@@ -47,18 +47,17 @@ namespace EntityFrameworkStorage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to add</typeparam>
         /// <param name="entity">The entity to add to the storage</param>
-        /// <returns>The entity just added</returns>
         /// <remarks>
         /// @pre entity.Id == 0
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// @post entity.Id != 0
         /// </remarks>
         public void Add<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
-            lock (IsAdding)
+            lock (IsAddingMutex)
             {
                 IsDisposed();
-                if (entity.Id != 0) throw new InternalDbException("The id was set");
+                if (entity.Id != 0){ throw new InternalDbException("The id was set");}
                 try
                 {
                     entity.Id = Get<TEntity>().Max(t => t.Id) + 1;
@@ -79,9 +78,8 @@ namespace EntityFrameworkStorage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to update</typeparam>
         /// <param name="entity">The new version of the entity</param>
-        /// <returns>The just updated entity</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public void Update<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
@@ -94,9 +92,8 @@ namespace EntityFrameworkStorage
         /// </summary>
         /// <typeparam name="TEntity">The entity type to use</typeparam>
         /// <param name="entity">The entity to delete</param>
-        /// <returns>True if the operation was successfull</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public void Delete<TEntity>(TEntity entity) where TEntity : class, IEntityDto
         {
@@ -109,7 +106,7 @@ namespace EntityFrameworkStorage
         /// </summary>
         /// <returns>true if entities was saved</returns>
         /// <remarks>
-        /// @pre IsDisposed == false
+        /// @pre !IsDisposed
         /// </remarks>
         public bool SaveChanges()
         {
