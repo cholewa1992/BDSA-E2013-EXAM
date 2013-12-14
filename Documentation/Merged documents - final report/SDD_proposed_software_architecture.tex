@@ -8,26 +8,50 @@
 
 
 \subsection{System architecture choice NEED TO BE UPDATED}
-We have chosen to utilise the \textbf{Model-View-Controller} system architecture, separating presentation and interaction from system data. Our clients are the view, the webserver is the controller, and the storage module is the model.
+The system is build up by several different system architectures.
+The over all system architecture is the \textbf{client server architecture} (figure ~\ref{fig:System architecture}) utilizing the \textbf{distributed architecture} using the REST communication interface separating  the main components of our program, the clients and the web server.
 
-\paragraph{Advantages}
+\paragraph{Advantages of server client architecture}
+\begin{itemize}
+	\item By keeping the coupling to the sever very light, other developers can easily use our server(api) to build their own clients \\
+	\item The server is distributed across a network allowing many users to utilize our service.
+	\item Users can use all or parts of our API through the REST interface making it very customizable to the users needs.
+\end{itemize}
+\paragraph{Disadvantages of server client architecture}
+\begin{itemize}
+	\item The system is distributed which raises a lot of both safety and failure points eg. concurrency  \\
+	\item The solutions performance is heavily relying on the network speed and reliability  
+\end{itemize}
+
+For the different system components we use different internal software architectures. The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).
+
+The WCF clients uses the Model-View-Viewmodel (MVVM)
+
+%WRITE MORE!
+
+The ASP.net client utilise the Model-View-Controller system architecture, separating presentation and interaction from system data.
+
+\paragraph{Advantages of MVC}
 \begin{itemize}
 	\item By keeping the visuals separated from the application data, we can achieve very loose coupling, as well as the ability to easily change the same data from many different views, for example via our desktop and web-based clients. \\
 	\item If we ever need to change parts of the program, it will be easy to switch out parts of the code.
 \end{itemize}
-
-
-\paragraph{Disadvantages}
+\paragraph{Disadvantages of MVC}
 \begin{itemize}
 	\item We will most likely have a larger amount of classes than necessary for a project of this scope. \\
 	\item The class hierarchy might become messier, as we will need a larger amount of classes for simple tasks.
 \end{itemize}
 
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{img/SDD/bdsaproject.png}
+\caption{System architecture}
+\label{fig:System architecture}
+\end{figure}
+
 \subsection{Design pattern choices}
-We will here document the design patterns utilized by the program. We will mention the reasoning behind our choices.
+We will in this section document the design patterns utilized by the program. We will mention the reasoning behind our choices.
 
 \begin{itemize}
-	\item \emph{MVC} (or Model-View-Controller) has not only been utilized on the system as a whole, but also notably in the ASP.net client. By doing this, user interface is clearly separated from the controlling logic of the program, and we get modular code that is easy to maintain and extend.
 	\item The \emph{Database Mapper} pattern has been applied when performing transactions between the web server and the database. The system contains a facade exposed to the web server. The facade can be injected with the wanted mapper, which will then connect to the database based on the mapper.
 	\item The \emph{Abstract factory} is used in the storage subsystem to create instances of storage. By using this design pattern, we give the subsystem added extendability, simplifying the progress of making plugins that utilize the subsystem.
 	\item \emph{bridge pattern} is implemented in the storage and is used to easily allow the rest of the system to use the data, independent of how the actual storage functionality works, whether it's a MySQL Database or flatfile.
