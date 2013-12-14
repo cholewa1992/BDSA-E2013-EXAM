@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunicationFramework;
 using FakeIMDB_DesktopClient.Model;
 using Utils;
@@ -69,7 +70,7 @@ namespace FakeIMDB_DesktopClient.Services
         /// <returns>a list of ISearchItems</returns>
         public List<ISearchItem> FetchData(String term, ConnectionModel connectionModel)
         {
-            
+
             var ch = new CommunicationHandler(connectionModel.Protocol);
 
             // Build RESTful string
@@ -79,7 +80,7 @@ namespace FakeIMDB_DesktopClient.Services
             ch.Send(restAddress, new byte[0], "GET");
 
             // Decode result to string
-            string json = Encoder.Decode(ch.Receive(5000));
+            string json = Encoder.Decode(ch.Receive(connectionModel.Timeout));
 
             // Build dictionary representation of the json result
             Dictionary<string, string> resultDictionary = JSonParser.GetValues(json);

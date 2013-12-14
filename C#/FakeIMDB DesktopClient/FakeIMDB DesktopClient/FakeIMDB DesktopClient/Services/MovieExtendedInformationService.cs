@@ -80,7 +80,7 @@ namespace FakeIMDB_DesktopClient.Services
             ch.Send(restAddress, new byte[0], "GET");
 
             // decode response to string dictionary representation of the json
-            Dictionary<string, string> json = JSonParser.GetValues(Encoder.Decode(ch.Receive(10000)));
+            Dictionary<string, string> json = JSonParser.GetValues(Encoder.Decode(ch.Receive(connectionModel.Timeout)));
 
             // set values from json dictionary
             item.Id = json["id"];

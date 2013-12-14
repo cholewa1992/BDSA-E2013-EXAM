@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunicationFramework;
 using FakeIMDB_DesktopClient.Message;
 using FakeIMDB_DesktopClient.Model;
 using FakeIMDB_DesktopClient.View;
@@ -41,7 +42,9 @@ namespace FakeIMDB_DesktopClient.ViewModel
                 {
                     ConnectionModel = new ConnectionModel()
                     {
-                        Address = address
+                        Address = address,
+                        Protocol = Protocols.Http,
+                        Timeout = 10000
                     }
                 });
 
