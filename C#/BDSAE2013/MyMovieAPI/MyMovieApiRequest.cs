@@ -21,7 +21,7 @@ namespace MyMovieAPI
             try
             {
                 var comHandler = new CommunicationHandler(Protocols.Http);
-                var restAddress = "http://http://mymovieapi.com/?title=" + searchWord + "&limit=" + limit;
+                var restAddress = "http://mymovieapi.com/?title=" + searchWord + "&limit=" + limit;
 
                 comHandler.Send(restAddress, new byte[0], "GET");
                 var json = Utils.Encoder.Decode(comHandler.Receive(timeout));
@@ -30,7 +30,7 @@ namespace MyMovieAPI
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Error connection to MyMovieApi",e);
+                throw new InvalidOperationException("Error connecting to MyMovieApi",e);
             }
         }
 

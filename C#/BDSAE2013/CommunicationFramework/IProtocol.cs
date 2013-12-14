@@ -10,9 +10,12 @@ namespace CommunicationFramework
     /// <summary>
     /// Interface for all the protocols to adhere to
     /// </summary>
+    /// <author>
+    /// Mathias Pedersen (mkin@itu.dk)
+    /// Martin Juul Petersen (mjup@itu.dk)
+    /// </author>
     public interface IProtocol
     {
-
         /// <summary>
         /// Storing the address of the second party in the communication
         /// </summary>

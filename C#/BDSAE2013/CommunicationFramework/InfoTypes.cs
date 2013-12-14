@@ -12,9 +12,11 @@ namespace Utils
     /// <summary>
     /// A utiliy class that is used as a lookup for a string format of each movie type
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public class InfoTypes
     {
-
         public static Dictionary<int, string> infoTypeTable;
 
         /// <summary>

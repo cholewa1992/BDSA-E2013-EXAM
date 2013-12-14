@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace CommunicationFramework
 {
-    //The object to pass around in the system that contains all the information that should be relevant
+    /// <summary>
+    /// The object to pass around in the system that contains all the information that should be relevant
+    /// </summary>
+    /// <author>
+    /// Mathias Pedersen (mkin@itu.dk)
+    /// Martin Juul Petersen (mjup@itu.dk)
+    /// </author>
     public class Request
     {
         public byte[] Data{ get; set; }

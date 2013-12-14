@@ -107,7 +107,6 @@ namespace WebServer
                     movieSet.UnionWith(storage.Get<Movies>().Where(m => m.Title.ToLower().Contains(searchString)).Take(SearchLimit - movieSet.Count));
                 }
 
-
                 //Initialize the set of movies
                 HashSet<People> peopleSet = new HashSet<People>(new EntityComparer());
 

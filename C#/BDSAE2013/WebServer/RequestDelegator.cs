@@ -21,7 +21,7 @@ namespace WebServer
     public class RequestDelegator : IDisposable
     {
         private readonly List<IRequestController> _requestControllers;        //A list of the available controllers used by the class
-        private readonly IStorageConnectionBridgeFacade _storage;                   //The storage module linked to the RequestDelegator, this can be injected on instantiation
+        private readonly IStorageConnectionBridgeFacade _storage;             //The storage module linked to the RequestDelegator, this can be injected on instantiation
 
         /// <summary>
         /// The base constructor of the class.

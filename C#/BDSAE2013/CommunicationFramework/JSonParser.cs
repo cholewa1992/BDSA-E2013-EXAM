@@ -13,6 +13,9 @@ namespace Utils
     /// A utiliy class to parse and read a custom json object.
     /// This utility class can only handle json string containing single objects with a list of attributes
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg Hinrichsen (jkas@itu.dk)
+    /// </author>
     public class JSonParser
     {
         /// <summary>
@@ -55,7 +58,7 @@ namespace Utils
                 for (int i = 0; i < parameters.Length; i += 2)
                 {
                     //Skip the entry if the attribute name is an empty string
-                    if (parameters[i] == "" || parameters[i] == null || parameters[i+1] == null)
+                    if (parameters[i] == null || parameters[i] == "" || parameters[i + 1] == null)
                         continue;
 
                     //Write the attribute name
@@ -87,7 +90,7 @@ namespace Utils
         /// <returns> The cleaned string </returns>
         public static string CleanString(string input)
         {
-            return Regex.Replace(input, "[^A-Za-z0-9()\\[\\]\\s\\,\\@\\.\\-\\/\\:]", "");
+            return Regex.Replace(input, @"[^A-Za-z0-9()\[\]\s\,\@\.\-\/\:]", "");
         }
 
         /// <summary>

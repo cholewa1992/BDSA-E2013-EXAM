@@ -11,6 +11,9 @@ namespace Utils
     /// <summary>
     /// An encoder utility class used for encoding and decoding byte strings.
     /// </summary>
+    /// <author>
+    /// Jonas Kastberg (jkas@itu.dk)
+    /// </author>
     public class Encoder
     {
         //The standard encoding of the encoder
