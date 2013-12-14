@@ -213,7 +213,6 @@ After refining the system design, we have added the following boundary scenarios
 	
 	\item StartWebServer
 	\item ShutdownWebServer
-	\item ConfigureWebServer
 	\item ConnectionLostException
 \end{itemize}
 
@@ -459,14 +458,14 @@ The explanations furthermore include the relation between the actors and the use
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
 		Use Case Name & Connection Lost Exception \\ \hline
-		Participating Actors & Initiated by \emph{server} \\ \hline
+		Participating Actors & Initiated by \emph{client} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{server} completes any current transaction
-						\item[2.] The server logs all relevant information for each transaction to be used when the server regains connection
-						\item[3.] The server waits until it regains connection
+						\item[1.] The \emph{client} loses connection to the server.
+						\item[2.] The \emph{server} rolls back any partial changes
+						\item[3.] The \emph{client} displays an error message, and will start functioning again if connection is regained.  
 						\end{enumerate} \\ \hline
 		Entry Condition & \begin{itemize}
-						\item The \emph{server} program lost connection
+						\item The \emph{client} program lost connection
 					\end{itemize} \\ \hline
 		Exit Condition & \begin{itemize}
 						\item The server program has handled every current transaction and logged them
@@ -484,7 +483,7 @@ The explanations furthermore include the relation between the actors and the use
 	A movie is a collection of data about a specific movie. It has attributes defining its title, length, year of production and genre. Some movies are episodes of series and has attributes defining it's season and episode number.
 	
 	\item[2.] Person \hfill \\
-	The person entity defines data about a specific person. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age.
+	The person entity defines data about a specific person in the database. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age, and will often have references to movies that the person has starred in, if the person is an actor.
 	
 \end{enumerate}
 
@@ -525,12 +524,13 @@ These controllers are all more or less self-explanatory. They enable the user to
 
 \paragraph{Class Diagram}
 
-\begin{figure}[H]
+\begin{figure}[h]
 \includegraphics[width=\linewidth]{img/RAD/ClassDiagram.png}
 \caption{Class diagram}
 \label{fig:Class diagram}
 \end{figure}
 
+\newpage
 \subsubsection{Dynamic model}
 
 \paragraph{Sequence diagrams}
