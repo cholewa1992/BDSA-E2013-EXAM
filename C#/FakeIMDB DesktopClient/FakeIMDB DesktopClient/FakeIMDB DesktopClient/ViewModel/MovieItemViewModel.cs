@@ -101,11 +101,14 @@ namespace FakeIMDB_DesktopClient.ViewModel
 
             // Commands
             SelectionCommand = new RelayCommand<PersonSearchItem>((selectedItem) =>
+            {
+                MovieItem = null;
                 Messenger.Default.Send(new ChangeViewMessage()
                 {
                     view = new PersonItemView(),
                     SearchItem = selectedItem
-                })
+                });
+            }
                 );
 
 
