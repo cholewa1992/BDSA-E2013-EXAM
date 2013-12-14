@@ -61,7 +61,7 @@
                 $('#title').editable({
                     type: 'text',
                     pk: 1,
-                    url: '../EditInfo?id=@Model.Id&value=',
+                    url: '../EditInfo/@Model.Id',
                     title: 'Enter title',
                     display: function (value, response) {
                         if (response.indexOf("successfully") == -1) {

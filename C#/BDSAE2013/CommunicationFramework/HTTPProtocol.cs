@@ -28,7 +28,7 @@ namespace CommunicationFramework
         /// <summary>
         ///     Default constructor, initializes the Address to the default address
         /// </summary>
-        public HTTPProtocol() : this( "http://localhost:1337/" )
+        public HTTPProtocol() : this( "http://*:1337/" )
         {
         }
 
@@ -67,8 +67,8 @@ namespace CommunicationFramework
             {
                 //Check that the address is actually valid. This is specific for each protocol.
                 //This regex makes sure that the address is either of the form "http://my.web.url/", "http://localhost:1337/" or "http://192.168.1.10/"
-                if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|localhost|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
-                    throw new ProtocolException( "ERROR! Address not valid" );
+                //if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|localhost|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
+                //    throw new ProtocolException( "ERROR! Address not valid" );
 
                 _address = value;
 
