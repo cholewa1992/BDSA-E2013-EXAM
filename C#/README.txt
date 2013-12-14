@@ -1,6 +1,7 @@
 WebServer:
 	1. Start WebServer.exe. It will want to run as Administrator, allow it to
 	2. The Server is hardcoded to listen on port :1337
+	3. Alternatively open the solution and start it from there
 
 ASP.NET Client:
 	1. The WebServer must be started
@@ -13,3 +14,4 @@ WPF Desktop Client:
 	3. The application will listen to http://localhost:1337/ as default, and you can
 	   start searching right away. If you want to change the address, remember to end
 	   it with a /
+	4. Alternatively open the solution and start it from there
