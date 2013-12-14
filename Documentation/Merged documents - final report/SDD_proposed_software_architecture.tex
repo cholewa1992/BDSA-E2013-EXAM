@@ -67,7 +67,7 @@ We have grouped our classes into subsystems to create a clearer structure of the
 
 
 \begin{figure}[H]
-\includegraphics[scale=0.2]{img/SDD/FakeIMDbSubsystems.png}
+\includegraphics[width=\linewidth]{img/SDD/FakeIMDbSubsytems.png}
 \caption{Fake IMDb Subsystems}
 \label{fig:FakeIMDBSubsystems}
 \end{figure}
@@ -75,7 +75,7 @@ We have grouped our classes into subsystems to create a clearer structure of the
 The software is divided into five main subsystems with one subsystem for each different clients, communicating with the WebServer subsystem through the Communication Framework subsystem. The WebServer subsystem use the Storage subsystem to get/put data to/from the clients.\\
 
 \begin{figure}[H]
-\includegraphics[scale=0.2]{img/SDD/WebClientSubsystemSnippet.png}
+\includegraphics[width=\linewidth]{img/SDD/WebClientSubsystem.png}
 \caption{A snippet of the Web Client}
 \label{fig:WebClientSubsystem}
 \end{figure}
@@ -83,14 +83,14 @@ The software is divided into five main subsystems with one subsystem for each di
 The Web Client utilizes the ASP.Net framework which contains a lot of classes which are redundant to visualize through a common static class diagram. Instead only the classes used when searching is shown. The SearchController uses the SearchResult to get a movieresult or personresult to show in the Search(view)\\
 
 \begin{figure}[H]
-\includegraphics[scale=0.2]{img/SDD/CommunicationFrameworkSubsystem.png}
+\includegraphics[width=\linewidth]{img/SDD/CommunicationFrameWork.png}
 \caption{Communication Framework Subsystem}
 \label{fig:CommunicationFramework}
 \end{figure}
 The communication framework subsystem is used when sending and receiving requests. The framework is used by both the WebServer and each of the clients for communication purposes. The subsystem allows for easy extensibility of more protocol types, though the software at hand only utilizes the Http protocol.
 
 \begin{figure}[H]
-\includegraphics[scale=0.2]{img/SDD/NewWebserverSubsystem.png}
+\includegraphics[width=\linewidth]{img/SDD/WebserverSubsystem.png}
 \caption{Web Server Subsystem}
 \label{fig:WebServer}
 \end{figure}
@@ -103,7 +103,9 @@ The RequestDelegator facade will use a delegate given by the specified controlle
 \label{fig:Storage}
 \end{figure}
 
-The storage subsystem exposes a bridge facade that allows easy access to the database. The context and the database type (either sql or in-memory) is injected through the facade, allowing for interchangable inner database structure. (CHOLEWA CONTINUES)
+The storage subsystem exposes a bridge facade that allows easy access to the database. The context and the database type (either entity framework or in-memory) is injected through the facade, allowing a generic mapper pattern that doesn't have to know anything about the model being used.
+
+An Abstract factory have been implemented to allow new storage methods to be easily integrated with the existing storage module as it can just be injected into the solution.
 
 \subsection{Hardware/software mapping}
 \label{sec:Hardware/software mapping}
