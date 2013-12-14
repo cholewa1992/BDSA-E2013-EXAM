@@ -71,7 +71,7 @@ namespace CommunicationFramework
             {
                 //Check that the address is actually valid. This is specific for each protocol.
                 //This regex makes sure that the address is either of the form "http://my.web.url/", "http://localhost:1337/" or "http://192.168.1.10/"
-                if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|\*|[\wÆæØøÅå]+?|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
+                if( !Regex.Match( value, @"^http://([\wÆæØøÅå\.]+?\.[a-zA-ZÆæØøÅå]{2,3}|\*|[\wÆæØøÅå-]+?|([\d]{1,3}\.){3}[\d]{1,3})(:[\d]{1,5})?/.*$" ).Success )
                     throw new ProtocolException( "ERROR! Address not valid" );
 
                 _address = value;
