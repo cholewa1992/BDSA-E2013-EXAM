@@ -70,12 +70,22 @@ We have grouped our classes into subsystems to create a clearer structure of the
 
 
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{img/SDD/FakeIMDbSubsytems.png}
+\includegraphics[scale=0.17]{img/SDD/FakeIMDbSubsytems.png}
 \caption{Fake IMDb Subsystems}
 \label{fig:FakeIMDBSubsystems}
 \end{figure}
 
 The software is divided into five main subsystems with one subsystem for each different clients, communicating with the WebServer subsystem through the Communication Framework subsystem. The WebServer subsystem use the Storage subsystem to get/put data to/from the clients.\\
+
+
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{img/SDD/DesktopClientSubsystem.png}
+\caption{DesktopClient subsystem}
+\label{fig:DesktopClientSubsystem}
+\end{figure}
+
+The desktop client uses the MVVM Light framework to obtain a decoupled MVVM architecture. Views bind to ViewModels through the ViewModelLocator, and ViewModels hold models and other properties to be binded to. Services are injectet into the ViewModels and uses through Messeging and Commands.
+
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{img/SDD/WebClientSubsystem.png}
