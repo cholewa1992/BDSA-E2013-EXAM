@@ -34,6 +34,7 @@ We will here document the design patterns utilized by the program. We will menti
 	\item The \emph{Adapter pattern} has been used when translating alien movie data from other databases to the format used in the main database.
 	\item The \emph{Front Controller Pattern} is used when processing requests. Incoming requests is sent through a delegator to the relevant request controller. The controller determines how the request will affect the database. This allows for new request types to be implemented easily.
 	\item The \emph{Facade Pattern} is used for each of the subsystems in the program. All subsystems expose a single facade to be accessed by other subsystems, allowing simple communication compared to more complicated communication in which every class could communicate with eachother. Furthermore the pattern allows each subsystem to be self-contained allowing for inner changes to be made frequently as long as the changes does not change the functionality of the facade.
+	\item The \emph{Command Pattern} has been used to invoke delegates in the ViewModels bound by controllers in the Views. A button, for example, will be bound to a command in the ViewModel, and hence code can be executed by the hand of the user.
 \end{itemize}
 
 \subsection{Subsystem decomposition}
@@ -143,3 +144,33 @@ We have indentified the following boundary conditions, and added them to the lis
 \end{itemize}
 
 \subsection{Identifying optimization possibilities}
+
+The software under development has a high degree of finality though there are always ways of optimizing the end product.
+When considering optimizations there are two fields of extensibility at hand.
+
+\subsubsection{Features}
+
+The end product contains many features, yet some improvements could have been made.
+The features being mentioned are the ones slightly beyond scope, yet within reach of another week of development.
+
+- Additional features exposed through clients
+The backend of the program exposes services to manage the entire database in an easy fashion. These services are however not fully utilized through the clients, due to the complications of developing a rich user interface that exposes each of the services in a decent way.
+
+- Improved Caching
+Even though the entity framework supports minor caching, the respond times of the web server could greatly be improved by caching various resources.
+The main methods of caching under discussion is entity caching, in which the server would cache any resources being exposed through a request for later use, or query caching, in which a query's result would be stored locally.
+
+\subsubsection{Optimization}
+
+The software being developed, even though having a high amount of quality checks and revisions, can always be improved.
+The optimization options being mentioned are that of code optimization, speed optimization or structure optimization in general.
+
+- Json messaging
+The software communicates utilizing json. The json is stored as a single json object with various attribute names and attribute values.
+The communication could be improved to use actual json objects, while using anonymous and dynamic objects for serializing and deserializing, to prevent a static structure, in which no server and client version can be out of sync .
+
+- Communication Framework
+The communication framework was specifically designed to be easily expandable with additional protocol types. The internal structure of the subsystem has a lot of logic that could be shared between protocols, being defined in the http protocol class structure. This logic should be moved to a higher level, for easier sharing between polymorphic members.
+
+- Higher quality of testing
+In general the amount of tests being conducted on each individual subsystem was too insignificant. More thorough testing should be conducted to better validate the correctedness of the software.

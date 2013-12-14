@@ -52,8 +52,17 @@
 
             <!-- #Context -->
 
-            <h1>Error <small>@Model.ErrorCode </small></h1>
-            @if (!string.IsNullOrEmpty(Model.ErrorMsg))
+            <h1>Error <small>
+                          @if (Model != null && !string.IsNullOrEmpty(Model.ErrorCode))
+                          {
+                              @Model.ErrorCode
+                          }
+                          else
+                          {
+                              @Html.Raw("404 - Not found");
+                          }
+                      </small></h1>
+            @if (Model != null && !string.IsNullOrEmpty(Model.ErrorMsg))
             {
                 <div class="well well-sm">@Model.ErrorMsg</div>
             }
