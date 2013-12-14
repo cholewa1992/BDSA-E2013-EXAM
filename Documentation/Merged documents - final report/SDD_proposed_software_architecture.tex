@@ -7,7 +7,7 @@
 
 
 
-\subsection{System architecture choice NEED TO BE UPDATED}
+\subsection{System architecture choice}
 The system is build up by several different system architectures.
 The over all system architecture is the \textbf{client server architecture} (figure ~\ref{fig:System architecture}) utilizing the \textbf{distributed architecture} using the REST communication interface separating  the main components of our program, the clients and the web server.
 
@@ -24,29 +24,32 @@ The over all system architecture is the \textbf{client server architecture} (fig
 \end{itemize}
 
 \begin{figure}[H]
-\includegraphics[width=\linewidth]{img/SDD/bdsaproject.png}
+\begin{center}
+\includegraphics[scale=0.7]{img/SDD/bdsaproject.png}
 \caption{System architecture}
 \label{fig:System architecture}
+\end{center}
 \end{figure}
 
 For the different system components we use different internal software architectures. The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).
-
-The WCF clients uses the Model-View-Viewmodel (MVVM)
-
-%WRITE MORE!
 
 The ASP.net client utilise the Model-View-Controller system architecture, separating presentation and interaction from system data.
 
 \paragraph{Advantages of MVC}
 \begin{itemize}
-	\item By keeping the visuals separated from the application data, we can achieve very loose coupling, as well as the ability to easily change the same data from many different views, for example via our desktop and web-based clients. \\
-	\item If we ever need to change parts of the program, it will be easy to switch out parts of the code.
+	\item By keeping the visuals separated from the application data, we can achieve very loose coupling, as well as the ability to easily change the same data from many different views, for example via our desktop and web-based clients. 
+	\item If there's ever need to change parts of the program, it will be easy to switch out parts of the code.
 \end{itemize}
 \paragraph{Disadvantages of MVC}
 \begin{itemize}
-	\item We will most likely have a larger amount of classes than necessary for a project of this scope. \\
-	\item The class hierarchy might become messier, as we will need a larger amount of classes for simple tasks.
+	\item We will most likely have a larger amount of classes than necessary for a project of this scope. 
+	\item The class hierarchy might become messier, as we will need a larger amount of classes for simple tasks. \\
 \end{itemize}
+
+
+The WPF client uses the Model-View-Viewmodel (MVVM) pattern, which is a specialization of the MVC pattern. The advantages and disadvantages are the same. Instead of a Controller, it has the ViewModel, which combines properties for databinding by the View and logic like commands.
+
+
 
 \subsection{Design pattern choices}
 We will in this section document the design patterns utilized by the program. We will mention the reasoning behind our choices.
