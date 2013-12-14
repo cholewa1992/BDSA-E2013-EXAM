@@ -10,16 +10,28 @@ using Utils;
 namespace AspClient.Controllers
 {
     /// <summary>
+    /// Controller for handling fetching of movie data
     /// @Author Jacob Cholewa (jbec@itu.dk)
     /// @Author Martin
     /// </summary>
     public class PersonController : Controller
     {
+        /// <summary>
+        /// ActionResult for ~/Person/ redirecting clients back to frontpage (beacuse it is an invalid path)
+        /// </summary>
+        /// <returns>An actionResult redirecting back to frontpage</returns>
         public ActionResult Index()
         {
             return RedirectToAction( "Index", "Home" );
         }
 
+        /// <summary>
+        /// Action result for updating data through POST
+        /// Invoked by ~/Person/EditInfo/Id called with a post contaning the value of the name to change to
+        /// </summary>
+        /// <param name="id">The id of the person you wish to change</param>
+        /// <param name="value">The new name of the person you want to chagne</param>
+        /// <returns>An ActionResult containg a respons view</returns>
         [HttpPost]
         public ActionResult EditInfo(string id, string value)
         {
@@ -75,6 +87,13 @@ namespace AspClient.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// ActionResult with a view of movieinfo ~/Person/ViewInfo/Id
+        /// If the Id parameter is wrong, the user is redirected to an error page
+        /// </summary>
+        /// <param name="id">The if of the person to be shown</param>
+        /// <returns>An ActionResult with the person view</returns>
+        [HttpGet]
         public ActionResult ViewInfo( string id )
         {
             int intId;

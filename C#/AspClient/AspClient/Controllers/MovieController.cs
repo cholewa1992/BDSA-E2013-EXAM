@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using AspClient.Models;
 using CommunicationFramework;
 using Utils;
@@ -11,19 +10,29 @@ using Utils;
 namespace AspClient.Controllers
 {
     /// <summary>
+    /// Controller for handling fetching of movie data
     /// @Author Jacob Cholewa (jbec@itu.dk)
     /// @Author Martin
     /// </summary>
     public class MovieController : Controller
     {
-        //
-        // GET: /Movie/
-
+         
+        /// <summary>
+        /// ActionResult for ~/Movie/ redirecting clients back to frontpage (beacuse it is an invalid path)
+        /// </summary>
+        /// <returns>An actionResult redirecting back to frontpage</returns>
         public ActionResult Index()
         {
             return RedirectToAction( "Index", "Home" );
         }
 
+        /// <summary>
+        /// Action result for updating data through POST
+        /// Invoked by ~/Movie/EditInfo/Id called with a post contaning the value of the title to change to
+        /// </summary>
+        /// <param name="id">The id of the movie you wish to change</param>
+        /// <param name="value">The new title of the movie you want to chagne</param>
+        /// <returns>An ActionResult containg a respons view</returns>
         [HttpPost]
         public ActionResult EditInfo(string id, string value)
         {
@@ -60,7 +69,6 @@ namespace AspClient.Controllers
                 });
             }
 
-            byte[] receivedData;
             try
             {
                 var handler = new CommunicationHandler(Protocols.Http);
@@ -68,8 +76,7 @@ namespace AspClient.Controllers
                     "http://localhost:1337/Movie/",
                     Encoder.Encode("{\"id\": \""+ intId +"\",\"title\": \""+ value +"\"}"),
                     "PUT");
-                receivedData = handler.Receive();
-
+                byte[] receivedData = handler.Receive();
                 model.Msg = Encoder.Decode(receivedData);
             }
             catch (Exception e)
@@ -85,6 +92,12 @@ namespace AspClient.Controllers
             return View( model );
         }
 
+        /// <summary>
+        /// ActionResult with a view of movieinfo ~/Movie/ViewInfo/Id
+        /// If the Id parameter is wrong, the user is redirected to an error page
+        /// </summary>
+        /// <param name="id">The if of the movie to be shown</param>
+        /// <returns>An ActionResult with the movie view</returns>
         [HttpGet]
         public ActionResult ViewInfo( string id )
         {
@@ -130,7 +143,7 @@ namespace AspClient.Controllers
 
             if( receivedData != null && receivedData.Count() != 0 )
             {
-                var dictionary = Utils.JSonParser.GetValues( Encoder.Decode( receivedData ) );
+                var dictionary = JSonParser.GetValues( Encoder.Decode( receivedData ) );
                 model.Id = intId;
                 model.Title = dictionary.ContainsKey( "title" ) ? dictionary[ "title" ] : "";
                 dictionary.Remove("title");
