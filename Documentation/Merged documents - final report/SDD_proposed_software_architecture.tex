@@ -86,8 +86,8 @@ Below are the generalized components mapped to hardware or software
 \end{figure}
 
 \begin{itemize}
-\item \textbf{aPC} is the hardware node for our DesktopClient component. The requirement it that it must run on a PC with Windows 7 or 8, utilizing .NET 4.5 or greater
-\item \textbf{aWebkitBrowser} is a software environment implementing WebKit 2 or greater, able to execute our WebClient component. There are no requirements to the hardware platform
+\item \textbf{aPC} is the hardware node for our DesktopClient component. The requirement is that it must run on a PC with Windows 7 or 8, utilizing .NET 4.5 or greater
+\item \textbf{aWebkitBrowser} is a software environment implementing WebKit 2 or greater, able to execute our WebClient component. There are no requirements to the hardware platform. This could be any device with a browser powered by WebKit.
 \item \textbf{WindowsHost} is the server hardware node. On it are two execution environments: .NET 4.5 or greater and MSSQL, required for our WebServer and Database components respectively. The components communicate by entity framework which allows for moving an environment and component to another WindowsHost hardware node.
 \end{itemize}
 
