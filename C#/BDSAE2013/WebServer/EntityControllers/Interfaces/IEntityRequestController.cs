@@ -11,15 +11,10 @@ namespace WebServer
     /// </summary>
     public interface IEntityRequestController : IRequestController
     {
-        string Keyword { get; set; }
-
-        Func<IStorageConnectionBridgeFacade, object> ProcessRequest(Request request);
-
         Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request);
         Func<IStorageConnectionBridgeFacade, object> ProcessPost(Request request);
         Func<IStorageConnectionBridgeFacade, object> ProcessDelete(Request request);
         Func<IStorageConnectionBridgeFacade, object> ProcessPut(Request request);
-
         NameValueCollection ConvertByteToDataTable(byte[] bytes);
     }
 

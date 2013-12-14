@@ -14,12 +14,7 @@ namespace WebServer
     /// </author>
     public interface IAggregatedRequestController : IRequestController
     {
-        string Keyword { get; set; }
-
-        Func<IStorageConnectionBridgeFacade, object> ProcessRequest(Request request);
-
         Func<IStorageConnectionBridgeFacade, object> ProcessGet(Request request);
-
         NameValueCollection ConvertByteToDataTable(byte[] bytes);
     }
 
