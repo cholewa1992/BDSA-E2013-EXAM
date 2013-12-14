@@ -8,6 +8,7 @@ namespace InMemoryStorageTest
 {
     /// <author>
     /// Jacob Cholewa (jbec@itu.dk)
+    /// Morten Rosenmeier (morr@itu.dk)
     /// </author>
     [TestClass]
     public class InMemoryIntegrationTest
