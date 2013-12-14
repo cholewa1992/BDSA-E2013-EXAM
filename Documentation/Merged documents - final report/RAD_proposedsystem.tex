@@ -115,10 +115,10 @@ The following scenarios were set up in order to analyze them:
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{find the movie Pulp Fiction}  \\ \hline
+		Scenario name & \underline{Find the movie The Hobbit}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John wants to find out the name of the actor playing the protagonist in Pulp Fiction. He enters the title in the search field.
+						\item John wants to find out the name of the actor playing the protagonist in The Hobbit. He enters the title in the search field.
 						\item John receive information for the movie, such as a list of actors, roles, a description for the movie, rating ect.
 						\end{enumerate}
 						\\ \hline
@@ -130,10 +130,10 @@ The following scenarios were set up in order to analyze them:
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{find the actor Samuel L. Jackson}  \\ \hline
+		Scenario name & \underline{Find the actor Leonado Dicaprio}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John liked the performance of Samuel L. Jackson in Pulp Fiction, and wants to find other movies where he stars in. He searches for Samuel L. Jackson and recieves his personal information. Ex. Gender and a list of movis he stairs in.
+						\item John liked the performance of Leonado Dicaprio in Titanic, and wants to find other movies where he stars in. He searches for Leonardo Dicaprio and recieves his personal information. Ex. Gender and a list of movies he stars in.
 						\end{enumerate}
 						\\ \hline
 						
@@ -155,29 +155,40 @@ The following scenarios were set up in order to analyze them:
 	\end{tabular}
 \end{center}
 
-
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{edit the movie The Hobbit 3}  \\ \hline
+		Scenario name & \underline{Edit the movie The Hobbit}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John notices that their is a mistake in the genre of 'The Hobbit 3'. The genre is set to a horror movie.
-						\item John edits the genre to fantasy.
+						\item John notices that their is a mistake in the year of 'The Hobbit: An Unexpected Journey. The year is set to 2001.
+						\item John edits the year to 2012.
 						\end{enumerate}
 						\\ \hline
 						
 	\end{tabular}
 \end{center}
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & Find other movies that the actor who plays Bilbo in The Hobbit has starred in  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John likes the actor who plays Bilbo Baggins in 'The Hobbit: An Unexpected Journey', and want to know what other movies he starred in.
+						John searches for 'The Hobbit', enters it and notices the list of actors and what they play in the movie.
+						\item John clicks the name of the actor who plays Bilbo Baggins, to open the actors site
+						\item John checks the list of movies that the actor has starred in and finds hot fuzz.
+						\end{enumerate}
+						\\ \hline
+	\end{tabular}
+\end{center}
 
 \subsubsection{Use case model}
-
 
 \begin{itemize}
 	\setlength{\itemsep}{-5pt}
 	\item User
-	\item Administrator
 	\item Server
 \end{itemize}
 
@@ -190,6 +201,8 @@ User use cases:
 	\setlength{\itemsep}{-5pt}
 	\item Find movie
 	\item Find actor
+	\item Find a movie through an actor
+	\item Find an actor through a movie
 	\item Edit movie information
 	\item Edit actor information
 \end{itemize}
@@ -264,7 +277,64 @@ The explanations furthermore include the relation between the actors and the use
 	\end{tabular}
 \end{center}
 
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Find a movie through an actor \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} searches for an actor
+						\begin{enumerate}
+							\item[2.] The client presents the user with a list of actors with names containing the input
+						\end{enumerate}
+						\item[3.] The \emph{user} selects one of the search results
+						\begin{enumerate}
+							\item[4.] The client displays a page containing information on the actor
+						\end{enumerate}
+						\item[5.] The \emph{user} selects one of the movies from the actor's "starred in" list
+						\begin{enumerate}
+							\item[6.] The client displays a page containing information on the movie
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully found a movie
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Use Case Name & Find an actor through a actor \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item[1.] The \emph{user} searches for a movie
+						\begin{enumerate}
+							\item[2.] The client presents the user with a list of movies with title containing the input
+						\end{enumerate}
+						\item[3.] The \emph{user} selects one of the search results
+						\begin{enumerate}
+							\item[4.] The client displays a page containing information on the movie
+						\end{enumerate}
+						\item[5.] The \emph{user} selects one of the actors from the movie's "starred in" list
+						\begin{enumerate}
+							\item[6.] The client displays a page containing information on the actor
+						\end{enumerate}
+					\end{enumerate} \\ \hline
+		Entry Condition & \begin{itemize}
+						\item The \emph{user} has a client open
+					\end{itemize} \\ \hline
+		Exit Condition & \begin{itemize}
+						\item The \emph{user} successfully found an actor
+					\end{itemize} \\
+		\hline
+	\end{tabular}
+\end{center}
 
 
 \begin{center}
