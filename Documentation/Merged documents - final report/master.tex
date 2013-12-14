@@ -1,0 +1,28 @@
+\documentclass[12pt,a4paper] {report}
+\author{Jonas,\\Martin,\\Michael}
+\title{Requirements Analysis Document}
+\date{\today}
+
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{float}
+
+\DeclareGraphicsExtensions{.png}
+
+\begin{document}
+	\long\def\/*#1*/{}
+	\maketitle
+	\tableofcontents
+	
+	\include{introduction}
+	
+	\include{RAD_introduction}
+	\include{RAD_glossary}
+	\include{RAD_proposedsystem}
+	\include{RAD_appendix}
+
+	\include{SDD_introduction}
+	\include{SDD_proposed_software_architecture}
+	\include{SDD_subsystem_services}
+\end{document}
