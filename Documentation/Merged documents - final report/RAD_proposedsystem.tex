@@ -399,7 +399,7 @@ The explanations furthermore include the relation between the actors and the use
 		Flow of Events & \begin{enumerate}
 						\item[1.] The \emph{administrator} executes the server program
 						\begin{enumerate}
-							\item[2.] The server initializes the required classes and sets up the repository with the default settings
+							\item[2.] The server starts listening to any incoming requests to be handled by the underlying server structure
 						\end{enumerate}
 					\end{enumerate} \\ \hline
 		Entry Condition & \begin{itemize}
@@ -421,7 +421,7 @@ The explanations furthermore include the relation between the actors and the use
 						\item[1.] The \emph{administrator} closes the server program
 						\begin{enumerate}
 							\item[2.] The server stops receiving requests.
-							\item[3.] The server finishes any current transaction request.
+							\item[3.] The server finishes any current transactions to prevent data loss. Requests that has not yet reached the database layer of the program will not affect the database before termination.
 							\item[4.] The server closes the application.			 
 						\end{enumerate}
 					\end{enumerate} \\ \hline
