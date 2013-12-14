@@ -86,8 +86,8 @@ Below are the generalized components mapped to hardware or software
 \end{figure}
 
 \begin{itemize}
-\item \textbf{aPC} is the hardware node for our DesktopClient component. The requirement it that it must run on a PC with Windows 7 or 8, utilizing .NET 4.5 or greater
-\item \textbf{aWebkitBrowser} is a software environment implementing WebKit 2 or greater, able to execute our WebClient component. There are no requirements to the hardware platform
+\item \textbf{aPC} is the hardware node for our DesktopClient component. The requirement is that it must run on a PC with Windows 7 or 8, utilizing .NET 4.5 or greater
+\item \textbf{aWebkitBrowser} is a software environment implementing WebKit 2 or greater, able to execute our WebClient component. There are no requirements to the hardware platform. This could be any device with a browser powered by WebKit.
 \item \textbf{WindowsHost} is the server hardware node. On it are two execution environments: .NET 4.5 or greater and MSSQL, required for our WebServer and Database components respectively. The components communicate by entity framework which allows for moving an environment and component to another WindowsHost hardware node.
 \end{itemize}
 
@@ -97,9 +97,8 @@ Below are the generalized components mapped to hardware or software
 
 \subsection{Access control and security}
 \begin{itemize}
-\item Access Control: The idea with this system is to make a IMDb where the users of the system are in control of the content of the available information. The system doesn't operate with different levels of access control. The system has a user who can post information, get information and edit information so that any user have unlimited access to system data.
-\item Security: To make a secure system in that sense that messages sent from client to sever and back to client again, is encrypted is out of the scobe for this project.\\
-The system do not control who a user is as their is no account with a login and a password in the newest version of FakeIMDb, but the server is prepared for this implementation in a future release.
+\item Access Control: The idea with the system is to make a version of IMDb where the users are in control of the content on the site. The system doesn't operate with different levels of access control, since only one type of users exist where everyone is anonymous. All users are able to get, post and edit -information, which means everyone has unlimited access to all data in the system.\\
+\item Security: There is no security in the system in the sense of encryption of the messages that are sent back and forth, nor any user control. A user does not log into the system as there are no functionality for accounts in place currently, however the server implementation already has the features necessary to support this feature in a future release.
 \end{itemize}
 
 \subsection{Global software control}
