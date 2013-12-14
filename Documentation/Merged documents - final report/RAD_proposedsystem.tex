@@ -2,8 +2,7 @@
 \label{sec:proposed system}
 
 \subsection{Overview}
-A distributed system where a user is able to search and find movies. Information for the selected movie is displayed. He is able to add the found movie to his favourites list.
-
+A distributed system where a user is able to search, find and edit movies and persons. Information for the selected movie or person is displayed.
 \subsection{Functional requirements}
 \begin{itemize}
 	\setlength{\itemsep}{-5pt}
@@ -11,7 +10,7 @@ A distributed system where a user is able to search and find movies. Information
 	\begin{itemize}
 		\setlength{\itemsep}{-5pt}
 		\item A database
-		\item A server exposing functions for retrieving data from the database
+		\item A web server exposing functions for handling data to and from the database
 		\item A Windows Application
 		\item A Web Client
 	\end{itemize}
@@ -20,6 +19,7 @@ A distributed system where a user is able to search and find movies. Information
 	\item The server must build on the HttpListener for HTTP communication
 	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
 	\item The server must be able to merge information from My Movie API. If a search term is not found in the database, the server will search IMDB using My Movie API. If there is a search result from the My Movie API, it will be sent to the client.
+	\item The clients in the system should display information coming from the server, and should also take input from the user and transfer it back to the server.
 \end{itemize}
 
 \subsection{Nonfunctional requirements}
@@ -28,25 +28,28 @@ A distributed system where a user is able to search and find movies. Information
 
 \item[\textbf{Usability}]
 \begin{itemize}
-\item A user able to use an internet browser must be able to use the System
+\item A user able to use an internet browser must be able to use the System.
 \end{itemize}
 
 \vspace{0.2cm}
 \item[\textbf{Reliability}]
 \begin{itemize}
 \item Reliability is a \textit{must} for the system. The user should experience as few software crashes as possible, with a maximum of 2 per day.
-\item Restarting the system is acceptable if a software crash does happen
-\item The system must not lose data as result of a software crash
+\item The client application should function in a non-connected mode.
+\item The server should work also if the database is unavailable.
+\item Restarting the system is acceptable if a software crash does happen.
+\item The system must not lose data as result of a software crash.
 \end{itemize}
 
 
 \vspace{0.2cm}
-\item[\textbf{Performance}] 
+\item[\textbf{Performance}]
 
 \hspace{50cm}
 
 \begin{itemize}
-\item Minimum requirements
+\item The system should be optimized for fast response time by using caching and lazy loading.
+\item System requirements
 \end{itemize}
 
 
