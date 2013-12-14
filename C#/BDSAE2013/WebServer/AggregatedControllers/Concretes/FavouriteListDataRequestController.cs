@@ -34,13 +34,13 @@ namespace WebServer
         }
 
         /// <summary>
-        /// This method returns a delegate that can be used to get a complete set of data about a specified person
-        /// The id of the person is determined by the parsed request
+        /// This method returns a delegate that can be used to get a complete set of data about a specified favourite list
+        /// The id of the favourite list determined by the parsed request
         /// @pre request != null
         /// @pre request.Method != null
         /// </summary>
         /// <param name="request"> The original request received by the web server. </param>
-        /// <returns> A delegate that gets a person and all their associated data from the database </returns>
+        /// <returns> A delegate that gets a favourite list and all its associated data from the database </returns>
         public override Func<IStorageConnectionBridgeFacade, byte[]> ProcessGet(Request request)
         {
             //Pre condition check that the incoming request is not null

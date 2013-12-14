@@ -10,12 +10,12 @@ namespace MyMovieAPI
     public class MyMovieApiRequest
     {
         /// <summary>
-        /// 
+        /// Search the MyMovieAPI for movies. Returns the movies in json format
         /// </summary>
-        /// <param name="searchWord"></param>
-        /// <param name="limit"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
+        /// <param name="searchWord"> The search word to match </param>
+        /// <param name="limit"> The amount of movies to find </param>
+        /// <param name="timeout"> The timeout in miliseconds </param>
+        /// <returns> The found movies in json format </returns>
         public static string MakeRequest(string searchWord, int limit = 3, int timeout = 5000)
         {
             try
