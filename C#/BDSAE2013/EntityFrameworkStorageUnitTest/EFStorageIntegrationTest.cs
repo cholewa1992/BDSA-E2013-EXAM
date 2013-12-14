@@ -7,6 +7,7 @@ namespace EntityFrameworkStorageUnitTest
 {
     /// <author>
     /// Jacob Cholewa (jbec@itu.dk)
+    /// Morten Rosenmeier (morr@itu.dk)
     /// </author>
     [TestClass]
     public class EFStorageIntegrationTest
@@ -14,7 +15,7 @@ namespace EntityFrameworkStorageUnitTest
         [TestMethod]
         public void AddToContextTest()
         {
-            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockImdbContext>()))
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
                 var user = new UserAcc {Email = "jbec@itu.dk", Password = "1234"};
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
@@ -27,7 +28,7 @@ namespace EntityFrameworkStorageUnitTest
         [ExpectedException(typeof(InternalDbException))]
         public void AddInvalidUserToContextTest()
         {
-            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockImdbContext>()))
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
                 var user = new UserAcc ();
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Email == user.Email));
@@ -39,7 +40,7 @@ namespace EntityFrameworkStorageUnitTest
         [TestMethod]
         public void UpdateEntityInContextTest()
         {
-            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockImdbContext>()))
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
                 var user = new UserAcc {Email = "jbec@itu.dk", Password = "1234"};
                 ef.Add(user);
@@ -55,7 +56,7 @@ namespace EntityFrameworkStorageUnitTest
         [ExpectedException(typeof(InternalDbException))]
         public void UpdateEntityNotInContextTest()
         {
-            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockImdbContext>()))
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
                 var user = new UserAcc {Id = 1, Email = "jbec@itu.dk", Password = "1234"};
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id && t.Email == "jbec@itu.dk"));
@@ -69,7 +70,7 @@ namespace EntityFrameworkStorageUnitTest
         [TestMethod]
         public void DeleteEntityInContextTest()
         {
-            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockImdbContext>()))
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
                 var user = new UserAcc { Email = "jbec@itu.dk", Password = "1234" };
                 ef.Add(user);
@@ -82,7 +83,7 @@ namespace EntityFrameworkStorageUnitTest
         [ExpectedException(typeof(InternalDbException))]
         public void DeleteEntityNotInContextTest()
         {
-            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockImdbContext>()))
+            using (var ef = new StorageConnectionBridgeFacade(new EFConnectionFactory<MockFakeImdbContext>()))
             {
                 var user = new UserAcc {Id = 1, Email = "jbec@itu.dk", Password = "1234" };
                 Assert.IsFalse(ef.Get<UserAcc>().Any(t => t.Id == user.Id));
