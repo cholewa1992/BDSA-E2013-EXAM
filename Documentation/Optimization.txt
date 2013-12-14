@@ -18,3 +18,16 @@ Communication Framework:
 
 Testing:
 - Higher quality of testing
+
+-----------------------------------------------------
+
+Features:
+- ASP client exposed features
+- Desktop client exposed features
+- Entity caching (caching found entities)
+- Query caching (cache the results of a query, so we can easily return that query again)
+
+Optimization:
+- JSon request/responses
+- HTTP protocol has a lot of hard coded logic, this should be coded in the communicati
+- Higher quality of testingon handler
