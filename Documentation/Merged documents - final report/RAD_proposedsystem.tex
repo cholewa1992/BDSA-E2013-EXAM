@@ -172,13 +172,27 @@ The following scenarios were set up in order to analyze them:
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & Find other movies that the actor who plays Bilbo in The Hobbit has starred in  \\ \hline
+		Scenario name & \underline Find other movies that the actor who plays Bilbo in The Hobbit has starred in  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
 						\item John likes the actor who plays Bilbo Baggins in 'The Hobbit: An Unexpected Journey', and want to know what other movies he starred in.
 						John searches for 'The Hobbit', enters it and notices the list of actors and what they play in the movie.
 						\item John clicks the name of the actor who plays Bilbo Baggins, to open the actors site
 						\item John checks the list of movies that the actor has starred in and finds hot fuzz.
+						\end{enumerate}
+						\\ \hline
+	\end{tabular}
+\end{center}
+
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |  }
+		 \hline
+		Scenario name & \underline Find the name of the protagonist in Kill Bill.  \\ \hline
+		Participating Actors & \underline{John} \\ \hline
+		Flow of Events & \begin{enumerate}
+						\item John likes the actor who is the protagonist in 'Kill Bill', and want to know her name.
+						John searches for 'Kill Bill', enters it and notices the list of actors and what they play in the movie and finds Uma Thurman.
 						\end{enumerate}
 						\\ \hline
 	\end{tabular}
@@ -213,7 +227,6 @@ After refining the system design, we have added the following boundary scenarios
 	
 	\item StartWebServer
 	\item ShutdownWebServer
-	\item ConfigureWebServer
 	\item ConnectionLostException
 \end{itemize}
 
@@ -310,7 +323,7 @@ The explanations furthermore include the relation between the actors and the use
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Use Case Name & Find an actor through a actor \\ \hline
+		Use Case Name & Find an actor through a movie \\ \hline
 		Participating Actors & Initiated by \emph{User} \\ \hline
 		Flow of Events & \begin{enumerate}
 						\item[1.] The \emph{user} searches for a movie
@@ -400,7 +413,7 @@ The explanations furthermore include the relation between the actors and the use
 		Flow of Events & \begin{enumerate}
 						\item[1.] The \emph{administrator} executes the server program
 						\begin{enumerate}
-							\item[2.] The server initializes the required classes and sets up the repository with the default settings
+							\item[2.] The server starts listening to any incoming requests to be handled by the underlying server structure
 						\end{enumerate}
 					\end{enumerate} \\ \hline
 		Entry Condition & \begin{itemize}
@@ -422,7 +435,7 @@ The explanations furthermore include the relation between the actors and the use
 						\item[1.] The \emph{administrator} closes the server program
 						\begin{enumerate}
 							\item[2.] The server stops receiving requests.
-							\item[3.] The server finishes any current transaction request.
+							\item[3.] The server finishes any current transactions to prevent data loss. Requests that has not yet reached the database layer of the program will not affect the database before termination.
 							\item[4.] The server closes the application.			 
 						\end{enumerate}
 					\end{enumerate} \\ \hline
@@ -459,14 +472,14 @@ The explanations furthermore include the relation between the actors and the use
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
 		Use Case Name & Connection Lost Exception \\ \hline
-		Participating Actors & Initiated by \emph{server} \\ \hline
+		Participating Actors & Initiated by \emph{client} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{server} completes any current transaction
-						\item[2.] The server logs all relevant information for each transaction to be used when the server regains connection
-						\item[3.] The server waits until it regains connection
+						\item[1.] The \emph{client} loses connection to the server.
+						\item[2.] The \emph{server} rolls back any partial changes
+						\item[3.] The \emph{client} displays an error message, and will start functioning again if connection is regained.  
 						\end{enumerate} \\ \hline
 		Entry Condition & \begin{itemize}
-						\item The \emph{server} program lost connection
+						\item The \emph{client} program lost connection
 					\end{itemize} \\ \hline
 		Exit Condition & \begin{itemize}
 						\item The server program has handled every current transaction and logged them
@@ -484,7 +497,7 @@ The explanations furthermore include the relation between the actors and the use
 	A movie is a collection of data about a specific movie. It has attributes defining its title, length, year of production and genre. Some movies are episodes of series and has attributes defining it's season and episode number.
 	
 	\item[2.] Person \hfill \\
-	The person entity defines data about a specific person. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age.
+	The person entity defines data about a specific person in the database. Each entity instance includes attributes defining the name and the gender of the person. The person links to zero or more person information, describing further information such as age, and will often have references to movies that the person has starred in, if the person is an actor.
 	
 \end{enumerate}
 
@@ -525,12 +538,13 @@ These controllers are all more or less self-explanatory. They enable the user to
 
 \paragraph{Class Diagram}
 
-\begin{figure}[H]
+\begin{figure}[h]
 \includegraphics[width=\linewidth]{img/RAD/ClassDiagram.png}
 \caption{Class diagram}
 \label{fig:Class diagram}
 \end{figure}
 
+\newpage
 \subsubsection{Dynamic model}
 
 \paragraph{Sequence diagrams}
@@ -550,7 +564,7 @@ The sequence diagrams explains some of the more apparant use cases of the system
 \end{figure}
 
 \paragraph{State machines}
-An entity can have different states. As seen in figure \ref{fig:Entity State Machine Diagram}, after its creation (POST), it is stores in the persistent database module on the server. From here it can either be deleted (DELETE), or it can be fetched (GET). When a object is queried from the database the server will fetch it as a DTO (Data transfer object) into the servers memory. Often used objects will be saved in the server's cache. The DTO is then sent to the client requesting the object. The client-side also have a cache. This means that if the user has recently queried the object, it will not be fetched from the server, but from the local cache. A DTO can from there either be updated (PUT) and pushed back to the server, or cache time-out and be deleted (This means that only the DTO will be deleted and not the entity in the database).
+An entity can have different states. As seen in figure \ref{fig:Entity State Machine Diagram}, after its creation (POST), it is stored in the persistent database module on the server. From here it can either be deleted (DELETE), or it can be fetched (GET). When a object is queried from the database the server will fetch it as a DTO (Data transfer object) into the servers memory and the DTO is sent to the client requesting the object. A DTO can from there either be updated (PUT) and pushed back to the server or it can go out of scope, meaning it's removed from the server's memory. (This means that only the DTO will be deleted and not the entity in the database).
 
 This is valid for Movies and Actors.
 
@@ -558,5 +572,11 @@ This is valid for Movies and Actors.
 \includegraphics[width=\linewidth]{img/RAD/EntityStateMachineDiagram.png}
 \caption{Entity State Machine Diagram}
 \label{fig:Entity State Machine Diagram}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{img/RAD/GUIMuckUp.JPG}
+\caption{First version of GUI muck-up}
+\label{fig:GUIMuckUp}
 \end{figure}
 \newpage

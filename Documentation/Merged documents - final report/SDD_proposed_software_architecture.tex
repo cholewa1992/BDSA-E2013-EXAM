@@ -30,10 +30,10 @@ We will here document the design patterns utilized by the program. We will menti
 	\item \emph{MVC} (or Model-View-Controller) has not only been utilized on the system as a whole, but also notably in the ASP.net client. By doing this, user interface is clearly separated from the controlling logic of the program, and we get modular code that is easy to maintain and extend.
 	\item The \emph{Database Mapper} pattern has been applied when performing transactions between the web server and the database. The system contains a facade exposed to the web server. The facade can be injected with the wanted mapper, which will then connect to the database based on the mapper.
 	\item The \emph{Abstract factory} is used in the storage subsystem to create instances of storage. By using this design pattern, we give the subsystem added extendability, simplifying the progress of making plugins that utilize the subsystem.
-	\item \emph{bridge pattern} is implemented  in storage is used to easily inject stops.
+	\item \emph{bridge pattern} is implemented in the storage and is used to easily allow the rest of the system to use the data, independent of how the actual storage functionality works, whether it's a MySQL Database or flatfile.
 	\item The \emph{Adapter pattern} has been used when translating alien movie data from other databases to the format used in the main database.
 	\item The \emph{Front Controller Pattern} is used when processing requests. Incoming requests is sent through a delegator to the relevant request controller. The controller determines how the request will affect the database. This allows for new request types to be implemented easily.
-	\item The \emph{Facade Pattern} is used for each of the subsystems in the program. All subsystems expose a single facade to be accessed by other subsystems, allowing simple communication compared to more complicated communication in which every class could communicate with eachother. Furthermore the pattern allows each subsystem to be self-contained allowing for inner changes to be made frequently as long as the changes does not change the functionality of the facade.
+	\item The \emph{Facade Pattern} is used for each of the subsystems in the program. All subsystems expose a single facade to be accessed by other subsystems, allowing simpler communication between all of the components in the system. Furthermore the pattern allows each subsystem to be self-contained allowing for inner changes to be made frequently as long as the changes does not change the functionality of the facade.
 	\item The \emph{Command Pattern} has been used to invoke delegates in the ViewModels bound by controllers in the Views. A button, for example, will be bound to a command in the ViewModel, and hence code can be executed by the hand of the user.
 \end{itemize}
 
@@ -73,8 +73,13 @@ The communication framework subsystem is used when sending and receiving request
 The WebServer is used to interpret incoming requests, received through the communication framework. The requests will be handled by the designated controller (if any exists), or discarded with an error code, since the server is not able to furtherly process it.
 The RequestDelegator facade will use a delegate given by the specified controller to access the database and retrieve or modify the relevant data. When the request has been handled the WebServer responds to the request using the communication framework.
 
-%insert subsystem diagrams here
+\begin{figure}[H]
+\includegraphics[scale=0.135]{img/SDD/StoragePackage.png}
+\caption{Storage Subsystem}
+\label{fig:Storage}
+\end{figure}
 
+The storage subsystem exposes a bridge facade that allows easy access to the database. The context and the database type (either sql or in-memory) is injected through the facade, allowing for interchangable inner database structure. (CHOLEWA CONTINUES)
 
 \subsection{Hardware/software mapping}
 \label{sec:Hardware/software mapping}
@@ -148,7 +153,6 @@ We have indentified the following boundary conditions, and added them to the lis
 	\begin{itemize}
 			\item StartWebServer
 			\item ShutdownWebServer
-			\item ConfigureWebServer
 	\end{itemize}
 	\item Exception use cases:
 	\begin{itemize}
