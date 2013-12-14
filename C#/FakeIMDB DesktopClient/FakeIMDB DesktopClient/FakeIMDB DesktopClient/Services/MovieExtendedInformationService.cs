@@ -94,7 +94,11 @@ namespace FakeIMDB_DesktopClient.Services
             return item;
         }
 
-
+        /// <summary>
+        /// This method exstracts participants from the json
+        /// </summary>
+        /// <param name="json">json string</param>
+        /// <returns>list of PersonSearchItems</returns>
         public List<PersonSearchItem> ExstractParticipants(Dictionary<string, string> json)
         {
             List<PersonSearchItem> list = new List<PersonSearchItem>();

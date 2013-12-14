@@ -21,6 +21,10 @@ namespace FakeIMDB_DesktopClient.ViewModel
     /// </author>
     public class ViewModelLocator
     {
+
+        /// <summary>
+        /// Constructor of the ViewModelLocator which registers classes with SimpleIoc
+        /// </summary>
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
