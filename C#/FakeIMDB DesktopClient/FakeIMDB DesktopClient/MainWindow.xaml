@@ -1,0 +1,62 @@
+﻿<!-- Main window for the application
+    <author>Mathias Kindsholm Pedersen(mkin@itu.dk)</author> -->
+    
+    <Window x:Class="FakeIMDB_DesktopClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        WindowStartupLocation="CenterScreen"
+        Title="FakeIMDB" Height="600" Width="750" MinHeight="250" MinWidth="400"
+        Style="{DynamicResource MainWindowStyle}"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+    <DockPanel>
+        <WrapPanel DockPanel.Dock="Top" Margin="20">
+            <Label Content="{Binding ProgramBanner}" FontSize="20" Width="200" />
+
+            <!-- <UserControl Content="{Binding BusyIndicator}"/> -->
+
+            <StackPanel>
+
+                <TextBox Name="Searchbox" Width="269" Height="35" Focusable="{Binding IsAddressSet}"
+                         FontSize="20" HorizontalAlignment="Center" ToolTip="Press enter to search">
+
+
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"
+                                    CommandParameter="{Binding Text, ElementName=Searchbox}" />
+
+                    </TextBox.InputBindings>
+
+                </TextBox>
+
+                
+
+                <ProgressBar Visibility="{Binding SearchProgressVisibility}"
+                             Width="{Binding ActualWidth, ElementName=Searchbox}"
+                             Value="{Binding SearchProgress.value}" />
+            </StackPanel>
+
+
+            <Button Content="Options" Margin="90,0,0,0" Height="20" Width="80" Command="{Binding OptionsViewCommand}"/>
+
+
+        </WrapPanel>
+
+        <ContentControl Margin="20" DockPanel.Dock="Bottom" Content="{Binding CurrentView}" />
+
+    </DockPanel>
+</Window>
