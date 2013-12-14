@@ -73,8 +73,13 @@ The communication framework subsystem is used when sending and receiving request
 The WebServer is used to interpret incoming requests, received through the communication framework. The requests will be handled by the designated controller (if any exists), or discarded with an error code, since the server is not able to furtherly process it.
 The RequestDelegator facade will use a delegate given by the specified controller to access the database and retrieve or modify the relevant data. When the request has been handled the WebServer responds to the request using the communication framework.
 
-%insert subsystem diagrams here
+\begin{figure}[H]
+\includegraphics[scale=0.135]{img/SDD/StoragePackage.png}
+\caption{Storage Subsystem}
+\label{fig:Storage}
+\end{figure}
 
+The storage subsystem exposes a bridge facade that allows easy access to the database. The context and the database type (either sql or in-memory) is injected through the facade, allowing for interchangable inner database structure. (CHOLEWA CONTINUES)
 
 \subsection{Hardware/software mapping}
 \label{sec:Hardware/software mapping}
