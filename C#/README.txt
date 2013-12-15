@@ -1,5 +1,5 @@
 WebServer:
-	1. Start WebServer.exe. It will want to run as Administrator, allow it to
+	1. Start WebServer.exe found in the BDSAE2013 complied release. It will want to run as Administrator, allow it to
 	2. The Server is hardcoded to listen on port :1337
 	3. Alternatively open the solution and start it from there
 
@@ -10,7 +10,7 @@ ASP.NET Client:
 
 WPF Desktop Client:
 	1. The WebServer must be started
-	2. Start FakeIMDB DesktopClient.exe
+	2. Start FakeIMDB DesktopClient.exe found in the FakeIMDB DesktopClient complied release
 	3. The application will listen to http://localhost:1337/ as default, and you can
 	   start searching right away. If you want to change the address, remember to end
 	   it with a /
