@@ -107,8 +107,8 @@ The communication framework subsystem is used when sending and receiving request
 \caption{Web Server Subsystem}
 \label{fig:WebServer}
 \end{figure}
-The WebServer is used to interpret incoming requests, received through the communication framework. The requests will be handled by the designated controller (if any exists), or discarded with an error code, since the server is not able to furtherly process it.
-The RequestDelegator facade will use a delegate given by the specified controller to access the database and retrieve or modify the relevant data. When the request has been handled the WebServer responds to the request using the communication framework.
+The WebServer is used to interpret incoming requests, received through the communication framework. The requests will be handled by the designated controller (if any exists), or discarded with an error code, since the server is not able to process it any further.
+The RequestDelegator facade will use a delegate given by the specified controller to access the database and retrieve or modify the relevant data. When the request has been handled, the WebServer responds to the request using the communication framework.
 
 \begin{figure}[H]
 \includegraphics[width=\linewidth]{img/SDD/StoragePackage.png}
@@ -146,25 +146,25 @@ The persistent objects for the system is already given and implemented in an MSS
 \end{figure}
 
 \subsubsection{Storage management strategy}
-The web server is designed as an layered architecture. On top the REST communication, then a logic layer, than a storage layer and on the bottom concert persistent modules (eg. A database).\\\\
-The storage layer is implemented with different design patterns (see figure \ref{fig:StorageSubsystem}), but the overall architecture is build around the object-mapper pattern. This means that the storage layer doesn't know anything about the object model. This is done so that if a new entity were to be added, only the object model has to been updated in order to implement the change. 
+The web server is designed as an layered architecture. On top there's the REST communication, then a logic layer, then a storage layer and on the bottom concrete persistent modules (eg. A database).\\\\
+The storage layer is implemented with different design patterns (see figure \ref{fig:StorageSubsystem}), but the overall architecture is built around the object-mapper pattern. This means that the storage layer doesn't know anything about the object model. This is done so that if a new entity were to be added, only the object model has to been updated in order to implement the change. 
 
 The system implements two storage strategies. A relational database management system implemented using Entity Framework, and a proof of concept In-Memory storage solution that could later be used to implement caching. 
 
-Both concrete solutions are using the transaction state pattern to ensure that the database is consistent. The state pattern keeps track of the entities states (see figure ~\ref{fig:Entity State Machine Diagram}), and only when Save Changes is invoked, the data is actually saved to the persistent module. This ensures that if the program was to crash while working on ongoing transactions, the persistent data integrity would not be violated.  
+Both concrete solutions are using the transaction state pattern to ensure that the database is consistent. The state pattern keeps track of the entities states (see figure ~\ref{fig:Entity State Machine Diagram}), and only when Save Changes is invoked, the data is actually saved to the persistent module. This ensures that if the program were to crash while working on ongoing transactions, the persistent data integrity would not be violated.  
 
 \subsubsection{Relational database}
-To improve performance and repose time, we have altered the database to use clustered indexing on key values and non-clustered indexes on often used attributes. The database also uses foreign keys which the entity framework uses for making property references for easy mapping between objects. 
+To improve performance and repose time, we have altered the database to use clustered indexing on key values and non-clustered indexes on often used attributes. Besides that, the database uses foreign keys which the entity framework uses for making property references for easy mapping between objects. 
 
 
 \subsection{Access control and security}
 \begin{itemize}
 \item Access Control: The idea with the system is to make a version of IMDb where the users are in control of the content on the site. The system doesn't operate with different levels of access control, since only one type of users exist where everyone is anonymous. All users are able to get, post and edit -information, which means everyone has unlimited access to all data in the system.\\
-\item Security: There is no security in the system in the sense of encryption of the messages that are sent back and forth, nor any user control. A user does not log into the system as there are no functionality for accounts in place currently, however the server implementation already has the features necessary to support this feature in a future release.
+\item Security: There is no security in the system in the sense of encryption of the messages that are sent back and forth, nor any user control. A user does not log into the system as there is no functionality for accounts in place currently, however the server implementation already has the features necessary to support this feature in a future release.
 \end{itemize}
 
 \subsection{Global software control}
-The global control flow in our system is primarily designed as an event driven control flow. Whenever the client performs an action, the event is passed on to the WebServer through the Communication Framework. Once the WebServer receives this request, a new thread is started for this particular request and a RequestDelegator is created that will handle the request. The Storage is then invoked by the RequestController that the RequestDelegator has delegated the request to. This allows parellel handling of the requests and is a very responsive system making it possible to respond to other requests while several are being processed at the same time, only being limited by the processing power that is available. Once a request has been handled by the WebServer and the response is ready, it's sent back through the Communication Framework to the client whom is waiting for the response. 
+The global control flow in our system is primarily designed as an event driven control flow. Whenever the client performs an action, the event is passed on to the WebServer through the Communication Framework. Once the WebServer receives this request, a new thread is started for this particular request and a RequestDelegator is created that will handle the request. The Storage is then invoked by the RequestController that the RequestDelegator has delegated the request to. This allows parellel handling of the requests and is a very responsive system making it possible to respond to other requests while several are being processed at the same time and the only limit to the amount of concurrenct users is the amount of processing power that is available. Once a request has been handled by the WebServer and the response is ready, it's sent back through the Communication Framework to the client, waiting for the response. 
 
 \subsection{Identifying services}
 We have identified subsystem services for our program. They are shown in the figure below, and more detailed explanations for the services can be found beneath the diagram.
@@ -185,7 +185,7 @@ We have identified subsystem services for our program. They are shown in the fig
 
 \subsection{Boundary conditions}
 
-We have indentified the following boundary conditions, and added them to the list of use cases in the RAD:
+We have identified the following boundary conditions and added them to the list of use cases in the RAD:
 
 \begin{itemize}
 	\item Start up and shutdown boundary use cases:
@@ -211,20 +211,20 @@ The end product contains many features, yet some improvements could have been ma
 The features being mentioned are the ones slightly beyond scope, yet within reach of another week of development.
 
 - Additional features exposed through clients
-The backend of the program exposes services to manage the entire database in an easy fashion. These services are however not fully utilized through the clients, due to the complications of developing a rich user interface that exposes each of the services in a decent way.
+The backend of the program exposes services to manage the entire database in an easy fashion. These services are however not fully utilized in the clients, due to the complications of developing a rich user interface that exposes each of the services in a decent way.
 
 - Improved Caching
 Even though the entity framework supports minor caching, the respond times of the web server could greatly be improved by caching various resources.
-The main methods of caching under discussion is entity caching, in which the server would cache any resources being exposed through a request for later use, or query caching, in which a query's result would be stored locally.
+The main methods of caching, currently under discussion, is entity caching in which the server would cache any resources being exposed through a request for later use, or query caching, in which a query's result would be stored locally.
 
 \subsubsection{Optimization}
 
-The software being developed, even though having a high amount of quality checks and revisions, can always be improved.
-The optimization options being mentioned are that of code optimization, speed optimization or structure optimization in general.
+The software being developed, even though it already has a high amount of quality checks and revisions, can always be improved.
+The optimization options being mentioned are those of code optimization, speed optimization or structure optimization in general.
 
 - Json messaging
-The software communicates utilizing json. The json is stored as a single json object with various attribute names and attribute values.
-The communication could be improved to use actual json objects, while using anonymous and dynamic objects for serializing and deserializing, to prevent a static structure, in which no server and client version can be out of sync .
+The software communicates through the use of json. The json is stored as a single json object with various attribute names and attribute values.
+The communication could be improved to use actual json objects, while using anonymous and dynamic objects for serializing and deserializing, to prevent a static structure, in which no server and client version can be out of sync.
 
 - Communication Framework
 The communication framework was specifically designed to be easily expandable with additional protocol types. The internal structure of the subsystem has a lot of logic that could be shared between protocols, being defined in the http protocol class structure. This logic should be moved to a higher level, for easier sharing between polymorphic members.
@@ -239,12 +239,12 @@ In general the amount of tests being conducted on each individual subsystem was 
 For the main part of this project, we have worked as a SCRUM unit. It has helped us work more effectively as a unit but with certain challenges.
 
 \begin{itemize}
-\item In our experience, not having a central base, is a big hit on SCRUM. It means that we weren't able to have a physical SCRUM board, and were forced to use a mobile tool. We chose to use Trello, where each of us could log in and check up on and move tasks. The idea is fine, but easily forgotten. Today is our last scheduled work day, and we have transformed the tasks on post-its(see \ref{fig:Scrum Board1} page \pageref{fig:Scrum Board1}). To sum up, a physical board achieved being the status of progress, while Trello was more of another task to keep updated.
+\item In our experience, not having a central base, is a big hit on SCRUM. It means that we weren't able to have a physical SCRUM board, and were forced to use a mobile tool. We chose to use Trello, where each of us could log in, check up on and move tasks. The idea is fine, but easily forgotten. Today is our last scheduled work day, and we have transformed the tasks on post-its(see \ref{fig:Scrum Board1} page \pageref{fig:Scrum Board1}). To sum up, a physical board achieved being the status of progress, while Trello was more of another task to keep updated.
 \end{itemize}
 
 \section{Extreme programming}
 
 
 \section{Coding priorities}
-Our goal form the start was quality over quantity. We realize now that we could have displayed that nicely in the RAD and SDD, and since we haven't, it might seem like not many usecases were achieved. Instead we could have focused more on a requirement to supportability and extensibility, which we have achieved.
-We have focused on the architecture on all fronts. We began with the backend, using a wide variety of design pattern, and building a framework for communication. The same goes for the clients - however since we were working against a strict deadline, our clients did not get to reflect at all the full functionality of the backend. Our time was rather spent on the architecture of them. However our backend has controls for RESTful calls on all tables in the database. 
+Our goal form the start was quality over quantity. We realize now that we could have displayed that nicely in the RAD and SDD, and since we haven't, it might seem like many usecases wasn't achieved. Instead we could have focused more on a requirement to supportability and extensibility, which we have achieved.
+We have focused on the architecture on all fronts. We began with the backend, using a wide variety of design patterns and building a framework for communication. The same goes for the clients - however since we were working against a strict deadline, our clients did not get to reflect the full functionality of the backend. Our time was rather spent on the architecture of them. However our backend has controls for RESTful calls on all tables in the database. 
