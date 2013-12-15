@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunicationFramework;
 using FakeIMDB_DesktopClient.Model;
 using Utils;
@@ -76,7 +77,8 @@ namespace FakeIMDB_DesktopClient.Services
                 );
 
             // Build RESTful address to be used
-            string restAddress = connectionModel + "Person";
+            string restAddress = connectionModel.Address + "Person";
+
 
             // Encode json to byte array
             byte[] data = Encoder.Encode(json);
