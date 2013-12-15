@@ -66,7 +66,7 @@ We will in this section document the design patterns utilized by the program. We
 
 \subsection{Subsystem decomposition}
 \label{sec:Subsystem decomposition}
-We have grouped our classes into subsystems to create a clearer structure of the program. In this section, we will first show an overview of how the subsystems interact, and then a detailed look at the individual subsystems.\\
+We have grouped our classes into subsystems to create a clearer structure of the program. In this section, we will first show an overview of how the subsystems interact, and then a detailed look at the individual subsystems.
 
 
 \begin{figure}[H]
@@ -75,7 +75,7 @@ We have grouped our classes into subsystems to create a clearer structure of the
 \label{fig:FakeIMDBSubsystems}
 \end{figure}
 
-The software is divided into five main subsystems with one subsystem for each different client, communicating with the WebServer subsystem through the Communication Framework subsystem. The WebServer subsystem use the Storage subsystem to get/put data to/from the clients.\\
+The software is divided into five main subsystems with one subsystem for each different client, communicating with the WebServer subsystem through the Communication Framework subsystem. The WebServer subsystem use the Storage subsystem to get/put data to/from the clients.
 
 
 \begin{figure}[H]
@@ -170,9 +170,11 @@ The global control flow in our system is primarily designed as an event driven c
 We have identified subsystem services for our program. They are shown in the figure below, and more detailed explanations for the services can be found beneath the diagram.
 
 \begin{figure}[H]
-\includegraphics[scale=0.8]{img/SDD/SubsystemServices.jpg}
+\begin{center}
+\includegraphics[scale=0.4]{img/SDD/SubsystemServices.jpg}
 \caption{Subsystem Services}
 \label{fig:Subsystem Services}
+\end{center}
 \end{figure}
 
 

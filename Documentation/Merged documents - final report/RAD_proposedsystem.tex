@@ -67,7 +67,7 @@ A distributed system where a user is able to search, find and edit movies and pe
 
 \begin{itemize}
 \item The system should support at least 7 concurrent users
-\item The server must support storing at least 10 gigabytes of data
+\item The database must support storing at least 10 gigabytes of data
 \item The maximum latency the user can experience, when his internet is not a bottleneck, must not surpass 5 seconds
 \end{itemize}
 
@@ -210,8 +210,6 @@ The following scenarios were set up in order to analyze them:
 Through the inspection of the scenarios depicted in the Scenario’s section, we have deduced the use cases that the program should be able to support.
 
 The use cases are as follows:
-
-User use cases:
 \begin{itemize}
 	\setlength{\itemsep}{-5pt}
 	\item Find movie
@@ -537,8 +535,9 @@ These controllers are all more or less self-explanatory. They enable the user to
  	
 \end{enumerate}
 
-\paragraph{Class Diagram}
 
+\paragraph{Class Diagram}
+Below is the Class Diagram
 \begin{figure}[h]
 \includegraphics[width=\linewidth]{img/RAD/ClassDiagram.png}
 \caption{Class diagram}
@@ -553,9 +552,11 @@ These controllers are all more or less self-explanatory. They enable the user to
 The sequence diagrams explains some of the more apparant use cases of the system in detail. The interactions shown in the diagrams are not directly linked to the final interaction of the actual program, but is describing the overall flow of the messages sent between the objects being used.
 
 \begin{figure}[H]
+\begin{center}
 \includegraphics[width=\linewidth]{img/RAD/SearchSequenceDiagram.png}
 \caption{Search Sequence Diagram}
 \label{fig:Search Sequence Diagram}
+\end{center}
 \end{figure}
 
 \begin{figure}[H]
