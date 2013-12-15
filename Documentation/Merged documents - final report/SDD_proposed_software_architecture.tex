@@ -233,18 +233,35 @@ The communication framework was specifically designed to be easily expandable wi
 In general the amount of tests being conducted on each individual subsystem was too insignificant. More thorough testing should be conducted to better validate the correctedness of the software.
 
 
+
 \chapter{Discussion}
+\label{chap:Discusion}
 
-\chapter{SCRUM}
-For the main part of this project, we have worked as a SCRUM unit. It has helped us work more effectively as a unit but with certain challenges.
+\section{SCRUM}
+For the main part of this project, we have worked as a SCRUM unit. It has helped us work more efficiently, but with certain challenges.
 
-\begin{itemize}
-\item In our experience, not having a central base, is a big hit on SCRUM. It means that we weren't able to have a physical SCRUM board, and were forced to use a mobile tool. We chose to use Trello, where each of us could log in, check up on and move tasks. The idea is fine, but easily forgotten. Today is our last scheduled work day, and we have transformed the tasks on post-its(see \ref{fig:Scrum Board1} page \pageref{fig:Scrum Board1}). To sum up, a physical board achieved being the status of progress, while Trello was more of another task to keep updated.
-\end{itemize}
+In our experience, not having a central base, is a big hit on SCRUM. It means that we weren't able to have a physical SCRUM board, and were forced to use a mobile tool. We chose to use Trello, where each of us could log in, check up on and move tasks. The idea is fine, but easily forgotten. Today(14/12-13) is our last scheduled work day, and we have transformed the tasks to post-its(see fig. \ref{fig:Scrum Board1} page \pageref{fig:Scrum Board1}). To sum up, a physical board attained being the status of progress, while Trello was more of another task to keep updated.
 
-\section{Extreme programming}
+\section{Extreme Programming}
+Extreme programming is a recognized style of developing code. We have used two paradigms; pair programming and merciless refactoring. Exactly how merciless, was up to the individual developer(or pair). It could have certainly been used to a wider extend, given we had more coding experience, and we will remember that, because it has helped us achieve better code along the way.
 
+Our experience with pair programming has been more mixed, as seen from our sprint retrospective(sec. \ref{sec:retrospective1} page \pageref{sec:retrospective1}). We adored the fruits of being two people responsible for a development area - when finding bugs later in the development, the responsible parties could look at each other and smile, maybe with a clear idea of their mistake. When developing alone the burden feels a little different on ones shoulders. Yet we still stopped using pair programming after the first sprint for the sole reason being coding experience. Our skills are mixed, and generally not good enough to develop code in a pair manner efficiently - it simply took too long. 
 
 \section{Coding priorities}
-Our goal form the start was quality over quantity. We realize now that we could have displayed that nicely in the RAD and SDD, and since we haven't, it might seem like many usecases wasn't achieved. Instead we could have focused more on a requirement to supportability and extensibility, which we have achieved.
+Our goal form the start was quality over quantity. We realize now that we could have displayed that nicely in the RAD and SDD, and since we haven't, it might seem like many usecases weren't achieved. Instead we could have added strict requirements for supportability and extensibility, which we \textit{have} achieved.
+
+
 We have focused on the architecture on all fronts. We began with the backend, using a wide variety of design patterns and building a framework for communication. The same goes for the clients - however since we were working against a strict deadline, our clients did not get to reflect the full functionality of the backend. Our time was rather spent on the architecture of them. However our backend has controls for RESTful calls on all tables in the database. 
+
+
+\chapter{Conclusion}
+\label{chap:Conclusion}
+In conclusion, we would all like to say that we're very satisfied with the project. It might seem as if we've only just achieved the project requirements, but in our opinion we have achieved so much more, and learned on all fronts.
+
+The backend is very developed. It satisfies responsiveness, extensibility, maintainability and RESTful calls on all database tables.
+
+The two clients are not as developed, and do not reflect the full functionality of the backend. Considering we have only had one lecture in ASP.net and WPF, it's clear that we would spend a lot of research time on these subjects, to achieve a business standard architecture. We believe that we have done that, and that adding the last features to reflect the backend is a minor task which we unfortunately did not find the time to.
+
+We have used SCRUM with all its heuristics, and while there has been challenges, we now have a good understanding of the work-flow that is SCRUM.
+
+
