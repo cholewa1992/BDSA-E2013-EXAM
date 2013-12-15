@@ -17,8 +17,9 @@ A distributed system where a user is able to search, find and edit movies and pe
 	\item All above parts shall be implemented in C\#. The Windows client in WPF, in .NET 4.5, and the web client in ASP.NET
 	\item Communication between clients and server shall happen in a RESTful manner sending JSON over HTTP
 	\item The server must build on the HttpListener for HTTP communication
-	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
-	\item The server must be able to merge information from My Movie API. If a search term is not found in the database, the server will search IMDB using My Movie API. If there is a search result from the My Movie API, it will be sent to the client.
+	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. 
+	%If the requested data is in memory it will be retrieved from there instead of from the Database
+	\item The server must be able to merge information from My Movie API. If a search term is not found in the database, the server will search IMDB using My Movie API. If there is a search result from the My Movie API, it will be sent to the client, and stored in the main database.
 	\item The clients in the system should display information coming from the server, and should also take input from the user and transfer it back to the server.
 \end{itemize}
 
@@ -28,7 +29,7 @@ A distributed system where a user is able to search, find and edit movies and pe
 
 \item[\textbf{Usability}]
 \begin{itemize}
-\item A user able to use an internet browser must be able to use the System.
+\item A user who is able to use an internet browser must be able to use the System.
 \end{itemize}
 
 \vspace{0.2cm}
@@ -48,7 +49,7 @@ A distributed system where a user is able to search, find and edit movies and pe
 \hspace{50cm}
 
 \begin{itemize}
-\item The system should be optimized for fast response time by using caching and lazy loading.
+\item The system should be optimized for fast response time by using lazy loading. %and caching %.
 \item System requirements
 \end{itemize}
 
