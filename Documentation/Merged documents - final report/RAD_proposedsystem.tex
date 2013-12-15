@@ -17,8 +17,9 @@ A distributed system where a user is able to search, find and edit movies and pe
 	\item All above parts shall be implemented in C\#. The Windows client in WPF, in .NET 4.5, and the web client in ASP.NET
 	\item Communication between clients and server shall happen in a RESTful manner sending JSON over HTTP
 	\item The server must build on the HttpListener for HTTP communication
-	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. If the requested data is in memory it will be retrieved from there instead of from the Database
-	\item The server must be able to merge information from My Movie API. If a search term is not found in the database, the server will search IMDB using My Movie API. If there is a search result from the My Movie API, it will be sent to the client.
+	\item The server should support two ways of retrieving data. One being from its memory cache and the other being from the Database. 
+	%If the requested data is in memory it will be retrieved from there instead of from the Database
+	\item The server must be able to merge information from My Movie API. If a search term is not found in the database, the server will search IMDB using My Movie API. If there is a search result from the My Movie API, it will be sent to the client, and stored in the main database.
 	\item The clients in the system should display information coming from the server, and should also take input from the user and transfer it back to the server.
 \end{itemize}
 
@@ -28,7 +29,7 @@ A distributed system where a user is able to search, find and edit movies and pe
 
 \item[\textbf{Usability}]
 \begin{itemize}
-\item A user able to use an internet browser must be able to use the System.
+\item A user who is able to use an internet browser must be able to use the System.
 \end{itemize}
 
 \vspace{0.2cm}
@@ -48,7 +49,7 @@ A distributed system where a user is able to search, find and edit movies and pe
 \hspace{50cm}
 
 \begin{itemize}
-\item The system should be optimized for fast response time by using caching and lazy loading.
+\item The system should be optimized for fast response time by using lazy loading. %and caching %.
 \item System requirements
 \end{itemize}
 
@@ -115,10 +116,10 @@ The following scenarios were set up in order to analyze them:
 \begin{center}
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
-		Scenario name & \underline{Find the movie The Hobbit}  \\ \hline
+		Scenario name & \underline{Find the movie 'The Hobbit'}  \\ \hline
 		Participating Actors & \underline{John} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item John wants to find out the name of the actor playing the protagonist in The Hobbit. He enters the title in the search field.
+						\item John likes the movie 'The Hobbit' and want to know some more about it. He enters the hobbit in the search field and press the search button.
 						\item John receive information for the movie, such as a list of actors, roles, a description for the movie, rating ect.
 						\end{enumerate}
 						\\ \hline
@@ -354,22 +355,22 @@ The explanations furthermore include the relation between the actors and the use
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
 		Use Case Name & Edit movie information \\ \hline
-		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{administrator} uses the client to search for, and find, a movie. On the movie page he choses to edit the movie
+						\item[1.] The \emph{User} uses the client to search for, and find, a movie. On the movie page he choses to edit the movie
 						\begin{enumerate}
-							\item[2.] The client presents the \emph{administrator} with a page where he can edit information
+							\item[2.] The client presents the \emph{User} with a page where he can edit information
 						\end{enumerate}
-						\item[3.] The \emph{administrator} edits the desired information, and chooses to save his changes
+						\item[3.] The \emph{User} edits the desired information, and chooses to save his changes
 						\begin{enumerate}
 							\item[4.] The client saves the changes
 						\end{enumerate}
 					\end{enumerate} \\ \hline
 		Entry Condition & \begin{itemize}
-						\item The \emph{administrator} has logged in and has selected a movie
+						\item The \emph{User} The User has a client open and has found and selected a movie
 					\end{itemize} \\ \hline
 		Exit Condition & \begin{itemize}
-						\item The \emph{administrator} has succesfully edited the movie, and the changes are saved to the database
+						\item The \emph{User} has succesfully edited the movie, and the changes are saved to the database
 					\end{itemize} \\
 		\hline
 	\end{tabular}
@@ -382,19 +383,19 @@ The explanations furthermore include the relation between the actors and the use
 	\begin{tabular}{ | l | p{10cm} |  }
 		 \hline
 		Use Case Name & Edit actor information \\ \hline
-		Participating Actors & Initiated by \emph{administrator} \\ \hline
+		Participating Actors & Initiated by \emph{User} \\ \hline
 		Flow of Events & \begin{enumerate}
-						\item[1.] The \emph{administrator} uses the client to search for, and find, an actor. On the actor page, he choses to edit the actor
+						\item[1.] The \emph{User} uses the client to search for, and find, an actor. On the actor page, he choses to edit the actor
 						\begin{enumerate}
-							\item[2.] The client presents the \emph{administrator} with a page where he can edit information on the actor
+							\item[2.] The client presents the \emph{User} with a page where he can edit information on the actor
 						\end{enumerate}
-						\item[3.] The \emph{administrator} edits the desired information, and chooses to save his changes
+						\item[3.] The \emph{User} edits the desired information, and chooses to save his changes
 						\begin{enumerate}
 							\item[4.] The client saves the changes to the database
 						\end{enumerate}
 					\end{enumerate} \\ \hline
 		Entry Condition & \begin{itemize}
-						\item The \emph{administrator} has logged in and has selected an actor
+						\item The \emph{User} has a client open and has found and selected an actor
 					\end{itemize} \\ \hline
 		Exit Condition & \begin{itemize}
 						\item The \emph{administrator} has succesfully edited the actor, and the changes are saved to the database
