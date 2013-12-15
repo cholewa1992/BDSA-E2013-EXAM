@@ -152,7 +152,6 @@ ehthumbs.db
 *.iso
 *.jar
 *.tar
-*.zip
 
 # Entity framework
 !EntityFramework.dll
