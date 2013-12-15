@@ -27,10 +27,7 @@ namespace CommunicationFrameworkUnitTest
     [ TestClass ]
     public class CommunicationUnitTest
     {
-        //Test ideas: Check to make sure timeout actually works,
-        //Check whether or not the actual send -> receive -> do stuff -> send -> receive actually works,
-
-        [ TestMethod ]
+       [ TestMethod ]
         public void CommunicationHandler_Constructor_ProtocolIsNotNull()
         {
             var handler = new CommunicationHandler( Protocols.Http );
@@ -107,16 +104,6 @@ namespace CommunicationFrameworkUnitTest
             ExceptionAssert.Throws<ProtocolException>( () =>
             {
                 Client.Send( "http://localhost.123/", null, "GET" );
-            }, "ERROR! Address not valid" );
-        }
-
-        [ TestMethod ]
-        public void HTTPProtocol_Send_AddressInvalid_localhostWithoutH()
-        {
-            var Client = new CommunicationHandler( Protocols.Http );
-            ExceptionAssert.Throws<ProtocolException>( () =>
-            {
-                Client.Send( "http://localost:123/", null, "GET" );
             }, "ERROR! Address not valid" );
         }
 
